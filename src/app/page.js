@@ -40,7 +40,7 @@ export default function Home() {
       </section>
       <section className="my-16 flex flex-col items-center">
         <h2 className="text-center mb-8">Inspirez vous</h2>
-        <div className="flex items-center justify-around w-10/12 flex-wrap">
+        <div className="flex items-center justify-around w-10/12 flex-wrap space-y-6">
           {/* <div></div> */}
           <ProductItem link="/images/romantic.jpg" />
           <ProductItem link="/images/versailles.jpg" />
