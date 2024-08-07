@@ -4,7 +4,6 @@ import HomeSwipper from "@/app/components/HomeSwipper";
 import MainMenu from "@/app/components/MainMenu";
 import ProductItem from "./components/inspiration/ProductItem";
 import BubbleIcon from "./components/BubbleIcon";
-import { Icon } from "@iconify/react";
 
 export default function Home() {
   return (
@@ -61,7 +60,7 @@ export default function Home() {
           <div className="flex flex-col items-center justify-center">
             <BubbleIcon size="80" icon="solar:notebook-minimalistic-outline" link="/nos-services"/>
             <h6>Choix et disponibilité des produits</h6>
-            <h6 className="leading-3">Outils d'aide à la vente</h6>
+            <h6 className="leading-3">Outils d&apos;aide à la vente</h6>
           </div>
           <div className="flex flex-col items-center justify-center">
             <BubbleIcon size="80" icon="solar:settings-minimalistic-outline" link="/nos-services"/>
