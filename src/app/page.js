@@ -52,7 +52,7 @@ export default function Home() {
       </div>
       <section>
         <h2 className="text-center">Services pour les professionnels</h2>
-        <div className="flex flex-col items-center justify-center my-24 space-y-4">
+        <div className="flex flex-col md:flex-row items-center justify-center md:justify-around my-12 space-y-4">
           <div className="flex flex-col items-center justify-center">
             <BubbleIcon
               size="80"
@@ -90,7 +90,7 @@ export default function Home() {
         <div className="flex items-start justify-evenly my-24 flex-wrap">
           <AvisClient
             note={5}
-            name="Jean Dupont"
+            name="Alain Connu"
             text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           e et dolore magna aliqua. Ut enim ad
           minim veniam, quis nostrud exercitation ullamco laboris nisi ut
@@ -108,7 +108,7 @@ export default function Home() {
           />
           <AvisClient
             note={4}
-            name="Harry Potter"
+            name="Guy Tar"
             text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
           minim veniam, quis nostrud exer"
@@ -116,7 +116,7 @@ export default function Home() {
           />
           <AvisClient
             note={5}
-            name="Dark Vador"
+            name="Gérard Manvussa"
             text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor iagna aliqua. Ut enim ad
           minim veniam, quis nostrud exercitation ullamco laboris nisi ut
