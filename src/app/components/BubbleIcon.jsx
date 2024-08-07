@@ -1,5 +1,3 @@
-"use client";
-
 import { Icon } from "@iconify/react";
 import Link from "next/link";
 
@@ -7,16 +5,18 @@ const BubbleIcon = ({ icon, size, link }) => {
   return link ? (
     <Link href={link} className="group">
       <div
-        className={`rounded-full bg-primary flex items-center justify-center p-4 overflow-hidden min-h-${size} min-w-${size}`}
+        className={`relative rounded-full bg-primary flex items-center justify-center p-4 overflow-hidden h-${size} w-${size}`}
       >
         <Icon
           icon={icon}
+          width={size -8}
+          height={size -8}
           className={`text-or ${
-            link ? "group-hover:translate-x-40 transform duration-700" : ""
+            link ? "group-hover:translate-x-24 transform duration-300" : ""
           }`}
         />
         {link && (
-          <span className="-translate-x-40 group-hover:translate-x-0 transform duration-700">
+          <span className="absolute -translate-x-24 group-hover:translate-x-0 transform duration-300 text-center text-or">
             En savoir plus
           </span>
         )}
