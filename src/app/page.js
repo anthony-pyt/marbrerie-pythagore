@@ -5,6 +5,7 @@ import MainMenu from "@/app/components/MainMenu";
 import ProductItem from "./components/inspiration/ProductItem";
 import BubbleIcon from "./components/BubbleIcon";
 import AvisClient from "./components/AvisClient";
+import Footer from "./components/Footer";
 
 export default function Home() {
   return (
@@ -125,7 +126,7 @@ export default function Home() {
           />
         </div>
       </section>
-      <footer className="bg-secondary h-96 my-16"></footer>
+      <Footer/>
     </main>
   );
 }
