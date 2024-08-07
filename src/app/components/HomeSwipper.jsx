@@ -4,7 +4,7 @@ import React from "react";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
 
-export default () => {
+export default function HomeSwipper() {
   return (
     <Splide
       options={{

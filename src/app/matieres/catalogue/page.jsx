@@ -1,6 +1,6 @@
 import MainMenu from "@/app/components/MainMenu";
 
-export default function () {
+export default function Page() {
   return (
     <main className="min-h-screen">
       <MainMenu/>
