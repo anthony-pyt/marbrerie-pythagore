@@ -1,11 +1,11 @@
 "use client";
 
 export default function ProductItem({ link }) {
-    //TODO Remplacer link par le produit concerné
+  //TODO Remplacer link par le produit concerné
   return (
     <div>
       <div
-        className="rounded-2xl h-[350px] w-[280px] bg-cover bg-center bg-no-repeat shadow-lg mx-4"
+        className="rounded-2xl h-[350px] w-[280px] bg-cover bg-center bg-no-repeat shadow-lg"
         style={{ backgroundImage: `url(${link})` }}
       ></div>
       <div>
@@ -18,4 +18,4 @@ export default function ProductItem({ link }) {
       </div>
     </div>
   );
-};
+}

@@ -3,6 +3,8 @@ import Button from "@/app/components/Button";
 import HomeSwipper from "@/app/components/HomeSwipper";
 import MainMenu from "@/app/components/MainMenu";
 import ProductItem from "./components/inspiration/ProductItem";
+import BubbleIcon from "./components/bubbleIcon";
+import { Icon } from "@iconify/react";
 
 export default function Home() {
   return (
@@ -50,6 +52,23 @@ export default function Home() {
       </div>
       <section>
         <h2 className="text-center mb-8">Services pour les professionnels</h2>
+        <div className="flex items-start justify-evenly my-24">
+          <div className="flex flex-col items-center justify-center">
+            <BubbleIcon size="80" icon="solar:user-speak-outline" link="/nos-services"/>
+            <h6>Conseil</h6>
+            <h6 className="leading-3">Formation</h6>
+          </div>
+          <div className="flex flex-col items-center justify-center">
+            <BubbleIcon size="80" icon="solar:notebook-minimalistic-outline" link="/nos-services"/>
+            <h6>Choix et disponibilité des produits</h6>
+            <h6 className="leading-3">Outils d'aide à la vente</h6>
+          </div>
+          <div className="flex flex-col items-center justify-center">
+            <BubbleIcon size="80" icon="solar:settings-minimalistic-outline" link="/nos-services"/>
+            <h6>Prestation complète</h6>
+            <h6 className="leading-3">SAV</h6>
+          </div>
+        </div>
       </section>
       <footer className="bg-secondary h-96 my-16"></footer>
     </main>
