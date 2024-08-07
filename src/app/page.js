@@ -2,7 +2,7 @@ import Image from "next/image";
 import Button from "@/app/components/Button";
 import HomeSwipper from "@/app/components/HomeSwipper";
 import MainMenu from "@/app/components/MainMenu";
-import ProductItem from "@/app/components/inspiration/productItem";
+import ProductItem from "./components/inspiration/ProductItem";
 
 export default function Home() {
   return (
