@@ -3,7 +3,7 @@ import Button from "@/app/components/Button";
 import HomeSwipper from "@/app/components/HomeSwipper";
 import MainMenu from "@/app/components/MainMenu";
 import ProductItem from "./components/inspiration/ProductItem";
-import BubbleIcon from "./components/bubbleIcon";
+import BubbleIcon from "./components/BubbleIcon";
 import { Icon } from "@iconify/react";
 
 export default function Home() {
