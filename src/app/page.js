@@ -4,15 +4,16 @@ import HomeSwipper from "@/app/components/HomeSwipper";
 import MainMenu from "@/app/components/MainMenu";
 import ProductItem from "./components/inspiration/ProductItem";
 import BubbleIcon from "./components/BubbleIcon";
+import AvisClient from "./components/AvisClient";
 
 export default function Home() {
   return (
     <main className="min-h-screen">
       <MainMenu />
       <section className="flex justify-center">
-        <div className="bg-white flex h-[500px] justify-between rounded-xl overflow-hidden my-3 shadow-lg flex-wrap w-11/12">
+        <div className="bg-white flex h-auto lg:h-[500px] justify-between rounded-xl overflow-hidden my-3 shadow-lg flex-wrap w-11/12">
           <div className="flex-1">
-            <div className="p-20">
+            <div className=" py-12 lg:py-20 px-4 lg:px-20">
               <h2>
                 Un savoir-faire depuis <span className="text-or">1995</span>
               </h2>
@@ -50,23 +51,78 @@ export default function Home() {
         <hr className="border border-or w-7/12" />
       </div>
       <section>
-        <h2 className="text-center mb-8">Services pour les professionnels</h2>
-        <div className="flex items-start justify-evenly my-24">
+        <h2 className="text-center">Services pour les professionnels</h2>
+        <div className="flex flex-col items-center justify-center my-24 space-y-4">
           <div className="flex flex-col items-center justify-center">
-            <BubbleIcon size="80" icon="solar:user-speak-outline" link="/nos-services"/>
-            <h6>Conseil</h6>
-            <h6 className="leading-3">Formation</h6>
+            <BubbleIcon
+              size="80"
+              icon="solar:user-speak-outline"
+              link="/nos-services"
+            />
+            <h6 className="text-center">Conseil</h6>
+            <h6 className="leading-3 text-center">Formation</h6>
           </div>
           <div className="flex flex-col items-center justify-center">
-            <BubbleIcon size="80" icon="solar:notebook-minimalistic-outline" link="/nos-services"/>
-            <h6>Choix et disponibilité des produits</h6>
+            <BubbleIcon
+              size="80"
+              icon="solar:notebook-minimalistic-outline"
+              link="/nos-services"
+            />
+            <h6 className="text-center text-center">Choix et disponibilité des produits</h6>
             <h6 className="leading-3">Outils d&apos;aide à la vente</h6>
           </div>
           <div className="flex flex-col items-center justify-center">
-            <BubbleIcon size="80" icon="solar:settings-minimalistic-outline" link="/nos-services"/>
-            <h6>Prestation complète</h6>
-            <h6 className="leading-3">SAV</h6>
+            <BubbleIcon
+              size="80"
+              icon="solar:settings-minimalistic-outline"
+              link="/nos-services"
+            />
+            <h6 className="text-center">Prestation complète</h6>
+            <h6 className="leading-3 text-center">SAV</h6>
           </div>
+        </div>
+      </section>
+      <div className="flex justify-center my-12">
+        <hr className="border border-or w-7/12" />
+      </div>
+      <section>
+        <h2 className="text-center mb-8">Avis de nos clients</h2>
+        <div className="flex items-start justify-evenly my-24 flex-wrap">
+          <AvisClient
+            note={5}
+            name="Jean Dupont"
+            text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          e et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequa"
+            date="07/08/2024"
+          />
+          <AvisClient
+            note={5}
+            name="Jean Neymar"
+            text="Lorem ipsum dolor sit amet, consecte, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequa"
+            date="24/06/2024"
+          />
+          <AvisClient
+            note={4}
+            name="Harry Potter"
+            text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exer"
+            date="17/04/2024"
+          />
+          <AvisClient
+            note={5}
+            name="Dark Vador"
+            text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor iagna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequa"
+            date="07/02/2024"
+          />
         </div>
       </section>
       <footer className="bg-secondary h-96 my-16"></footer>
