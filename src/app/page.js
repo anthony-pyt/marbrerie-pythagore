@@ -59,8 +59,8 @@ export default function Home() {
               icon="solar:user-speak-outline"
               link="/nos-services"
             />
-            <h6 className="text-center">Conseil</h6>
-            <h6 className="leading-3 text-center">Formation</h6>
+            <p className="text-center">Conseil</p>
+            <p className="leading-3 text-center">Formation</p>
           </div>
           <div className="flex flex-col items-center justify-center">
             <BubbleIcon
@@ -68,8 +68,8 @@ export default function Home() {
               icon="solar:notebook-minimalistic-outline"
               link="/nos-services"
             />
-            <h6 className="text-center text-center">Choix et disponibilité des produits</h6>
-            <h6 className="leading-3">Outils d&apos;aide à la vente</h6>
+            <p className="text-center">Choix et disponibilité des produits</p>
+            <p className="leading-3 text-center">Outils d&apos;aide à la vente</p>
           </div>
           <div className="flex flex-col items-center justify-center">
             <BubbleIcon
@@ -77,8 +77,8 @@ export default function Home() {
               icon="solar:settings-minimalistic-outline"
               link="/nos-services"
             />
-            <h6 className="text-center">Prestation complète</h6>
-            <h6 className="leading-3 text-center">SAV</h6>
+            <p className="text-center">Prestation complète</p>
+            <p className="leading-3 text-center">SAV</p>
           </div>
         </div>
       </section>
