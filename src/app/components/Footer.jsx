@@ -6,10 +6,9 @@ const Footer = () => {
   return (
     <footer className="bg-secondary mt-16 py-8 px-4 flex items-start justify-between text-white">
       <div className="flex-1 flex flex-col items-center justify-center">
-        <Image
+        <img
+          className="w-48"
           src={"/images/logo_pythagore_texte_blanc.png"}
-          width={248}
-          height={248 / 2.39}
           alt="Logo de Pythagore"
         />
         <div className="text-sm mt-2 font-title">
@@ -26,10 +25,9 @@ const Footer = () => {
             href="https://www.instagram.com/pythagoremarbrerie/"
             target="_blank"
           >
-            <Image
+            <img
+              className="w-12 h-12"
               src="/images/instagram.png"
-              width={48}
-              height={48}
               alt="instagram"
             />
           </Link>
@@ -37,10 +35,9 @@ const Footer = () => {
             href="https://www.linkedin.com/company/marbrerie-pythagore"
             target="_blank"
           >
-            <Image
+            <img
+              className="w-12 h-12"
               src="/images/linkedin.png"
-              width={48}
-              height={48}
               alt="linkedin"
             />
           </Link>

@@ -48,26 +48,28 @@ export default function MainMenu() {
             scrolling ? "scale-90" : "scale-100"
           } transition-transform duration-300`}
         >
-          <Logo theme="color"/>
+          <Logo theme="color" />
         </div>
         <div className="hidden xl:flex justify-center w-full flex-1">
           <div className="flex items-center justify-center space-x-2">
             {listMenu.map((item) => (
               <div
                 key={item.label}
-                className="flex items-center space-x-1 px-4 py-2 hover:bg-secondary rounded-lg group relative transform duration-200 z-50 cursor-pointer"
+                className="hover:bg-secondary rounded-lg group relative transform duration-200 z-50 cursor-pointer"
               >
-                <Icon
-                  icon={item.icon}
-                  width="20"
-                  height="20"
-                  className="cursor-pointer group-hover:text-primary text-secondary transform duration-700 delay-300"
-                />
                 <Link
                   href={item.link}
-                  className="group-hover:text-primary text-secondary transform duration-500"
+                  className="group-hover:text-primary text-secondary transform duration-500 flex items-center space-x-1 px-4 py-2"
                 >
-                  {item.label}
+                  <Icon
+                    icon={item.icon}
+                    width="20"
+                    height="20"
+                    className="cursor-pointer group-hover:text-primary text-secondary transform duration-700 delay-300"
+                  />
+                  <span className="group-hover:text-primary text-secondary transform duration-500">
+                    {item.label}
+                  </span>
                 </Link>
                 {item.children?.length > 0 && (
                   <div className="absolute top-full left-0 hidden group-hover:block overflow-hidden">

@@ -1,19 +1,22 @@
 import { Icon } from "@iconify/react";
+import Image from "next/image";
 
-const ServiceCard = ({ title, children }) => {
+const ServiceCard = ({ title, children, type }) => {
   return (
-    <div>
-      <div className="bg-primary h-72 w-72 rounded-xl shadow-lg flex items-center justify-center">
-        <Icon
-          icon="lets-icons:img-box-duotone-line"
-          width={138}
-          className="text-gray-500"
-        />
+    <div className="max-w-96 min-w-96 bg-white rounded-xl shadow-xl border m-8">
+      <div className="flex justify-center">
+        <div className="bg-primary h-48 w-11/12 flex items-center justify-center rounded-xl shadow-lg -mt-6 overflow-hidden">
+          <img
+            className="w-full h-48 object-cover"
+            src={`/images/${type}.jpg`}
+            loading="lazy"
+          />
+        </div>
       </div>
-      <div className="m-2">
-        <h6 className="text-wrap">{title}</h6>
+      <div className="p-6">
+          <h4 className="font-semibold mb-4">{title}</h4>
+        <div>{children}</div>
       </div>
-      <div>{children}</div>
     </div>
   );
 };
