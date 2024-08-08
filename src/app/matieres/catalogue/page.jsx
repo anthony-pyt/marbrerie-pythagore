@@ -1,4 +1,5 @@
 "use client";
+import Button from "@/app/components/Button";
 import Loader from "@/app/components/loader/Loader";
 import MainMenu from "@/app/components/MainMenu";
 import ProductCard from "@/app/components/product/card";
@@ -32,8 +33,11 @@ export default function Page() {
       <MainMenu />
       <h2 className="p-4">Catalogue</h2>
       <div>
+        <div className="mx-12 block lg:hidden">
+          <Button text="Filtres" color="or" size="small" icon="check"/>
+        </div>
         <div className="flex">
-          <div className="border p-4 shadow-lg rounded-xl bg-white m-2 w-72">
+          <div className="border p-4 shadow-lg rounded-xl bg-white m-2 w-72 hidden lg:block">
             {categories.length > 0 && (
               <div>
                 <fieldset>
