@@ -11,12 +11,12 @@ const BubbleIcon = ({ icon, size, link }) => {
           icon={icon}
           width={size -8}
           height={size -8}
-          className={`text-or ${
+          className={` ${
             link ? "group-hover:translate-x-24 transform duration-300" : ""
           }`}
         />
         {link && (
-          <span className="absolute -translate-x-24 group-hover:translate-x-0 transform duration-300 text-center text-or">
+          <span className="absolute -translate-x-24 group-hover:translate-x-0 transform duration-300 text-center">
             En savoir plus
           </span>
         )}
@@ -24,7 +24,7 @@ const BubbleIcon = ({ icon, size, link }) => {
     </Link>
   ) : (
     <div className="rounded-full bg-primary flex items-center justify-center p-4 overflow-hidden">
-      <Icon icon={icon} width={size} height={size} className="text-or" />
+      <Icon icon={icon} width={size} height={size} className="" />
     </div>
   );
 };

@@ -7,7 +7,7 @@ const AvisClient = ({ note, date, name, text }) => {
   const stars = Array.from({ length: note }, (_, index) => index);
 
   return (
-    <div className="rounded-2xl bg-primary shadow-lg w-64 h-72 p-5 overflow-hidden flex flex-col m-4">
+    <div className="rounded-2xl bg-white shadow-lg w-64 h-72 p-5 overflow-hidden flex flex-col m-4">
       <div className="inline-block">
         <div className="inline-flex items-center">
           {stars.map((_, index) => (
