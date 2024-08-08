@@ -53,7 +53,7 @@ export default function Page() {
                   Matières
                 </legend>
                 {categories?.map((category) => (
-                  <div className="space-y-5">
+                  <div className="space-y-5" key={category.id}>
                     <div className="relative flex items-start">
                       <div className="flex h-6 items-center">
                         <input
@@ -84,6 +84,7 @@ export default function Page() {
                         <ProductCard
                           product={product}
                           animationDelay={animationDelay}
+                          key={product.id}
                         />
                       );
                     })}

@@ -11,9 +11,18 @@ import { useEffect, useState } from "react";
 export default function MainMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolling, setScrolling] = useState(false);
+  const [isClosing, setIsClosing] = useState(false); // État pour gérer l'animation de fermeture
 
   const toggleOpenMenu = () => {
-    setIsOpen(!isOpen);
+    if (isOpen) {
+      setIsClosing(true); // Activer l'animation de fermeture
+      setTimeout(() => {
+        setIsOpen(false); // Fermer le menu après l'animation
+        setIsClosing(false); // Réinitialiser l'état de fermeture
+      }, 300); // Correspond à la durée de l'animation
+    } else {
+      setIsOpen(true); // Ouvrir le menu
+    }
   };
 
   useEffect(() => {
@@ -34,13 +43,13 @@ export default function MainMenu() {
   }, []);
 
   return (
-    <div className="sticky top-0 z-50 animate__animated animate__bounceInDown animate__delay-1s">
+    <div className="">
       <div
         className={`${
           scrolling ? "bg-slate-50" : "bg-white"
-        } m-5 rounded-xl p-3 shadow-lg flex items-center justify-between transform duration-1000`}
+        } m-5 rounded-xl p-3 shadow-lg flex items-center justify-between transform duration-500 sticky top-0 z-50 animate__animated animate__bounceInDown animate__delay-1s`}
       >
-        <button className="block xl:hidden" onClick={() => toggleOpenMenu()}>
+        <button className="block xl:hidden" onClick={toggleOpenMenu}>
           <Hamburger />
         </button>
         <div
@@ -78,11 +87,11 @@ export default function MainMenu() {
                         {item.children.map((child) => (
                           <Link
                             href={child.link}
-                            className="flex items-center space-x-3 px-4 py-2 hover:bg-secondary hover:text-primary text-secondary rounded-lg duration-150 transform cur7"
+                            className="flex items-center space-x-3 px-4 py-2 hover:bg-secondary hover:text-primary text-secondary rounded-lg duration-150 transform"
                             key={child.label}
                           >
                             <Icon icon={child.icon} width="20" height="20" />
-                            <div className="">{child.label}</div>
+                            <div>{child.label}</div>
                           </Link>
                         ))}
                       </div>
@@ -103,13 +112,24 @@ export default function MainMenu() {
         </div>
       </div>
       {isOpen && (
-        <div className="fixed inset-0 h-screen w-11/12 bg-white z-50 shadow-xl pl-3 flex flex-col justify-between overflow-y-auto">
+        <div
+          className={`fixed inset-0 h-screen w-screen bg-white z-50 shadow-xl p-3 flex flex-col justify-between overflow-y-auto ${
+            isClosing
+              ? "animate__animated animate__bounceOutLeft"
+              : "animate__animated animate__bounceInLeft"
+          }`}
+        >
+          <button onClick={toggleOpenMenu} className="absolute top-4 right-8">
+            <Icon icon="solar:close-circle-outline" className="h-12 w-12" />
+          </button>
           <div>
-            <h3 className="text-3xl">Menu principal</h3>
+            <div className="">
+              <h3 className="text-3xl">Menu principal</h3>
+            </div>
             <div>
               {listMenu.map((item) => (
                 <div key={item.label} className="my-1 p-1">
-                  <div className=" flex items-center space-x-1">
+                  <div className="flex items-center space-x-1">
                     <Link href={item.link} className="text-3xl">
                       {item.label}
                     </Link>
@@ -119,7 +139,7 @@ export default function MainMenu() {
                       <div>
                         <div>
                           {item.children.map((child) => (
-                            <div className=" px-4 text-xl" key={child.label}>
+                            <div className="px-4 text-xl" key={child.label}>
                               <Link href={child.link} className="">
                                 {child.label}
                               </Link>
