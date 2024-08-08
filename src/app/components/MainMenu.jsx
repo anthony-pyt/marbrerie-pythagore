@@ -34,7 +34,7 @@ export default function MainMenu() {
   }, []);
 
   return (
-    <div className="sticky top-0 z-50">
+    <div className="sticky top-0 z-50 animate__animated animate__bounceInDown animate__delay-1s">
       <div
         className={`${
           scrolling ? "bg-slate-50" : "bg-white"

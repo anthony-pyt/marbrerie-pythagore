@@ -1,4 +1,4 @@
-
+"use client";
 import Button from "@/app/components/Button";
 import HomeSwipper from "@/app/components/HomeSwipper";
 import MainMenu from "@/app/components/MainMenu";
@@ -8,10 +8,12 @@ import AvisClient from "./components/AvisClient";
 import Footer from "./components/Footer";
 
 export default function Home() {
+  
+
   return (
     <main className="min-h-screen">
       <MainMenu />
-      <section className="flex justify-center">
+      <section className="flex justify-center animate__animated animate__fadeInDownBig">
         <div className="bg-white flex h-auto lg:h-[500px] justify-between rounded-xl overflow-hidden my-3 shadow-lg flex-wrap w-11/12">
           <div className="flex-1">
             <div className=" py-12 lg:py-20 px-4 lg:px-20">
@@ -55,10 +57,7 @@ export default function Home() {
         <h2 className="text-center">Services pour les professionnels</h2>
         <div className="flex flex-col md:flex-row items-center justify-center my-12 space-y-8 md:space-y-0 md:space-x-24">
           <div className="flex flex-col items-center justify-center">
-            <BubbleIcon
-              icon="solar:user-speak-outline"
-              link="/nos-services"
-            />
+            <BubbleIcon icon="solar:user-speak-outline" link="/nos-services" />
             <p className="text-center">Conseil</p>
             <p className="leading-3 text-center">Formation</p>
           </div>
@@ -68,7 +67,9 @@ export default function Home() {
               link="/nos-services"
             />
             <p className="text-center">Choix et disponibilité des produits</p>
-            <p className="leading-3 text-center">Outils d&apos;aide à la vente</p>
+            <p className="leading-3 text-center">
+              Outils d&apos;aide à la vente
+            </p>
           </div>
           <div className="flex flex-col items-center justify-center">
             <BubbleIcon
@@ -123,7 +124,7 @@ export default function Home() {
           />
         </div>
       </section>
-      <Footer/>
+      <Footer />
     </main>
   );
 }

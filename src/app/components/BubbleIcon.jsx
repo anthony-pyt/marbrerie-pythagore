@@ -7,7 +7,7 @@ const BubbleIcon = ({ icon, link }) => {
   return link ? (
     <Link href={link} className="group">
       <div
-        className={`relative rounded-full bg-primary flex items-center justify-center p-4 overflow-hidden max-h-120 max-w-120`}
+        className={`relative rounded-full bg-primary flex items-center justify-center p-4 overflow-hidden max-h-120 max-w-120 mb-4`}
       >
         <Icon
           icon={icon}
