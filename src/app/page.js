@@ -1,4 +1,4 @@
-import Image from "next/image";
+
 import Button from "@/app/components/Button";
 import HomeSwipper from "@/app/components/HomeSwipper";
 import MainMenu from "@/app/components/MainMenu";
@@ -53,10 +53,9 @@ export default function Home() {
       </div>
       <section>
         <h2 className="text-center">Services pour les professionnels</h2>
-        <div className="flex flex-col md:flex-row items-center justify-center md:justify-around my-12 space-y-4">
+        <div className="flex flex-col md:flex-row items-center justify-center my-12 space-y-8 md:space-y-0 md:space-x-24">
           <div className="flex flex-col items-center justify-center">
             <BubbleIcon
-              size="80"
               icon="solar:user-speak-outline"
               link="/nos-services"
             />
@@ -65,7 +64,6 @@ export default function Home() {
           </div>
           <div className="flex flex-col items-center justify-center">
             <BubbleIcon
-              size="80"
               icon="solar:notebook-minimalistic-outline"
               link="/nos-services"
             />
@@ -74,7 +72,6 @@ export default function Home() {
           </div>
           <div className="flex flex-col items-center justify-center">
             <BubbleIcon
-              size="80"
               icon="solar:settings-minimalistic-outline"
               link="/nos-services"
             />
