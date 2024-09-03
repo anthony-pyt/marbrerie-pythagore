@@ -50,7 +50,7 @@ export default function Home() {
       </section>
       <section className="bg-primary py-24">
         <h2 className="text-center mb-12 text-secondary">Services pour les professionnels</h2>
-        <div className="flex flex-col md:flex-row flex-wrap items-center 2xl:justify-around justify-center">
+        <div className="flex flex-col md:flex-row flex-wrap items-center justify-center">
           <div>
             <BubbleIcon icon="solar:user-speak-outline" link="/nos-services">
               <p>Conseil et formation</p>
