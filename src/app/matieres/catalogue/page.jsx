@@ -12,18 +12,18 @@ export default function Page() {
   const [categories, setCategories] = useState([]);
 
   const colors = [
-    "Blanc",
-    "Beige",
-    "Marron",
-    "Gris",
-    "Noir",
-    "Bleu",
-    "Vert",
-    "Rose",
-    "Rouge",
-    "Orange",
-    "Argent",
-    "Or",
+    { name: "Blanc", hex: "#FFFFFF" },
+    { name: "Beige", hex: "#F5F5DC" },
+    { name: "Marron", hex: "#8B4513" },
+    { name: "Gris", hex: "#808080" },
+    { name: "Noir", hex: "#000000" },
+    { name: "Bleu", hex: "#0000FF" },
+    { name: "Vert", hex: "#008000" },
+    { name: "Rose", hex: "#FFC0CB" },
+    { name: "Rouge", hex: "#FF0000" },
+    { name: "Orange", hex: "#FFA500" },
+    { name: "Argent", hex: "#C0C0C0" },
+    { name: "Or", hex: "#FFD700" },
   ];
 
   useEffect(() => {
@@ -112,8 +112,8 @@ export default function Page() {
     <main className="min-h-screen">
       <MainMenu />
       <PageTitle title={"Catalogue"} />
-      <div>
-        <div className="mx-12 block lg:hidden">
+      <div className="mt-2">
+        <div className="lg:hidden flex justify-end mx-2">
           <Button text="Filtres" color="or" size="small" icon="check" />
         </div>
         <div className="flex">
@@ -123,6 +123,14 @@ export default function Page() {
                 <legend className="border-b border-or w-full mb-2">
                   Matières
                 </legend>
+              {load && (
+                <div className="flex flex-col items-center">
+                  <Icon
+                    icon="ph:spinner-gap"
+                    className="w-6 h-6 animate-spin"
+                  />
+                </div>
+              )}
                 {categories?.map((category) => (
                   <div className="space-y-5" key={category.id}>
                     <div className="relative flex items-start">
@@ -156,13 +164,13 @@ export default function Page() {
                           id={index}
                           name={index}
                           type="checkbox"
-                          aria-describedby={color}
+                          aria-describedby={color.name}
                           className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                         />
                       </div>
                       <div className="ml-3 text-sm leading-6">
                         <label htmlFor={index} className="font-medium">
-                          {color}
+                          {color.name}
                         </label>
                       </div>
                     </div>

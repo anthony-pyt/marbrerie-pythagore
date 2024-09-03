@@ -8,8 +8,6 @@ import AvisClient from "./components/AvisClient";
 import Footer from "./components/Footer";
 
 export default function Home() {
-  
-
   return (
     <main className="min-h-screen">
       <MainMenu />
@@ -50,43 +48,37 @@ export default function Home() {
           <ProductItem link="/images/IMG-4058.JPG" />
         </div>
       </section>
-      <div className="flex justify-center my-12">
-        <hr className="border border-or w-7/12" />
-      </div>
-      <section>
-        <h2 className="text-center">Services pour les professionnels</h2>
-        <div className="flex flex-col md:flex-row items-center justify-center my-12 space-y-8 md:space-y-0 md:space-x-24">
-          <div className="flex flex-col items-center justify-center">
-            <BubbleIcon icon="solar:user-speak-outline" link="/nos-services" />
-            <p className="text-center">Conseil</p>
-            <p className="leading-3 text-center">Formation</p>
+      <section className="bg-primary py-24">
+        <h2 className="text-center mb-12 text-secondary">Services pour les professionnels</h2>
+        <div className="flex flex-col md:flex-row flex-wrap items-center 2xl:justify-around justify-center">
+          <div>
+            <BubbleIcon icon="solar:user-speak-outline" link="/nos-services">
+              <p>Conseil et formation</p>
+            </BubbleIcon>
           </div>
-          <div className="flex flex-col items-center justify-center">
+          <div>
             <BubbleIcon
               icon="solar:notebook-minimalistic-outline"
               link="/nos-services"
-            />
-            <p className="text-center">Choix et disponibilité des produits</p>
-            <p className="leading-3 text-center">
-              Outils d&apos;aide à la vente
-            </p>
+            >
+              <p>Choix et disponibilité des produits</p>
+              <p>Outils d&apos;aide à la vente</p>
+            </BubbleIcon>
           </div>
-          <div className="flex flex-col items-center justify-center">
+          <div>
             <BubbleIcon
               icon="solar:settings-minimalistic-outline"
               link="/nos-services"
-            />
-            <p className="text-center">Prestation complète</p>
-            <p className="leading-3 text-center">SAV</p>
+            >
+              <p>Prestation complète</p>
+              <p>SAV</p>
+            </BubbleIcon>
           </div>
         </div>
       </section>
-      <div className="flex justify-center my-12">
-        <hr className="border border-or w-7/12" />
-      </div>
       <section>
-        <h2 className="text-center mb-8">Avis de nos clients</h2>
-        <div className="flex items-start justify-evenly my-24 flex-wrap">
+        <h2 className="text-center my-8">Avis de nos clients</h2>
+        <div className="flex items-start justify-evenly flex-wrap">
           <AvisClient
             note={5}
             name="Alain Connu"
@@ -107,7 +99,7 @@ export default function Home() {
           />
           <AvisClient
             note={4}
-            name="Guy Tar"
+            name="Guy Tare"
             text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
           minim veniam, quis nostrud exer"

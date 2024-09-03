@@ -23,11 +23,11 @@ const PageTitle = ({ title }) => {
   }, []);
 
   return (
-    <div className="bg-white border rounded-xl mx-2 p-16 overflow-hidden relative bg-cover">
+    <div className="bg-white border rounded-xl mx-2 md:p-16 overflow-hidden relative bg-cover">
         <img src="/images/bg-title.png" alt="bg" className="absolute inset-0"/>
       <h1
         ref={titleRef}
-        className="p-4 text-center text-secondary"
+        className="p-4 text-center text-secondary text-2xl md:text-6xl"
       >
         {title}
       </h1>

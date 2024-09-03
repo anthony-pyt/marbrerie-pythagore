@@ -1,33 +1,36 @@
 "use client";
 
 import { Icon } from "@iconify/react";
+import moment from "moment";
+import "moment/locale/fr";
+moment.locale("fr");
 
 const AvisClient = ({ note, date, name, text }) => {
   // Création d'un tableau avec autant d'éléments que la note pour les étoiles
   const stars = Array.from({ length: note }, (_, index) => index);
 
   return (
-    <div className="rounded-2xl bg-white shadow-lg w-64 h-72 p-5 overflow-hidden flex flex-col m-4">
-      <div className="inline-block">
-        <div className="inline-flex items-center">
-          {stars.map((_, index) => (
-            <Icon
-              key={index} // Ajoute une clé unique pour chaque élément généré
-              icon="line-md:star-filled"
-              className="text-or min-w-6 max-w-6 min-h-6 max-h-6"
-            />
-          ))}
+    <div className="bg-white rounded-xl shadow-md overflow-hidden w-80 h-52 p-6 m-4 border border-gray-200">
+      <div className="flex flex-col">
+        <p className="text-lg font-semibold mb-1">{name}</p>
+        <div className="flex justify-between items-center">
+          <p className="text-sm text-gray-500 mb-3">
+            {moment(date, "DD/MM/y").fromNow()}
+          </p>
+          <div className="flex items-center mb-4 justify-end">
+            {/* Étoiles */}
+            <div className="flex text-yellow-500">
+              {stars.map((_, index) => (
+                <Icon
+                  key={index}
+                  icon="line-md:star-filled"
+                  className="text-xl"
+                />
+              ))}
+            </div>
+          </div>
         </div>
-      </div>
-      <div className="overflow-hidden flex-1 mt-3">
-        <div className="flex items-center justify-between space-x-2 mb-3">
-          <h4>Avis</h4>
-          <p className="font-title text-sm">du {date}</p>
-        </div>
-        <p className="font-title text-sm underline underline-offset-2">{name}</p>
-        <p className="truncate-multiline text-sm">
-          {text}
-        </p>
+        <p className="text-sm text-gray-700 truncate-multiline">{text}</p>
       </div>
     </div>
   );
