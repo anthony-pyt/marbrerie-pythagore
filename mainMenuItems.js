@@ -11,7 +11,6 @@ const listMenu = [
     active: true,
     link: "#",
     icon: "solar:command-outline",
-
     children: [
       {
         label: "Catalogue",
@@ -32,6 +31,15 @@ const listMenu = [
         icon: "solar:case-outline",
       },
     ],
+  },
+  {
+    label: "Savoir-faire",
+    active: true,
+    slug: "savoir-faire",
+    link: "/savoir-faire",
+    icon: "solar:accessibility-outline",
+
+    children: [],
   },
   {
     label: "Nos services",
@@ -95,7 +103,7 @@ const listMenu = [
     children: [],
     slug: "nos-metiers",
     link: "/nos-metiers",
-    icon: "solar:ruler-angular-outline",
+    icon: "solar:ruler-cross-pen-outline",
   },
 ];
 
