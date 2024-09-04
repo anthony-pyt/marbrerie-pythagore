@@ -1,10 +1,11 @@
 import MainMenu from "@/app/components/MainMenu";
+import PageTitle from "@/app/components/PageTitle";
 
 export default function Page() {
   return (
     <main className="min-h-screen">
-        <MainMenu/>
-      <h1>Caractéristiques</h1>
+      <MainMenu />
+      <PageTitle title={"Caracteristiques"} />
     </main>
   );
 }

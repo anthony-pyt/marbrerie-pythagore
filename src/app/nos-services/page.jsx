@@ -1,15 +1,14 @@
 import MainMenu from "@/app/components/MainMenu";
 import Footer from "../components/Footer";
 import ServiceCard from "../components/services/serviceCard";
+import PageTitle from "../components/PageTitle";
 
 export default function Page() {
   return (
     <main className="min-h-screen">
       <MainMenu />
       <div className="p-4">
-        <h2>
-          Nos services pour les <span className="text-or">professionnels</span>{" "}
-        </h2>
+        <PageTitle title={'Nos services pour les professionnels'}/>
         <div className="flex items-stretch justify-center lg:justify-start flex-wrap my-12 mx-6">
           <ServiceCard title="Conseil" type="conseil">
             <ul>

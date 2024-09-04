@@ -1,4 +1,5 @@
 "use client";
+
 import Button from "@/app/components/Button";
 import Loader from "@/app/components/loader/Loader";
 import MainMenu from "@/app/components/MainMenu";
@@ -8,8 +9,10 @@ import { Icon } from "@iconify/react";
 import { useEffect, useState } from "react";
 
 export default function Page() {
-  const [load, setLoad] = useState(false);
+  const [load, setLoad] = useState(true);
   const [categories, setCategories] = useState([]);
+  const [selectedColors, setSelectedColors] = useState([]); // Par défaut, aucune couleur sélectionnée
+  const [selectedCategories, setSelectedCategories] = useState([]); // Par défaut, toutes les catégories sélectionnées
 
   const colors = [
     { name: "Blanc", hex: "#FFFFFF" },
@@ -78,6 +81,7 @@ export default function Page() {
               return {
                 id: childCategory.id,
                 label: childCategory.label,
+                logo_url: childCategory.logo_url,
                 products: Object.values(groupedProducts),
               };
             });
@@ -96,8 +100,11 @@ export default function Page() {
           }
         });
 
-        console.log(groupedData);
         setCategories(groupedData);
+
+        // Sélectionner toutes les catégories par défaut
+        const allCategoryIds = groupedData.map((cat) => cat.id);
+        setSelectedCategories(allCategoryIds);
       } catch (error) {
         console.error(error);
       } finally {
@@ -107,6 +114,37 @@ export default function Page() {
 
     fetchProduct();
   }, []);
+
+  const handleCategoryChange = (categoryId) => {
+    setSelectedCategories((prev) =>
+      prev.includes(categoryId)
+        ? prev.filter((id) => id !== categoryId)
+        : [...prev, categoryId]
+    );
+  };
+
+  const handleColorChange = (colorHex) => {
+    setSelectedColors((prev) =>
+      prev.includes(colorHex)
+        ? prev.filter((hex) => hex !== colorHex)
+        : [...prev, colorHex]
+    );
+  };
+
+  const filteredCategories = categories
+    .filter((category) => selectedCategories.includes(category.id))
+    .map((category) => ({
+      ...category,
+      children: category.children.map((child) => ({
+        ...child,
+        products: child.products.filter((product) => {
+          if (selectedColors.length === 0) return true;
+          return selectedColors.some((color) =>
+            product.colors?.includes(color)
+          );
+        }),
+      })),
+    }));
 
   return (
     <main className="min-h-screen">
@@ -118,19 +156,44 @@ export default function Page() {
         </div>
         <div className="flex">
           <div className="border p-4 shadow-lg rounded-xl bg-white m-2 w-72 hidden lg:block">
+            <div className="mb-12">
+              <label
+                htmlFor="account-number"
+                className="sr-only"
+              >
+                Recherche
+              </label>
+              <div className="relative mt-2 rounded-md shadow-sm">
+                <input
+                  id="account-number"
+                  name="account-number"
+                  type="text"
+                  placeholder="Ex: sirius, zimbabwe"
+                  className="block w-full rounded-md border-0 p-1.5 pr-8 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                />
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-1">
+                  <Icon
+                    icon="f7:search-circle-fill"
+                    width="24"
+                    height="24"
+                    style={{ color: 'gray' }}
+                  />
+                </div>
+              </div>
+            </div>
             <div>
               <fieldset>
                 <legend className="border-b border-or w-full mb-2">
                   Matières
                 </legend>
-              {load && (
-                <div className="flex flex-col items-center">
-                  <Icon
-                    icon="ph:spinner-gap"
-                    className="w-6 h-6 animate-spin"
-                  />
-                </div>
-              )}
+                {load && (
+                  <div className="flex flex-col items-center">
+                    <Icon
+                      icon="ph:spinner-gap"
+                      className="w-6 h-6 animate-spin"
+                    />
+                  </div>
+                )}
                 {categories?.map((category) => (
                   <div className="space-y-5" key={category.id}>
                     <div className="relative flex items-start">
@@ -141,6 +204,8 @@ export default function Page() {
                           type="checkbox"
                           aria-describedby={category.label}
                           className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                          checked={selectedCategories.includes(category.id)}
+                          onChange={() => handleCategoryChange(category.id)}
                         />
                       </div>
                       <div className="ml-3 text-sm leading-6">
@@ -166,6 +231,8 @@ export default function Page() {
                           type="checkbox"
                           aria-describedby={color.name}
                           className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                          checked={selectedColors.includes(color.hex)}
+                          onChange={() => handleColorChange(color.hex)}
                         />
                       </div>
                       <div className="ml-3 text-sm leading-6">
@@ -189,30 +256,37 @@ export default function Page() {
                 <p>Chargement des données...</p>
               </div>
             )}
-            {categories?.map((category) => (
-              <div key={category.id} className="mb-4">
-                <h4 className="text-xl font-bold mb-2">{category.label}</h4>
-                {category?.children?.map((child) => (
-                  <div key={child.id} className="mb-6">
-                    <h5 className="text-lg font-semibold mb-2">
-                      {child.label}
-                    </h5>
-                    <div className="flex flex-wrap items-stretch">
-                      {child?.products?.map((product, index) => {
-                        const animationDelay = `${index * 0.075}s`; // Délai de 75ms entre chaque produit
-                        return (
-                          <ProductCard
-                            product={product}
-                            animationDelay={animationDelay}
-                            key={product.id}
-                          />
-                        );
-                      })}
-                    </div>
+            {filteredCategories.length > 0
+              ? filteredCategories.map((category) => (
+                  <div key={category.id} className="mb-4">
+                    <h2 className="text-xl font-bold mb-2">{category.label}</h2>
+                    {category.children.map((child) => (
+                      <div key={child.id} className="mb-4">
+                        <h5 className="text-lg font-semibold mb-2">
+                          {child.label}
+                        </h5>
+                        {child.products.length > 0 ? (
+                          <div className="flex flex-wrap justify-center md:justify-normal items-stretch">
+                            {child.products.map((product) => (
+                              <ProductCard key={product.id} product={product} />
+                            ))}
+                          </div>
+                        ) : (
+                          <p>
+                            Aucun produit disponible pour cette sous-catégorie.
+                          </p>
+                        )}
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            ))}
+                ))
+              : !load && (
+                  <div className="flex justify-center items-center mt-28">
+                    <p className="text-gray-500">
+                      Aucun produit ne correspond aux filtres.
+                    </p>
+                  </div>
+                )}
           </div>
         </div>
       </div>

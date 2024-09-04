@@ -106,3 +106,9 @@ body {
   text-overflow: ellipsis;
 }
 
+.parallax {
+  background-attachment: fixed;
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: contain;
+}

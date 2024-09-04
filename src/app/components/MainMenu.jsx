@@ -47,7 +47,7 @@ export default function MainMenu() {
       <div
         className={`${
           scrolling ? "bg-slate-50" : "bg-white"
-        } m-5 rounded-xl p-3 shadow-lg flex items-center justify-between transform duration-500 sticky top-0 z-50 animate__animated animate__bounceInDown animate__delay-1s`}
+        } m-5 rounded-xl p-3 shadow-lg flex items-center justify-between transform duration-500 sticky top-0 z-50 animate__animated animate__bounceInDown animate__delay`}
       >
         <button className="block xl:hidden" onClick={toggleOpenMenu}>
           <Hamburger />

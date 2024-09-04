@@ -1,34 +1,14 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-
 const PageTitle = ({ title }) => {
-  const titleRef = useRef(null);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.pageYOffset;
-      if (titleRef.current) {
-        titleRef.current.style.transform = `translateY(${
-          scrollPosition * 0.5
-        }px)`;
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  const number = Math.floor(Math.random() * 10) + 1;
 
   return (
-    <div className="bg-white border rounded-xl mx-2 md:p-16 overflow-hidden relative bg-cover">
-        <img src="/images/bg-title.png" alt="bg" className="absolute inset-0"/>
-      <h1
-        ref={titleRef}
-        className="p-4 text-center text-secondary text-2xl md:text-6xl"
-      >
+    <div
+      className="relative bg-white border rounded-xl overflow-hidden parallax h-48 flex items-center justify-center"
+      style={{ backgroundImage: `url('/images/wave-${number}.png')` }}
+    >
+      <h1 className="relative p-4 text-center text-secondary text-3xl md:text-6xl parallax-title animate__animated animate__bounceInLeft">
         {title}
       </h1>
     </div>

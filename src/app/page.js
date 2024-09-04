@@ -48,7 +48,7 @@ export default function Home() {
           <ProductItem link="/images/IMG-4058.JPG" />
         </div>
       </section>
-      <section className="bg-primary py-24">
+      <section className="bg-primary py-20">
         <h2 className="text-center mb-12 text-secondary">Services pour les professionnels</h2>
         <div className="flex flex-col md:flex-row flex-wrap items-center justify-center">
           <div>

@@ -7,7 +7,7 @@ const BubbleIcon = ({ icon, link, children }) => {
   return (
     <Link
       href={link}
-      className="relative block p-4 overflow-hidden rounded-xl bg-white border border-gray-300 shadow-lg h-40 w-96 m-4 group"
+      className="relative block p-4 overflow-hidden rounded-xl bg-white border border-gray-300 shadow-lg h-40 w-96 m-8 group"
       aria-label={children ? `Link to ${children}` : "Link"}
     >
       <div className="absolute -left-20 -top-4 transform rotate-6 opacity-25 z-0">
