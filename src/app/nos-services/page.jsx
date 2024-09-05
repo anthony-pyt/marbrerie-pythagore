@@ -1,4 +1,4 @@
-import MainMenu from "@/app/components/MainMenu";
+import MainMenu from "./../components/MainMenu"
 import Footer from "../components/Footer";
 import ServiceCard from "../components/services/serviceCard";
 import PageTitle from "../components/PageTitle";

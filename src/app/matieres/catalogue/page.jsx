@@ -1,9 +1,9 @@
 "use client";
 
-import Button from "@/app/components/Button";
-import MainMenu from "@/app/components/MainMenu";
-import PageTitle from "@/app/components/PageTitle";
-import ProductCard from "@/app/components/product/card";
+import Button from './../../components/Button'
+import MainMenu from "./../../components/MainMenu";
+import PageTitle from "./../../components/PageTitle";
+import ProductCard from "./../../components/product/card";
 import { Icon } from "@iconify/react";
 import { useEffect, useState } from "react";
 

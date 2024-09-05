@@ -1,8 +1,6 @@
 import { Icon } from "@iconify/react";
-import Image from "next/image";
-import Link from "next/link";
 import { useState } from "react";
-import { AnimatedModal } from "../AnimatedModal";
+import { ModalProduct } from "./ModalProduct";
 
 const ProductCard = ({ product, animationDelay }) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -12,7 +10,7 @@ const ProductCard = ({ product, animationDelay }) => {
     };
   return (
     <>
-      {isOpenModal && <AnimatedModal openModal={openModal} open={isOpenModal} setOpen={openModal} product={product} />}
+      {isOpenModal && <ModalProduct openModal={openModal} open={isOpenModal} setOpen={openModal} product={product} />}
       <div className="max-w-72 min-w-72 min-h-64 bg-white rounded-xl shadow-xl border m-8 flex flex-col justify-between">
         <div>
           <div className="flex justify-center">

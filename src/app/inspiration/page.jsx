@@ -1,10 +1,12 @@
 import MainMenu from "./../components/MainMenu";
+import PageTitle from "./../components/PageTitle";
 
 export default function Page() {
+    
   return (
     <main className="min-h-screen">
       <MainMenu />
-      <h1>Nos métiers</h1>
+      <PageTitle title={'Inspiration'}/>
     </main>
   );
 }

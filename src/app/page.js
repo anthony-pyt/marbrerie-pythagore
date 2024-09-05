@@ -1,8 +1,9 @@
 "use client";
-import Button from "@/app/components/Button";
-import HomeSwipper from "@/app/components/HomeSwipper";
-import MainMenu from "@/app/components/MainMenu";
-import ProductItem from "./components/inspiration/ProductItem";
+import Button from "./components/Button";
+import HomeSwipper from "./components/home/HomeSwipper";
+import ActionCatalogue from "./components/home/ActionCatalogue";
+import MainMenu from "./components/MainMenu";
+import InspirationWidget from "./components/home/InspirationWidget";
 import BubbleIcon from "./components/BubbleIcon";
 import AvisClient from "./components/AvisClient";
 import Footer from "./components/Footer";
@@ -39,17 +40,16 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="my-16 flex flex-col items-center">
-        <h2 className="text-center mb-8">Inspirez vous</h2>
-        <div className="flex items-center justify-around w-10/12 flex-wrap space-y-6">
-          {/* <div></div> */}
-          <ProductItem link="/images/romantic.jpg" />
-          <ProductItem link="/images/versailles.jpg" />
-          <ProductItem link="/images/IMG-4058.JPG" />
-        </div>
+      <section>
+        <InspirationWidget />
+      </section>
+      <section>
+        <ActionCatalogue />
       </section>
       <section className="bg-primary py-20">
-        <h2 className="text-center mb-12 text-secondary">Services pour les professionnels</h2>
+        <h2 className="text-center mb-12 text-secondary">
+          Services pour les professionnels
+        </h2>
         <div className="flex flex-col md:flex-row flex-wrap items-center justify-center">
           <div>
             <BubbleIcon icon="solar:user-speak-outline" link="/nos-services">

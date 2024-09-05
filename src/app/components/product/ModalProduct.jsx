@@ -7,10 +7,8 @@ import {
   DialogPanel,
   DialogTitle,
 } from "@headlessui/react";
-import { Icon } from "@iconify/react";
 
-export function AnimatedModal({setOpen, open, product}) {
-  
+export function ModalProduct({ setOpen, open, product }) {
   return (
     <Dialog open={open} onClose={setOpen} className="relative z-10 ">
       <DialogBackdrop
@@ -25,14 +23,14 @@ export function AnimatedModal({setOpen, open, product}) {
             className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 sm:w-full sm:max-w-lg sm:p-6 data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95"
           >
             <div className="rounded-lg overflow-hidden">
-                <img
-                  width={300}
-                  height={300}
-                  src={product.image_url}
-                  loading="lazy"
-                  alt={product.label}
-                  className="object-cover w-full h-full"
-                />
+              <img
+                width={300}
+                height={300}
+                src={product.image_url}
+                loading="lazy"
+                alt={product.label}
+                className="object-cover w-full h-full"
+              />
               <div className="mt-3 text-center sm:mt-5">
                 <DialogTitle
                   as="h3"
