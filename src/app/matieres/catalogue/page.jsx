@@ -1,6 +1,6 @@
 "use client";
 
-import Button from './../../components/Button'
+import Button from "./../../components/Button";
 import MainMenu from "./../../components/MainMenu";
 import PageTitle from "./../../components/PageTitle";
 import ProductCard from "./../../components/product/card";
@@ -178,77 +178,129 @@ export default function Page() {
               </div>
             </div>
             <div>
-              <fieldset>
-                <legend className="border-b border-or w-full mb-2">
-                  Matières
-                </legend>
-                {load && (
-                  <div className="flex flex-col items-center">
-                    <Icon
-                      icon="ph:spinner-gap"
-                      className="w-6 h-6 animate-spin"
-                    />
-                  </div>
-                )}
-                {categories?.map((category) => (
-                  <div className="space-y-5" key={category.id}>
-                    <div className="relative flex items-start">
-                      <div className="flex h-6 items-center">
-                        <input
-                          id={category.id}
-                          name={category.id}
-                          type="checkbox"
-                          aria-describedby={category.label}
-                          className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                          checked={selectedCategories.includes(category.id)}
-                          onChange={() => handleCategoryChange(category.id)}
+              <div className="my-4">
+                <fieldset>
+                  <legend className="border-b border-or w-full mb-2">
+                    Filtres
+                  </legend>
+                  <div className="relative flex items-start">
+                    <div className="flex h-6 items-center">
+                      <input
+                        name={"coup_de_coeur"}
+                        type="checkbox"
+                        aria-describedby={"coup de coeur"}
+                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                        onChange={() => console.log("click")}
+                      />
+                    </div>
+                    <div className="ml-3 text-sm leading-6">
+                      <label
+                        htmlFor={"coup_de_coeur"}
+                        className="font-medium flex space-x-1 items-center"
+                      >
+                        <span>Coup de coeur </span>
+                        <Icon
+                          icon="solar:heart-angle-bold"
+                          width="20"
+                          height="20"
+                          style={{ color: "#ff0000" }}
                         />
-                      </div>
-                      <div className="ml-3 text-sm leading-6">
-                        <label htmlFor={category.id} className="font-medium">
-                          {category.label}
-                        </label>
-                      </div>
+                      </label>
                     </div>
                   </div>
-                ))}
-              </fieldset>
-              <fieldset className="mt-3">
-                <legend className="border-b border-or w-full mb-2">
-                  Couleurs
-                </legend>
-                {colors?.map((color, index) => (
-                  <div className="space-y-5" key={index}>
-                    <div className="relative flex items-start">
-                      <div className="flex h-6 items-center">
-                        <input
-                          id={index}
-                          name={index}
-                          type="checkbox"
-                          aria-describedby={color.name}
-                          className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                          checked={selectedColors.includes(color.hex)}
-                          onChange={() => handleColorChange(color.hex)}
-                        />
-                      </div>
-                      <div className="ml-3 text-sm leading-6">
-                        <label htmlFor={index} className="font-medium">
-                          {color.name}
-                        </label>
-                      </div>
+                  <div className="relative flex items-start">
+                    <div className="flex h-6 items-center">
+                      <input
+                        name={"eco_responsable"}
+                        type="checkbox"
+                        aria-describedby={"coup de coeur"}
+                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                        onChange={() => console.log("click")}
+                      />
+                    </div>
+                    <div className="ml-3 text-sm leading-6">
+                      <label
+                        htmlFor={"eco_responsable"}
+                        className="font-medium flex space-x-1 items-center"
+                      >
+                        <span>Eco responsable </span>
+                        <Icon icon="ion:leaf" width="20" height="20"  style={{color: '#2a8339'}} />
+                      </label>
                     </div>
                   </div>
-                ))}
-              </fieldset>
+                </fieldset>
+              </div>
+              <div className="my-4">
+                <fieldset>
+                  <legend className="border-b border-or w-full mb-2">
+                    Matières
+                  </legend>
+                  {load && (
+                    <div className="flex flex-col items-center">
+                      <Icon
+                        icon="ph:spinner-gap"
+                        className="w-6 h-6 animate-spin"
+                      />
+                    </div>
+                  )}
+                  {categories?.map((category) => (
+                    <div className="space-y-5" key={category.id}>
+                      <div className="relative flex items-start">
+                        <div className="flex h-6 items-center">
+                          <input
+                            id={category.id}
+                            name={category.id}
+                            type="checkbox"
+                            aria-describedby={category.label}
+                            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                            checked={selectedCategories.includes(category.id)}
+                            onChange={() => handleCategoryChange(category.id)}
+                          />
+                        </div>
+                        <div className="ml-3 text-sm leading-6">
+                          <label htmlFor={category.id} className="font-medium">
+                            {category.label}
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </fieldset>
+              </div>
+              <div className="my-4">
+                <fieldset className="mt-3">
+                  <legend className="border-b border-or w-full mb-2">
+                    Couleurs
+                  </legend>
+                  {colors?.map((color, index) => (
+                    <div className="space-y-5" key={index}>
+                      <div className="relative flex items-start">
+                        <div className="flex h-6 items-center">
+                          <input
+                            id={index}
+                            name={index}
+                            type="checkbox"
+                            aria-describedby={color.name}
+                            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                            checked={selectedColors.includes(color.hex)}
+                            onChange={() => handleColorChange(color.hex)}
+                          />
+                        </div>
+                        <div className="ml-3 text-sm leading-6">
+                          <label htmlFor={index} className="font-medium">
+                            {color.name}
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </fieldset>
+              </div>
             </div>
           </div>
           <div className="w-full bg-white p-4 rounded-xl shadow-lg border m-2 min-h-screen">
             {load && (
               <div className="mt-28 flex flex-col items-center">
-                {/* <Icon
-                  icon="ph:spinner-gap"
-                  className="w-16 h-16 animate-spin"
-                /> */}
                 <div className="h-32 overflow-hidden flex justify-center items-center">
                   <img
                     src="/images/loaders/loader-pythagore.gif"
@@ -261,12 +313,8 @@ export default function Page() {
             {filteredCategories.length > 0
               ? filteredCategories.map((category) => (
                   <div key={category.id} className="mb-4">
-                    <h2 className="text-xl font-bold mb-2">{category.label}</h2>
                     {category.children.map((child) => (
                       <div key={child.id} className="mb-4">
-                        <h5 className="text-lg font-semibold mb-2">
-                          {child.label}
-                        </h5>
                         {child.products.length > 0 ? (
                           <div className="flex flex-wrap justify-center md:justify-normal items-stretch">
                             {child.products.map((product) => (
