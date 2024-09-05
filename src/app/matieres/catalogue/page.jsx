@@ -224,7 +224,12 @@ export default function Page() {
                         className="font-medium flex space-x-1 items-center"
                       >
                         <span>Eco responsable </span>
-                        <Icon icon="ion:leaf" width="20" height="20"  style={{color: '#2a8339'}} />
+                        <Icon
+                          icon="ion:leaf"
+                          width="20"
+                          height="20"
+                          style={{ color: "#2a8339" }}
+                        />
                       </label>
                     </div>
                   </div>
@@ -265,6 +270,84 @@ export default function Page() {
                       </div>
                     </div>
                   ))}
+                </fieldset>
+              </div>
+              <div className="my-4">
+                <fieldset>
+                  <legend className="border-b border-or w-full mb-2">
+                    Epaisseurs
+                  </legend>
+                  <div className="relative flex items-start">
+                    <div className="flex h-6 items-center">
+                      <input
+                        name={"2cm"}
+                        type="checkbox"
+                        aria-describedby={"coup de coeur"}
+                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                        onChange={() => console.log("click")}
+                      />
+                    </div>
+                    <div className="ml-3 text-sm leading-6">
+                      <label
+                        htmlFor={"2cm"}
+                        className="font-medium flex space-x-1 items-center"
+                      >
+                        <span>2cm </span>
+                      </label>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+              <div className="my-4">
+                <fieldset>
+                  <legend className="border-b border-or w-full mb-2">
+                    Finitions
+                  </legend>
+                  <div className="relative flex items-start">
+                    <div className="flex h-6 items-center">
+                      <input
+                        name={"Adoucie"}
+                        type="checkbox"
+                        aria-describedby={"coup de coeur"}
+                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                        onChange={() => console.log("click")}
+                      />
+                    </div>
+                    <div className="ml-3 text-sm leading-6">
+                      <label
+                        htmlFor={"Adoucie"}
+                        className="font-medium flex space-x-1 items-center"
+                      >
+                        <span>Adoucie</span>
+                      </label>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+              <div className="my-4">
+                <fieldset>
+                  <legend className="border-b border-or w-full mb-2">
+                    Motifs
+                  </legend>
+                  <div className="relative flex items-start">
+                    <div className="flex h-6 items-center">
+                      <input
+                        name={"Uni"}
+                        type="checkbox"
+                        aria-describedby={"coup de coeur"}
+                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                        onChange={() => console.log("click")}
+                      />
+                    </div>
+                    <div className="ml-3 text-sm leading-6">
+                      <label
+                        htmlFor={"Uni"}
+                        className="font-medium flex space-x-1 items-center"
+                      >
+                        <span>Uni</span>
+                      </label>
+                    </div>
+                  </div>
                 </fieldset>
               </div>
               <div className="my-4">
