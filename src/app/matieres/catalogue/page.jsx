@@ -1,7 +1,6 @@
 "use client";
 
 import Button from "@/app/components/Button";
-import Loader from "@/app/components/loader/Loader";
 import MainMenu from "@/app/components/MainMenu";
 import PageTitle from "@/app/components/PageTitle";
 import ProductCard from "@/app/components/product/card";
@@ -157,10 +156,7 @@ export default function Page() {
         <div className="flex">
           <div className="border p-4 shadow-lg rounded-xl bg-white m-2 w-72 hidden lg:block">
             <div className="mb-12">
-              <label
-                htmlFor="account-number"
-                className="sr-only"
-              >
+              <label htmlFor="account-number" className="sr-only">
                 Recherche
               </label>
               <div className="relative mt-2 rounded-md shadow-sm">
@@ -176,7 +172,7 @@ export default function Page() {
                     icon="f7:search-circle-fill"
                     width="24"
                     height="24"
-                    style={{ color: 'gray' }}
+                    style={{ color: "gray" }}
                   />
                 </div>
               </div>
@@ -249,10 +245,16 @@ export default function Page() {
           <div className="w-full bg-white p-4 rounded-xl shadow-lg border m-2 min-h-screen">
             {load && (
               <div className="mt-28 flex flex-col items-center">
-                <Icon
+                {/* <Icon
                   icon="ph:spinner-gap"
                   className="w-16 h-16 animate-spin"
-                />
+                /> */}
+                <div className="h-32 overflow-hidden flex justify-center items-center">
+                  <img
+                    src="/images/loaders/loader-pythagore.gif"
+                    className="h-40"
+                  />
+                </div>
                 <p>Chargement des données...</p>
               </div>
             )}
