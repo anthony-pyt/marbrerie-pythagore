@@ -1,5 +1,5 @@
-import MainMenu from "./../components/MainMenu";
-import PageTitle from "./../components/PageTitle";
+import MainMenu from "./../../components/MainMenu";
+import PageTitle from "./../../components/PageTitle";
 
 export default function Page() {
   return (
