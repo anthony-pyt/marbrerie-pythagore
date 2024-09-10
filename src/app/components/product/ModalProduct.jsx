@@ -53,8 +53,19 @@ export function ModalProduct({ setOpen, open, product }) {
             </div>
             <div className="mt-3 text-center lg:text-left sm:mt-5 flex flex-col justify-between">
               <div>
-                <DialogTitle as="h3" className="font-semibold text-2xl">
-                  {product.label}
+                <DialogTitle
+                  as="h3"
+                  className="font-semibold text-2xl flex items-center space-x-4"
+                >
+                  <span>{product.label}</span>
+                  {product.eco && (
+                    <Icon
+                      icon="ion:leaf"
+                      width="24"
+                      height="24"
+                      style={{ color: "#2a8339" }}
+                    />
+                  )}
                 </DialogTitle>
                 <div className="absolute top-1 right-1 m-2">
                   {product.category.logo_url != null ? (
@@ -76,12 +87,14 @@ export function ModalProduct({ setOpen, open, product }) {
                     width="18"
                     height="18"
                   />
-                  {product?.finition.map((finition, index) => (
+                  {product?.finitions.map((item, index) => (
                     <div
                       className="lowercase bg-primary/25 px-2 py-0.5 rounded"
-                      key={finition.id}
+                      key={item.id}
                     >
-                      <span className="text-secondary">{finition.label}</span>
+                      <span className="text-secondary">
+                        {item.finition.label}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -91,12 +104,14 @@ export function ModalProduct({ setOpen, open, product }) {
                     width="18"
                     height="18"
                   />
-                  {product?.thikness.map((thikness, index) => (
+                  {product?.thiknesses.map((item, index) => (
                     <div
                       className="lowercase bg-primary/25 px-2 py-0.5 rounded"
-                      key={thikness.id}
+                      key={item.id}
                     >
-                      <span className="text-secondary">{thikness?.label}</span>
+                      <span className="text-secondary">
+                        {item.thikness_plan.label}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -118,8 +133,24 @@ export function ModalProduct({ setOpen, open, product }) {
                     width="18"
                     height="18"
                   />
-                  <div className="lowercase bg-primary/25 px-2 py-0.5 rounded">
-                    <span className="text-secondary">Uni</span>
+                  <div className="bg-primary/25 px-2 py-0.5 rounded">
+                    <span className="text-secondary">{product.motif ?? 'Non spécifié'}</span>
+                  </div>
+                </div>
+                <div className="flex flex-wrap items-center space-x-1 text-xs m-3">
+                  <Icon icon="mdi:planet" width="18" height="18" />
+                  <div className="bg-primary/25 px-2 py-0.5 rounded">
+                    <span className="text-secondary">{product.origine ?? 'Non spécifié'}</span>
+                  </div>
+                </div>
+                <div className="flex flex-wrap items-center space-x-1 text-xs m-3">
+                  <Icon
+                    icon="arcticons:rocksndiamonds"
+                    width="18"
+                    height="18"
+                  />
+                  <div className="bg-primary/25 px-2 py-0.5 rounded">
+                    <span className="text-secondary">{product.type_materiau ?? 'Non spécifié'}</span>
                   </div>
                 </div>
               </div>

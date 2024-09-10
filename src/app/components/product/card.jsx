@@ -52,7 +52,7 @@ const ProductCard = ({ product, animationDelay }) => {
                     className="h-4 p-0.5 bg-white rounded px-2"
                   />
                 ) : (
-                  <div className="border border-or inline-block px-2 rounded-full leading-3 bg-white">
+                  <div className="border border-or inline-block px-2 rounded-lg leading-3 bg-white">
                     <span className="text-or text-xs">
                       {product.category.label}
                     </span>
@@ -68,23 +68,23 @@ const ProductCard = ({ product, animationDelay }) => {
         <div className="p-3 space-y-1">
           <div className="flex flex-wrap items-center space-x-1 text-xs">
             <Icon icon="solar:sticker-square-outline" width="18" height="18" />
-            {product?.finition.map((finition, index) => (
+            {product?.finitions.map((item, index) => (
               <div
                 className="lowercase bg-primary/25 px-2 py-0.5 rounded"
-                key={finition.id}
+                key={item.id}
               >
-                <span className="text-secondary">{finition.label}</span>
+                <span className="text-secondary">{item?.finition?.label}</span>
               </div>
             ))}
           </div>
           <div className="flex flex-wrap items-center space-x-1 text-xs">
             <Icon icon="solar:ruler-angular-outline" width="18" height="18" />
-            {product?.thikness.map((thikness, index) => (
+            {product?.thiknesses.map((item, index) => (
               <div
                 className="lowercase bg-primary/25 px-2 py-0.5 rounded"
-                key={thikness.id}
+                key={item.id}
               >
-                <span className="text-secondary">{thikness?.label}</span>
+                <span className="text-secondary">{item?.thikness_plan.label}</span>
               </div>
             ))}
           </div>

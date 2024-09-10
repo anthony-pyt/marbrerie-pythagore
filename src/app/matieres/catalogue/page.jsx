@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 
 export default function Page() {
   const [load, setLoad] = useState(true);
+  const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedColors, setSelectedColors] = useState([]); // Par défaut, aucune couleur sélectionnée
   const [selectedCategories, setSelectedCategories] = useState([]); // Par défaut, toutes les catégories sélectionnées
@@ -33,77 +34,20 @@ export default function Page() {
       setLoad(true);
       try {
         const response = await fetch(
-          "https://gateway.marbrerie-pythagore.fr/api/stock/categories-with-parent-matieres"
+          process.env.NEXT_PUBLIC_API_URL + "/stock/products_only_matieres"
         );
         const resultat = await response.json();
-
-        const categoriesArray = Object.keys(resultat).map(
-          (key) => resultat[key][0]
+        // Filtrer les produits qui ont la colonne `heart` égale à 1
+        const filteredProducts = resultat.filter(
+          (product) => product.heart === 1
         );
+        setProducts(filteredProducts);
 
-        const groupedData = categoriesArray.map((category) => {
-          if (category.children && category.children.length > 0) {
-            const children = category.children.map((childCategory) => {
-              const groupedProducts = {};
-
-              childCategory.products.forEach((product) => {
-                const { label, thikness, finition, ...rest } = product;
-
-                if (groupedProducts[label]) {
-                  if (
-                    thikness &&
-                    !groupedProducts[label].thikness.some(
-                      (t) => t.label === thikness.label
-                    )
-                  ) {
-                    groupedProducts[label].thikness.push(thikness);
-                  }
-
-                  if (
-                    finition &&
-                    !groupedProducts[label].finition.some(
-                      (f) => f.label === finition.label
-                    )
-                  ) {
-                    groupedProducts[label].finition.push(finition);
-                  }
-                } else {
-                  groupedProducts[label] = {
-                    label, // On conserve le label du produit
-                    ...rest,
-                    thikness: thikness ? [thikness] : [],
-                    finition: finition ? [finition] : [],
-                  };
-                }
-              });
-
-              return {
-                id: childCategory.id,
-                label: childCategory.label,
-                logo_url: childCategory.logo_url,
-                products: Object.values(groupedProducts),
-              };
-            });
-
-            return {
-              id: category.id,
-              label: category.label,
-              children: children,
-            };
-          } else {
-            return {
-              id: category.id,
-              label: category.label,
-              children: [],
-            };
-          }
-        });
-
-        setCategories(groupedData);
-
-        // Sélectionner toutes les catégories par défaut
-        const allCategoryIds = groupedData.map((cat) => cat.id);
-        setSelectedCategories(allCategoryIds);
+        const categories = await fetch(process.env.NEXT_PUBLIC_API_URL + "/stock/categories-with-parent-matieres") ;
+        const resultatCategories = await categories.json()
+        console.log(resultatCategories);
+        
+        
       } catch (error) {
         console.error(error);
       } finally {
@@ -113,37 +57,6 @@ export default function Page() {
 
     fetchProduct();
   }, []);
-
-  const handleCategoryChange = (categoryId) => {
-    setSelectedCategories((prev) =>
-      prev.includes(categoryId)
-        ? prev.filter((id) => id !== categoryId)
-        : [...prev, categoryId]
-    );
-  };
-
-  const handleColorChange = (colorHex) => {
-    setSelectedColors((prev) =>
-      prev.includes(colorHex)
-        ? prev.filter((hex) => hex !== colorHex)
-        : [...prev, colorHex]
-    );
-  };
-
-  const filteredCategories = categories
-    .filter((category) => selectedCategories.includes(category.id))
-    .map((category) => ({
-      ...category,
-      children: category.children.map((child) => ({
-        ...child,
-        products: child.products.filter((product) => {
-          if (selectedColors.length === 0) return true;
-          return selectedColors.some((color) =>
-            product.colors?.includes(color)
-          );
-        }),
-      })),
-    }));
 
   return (
     <main className="min-h-screen">
@@ -163,16 +76,16 @@ export default function Page() {
                 <input
                   id="account-number"
                   name="account-number"
-                  type="text"
+                  type="search"
                   placeholder="Ex: sirius, zimbabwe"
-                  className="block w-full rounded-md border-0 p-1.5 pr-8 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 p-1.5 pl-8 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                 />
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-1">
+                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-1">
                   <Icon
                     icon="f7:search-circle-fill"
                     width="24"
                     height="24"
-                    style={{ color: "gray" }}
+                    className="text-secondary"
                   />
                 </div>
               </div>
@@ -248,7 +161,7 @@ export default function Page() {
                       />
                     </div>
                   )}
-                  {categories?.map((category) => (
+                  {/* {categories?.map((category) => (
                     <div className="space-y-5" key={category.id}>
                       <div className="relative flex items-start">
                         <div className="flex h-6 items-center">
@@ -269,7 +182,7 @@ export default function Page() {
                         </div>
                       </div>
                     </div>
-                  ))}
+                  ))} */}
                 </fieldset>
               </div>
               <div className="my-4">
@@ -393,33 +306,25 @@ export default function Page() {
                 <p>Chargement des données...</p>
               </div>
             )}
-            {filteredCategories.length > 0
-              ? filteredCategories.map((category) => (
-                  <div key={category.id} className="mb-4">
-                    {category.children.map((child) => (
-                      <div key={child.id} className="mb-4">
-                        {child.products.length > 0 ? (
-                          <div className="flex flex-wrap justify-center md:justify-normal items-stretch">
-                            {child.products.map((product) => (
-                              <ProductCard key={product.id} product={product} />
-                            ))}
-                          </div>
-                        ) : (
-                          <p>
-                            Aucun produit disponible pour cette sous-catégorie.
-                          </p>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                ))
-              : !load && (
-                  <div className="flex justify-center items-center mt-28">
-                    <p className="text-gray-500">
-                      Aucun produit ne correspond aux filtres.
-                    </p>
-                  </div>
-                )}
+            {products.length > 0 ? (
+              products.length > 0 ? (
+                <div className="flex flex-wrap justify-center md:justify-normal items-stretch">
+                  {products.map((product) => (
+                    <ProductCard key={product.id} product={product} />
+                  ))}
+                </div>
+              ) : (
+                <p>Aucun produit disponible</p>
+              )
+            ) : (
+              !load && (
+                <div className="flex justify-center items-center mt-28">
+                  <p className="text-gray-500">
+                    Aucun produit ne correspond aux filtres.
+                  </p>
+                </div>
+              )
+            )}
           </div>
         </div>
       </div>
