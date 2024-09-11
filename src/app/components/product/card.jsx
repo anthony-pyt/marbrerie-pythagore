@@ -10,12 +10,19 @@ const ProductCard = ({ product, animationDelay }) => {
     };
   return (
     <>
-      {isOpenModal && <ModalProduct openModal={openModal} open={isOpenModal} setOpen={openModal} product={product} />}
-      <div className="max-w-72 min-w-72 min-h-64 bg-white rounded-xl shadow-xl border m-8 flex flex-col justify-between">
+      {isOpenModal && (
+        <ModalProduct
+          openModal={openModal}
+          open={isOpenModal}
+          setOpen={openModal}
+          product={product}
+        />
+      )}
+      <div className="relative max-w-72 min-w-72 min-h-64 bg-white rounded-xl drop-shadow-xl border m-8 flex flex-col justify-between">
         <div>
           <div className="flex justify-center">
             <button
-              onClick={()=> openModal(true)}
+              onClick={() => openModal(true)}
               // className="group relative h-48 bg-primary w-11/12 flex items-center justify-center rounded-xl shadow-lg -mt-6 overflow-hidden animate__animated animate__backInDown"
               className="group relative h-48 bg-primary w-11/12 flex items-center justify-center rounded-xl shadow-lg -mt-6 overflow-hidden"
               style={{ animationDelay }}
@@ -84,9 +91,29 @@ const ProductCard = ({ product, animationDelay }) => {
                 className="lowercase bg-primary/25 px-2 py-0.5 rounded"
                 key={item.id}
               >
-                <span className="text-secondary">{item?.thikness_plan.label}</span>
+                <span className="text-secondary">
+                  {item?.thikness_plan.label}
+                </span>
               </div>
             ))}
+          </div>
+          <div className="flex items-center space-x-1 absolute right-3 bottom-3 ">
+            {product.eco === 1 && (
+              <Icon
+                icon="mdi:ecology"
+                width="24"
+                height="24"
+                className="drop-shadow text-green-600"
+              />
+            )}
+            {product.heart === 1 && (
+              <Icon
+                icon="solar:heart-bold"
+                width="20"
+                height="20"
+                style={{ color: "#ff0000" }}
+              />
+            )}
           </div>
         </div>
       </div>

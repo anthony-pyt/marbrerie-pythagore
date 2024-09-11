@@ -60,10 +60,10 @@ export function ModalProduct({ setOpen, open, product }) {
                   <span>{product.label}</span>
                   {product.eco && (
                     <Icon
-                      icon="ion:leaf"
+                      icon="mdi:ecology"
                       width="24"
                       height="24"
-                      style={{ color: "#2a8339" }}
+                      className="text-green-600"
                     />
                   )}
                 </DialogTitle>
@@ -134,13 +134,17 @@ export function ModalProduct({ setOpen, open, product }) {
                     height="18"
                   />
                   <div className="bg-primary/25 px-2 py-0.5 rounded">
-                    <span className="text-secondary">{product.motif ?? 'Non spécifié'}</span>
+                    <span className="text-secondary">
+                      {product.motif ?? "Non spécifié"}
+                    </span>
                   </div>
                 </div>
                 <div className="flex flex-wrap items-center space-x-1 text-xs m-3">
                   <Icon icon="mdi:planet" width="18" height="18" />
                   <div className="bg-primary/25 px-2 py-0.5 rounded">
-                    <span className="text-secondary">{product.origine ?? 'Non spécifié'}</span>
+                    <span className="text-secondary">
+                      {product.origine ?? "Non spécifié"}
+                    </span>
                   </div>
                 </div>
                 <div className="flex flex-wrap items-center space-x-1 text-xs m-3">
@@ -150,7 +154,9 @@ export function ModalProduct({ setOpen, open, product }) {
                     height="18"
                   />
                   <div className="bg-primary/25 px-2 py-0.5 rounded">
-                    <span className="text-secondary">{product.type_materiau ?? 'Non spécifié'}</span>
+                    <span className="text-secondary">
+                      {product.type_materiau ?? "Non spécifié"}
+                    </span>
                   </div>
                 </div>
               </div>
