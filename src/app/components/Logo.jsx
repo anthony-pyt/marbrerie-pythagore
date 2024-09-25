@@ -15,7 +15,7 @@ export default function Logo({ theme }) {
       <img
         src={url}
         alt="Logo pythagore"
-        className={`hover:-rotate-3 hover:scale-110 transform duration-300 w-32`}
+        className={`hover:-rotate-3 hover:scale-110 transform duration-300 `}
       />
     </a>
   );

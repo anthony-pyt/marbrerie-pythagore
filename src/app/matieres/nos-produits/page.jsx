@@ -1,12 +1,13 @@
 "use client";
 
-import Button from "./../../components/Button";
-import MainMenu from "./../../components/MainMenu";
-import PageTitle from "./../../components/PageTitle";
-import ProductCard from "./../../components/product/card";
+import Button from "../../components/Button";
+import MainMenu from "../../components/MainMenu";
+import Footer from '../../components/Footer'
+import PageTitle from "../../components/PageTitle";
+import ProductCard from "../../components/product/ProductCard"
 import { Icon } from "@iconify/react";
 import { useEffect, useState } from "react";
-import Filter from "./../../components/catalogue/Filter";
+import Filter from "../../components/catalogue/Filter";
 
 export default function Page() {
   const [loadProducts, setLoadProducts] = useState(true);
@@ -17,15 +18,18 @@ export default function Page() {
   const [categories, setCategories] = useState([]);
   const [thiknesses, setThiknesses] = useState([]);
   const [finitions, setFinitions] = useState([]);
+  const [selectedMotifs, setSelectedMotifs] = useState([]);
   const [selectedColors, setSelectedColors] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedThiknesses, setSelectedThiknesses] = useState([]);
   const [selectedFinitions, setSelectedFinitions] = useState([]);
   const [selectedFilters, setSelectedFilters] = useState({
-    coupDeCoeur: false,
+    coupDeCoeur: true,
     ecoResponsable: false,
   });
-  const [filters, setFilters] = useState([]);
+  const [filters, setFilters] = useState([
+    { type: "filter", text: "Coup de cœur", icon: "solar:heart-bold" },
+  ]);
   const [searchTerm, setSearchTerm] = useState("");
 
   const colors = [
@@ -41,6 +45,14 @@ export default function Page() {
     { name: "Orange", hex: "#FFA500" },
     { name: "Argent", hex: "#C0C0C0" },
     { name: "Or", hex: "#FFD700" },
+  ];
+
+  const motifs = [
+    { name: "Linéaire", slug: "lineaire" },
+    { name: "Nuageux", slug: "nuageux" },
+    { name: "Oxyde", slug: "oxyde" },
+    { name: "Uni", slug: "uni" },
+    { name: "Veiné", slug: "veine" },
   ];
 
   useEffect(() => {
@@ -69,6 +81,8 @@ export default function Page() {
         ]);
 
         const products = await productResponse.json();
+        console.log(products);
+        
         const categories = await categoryResponse.json();
         const thiknesses = await thiknessResponse.json();
         const finitions = await finitionsResponse.json();
@@ -78,8 +92,6 @@ export default function Page() {
         setThiknesses(thiknesses);
         setFinitions(finitions);
 
-        //ajout du filtre 'coup de coeur'
-        handleFilterChange("coupDeCoeur", "Coup de cœur", "solar:heart-bold");
       } catch (error) {
         console.error(error);
       } finally {
@@ -118,22 +130,124 @@ export default function Page() {
     setFilters(updatedFilters);
   };
 
-  const handleThiknessChange = (thiknessId) => {
-    if (selectedThiknesses.includes(thiknessId)) {
+  const handleThiknessChange = (thikness) => {
+    if (selectedThiknesses.includes(thikness.id)) {
       setSelectedThiknesses(
-        selectedThiknesses.filter((id) => id !== thiknessId)
+        selectedThiknesses.filter((id) => id !== thikness.id)
       );
     } else {
-      setSelectedThiknesses([...selectedThiknesses, thiknessId]);
+      setSelectedThiknesses([...selectedThiknesses, thikness.id]);
     }
+
+    setFilters((prevFilters) => {
+      // Retire le filtre existant si déjà présent
+      const updatedFilters = prevFilters.filter(
+        (filter) => filter.text !== thikness.label
+      );
+
+      // Ajoute ou retire le filtre selon l'état du checkbox
+      if (prevFilters.some((filter) => filter.text === thikness.label)) {
+        return updatedFilters;
+      } else {
+        return [
+          ...updatedFilters,
+          {
+            type: "thikness",
+            text: thikness.label,
+            icon: null,
+          },
+        ];
+      }
+    });
   };
 
-  const handleFinitionChange = (finitionId) => {
-    if (selectedFinitions.includes(finitionId)) {
-      setSelectedFinitions(selectedFinitions.filter((id) => id !== finitionId));
+  const handleFinitionChange = (finition) => {
+    if (selectedFinitions.includes(finition.id)) {
+      setSelectedFinitions(
+        selectedFinitions.filter((id) => id !== finition.id)
+      );
     } else {
-      setSelectedFinitions([...selectedFinitions, finitionId]);
+      setSelectedFinitions([...selectedFinitions, finition.id]);
     }
+
+    setFilters((prevFilters) => {
+      // Retire le filtre existant si déjà présent
+      const updatedFilters = prevFilters.filter(
+        (filter) => filter.text !== finition.label
+      );
+
+      // Ajoute ou retire le filtre selon l'état du checkbox
+      if (prevFilters.some((filter) => filter.text === finition.label)) {
+        return updatedFilters;
+      } else {
+        return [
+          ...updatedFilters,
+          {
+            type: "finition",
+            text: finition.label,
+            icon: null,
+          },
+        ];
+      }
+    });
+  };
+
+  const handleMotifChange = (motif) => {
+    if (selectedMotifs.includes(motif.slug)) {
+      setSelectedMotifs(selectedMotifs.filter((name) => name !== motif.slug));
+    } else {
+      setSelectedMotifs([...selectedMotifs, motif.slug]);
+    }
+
+    setFilters((prevFilters) => {
+      // Retire le filtre existant si déjà présent
+      const updatedFilters = prevFilters.filter(
+        (filter) => filter.text !== motif.name
+      );
+
+      // Ajoute ou retire le filtre selon l'état du checkbox
+      if (prevFilters.some((filter) => filter.text === motif.name)) {
+        return updatedFilters;
+      } else {
+        return [
+          ...updatedFilters,
+          {
+            type: "motif",
+            text: motif.name,
+            icon: null,
+          },
+        ];
+      }
+    });
+  };
+
+  const handleColorChange = (color) => {
+    if (selectedColors.includes(color.name)) {
+      setSelectedColors(selectedColors.filter((name) => name !== color.name));
+    } else {
+      setSelectedColors([...selectedColors, color.name]);
+    }
+
+    setFilters((prevFilters) => {
+      // Retire le filtre existant si déjà présent
+      const updatedFilters = prevFilters.filter(
+        (filter) => filter.text !== color.name
+      );
+
+      // Ajoute ou retire le filtre selon l'état du checkbox
+      if (prevFilters.some((filter) => filter.text === color.name)) {
+        return updatedFilters;
+      } else {
+        return [
+          ...updatedFilters,
+          {
+            type: "color",
+            text: color.name,
+            icon: null,
+          },
+        ];
+      }
+    });
   };
 
   const handleFilterChange = (filterName, filterText, filterIcon) => {
@@ -161,13 +275,7 @@ export default function Page() {
         ];
       }
     });
-    
   };
-
-useEffect(() => {
-  console.log(filters);
-  
-}, [filters])
 
   const filteredProducts = products.filter((product) => {
     const matchesSearchTerm =
@@ -177,15 +285,15 @@ useEffect(() => {
 
     const matchesCategory =
       selectedCategories.length > 0
-        ? selectedCategories.includes(product.category.parent.id) ||
-          selectedCategories.includes(product.category.id)
+        ? selectedCategories.includes(product.product.category?.parent?.id) ||
+          selectedCategories.includes(product.product.category?.id)
         : true;
 
     const matchesThikness =
       selectedThiknesses.length > 0
         ? selectedThiknesses.every((selectedThikness) =>
             product.thiknesses.some(
-              (thikness) => thikness.thikness_plan.id === selectedThikness
+              (thikness) => thikness.id === selectedThikness
             )
           )
         : true;
@@ -193,8 +301,19 @@ useEffect(() => {
     const matchesFinition =
       selectedFinitions.length > 0
         ? product.finitions.some((finition) =>
-            selectedFinitions.includes(finition.finition_id)
+            selectedFinitions.includes(finition.id)
           )
+        : true;
+
+    const matchesMotif =
+      selectedMotifs.length > 0
+        ? selectedMotifs.includes(product.motif) ||
+          selectedMotifs.includes(product.motif)
+        : true;
+
+    const matchesColor =
+      selectedColors.length > 0
+        ? product.colories.some((color) => selectedColors.includes(color.name))
         : true;
 
     const matchesCoupDeCoeur = selectedFilters.coupDeCoeur
@@ -211,14 +330,16 @@ useEffect(() => {
       matchesThikness &&
       matchesFinition &&
       matchesCoupDeCoeur &&
-      matchesEcoResponsable
+      matchesEcoResponsable &&
+      matchesColor &&
+      matchesMotif
     );
   });
 
   return (
     <main className="min-h-screen">
       <MainMenu />
-      <PageTitle title={"Catalogue"} />
+      <PageTitle title={"Nos produits"} />
       <div className="mt-2">
         <div className="lg:hidden flex justify-end mx-2">
           <Button text="Filtres" color="or" size="small" icon="check" />
@@ -336,9 +457,9 @@ useEffect(() => {
                     </div>
                   )}
                   {categories?.map((category) => (
-                    <div className="space-y-5" key={category.id}>
-                      <div className="relative flex items-start">
-                        <div className="flex h-6 items-center">
+                    <div key={category.id}>
+                      <div className="relative flex items-center my-2">
+                        <div className="flex items-center">
                           <input
                             id={category.id}
                             name={category.id}
@@ -349,15 +470,39 @@ useEffect(() => {
                             onChange={() => handleCategoryChange(category)}
                           />
                         </div>
-                        <div className="ml-3 text-sm leading-6">
-                          <label
-                            htmlFor={category.id}
-                            className="font-medium lo"
-                          >
-                            {category.label}
+                        <div className="ml-3 text-sm">
+                          <label htmlFor={category.id} className="font-medium">
+                            {category.label.charAt(0).toUpperCase() +
+                              category.label.slice(1).toLowerCase()}
                           </label>
                         </div>
                       </div>
+                      {category.children.map((child) => {
+                        return (
+                          <div
+                            className="relative flex items-start ml-5"
+                            key={child.id}
+                          >
+                            <div className="flex items-center">
+                              <input
+                                id={child.id}
+                                name={child.id}
+                                type="checkbox"
+                                aria-describedby={child.label}
+                                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                                checked={selectedCategories.includes(child.id)}
+                                onChange={() => handleCategoryChange(child)}
+                              />
+                            </div>
+                            <div className="ml-3 text-sm">
+                              <label htmlFor={child.id} className="font-medium">
+                                {child.label.charAt(0).toUpperCase() +
+                                  child.label.slice(1).toLowerCase()}
+                              </label>
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
                   ))}
                 </fieldset>
@@ -388,7 +533,7 @@ useEffect(() => {
                             type="checkbox"
                             aria-describedby={"coup de coeur"}
                             className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                            onChange={() => handleThiknessChange(thikness.id)}
+                            onChange={() => handleThiknessChange(thikness)}
                           />
                         </div>
                         <div className="ml-3 text-sm leading-6">
@@ -430,7 +575,7 @@ useEffect(() => {
                             type="checkbox"
                             aria-describedby={finition.label}
                             className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                            onChange={() => handleFinitionChange(finition.id)}
+                            onChange={() => handleFinitionChange(finition)}
                           />
                         </div>
                         <div className="ml-3 text-sm leading-6">
@@ -451,26 +596,30 @@ useEffect(() => {
                   <legend className="border-b border-or w-full mb-2">
                     Motifs
                   </legend>
-                  <div className="relative flex items-start">
-                    <div className="flex h-6 items-center">
-                      <input
-                        name={"Uni"}
-                        id={"Uni"}
-                        type="checkbox"
-                        aria-describedby={"coup de coeur"}
-                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                        onChange={() => console.log("click")}
-                      />
-                    </div>
-                    <div className="ml-3 text-sm leading-6">
-                      <label
-                        htmlFor={"Uni"}
-                        className="font-medium flex space-x-1 items-center"
-                      >
-                        <span>Uni</span>
-                      </label>
-                    </div>
-                  </div>
+                  {motifs.map((motif, index) => {
+                    return (
+                      <div className="relative flex items-start" key={index}>
+                        <div className="flex h-6 items-center">
+                          <input
+                            name={motif.name}
+                            id={motif.name}
+                            type="checkbox"
+                            aria-describedby={"coup de coeur"}
+                            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                            onChange={() => handleMotifChange(motif)}
+                          />
+                        </div>
+                        <div className="ml-3 text-sm leading-6">
+                          <label
+                            htmlFor={motif.name}
+                            className="font-medium flex space-x-1 items-center"
+                          >
+                            <span>{motif.name}</span>
+                          </label>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </fieldset>
               </div>
               <div className="my-4">
@@ -488,8 +637,7 @@ useEffect(() => {
                             type="checkbox"
                             aria-describedby={color.name}
                             className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                            checked={selectedColors.includes(color.hex)}
-                            onChange={() => handleColorChange(color.hex)}
+                            onChange={() => handleColorChange(color)}
                           />
                         </div>
                         <div className="ml-3 text-sm leading-6">
@@ -518,7 +666,9 @@ useEffect(() => {
             )}
             <div className="flex items-center space-x-2">
               {filters?.map((filter, index) => {
-                return <Filter text={filter.text} icon={filter.icon} key={index}/>;
+                return (
+                  <Filter text={filter.text} icon={filter.icon} key={index} />
+                );
               })}
             </div>
             <div>
@@ -545,6 +695,7 @@ useEffect(() => {
           </div>
         </div>
       </div>
+      <Footer />
     </main>
   );
 }

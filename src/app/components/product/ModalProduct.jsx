@@ -11,7 +11,7 @@ import { Icon } from "@iconify/react";
 
 export function ModalProduct({ setOpen, open, product }) {
   return (
-    <Dialog open={open} onClose={setOpen} className="relative z-10 ">
+    <Dialog open={open} onClose={setOpen} className="relative z-20 ">
       <DialogBackdrop
         transition
         className="fixed inset-0 bg-gray-800 bg-opacity-75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
@@ -93,7 +93,7 @@ export function ModalProduct({ setOpen, open, product }) {
                       key={item.id}
                     >
                       <span className="text-secondary">
-                        {item.finition.label}
+                        {item.label}
                       </span>
                     </div>
                   ))}
@@ -110,7 +110,7 @@ export function ModalProduct({ setOpen, open, product }) {
                       key={item.id}
                     >
                       <span className="text-secondary">
-                        {item.thikness_plan.label}
+                        {item.label}
                       </span>
                     </div>
                   ))}

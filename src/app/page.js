@@ -7,13 +7,54 @@ import InspirationWidget from "./components/home/InspirationWidget";
 import BubbleIcon from "./components/BubbleIcon";
 import AvisClient from "./components/AvisClient";
 import Footer from "./components/Footer";
+import { useEffect, useState } from "react";
+import { Icon } from "@iconify/react";
 
 export default function Home() {
+  const [text, setText] = useState("");
+  const message = "Bienvenue chez PYTHAGORE";
+
+  useEffect(() => {
+    let index = 0;
+    const interval = setInterval(() => {
+      setText((prev) => prev + message[index]);
+      index++;
+      if (index >= message.length) {
+        clearInterval(interval);
+      }
+    }, 100); // Change la vitesse ici (100 ms)
+
+    return () => clearInterval(interval); // Nettoie l'intervalle lorsque le composant est démonté
+  }, []);
+
   return (
     <main className="min-h-screen">
-      <MainMenu />
-      <section className="flex justify-center animate__animated animate__fadeInDownBig">
-        <div className="bg-white flex h-auto lg:h-[500px] justify-between rounded-xl overflow-hidden my-3 shadow-lg flex-wrap w-11/12">
+      <MainMenu page='home'/>
+      <section className="relative">
+        <div className="hidden w-full h-screen overflow-hidden lg:flex justify-center items-center bg-black animate__animated animate__fadeIn">
+          <video
+            src="/videos/presentation.mp4"
+            loop
+            autoPlay
+            muted
+            className="opacity-40 blur-sm w-full object-cover"
+          />
+          <div className="absolute transform left-1/2 -translate-x-1/2 w-9/12">
+            <h1 className="text-white text-center">{text}</h1>
+          </div>
+        </div>
+        <div className="transform absolute bottom-12 left-1/2 -translate-x-1/2">
+          <Icon
+            icon="iconoir:mouse-scroll-wheel"
+            width="48"
+            height="48"
+            color="#FFFFFF"
+            className="animate__animated animate__bounce animate__infinite animate__slow"
+          />
+        </div>
+      </section>
+      <section className="flex justify-center ">
+        <div className="bg-white flex h-auto lg:h-[500px] justify-between rounded-xl overflow-hidden my-12 shadow-lg flex-wrap w-11/12 border">
           <div className="flex-1">
             <div className=" py-12 lg:py-20 px-4 lg:px-20">
               <h2>
@@ -52,22 +93,26 @@ export default function Home() {
         </h2>
         <div className="flex flex-col md:flex-row flex-wrap items-center justify-center">
           <div>
-            <BubbleIcon icon="solar:user-speak-outline" link="/nos-services">
-              <p>Conseil et formation</p>
+            <BubbleIcon
+              // icon="solar:user-speak-outline"
+              link="/nos-services"
+            >
+              <p>Conseil</p>
+              <p>Formation</p>
             </BubbleIcon>
           </div>
           <div>
             <BubbleIcon
-              icon="solar:notebook-minimalistic-outline"
+              // icon="solar:notebook-minimalistic-outline"
               link="/nos-services"
             >
-              <p>Choix et disponibilité des produits</p>
+              <p>Choix, disponibilité des produits.</p>
               <p>Outils d&apos;aide à la vente</p>
             </BubbleIcon>
           </div>
           <div>
             <BubbleIcon
-              icon="solar:settings-minimalistic-outline"
+              // icon="solar:settings-minimalistic-outline"
               link="/nos-services"
             >
               <p>Prestation complète</p>

@@ -8,10 +8,14 @@ import Link from "next/link";
 import { Hamburger } from "./Hamburger";
 import { useEffect, useState } from "react";
 
-export default function MainMenu() {
+export default function MainMenu({ page }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolling, setScrolling] = useState(false);
-  const [isClosing, setIsClosing] = useState(false); // État pour gérer l'animation de fermeture
+  const [isClosing, setIsClosing] = useState(false);
+  const [isHeightReduced, setIsHeightReduced] = useState(false);
+  const [lastScrollTop, setLastScrollTop] = useState(0);
+
+  const scrollThreshold = 100; // Le seuil de scroll que tu souhaites
+  const scrollTolerance = 50; // La tolérance de défilement
 
   const toggleOpenMenu = () => {
     if (isOpen) {
@@ -25,46 +29,75 @@ export default function MainMenu() {
     }
   };
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setScrolling(true);
-      } else {
-        setScrolling(false);
-      }
-    };
+  const handleScroll = () => {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
 
+    // Vérification du seuil avec une tolérance
+    if (scrollTop > scrollThreshold + scrollTolerance && !isHeightReduced) {
+      setIsHeightReduced(true); // Réduire la hauteur si on dépasse le seuil + tolérance
+    } else if (
+      scrollTop < scrollThreshold - scrollTolerance &&
+      isHeightReduced
+    ) {
+      setIsHeightReduced(false); // Remettre la hauteur initiale si on redescend sous le seuil - tolérance
+    }
+    setLastScrollTop(scrollTop <= 0 ? 0 : scrollTop); // Éviter les valeurs négatives
+  };
+
+  useEffect(() => {
+    // Ajoute l'écouteur d'événements pour le scroll
     window.addEventListener("scroll", handleScroll);
 
-    // Cleanup function to remove event listener
+    // Nettoyage lors de la destruction du composant
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [isHeightReduced]); // L'effet dépend de l'état `isHeightReduced`
 
   return (
-    <div className="">
+    <div
+      className={`fixed w-full top-0 z-20 rounded-xl mx-auto transform duration-100`}
+    >
       <div
-        className={`${
-          scrolling ? "bg-slate-50" : "bg-white"
-        } m-5 rounded-xl p-3 shadow-lg flex items-center justify-between transform duration-500 sticky top-0 z-50 animate__animated animate__bounceInDown animate__delay`}
+        className={` ${
+          isHeightReduced
+            ? "h-16 m-0 bg-white shadow-lg sticky top-0"
+            : "h-32 m-2 rounded-xl"
+        }
+        {${page} === 'home' ? '':''} 
+          p-3  flex items-center justify-between transform duration-500 top-0 z-50 animate__animated animate__bounceInDown animate__delay`}
       >
         <button className="block xl:hidden" onClick={toggleOpenMenu}>
           <Hamburger />
         </button>
         <div
-          className={`flex-0.5 ${
-            scrolling ? "scale-90" : "scale-100"
-          } transition-transform duration-300`}
+          className={`flex-0.5 transition-transform duration-300 ${
+            isHeightReduced
+              ? "ml-6 w-20"
+              : page === "home"
+              ? "w-80 absolute top-2 left-2"
+              : "w-44"
+          }`}
         >
-          <Logo theme="color" />
+          <Logo
+            theme={
+              page == "home" ? (isHeightReduced ? "color" : "white") : "color"
+            }
+            scroll={isHeightReduced}
+          />
         </div>
         <div className="hidden xl:flex justify-center w-full flex-1">
           <div className="flex items-center justify-center space-x-2">
             {listMenu.map((item) => (
               <div
                 key={item.label}
-                className="hover:bg-secondary rounded-lg group relative transform duration-200 z-50 cursor-pointer"
+                className={`${
+                  page == "home"
+                    ? isHeightReduced
+                      ? "hover:bg-secondary"
+                      : "hover:bg-or-light"
+                    : "hover:bg-secondary"
+                } rounded-lg group relative transform duration-200 z-50 cursor-pointer`}
               >
                 <Link
                   href={item.link}
@@ -72,11 +105,25 @@ export default function MainMenu() {
                 >
                   <Icon
                     icon={item.icon}
-                    width="20"
-                    height="20"
-                    className="cursor-pointer group-hover:text-primary text-secondary transform duration-700 delay-300"
+                    width="24"
+                    height="24"
+                    className={`${
+                      page == "home"
+                        ? isHeightReduced
+                          ? "group-hover:text-primary text-secondary"
+                          : "group-hover:text-black text-white"
+                        : "group-hover:text-primary text-secondary"
+                    } cursor-pointer transform duration-700 delay-300`}
                   />
-                  <span className="group-hover:text-primary text-secondary transform duration-500">
+                  <span
+                    className={`${
+                      page == "home"
+                        ? isHeightReduced
+                          ? "group-hover:text-primary text-secondary"
+                          : "group-hover:text-black text-white text-lg"
+                        : "group-hover:text-primary text-secondary"
+                    } transform duration-500`}
+                  >
                     {item.label}
                   </span>
                 </Link>
@@ -153,7 +200,7 @@ export default function MainMenu() {
               ))}
             </div>
           </div>
-          <div className="flex items-center justify-center space-x-2 mb-12">
+          <div className="flex items-center justify-center space-x-2">
             <a href="/contact">
               <Button color="primary" text="Contact" size="small" />
             </a>

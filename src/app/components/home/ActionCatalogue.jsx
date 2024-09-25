@@ -1,33 +1,34 @@
-"use client"
+"use client";
 
 import { useEffect, useRef, useState } from "react";
 
 const ActionCatalogue = () => {
-    const [isVisible, setIsVisible] = useState(false);
-    const sectionRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef(null);
 
-    useEffect(() => {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          if (entries[0].isIntersecting) {
-            setIsVisible(true);
-          }
-        },
-        {
-          threshold: 0.2, // Le pourcentage d'affichage du composant avant d'activer l'animation
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setIsVisible(true);
         }
-      );
-
-      if (sectionRef.current) {
-        observer.observe(sectionRef.current);
+      },
+      {
+        threshold: 0.5, // Le pourcentage d'affichage du composant avant d'activer l'animation
       }
+    );
 
-      return () => {
-        if (sectionRef.current) {
-          observer.unobserve(sectionRef.current);
-        }
-      };
-    }, []);
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
+
   return (
     <div
       className={`bg-secondary py-8 overflow-hidden animate__animated group ${
@@ -37,7 +38,10 @@ const ActionCatalogue = () => {
     >
       <div className="relative isolate">
         <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-          <div className="mx-auto flex max-w-2xl flex-col gap-16 bg-white/5 ring-1 ring-white/10 sm:rounded-3xl p-8 lg:mx-0 lg:max-w-none lg:flex-row lg:items-center">
+          <a
+            href="/matieres/nos-produits"
+            className="mx-auto flex max-w-2xl flex-col gap-16 bg-white/5 ring-1 ring-white/10 sm:rounded-3xl p-8 lg:mx-0 lg:max-w-none lg:flex-row lg:items-center"
+          >
             <img
               alt=""
               src="/images/mockup_catalogue_2.jpg"
@@ -45,21 +49,24 @@ const ActionCatalogue = () => {
             />
             <div className="w-full flex-auto">
               <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                Consultez notre calalogue
+                Découvrez nos produits
               </h2>
               <p className="mt-6 text-lg leading-8 text-gray-300">
                 Tous nos produits disponibles dans un seul et même endroit !
               </p>
               <div className="mt-10 flex justify-end mx-12">
-                <a
-                  href="/matieres/catalogue"
-                  className="text-sm font-semibold leading-6 text-or-light flex"
-                >
-                  Je vais le consulter <div aria-hidden="true" className="group-hover:translate-x-4 transform duration-300 ml-2">&rarr;</div>
-                </a>
+                <div className="text-sm font-semibold leading-6 text-or-light flex">
+                  Je vais le consulter{" "}
+                  <div
+                    aria-hidden="true"
+                    className="group-hover:translate-x-4 transform duration-300 ml-2"
+                  >
+                    &rarr;
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
+          </a>
         </div>
         <div
           aria-hidden="true"

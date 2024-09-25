@@ -3,6 +3,8 @@ import { useState } from "react";
 import { ModalProduct } from "./ModalProduct";
 
 const ProductCard = ({ product, animationDelay }) => {
+  console.log(product);
+  
   const [isOpenModal, setIsOpenModal] = useState(false);
 
     const openModal = (value) => {
@@ -53,7 +55,7 @@ const ProductCard = ({ product, animationDelay }) => {
               </div>
 
               <div className="absolute top-1 right-1">
-                {product.category.logo_url != null ? (
+                {product.product.category.logo_url != null ? (
                   <img
                     src={product.category.logo_url}
                     className="h-4 p-0.5 bg-white rounded px-2"
@@ -61,7 +63,7 @@ const ProductCard = ({ product, animationDelay }) => {
                 ) : (
                   <div className="border border-or inline-block px-2 rounded-lg leading-3 bg-white">
                     <span className="text-or text-xs">
-                      {product.category.label}
+                      {product.product.category.label}
                     </span>
                   </div>
                 )}
@@ -75,12 +77,12 @@ const ProductCard = ({ product, animationDelay }) => {
         <div className="p-3 space-y-1">
           <div className="flex flex-wrap items-center space-x-1 text-xs">
             <Icon icon="solar:sticker-square-outline" width="18" height="18" />
-            {product?.finitions.map((item, index) => (
+            {product.finitions.map((item, index) => (
               <div
                 className="lowercase bg-primary/25 px-2 py-0.5 rounded"
-                key={item.id}
+                key={item.finition.id}
               >
-                <span className="text-secondary">{item?.finition?.label}</span>
+                <span className="text-secondary">{item.finition.label}</span>
               </div>
             ))}
           </div>
@@ -89,11 +91,9 @@ const ProductCard = ({ product, animationDelay }) => {
             {product?.thiknesses.map((item, index) => (
               <div
                 className="lowercase bg-primary/25 px-2 py-0.5 rounded"
-                key={item.id}
+                key={item.thikness_plan.id}
               >
-                <span className="text-secondary">
-                  {item?.thikness_plan.label}
-                </span>
+                <span className="text-secondary">{item.thikness_plan.label}</span>
               </div>
             ))}
           </div>
