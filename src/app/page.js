@@ -35,7 +35,7 @@ export default function Home() {
           <video
             src="/videos/presentation.mp4"
             loop
-            // autoPlay
+            autoPlay
             muted
             className="opacity-40 blur-sm w-full object-cover"
           />
