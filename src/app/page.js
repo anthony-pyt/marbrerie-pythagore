@@ -37,24 +37,22 @@ export default function Home() {
             loop
             autoPlay
             muted
-            className="opacity-40 blur-sm w-full object-cover"
+            className="opacity-40 blur w-full object-cover"
           />
           <div className="absolute transform left-1/2 -translate-x-1/2 w-auto">
-            <h1 className="text-7xl text-white text-center">
-              {text}
-            </h1>
+            <h1 className="text-7xl text-white text-center">{text}</h1>
           </div>
         </div>
-        <div className="transform absolute bottom-12 left-1/2 -translate-x-1/2">
-        <a href='#slider'>
-          <Icon
-            icon="iconoir:mouse-scroll-wheel"
-            width="48"
-            height="48"
-            color="#FFFFFF"
-            className="animate__animated animate__bounce animate__infinite animate__slow"
-          />
-        </a>
+        <div className="transform absolute bottom-4 left-1/2 -translate-x-1/2">
+          <a href="#slider">
+            <Icon
+              icon="solar:mouse-minimalistic-outline"
+              width="48"
+              height="48"
+              color="#FFFFFF"
+              className="animate__animated animate__heartBeat animate__repeat-3 animate__slow"
+            />
+          </a>
         </div>
       </section>
       <section className="flex justify-center" id="slider">
