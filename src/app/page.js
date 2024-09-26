@@ -29,21 +29,24 @@ export default function Home() {
 
   return (
     <main className="min-h-screen">
-      <MainMenu page='home'/>
-      <section className="relative">
-        <div className="hidden w-full h-screen overflow-hidden lg:flex justify-center items-center bg-black animate__animated animate__fadeIn">
+      <MainMenu page="home" />
+      <section className="relative hidden xl:flex">
+        <div className="w-full h-screen overflow-hidden flex justify-center items-center bg-black animate__animated animate__fadeIn">
           <video
             src="/videos/presentation.mp4"
             loop
-            autoPlay
+            // autoPlay
             muted
             className="opacity-40 blur-sm w-full object-cover"
           />
-          <div className="absolute transform left-1/2 -translate-x-1/2 w-9/12">
-            <h1 className="text-white text-center">{text}</h1>
+          <div className="absolute transform left-1/2 -translate-x-1/2 w-auto">
+            <h1 className="text-7xl text-white text-center">
+              {text}
+            </h1>
           </div>
         </div>
         <div className="transform absolute bottom-12 left-1/2 -translate-x-1/2">
+        <a href='#slider'>
           <Icon
             icon="iconoir:mouse-scroll-wheel"
             width="48"
@@ -51,9 +54,10 @@ export default function Home() {
             color="#FFFFFF"
             className="animate__animated animate__bounce animate__infinite animate__slow"
           />
+        </a>
         </div>
       </section>
-      <section className="flex justify-center ">
+      <section className="flex justify-center" id="slider">
         <div className="bg-white flex h-auto lg:h-[500px] justify-between rounded-xl overflow-hidden my-12 shadow-lg flex-wrap w-11/12 border">
           <div className="flex-1">
             <div className=" py-12 lg:py-20 px-4 lg:px-20">

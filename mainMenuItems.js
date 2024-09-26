@@ -36,7 +36,7 @@ const listMenu = [
     label: "Nos produits",
     active: true,
     link: "/matieres/nos-produits",
-    icon: "solar:command-outline",
+    icon: "solar:notebook-minimalistic-outline",
     children: [],
   },
   {

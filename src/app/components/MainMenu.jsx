@@ -16,16 +16,26 @@ export default function MainMenu({ page }) {
 
   const scrollThreshold = 100; // Le seuil de scroll que tu souhaites
   const scrollTolerance = 50; // La tolérance de défilement
+  const [isXL, setIsXL] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsXL(window.innerWidth >= 1280);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const toggleOpenMenu = () => {
     if (isOpen) {
-      setIsClosing(true); // Activer l'animation de fermeture
+      setIsClosing(true);
       setTimeout(() => {
-        setIsOpen(false); // Fermer le menu après l'animation
-        setIsClosing(false); // Réinitialiser l'état de fermeture
-      }, 300); // Correspond à la durée de l'animation
+        setIsOpen(false);
+        setIsClosing(false);
+      }, 300);
     } else {
-      setIsOpen(true); // Ouvrir le menu
+      setIsOpen(true);
     }
   };
 
@@ -39,54 +49,91 @@ export default function MainMenu({ page }) {
       scrollTop < scrollThreshold - scrollTolerance &&
       isHeightReduced
     ) {
-      setIsHeightReduced(false); // Remettre la hauteur initiale si on redescend sous le seuil - tolérance
+      setIsHeightReduced(false);
     }
-    setLastScrollTop(scrollTop <= 0 ? 0 : scrollTop); // Éviter les valeurs négatives
+    setLastScrollTop(scrollTop <= 0 ? 0 : scrollTop);
   };
 
   useEffect(() => {
-    // Ajoute l'écouteur d'événements pour le scroll
     window.addEventListener("scroll", handleScroll);
-
-    // Nettoyage lors de la destruction du composant
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [isHeightReduced]); // L'effet dépend de l'état `isHeightReduced`
+  }, [isHeightReduced]);
+
+  const classGeneral =
+    page === "home"
+      ? isHeightReduced
+        ? "sticky"
+        : "block xl:fixed"
+      : "sticky";
+
+  const classDisposition = isHeightReduced
+    ? "h-16 m-0 bg-white shadow-lg"
+    : page != "home"
+    ? "h-32 m-2 rounded-xl bg-white"
+    : "h-32 m-2 rounded-xl bg-white xl:bg-transparent";
+
+  const classHamburger =
+    page == "home"
+      ? isHeightReduced
+        ? "block xl:hidden"
+        : "block"
+      : "block xl:hidden";
+
+  const classDispositionLogo =
+    page == "home"
+      ? isHeightReduced
+        ? "ml-6 w-20"
+        : "w-44 xl:w-80 md:absolute top-4 left-1/2 -translate-x-1/2"
+      : isHeightReduced
+      ? "ml-6 w-20"
+      : "w-44";
+
+  const classLogo =
+    page == "home"
+      ? isHeightReduced
+        ? "color"
+        : isXL
+        ? "white"
+        : "color"
+      : "color";
+
+  const classMainMenu =
+    page == "home"
+      ? isHeightReduced
+        ? "hidden xl:flex"
+        : "hidden"
+      : "hidden xl:flex";
+
+      const colorHamburger =
+        page == "home"
+          ? isHeightReduced
+            ? "#000"
+            : isXL
+            ? "#FFF"
+            : "#000"
+          : "#FFF";
 
   return (
     <div
-      className={`fixed w-full top-0 z-20 rounded-xl mx-auto transform duration-100`}
+      className={`${classGeneral} w-full top-0 z-20 rounded-xl mx-auto transform duration-100`}
     >
       <div
-        className={` ${
-          isHeightReduced
-            ? "h-16 m-0 bg-white shadow-lg sticky top-0"
-            : "h-32 m-2 rounded-xl"
-        }
-        {${page} === 'home' ? '':''} 
+        className={` ${classDisposition}
           p-3  flex items-center justify-between transform duration-500 top-0 z-50 animate__animated animate__bounceInDown animate__delay`}
       >
-        <button className="block xl:hidden" onClick={toggleOpenMenu}>
-          <Hamburger />
+        <button className={`${classHamburger}`} onClick={toggleOpenMenu}>
+          <Hamburger
+            color={colorHamburger} size={isHeightReduced ? 24 : 48}
+          />
         </button>
         <div
-          className={`flex-0.5 transition-transform duration-300 ${
-            isHeightReduced
-              ? "ml-6 w-20"
-              : page === "home"
-              ? "w-80 absolute top-2 left-2"
-              : "w-44"
-          }`}
+          className={`flex-0.5 transform duration-300 ${classDispositionLogo}`}
         >
-          <Logo
-            theme={
-              page == "home" ? (isHeightReduced ? "color" : "white") : "color"
-            }
-            scroll={isHeightReduced}
-          />
+          <Logo theme={classLogo} />
         </div>
-        <div className="hidden xl:flex justify-center w-full flex-1">
+        <div className={`${classMainMenu}  justify-center w-full flex-1`}>
           <div className="flex items-center justify-center space-x-2">
             {listMenu.map((item) => (
               <div
