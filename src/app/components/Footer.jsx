@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="bg-secondary mt-16 py-8 px-4 flex items-start justify-between text-white">
+    <footer className="bg-secondary mt-16 py-8 px-4 flex lg:flex-row flex-col space-y-4 lg:space-y-0 items-center lg:items-start justify-between text-white">
       <div className="flex-1 flex flex-col items-center justify-center">
         <img
           className="w-48"
@@ -45,9 +45,9 @@ const Footer = () => {
       </div>
       <div className="flex-1 flex flex-col items-center">
         <div className="flex flex-col items-start">
-          <Link href={"/contact"}>Contact</Link>
-          <Link href={"/mentions-legales"}>Mentions légales</Link>
-          <Link href={"/politique-de-confidentialite"}>
+          <Link href={"/contact"} className="text-sm lg:text-base">Contact</Link>
+          <Link href={"/mentions-legales"} className="text-sm lg:text-base">Mentions légales</Link>
+          <Link href={"/politique-de-confidentialite"} className="text-sm lg:text-base">
             Politique de confidentialité
           </Link>
         </div>

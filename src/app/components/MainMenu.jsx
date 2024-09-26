@@ -85,7 +85,7 @@ export default function MainMenu({ page }) {
     page == "home"
       ? isHeightReduced
         ? "ml-6 w-20"
-        : "w-44 xl:w-80 md:absolute top-4 left-1/2 -translate-x-1/2"
+        : "w-44 xl:w-80 absolute top-4 left-1/2 -translate-x-1/2"
       : isHeightReduced
       ? "ml-6 w-20"
       : "w-44";
@@ -113,7 +113,7 @@ export default function MainMenu({ page }) {
             : isXL
             ? "#FFF"
             : "#000"
-          : "#FFF";
+          : "#000";
 
   return (
     <div
@@ -121,12 +121,10 @@ export default function MainMenu({ page }) {
     >
       <div
         className={` ${classDisposition}
-          p-3  flex items-center justify-between transform duration-500 top-0 z-50 animate__animated animate__bounceInDown animate__delay`}
+          p-3 flex items-center justify-between transform duration-500 top-0 z-50 animate__animated animate__bounceInDown animate__delay`}
       >
         <button className={`${classHamburger}`} onClick={toggleOpenMenu}>
-          <Hamburger
-            color={colorHamburger} size={isHeightReduced ? 24 : 48}
-          />
+          <Hamburger color={colorHamburger} size={isHeightReduced ? 24 : 48} />
         </button>
         <div
           className={`flex-0.5 transform duration-300 ${classDispositionLogo}`}
@@ -207,23 +205,22 @@ export default function MainMenu({ page }) {
       </div>
       {isOpen && (
         <div
-          className={`fixed inset-0 h-screen w-screen bg-white z-50 shadow-xl p-3 flex flex-col justify-between overflow-y-auto ${
+          className={`fixed inset-0 h-screen w-screen bg-white z-50 shadow-xl flex flex-col justify-start overflow-y-auto py-12 ${
             isClosing
-              ? "animate__animated animate__bounceOutLeft"
-              : "animate__animated animate__bounceInLeft"
+              ? "animate__animated animate__fadeOutLeft"
+              : "animate__animated animate__fadeInLeft"
           }`}
         >
-          <button onClick={toggleOpenMenu} className="absolute top-4 right-8">
-            <Icon icon="solar:close-circle-outline" className="h-12 w-12" />
-          </button>
+          <div className="w-full flex justify-end absolute top-2 right-2">
+            <button onClick={toggleOpenMenu}>
+              <Icon icon="material-symbols:close" width="36" height="36" />
+            </button>
+          </div>
           <div>
-            <div className="">
-              <h3 className="text-3xl">Menu principal</h3>
-            </div>
-            <div>
+            <div className="py-20">
               {listMenu.map((item) => (
                 <div key={item.label} className="my-1 p-1">
-                  <div className="flex items-center space-x-1">
+                  <div className="flex items-center justify-center space-x-1">
                     <Link href={item.link} className="text-3xl">
                       {item.label}
                     </Link>
