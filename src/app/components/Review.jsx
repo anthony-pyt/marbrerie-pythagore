@@ -5,16 +5,16 @@ import moment from "moment";
 import "moment/locale/fr";
 moment.locale("fr");
 
-const AvisClient = ({ note, date, name, text }) => {
+const Review = ({ note, date, name, text }) => {
   // Création d'un tableau avec autant d'éléments que la note pour les étoiles
   const stars = Array.from({ length: note }, (_, index) => index);
 
   return (
-    <div className="bg-white rounded-xl shadow-md overflow-hidden w-80 h-52 p-6 m-4 border border-gray-200">
+    <div className="bg-gray-100 rounded-3xl overflow-hidden w-80 h-64 p-6 m-4 flex flex-col justify-between">
       <div className="flex flex-col">
-        <p className="text-lg font-semibold mb-1">{name}</p>
+        <p className="font-semibold">{name}</p>
         <div className="flex justify-between items-center">
-          <p className="text-sm text-gray-500 mb-3">
+          <p className="text-xs text-gray-500 mb-3">
             {moment(date, "DD/MM/y").fromNow()}
           </p>
           <div className="flex items-center mb-4 justify-end">
@@ -32,8 +32,11 @@ const AvisClient = ({ note, date, name, text }) => {
         </div>
         <p className="text-sm text-gray-700 truncate-multiline">{text}</p>
       </div>
+      <div>
+        <img src="/images/divers/google.png" alt="logo de google" className="h-6"/>
+      </div>
     </div>
   );
 };
 
-export default AvisClient;
+export default Review;

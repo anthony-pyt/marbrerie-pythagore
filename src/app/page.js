@@ -4,27 +4,66 @@ import HomeSwipper from "./components/home/HomeSwipper";
 import ActionCatalogue from "./components/home/ActionCatalogue";
 import MainMenu from "./components/MainMenu";
 import InspirationWidget from "./components/home/InspirationWidget";
-import BubbleIcon from "./components/BubbleIcon";
-import AvisClient from "./components/AvisClient";
+import BubbleService from "./components/BubbleService";
+import Review from "./components/Review";
 import Footer from "./components/Footer";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Icon } from "@iconify/react";
+import Link from "next/link";
 
 export default function Home() {
   const [text, setText] = useState("");
-  const message = "Bienvenue chez PYTHAGORE";
+  const message = "bienvenue chez pythagore";
+  const textRef = useRef("");
+
+  // État pour la visibilité des sections
+  const [visibleSections, setVisibleSections] = useState({});
+  const sectionRefs = useRef([]);
+
+ useEffect(() => {
+   let index = 0;
+   const interval = setInterval(() => {
+     // Met à jour le texte dans la ref et dans l'état
+     textRef.current = textRef.current + message[index];
+     setText(textRef.current);
+     index++;
+
+     if (index >= message.length) {
+       clearInterval(interval);
+     }
+   }, 100);
+
+   return () => clearInterval(interval);
+ }, []);
 
   useEffect(() => {
-    let index = 0;
-    const interval = setInterval(() => {
-      setText((prev) => prev + message[index]);
-      index++;
-      if (index >= message.length) {
-        clearInterval(interval);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const sectionId = entry.target.dataset.id; // Utilise l'ID de la section
+            setVisibleSections((prev) => ({
+              ...prev,
+              [sectionId]: true,
+            }));
+          }
+        });
+      },
+      {
+        threshold: 0.25, // Le pourcentage d'affichage du composant avant d'activer l'animation
       }
-    }, 100); // Change la vitesse ici (100 ms)
+    );
 
-    return () => clearInterval(interval); // Nettoie l'intervalle lorsque le composant est démonté
+    // Observer chaque section
+    sectionRefs.current.forEach((ref) => {
+      if (ref) observer.observe(ref);
+    });
+
+    return () => {
+      sectionRefs.current.forEach((ref) => {
+        if (ref) observer.unobserve(ref);
+      });
+    };
   }, []);
 
   return (
@@ -39,8 +78,8 @@ export default function Home() {
             muted
             className="opacity-40 blur w-full object-cover"
           />
-          <div className="absolute transform left-1/2 -translate-x-1/2 w-auto">
-            <h1 className="text-7xl text-white text-center">{text}</h1>
+          <div className="absolute transform left-1/2 -translate-x-1/2 w-full">
+            <h1 className="text-8xl text-white text-center font-sans font-bold">{text}</h1>
           </div>
         </div>
         <div className="transform absolute bottom-4 left-1/2 -translate-x-1/2">
@@ -55,7 +94,15 @@ export default function Home() {
           </a>
         </div>
       </section>
-      <section className="flex justify-center" id="slider">
+
+      <section
+        ref={(el) => (sectionRefs.current[0] = el)}
+        data-id="slider"
+        id="slider"
+        className={`flex justify-center animate__animated ${
+          visibleSections["slider"] ? "animate__fadeInUpBig" : "opacity-0"
+        }`}
+      >
         <div className="bg-white flex h-auto lg:h-[500px] justify-between rounded-xl overflow-hidden my-12 shadow-lg flex-wrap w-11/12 border">
           <div className="flex-1">
             <div className=" py-12 lg:py-20 px-4 lg:px-20">
@@ -66,7 +113,7 @@ export default function Home() {
                 <span className="text-or">Pythagore </span>
                 est avant tout une équipe d’hommes et de femmes, qui grâce à la
                 passion de leur métier, ont su créer l’entreprise que nous
-                incarnons aujoud’hui.
+                incarnons aujourd’hui.
               </p>
               <div className="flex justify-end mt-12">
                 <Button
@@ -83,50 +130,79 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section>
+
+      <section
+        ref={(el) => (sectionRefs.current[1] = el)}
+        data-id="inspiration"
+        className={`py-20 animate__animated ${
+          visibleSections["inspiration"] ? "animate__fadeInDown" : "opacity-0"
+        }`}
+      >
         <InspirationWidget />
       </section>
-      <section>
+
+      <section
+        ref={(el) => (sectionRefs.current[2] = el)}
+        data-id="catalogue"
+        className={`animate__animated ${
+          visibleSections["catalogue"] ? "animate__fadeInRight" : "opacity-0"
+        }`}
+      >
         <ActionCatalogue />
       </section>
-      <section className="bg-primary py-20">
+
+      <section
+        ref={(el) => (sectionRefs.current[3] = el)}
+        data-id="services"
+        className={`py-20 animate__animated bg-gray-100 ${
+          visibleSections["services"] ? "animate__fadeIn" : "opacity-0"
+        }`}
+      >
         <h2 className="text-center mb-12 text-secondary">
           Services pour les professionnels
         </h2>
-        <div className="flex flex-col md:flex-row flex-wrap items-center justify-center">
-          <div>
-            <BubbleIcon
-              // icon="solar:user-speak-outline"
-              link="/nos-services"
-            >
-              <p>Conseil</p>
-              <p>Formation</p>
-            </BubbleIcon>
+        <Link href={"/nos-services"}>
+          <div className="flex justify-center">
+            <div className="rounded-3xl flex-wrap flex flex-col lg:flex-row items-center justify-between w-full max-w-full m-4 p-8 bg-white shadow-lg lg:divide-x divide-or-light min-h-96">
+              <BubbleService urlImage={"/images/formation.jpg"}>
+                Conseil & formation
+              </BubbleService>
+              <BubbleService urlImage={"/images/echantillons.JPEG"}>
+                Choix, disponibilité des produits & Outils d'aide à la vente
+              </BubbleService>
+              <BubbleService urlImage={"/images/sav.jpg"}>
+                Prestation complète & SAV
+              </BubbleService>
+            </div>
           </div>
-          <div>
-            <BubbleIcon
-              // icon="solar:notebook-minimalistic-outline"
-              link="/nos-services"
-            >
-              <p>Choix, disponibilité des produits.</p>
-              <p>Outils d&apos;aide à la vente</p>
-            </BubbleIcon>
-          </div>
-          <div>
-            <BubbleIcon
-              // icon="solar:settings-minimalistic-outline"
-              link="/nos-services"
-            >
-              <p>Prestation complète</p>
-              <p>SAV</p>
-            </BubbleIcon>
+        </Link>
+      </section>
+
+      <section
+        ref={(el) => (sectionRefs.current[4] = el)}
+        data-id="reviews"
+        className={`py-20 animate__animated ${
+          visibleSections["reviews"] ? "animate__fadeIn" : "opacity-0"
+        }`}
+      >
+        <div className="flex flex-col items-center my-8">
+          <h2 className="text-center">Avis de nos clients</h2>
+          <div className="flex items-center space-x-1">
+            <span>4,8</span>
+            <div className="flex">
+              {Array.from({ length: 5 }, (_, index) => (
+                <Icon
+                  key={index}
+                  icon="line-md:star-filled"
+                  className="text-xl text-or-light"
+                />
+              ))}
+            </div>
+            <span>148 avis</span>
           </div>
         </div>
-      </section>
-      <section>
-        <h2 className="text-center my-8">Avis de nos clients</h2>
         <div className="flex items-start justify-evenly flex-wrap">
-          <AvisClient
+          <Review
             note={5}
             name="Alain Connu"
             text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -135,7 +211,7 @@ export default function Home() {
           aliquip ex ea commodo consequa"
             date="07/08/2024"
           />
-          <AvisClient
+          <Review
             note={5}
             name="Jean Neymar"
             text="Lorem ipsum dolor sit amet, consecte, sed do
@@ -144,7 +220,7 @@ export default function Home() {
           aliquip ex ea commodo consequa"
             date="24/06/2024"
           />
-          <AvisClient
+          <Review
             note={4}
             name="Guy Tare"
             text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -152,7 +228,7 @@ export default function Home() {
           minim veniam, quis nostrud exer"
             date="17/04/2024"
           />
-          <AvisClient
+          <Review
             note={5}
             name="Gérard Manvussa"
             text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do

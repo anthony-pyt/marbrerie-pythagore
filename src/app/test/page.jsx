@@ -6,24 +6,24 @@ export default function Test() {
       <div className="space-y-3 border-b border-black py-4">
         <h2>Les boutons</h2>
         <div className="flex items-center justify-start space-x-4">
-          <Button color="primary" text="Click me!" size="small" icon="send" />
+          <Button color="primary" text="Click me!" size="small" icon="lets-icons:send-fill" />
           <Button
             color="secondary"
             text="Click me!"
             size="small"
-            icon="check"
+            icon="lets-icons:check-fill"
           />
           <Button color="or" text="Click me!" size="small" />
         </div>
         <div className="flex items-center justify-start space-x-4 ">
           <Button color="primary" text="Click me!" />
-          <Button color="secondary" text="Click me!" icon="check" />
-          <Button color="or" text="Click me!" icon="watch" />
+          <Button color="secondary" text="Click me!" icon="lets-icons:check-fill" />
+          <Button color="or" text="Click me!" icon="ph:video" />
         </div>
         <div className="flex items-center justify-start space-x-4 ">
-          <Button color="primary" text="Click me!" size="large" icon="send" />
+          <Button color="primary" text="Click me!" size="large" icon="lets-icons:send-fill" />
           <Button color="secondary" text="Click me!" size="large" />
-          <Button color="or" text="Click me!" size="large" icon="watch" />
+          <Button color="or" text="Click me!" size="large" icon="ph:video" />
         </div>
       </div>
       <div className="space-y-3 border-b border-black py-4">

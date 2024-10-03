@@ -3,38 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 
 const ActionCatalogue = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      {
-        threshold: 0.5, // Le pourcentage d'affichage du composant avant d'activer l'animation
-      }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
-  }, []);
 
   return (
     <div
-      className={`bg-secondary py-8 overflow-hidden animate__animated group ${
-        isVisible ? "animate__bounceInRight" : "opacity-0"
-      }`}
-      ref={sectionRef}
+      className={`bg-secondary py-8 overflow-hidden animate__animated group`}
     >
       <div className="relative isolate">
         <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
