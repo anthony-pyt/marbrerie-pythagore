@@ -79,7 +79,9 @@ export default function Home() {
             className="opacity-40 blur w-full object-cover"
           />
           <div className="absolute transform left-1/2 -translate-x-1/2 w-full">
-            <h1 className="text-8xl text-white text-center font-sans font-bold">{text}</h1>
+            <h1 className="text-8xl text-white text-center font-sans font-bold">
+              {text}
+            </h1>
           </div>
         </div>
         <div className="transform absolute bottom-4 left-1/2 -translate-x-1/2">
@@ -168,7 +170,8 @@ export default function Home() {
                 Conseil & formation
               </BubbleService>
               <BubbleService urlImage={"/images/echantillons.JPEG"}>
-                Choix, disponibilité des produits & Outils d'aide à la vente
+                Choix, disponibilité des produits & Outils d&apos;aide à la
+                vente
               </BubbleService>
               <BubbleService urlImage={"/images/sav.jpg"}>
                 Prestation complète & SAV

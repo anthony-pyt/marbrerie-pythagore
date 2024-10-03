@@ -140,12 +140,10 @@ export default function Page() {
     }
 
     setFilters((prevFilters) => {
-      // Retire le filtre existant si déjà présent
       const updatedFilters = prevFilters.filter(
         (filter) => filter.text !== thikness.label
       );
 
-      // Ajoute ou retire le filtre selon l'état du checkbox
       if (prevFilters.some((filter) => filter.text === thikness.label)) {
         return updatedFilters;
       } else {

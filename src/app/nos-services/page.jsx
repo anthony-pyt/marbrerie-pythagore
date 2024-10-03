@@ -8,13 +8,15 @@ export default function Page() {
     <main className="min-h-screen">
       <MainMenu />
       <div className="p-4">
-        <PageTitle title={'Nos services pour les professionnels'}/>
+        <PageTitle title={"Nos services pour les professionnels"} />
         <div className="flex items-stretch justify-center lg:justify-start flex-wrap my-12 mx-6">
           <ServiceCard title="Conseil" type="conseil">
             <ul>
               <li>- Sur les produits</li>
               <li>- Les caractéristiques des matières</li>
-              <li>- La bonne utilisation de sproduits pour chaque agencement</li>
+              <li>
+                - La bonne utilisation de sproduits pour chaque agencement
+              </li>
             </ul>
           </ServiceCard>
           <ServiceCard title="Formation" type="formation">
@@ -53,8 +55,8 @@ export default function Page() {
               </li>
               <li>- Des échantillons de matériaux</li>
               <li>
-                - Un espace professionnel vous permettant de réaliser des devis en
-                ligne rapidement
+                - Un espace professionnel vous permettant de réaliser des devis
+                en ligne rapidement
               </li>
             </ul>
           </ServiceCard>
