@@ -99,7 +99,7 @@ export default function Page() {
               </div>
             </div>
             <div className="flex flex-col items-center mt-12">
-              <p>Votre demande concerne t'elle un projet à venir ? </p>
+              <p>Votre demande concerne t&apos;elle un projet à venir ? </p>
               <div className="flex justify-center mt-4 space-x-12">
                 <button
                   onClick={() => handleHasProject("yes")}
