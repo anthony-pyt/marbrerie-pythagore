@@ -105,7 +105,7 @@ const listMenu = [
   //   ],
   // },
   {
-    label: "A propos",
+    label: "Qui sommes-nous ?",
     active: true,
     children: [],
     slug: "a-propos",

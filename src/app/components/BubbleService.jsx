@@ -35,10 +35,12 @@ const BubbleService = ({ children, urlImage }) => {
       className={`group p-4 flex-1 h-full flex flex-col justify-center items-center animate__animated`}
     >
       <div className="overflow-hidden w-80 h-80 lg:w-60 lg:h-60 xl:w-80 xl:h-80 flex items-center justify-center rounded-full border-2 border-or-light shadow-xl">
-        <img
+        <Image
           src={urlImage}
           className="object-cover h-full w-full group-hover:scale-125 group-hover:-rotate-6 transform duration-500"
           alt="Conseil et Formation"
+          width={500}
+          height={500}
         />
       </div>
       <p className="mt-2 text-gray-500">{children}</p>

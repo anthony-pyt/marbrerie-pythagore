@@ -1,15 +1,15 @@
 import { Icon } from "@iconify/react";
 import { useState } from "react";
 import { ModalProduct } from "./ModalProduct";
-
+import Image from 'next/image'
 const ProductCard = ({ product, animationDelay }) => {
   console.log(product);
-  
+
   const [isOpenModal, setIsOpenModal] = useState(false);
 
-    const openModal = (value) => {
-      setIsOpenModal(value);
-    };
+  const openModal = (value) => {
+    setIsOpenModal(value);
+  };
   return (
     <>
       {isOpenModal && (
@@ -29,12 +29,12 @@ const ProductCard = ({ product, animationDelay }) => {
               className="group relative h-48 bg-primary w-11/12 flex items-center justify-center rounded-xl shadow-lg -mt-6 overflow-hidden"
               style={{ animationDelay }}
             >
-              {product.image_url && (
-                <img
+              {(product.image_url || product?.main_image?.image_url) && (
+                <Image
                   lazy="true"
                   width={300}
                   height={300}
-                  src={product.image_url}
+                  src={product?.main_image?.image_url ?? product.image_url}
                   loading="lazy"
                   alt={product.label}
                   className="object-cover w-full h-full"
@@ -56,9 +56,11 @@ const ProductCard = ({ product, animationDelay }) => {
 
               <div className="absolute top-1 right-1">
                 {product.product.category.logo_url != null ? (
-                  <img
-                    src={product.category.logo_url}
+                  <Image src={product.product.category?.logo_url}
                     className="h-4 p-0.5 bg-white rounded px-2"
+                    alt={product.product.category.label}
+                    width={100}
+                    height={100}
                   />
                 ) : (
                   <div className="border border-or inline-block px-2 rounded-lg leading-3 bg-white">
@@ -66,7 +68,8 @@ const ProductCard = ({ product, animationDelay }) => {
                       {product.product.category.label}
                     </span>
                   </div>
-                )}
+                )
+                }
               </div>
             </button>
           </div>
