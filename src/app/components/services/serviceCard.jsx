@@ -6,15 +6,18 @@ const ServiceCard = ({ title, children, type }) => {
     <div className="max-w-96 min-w-96 bg-white rounded-xl shadow-xl border m-8">
       <div className="flex justify-center">
         <div className="bg-primary h-48 w-11/12 flex items-center justify-center rounded-xl shadow-lg -mt-6 overflow-hidden">
-          <img
+          <Image
             className="w-full h-48 object-cover"
             src={`/images/${type}.jpg`}
             loading="lazy"
+            width={600}
+            height={200}
+            alt=""
           />
         </div>
       </div>
       <div className="p-6">
-          <h4 className="font-semibold mb-4">{title}</h4>
+        <h4 className="font-semibold mb-4">{title}</h4>
         <div>{children}</div>
       </div>
     </div>

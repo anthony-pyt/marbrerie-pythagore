@@ -74,7 +74,7 @@ export default function Page() {
           ),
           fetch(
             process.env.NEXT_PUBLIC_API_URL +
-              "/stock/categories-with-parent-matieres"
+            "/stock/categories-with-parent-matieres"
           ),
           fetch(process.env.NEXT_PUBLIC_API_URL + "/thiknesses"),
           fetch(process.env.NEXT_PUBLIC_API_URL + "/finitions"),
@@ -82,7 +82,7 @@ export default function Page() {
 
         const products = await productResponse.json();
         console.log(products);
-        
+
         const categories = await categoryResponse.json();
         const thiknesses = await thiknessResponse.json();
         const finitions = await finitionsResponse.json();
@@ -119,13 +119,13 @@ export default function Page() {
     const updatedFilters = isCategorySelected
       ? filters.filter((filter) => filter.type !== "matieres") // Retire le filtre existant si la catégorie est désélectionnée
       : [
-          ...filters.filter((filter) => filter.type !== "matieres"), // Enlève les filtres existants avec le même label
-          {
-            type: "matieres",
-            text: category.label,
-            icon: null,
-          },
-        ];
+        ...filters.filter((filter) => filter.type !== "matieres"), // Enlève les filtres existants avec le même label
+        {
+          type: "matieres",
+          text: category.label,
+          icon: null,
+        },
+      ];
 
     setFilters(updatedFilters);
   };
@@ -284,29 +284,29 @@ export default function Page() {
     const matchesCategory =
       selectedCategories.length > 0
         ? selectedCategories.includes(product.product.category?.parent?.id) ||
-          selectedCategories.includes(product.product.category?.id)
+        selectedCategories.includes(product.product.category?.id)
         : true;
 
     const matchesThikness =
       selectedThiknesses.length > 0
         ? selectedThiknesses.every((selectedThikness) =>
-            product.thiknesses.some(
-              (thikness) => thikness.id === selectedThikness
-            )
+          product.thiknesses.map(
+            (thikness) => thikness.id === selectedThikness
           )
+        )
         : true;
 
     const matchesFinition =
       selectedFinitions.length > 0
         ? product.finitions.some((finition) =>
-            selectedFinitions.includes(finition.id)
-          )
+          selectedFinitions.includes(finition.id)
+        )
         : true;
 
     const matchesMotif =
       selectedMotifs.length > 0
         ? selectedMotifs.includes(product.motif) ||
-          selectedMotifs.includes(product.motif)
+        selectedMotifs.includes(product.motif)
         : true;
 
     const matchesColor =
@@ -315,11 +315,11 @@ export default function Page() {
         : true;
 
     const matchesCoupDeCoeur = selectedFilters.coupDeCoeur
-      ? product.heart === 1
+      ? product.heart == 1
       : true;
 
     const matchesEcoResponsable = selectedFilters.ecoResponsable
-      ? product.eco === 1
+      ? product.eco == 1
       : true;
 
     return (

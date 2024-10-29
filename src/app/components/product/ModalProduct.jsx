@@ -25,32 +25,37 @@ export function ModalProduct({ setOpen, open, product }) {
           >
             <div className="rounded-lg overflow-hidden flex flex-col items-center">
               <img
-                src={product.image_url}
+                src={product?.main_image?.image_url ?? product.image_url}
                 loading="lazy"
                 alt={product.label}
                 className="object-cover h-72 w-72 rounded-lg"
               />
               <div className="flex items-center justify-between w-full mt-2">
-                <img
-                  src={product.image_url}
-                  loading="lazy"
-                  alt={product.label}
-                  className="object-cover h-20 w-20 rounded-lg"
-                />
-                <img
-                  src={product.image_url}
-                  loading="lazy"
-                  alt={product.label}
-                  className="object-cover h-20 w-20 rounded-lg"
-                />
-                <img
-                  src={product.image_url}
-                  loading="lazy"
-                  alt={product.label}
-                  className="object-cover h-20 w-20 rounded-lg"
-                />
+                {product.images && product.images.length > 0 ? (
+                  product.images.map((image, imageIndex) => (
+                    <img
+                      src={image.image_url}
+                      loading="lazy"
+                      alt={product.label}
+                      className="object-cover h-20 w-20 rounded-lg"
+                      key={imageIndex}
+                    />
+                  ))
+                ) : (
+                  // Images par défaut
+                  [1, 2, 3].map((_, index) => (
+                    <img
+                      src={product.image_url} // Remplace par le chemin de tes images par défaut
+                      loading="lazy"
+                      alt={`Image par défaut ${index + 1}`}
+                      className="object-cover h-20 w-20 rounded-lg"
+                      key={index}
+                    />
+                  ))
+                )}
               </div>
             </div>
+
             <div className="mt-3 text-center lg:text-left sm:mt-5 flex flex-col justify-between">
               <div>
                 <DialogTitle
@@ -68,15 +73,15 @@ export function ModalProduct({ setOpen, open, product }) {
                   )}
                 </DialogTitle>
                 <div className="absolute top-1 right-1 m-2">
-                  {product.category.logo_url != null ? (
+                  {product.product.category.logo_url != null ? (
                     <img
-                      src={product.category.logo_url}
+                      src={product.product.category.logo_url}
                       className="h-5 p-0.5 bg-white rounded px-2"
                     />
                   ) : (
                     <div className="border border-or inline-block px-2 rounded-full leading-3 bg-white">
                       <span className="text-or text-xs">
-                        {product.category.label}
+                        {product.product.category.label}
                       </span>
                     </div>
                   )}
@@ -164,7 +169,7 @@ export function ModalProduct({ setOpen, open, product }) {
               <div className="flex flex-col lg:flex-row items-center w-72 flex-shrink justify-center mt-12">
                 <div className="flex justify-end">
                   <img
-                    src={`/images/garanties/${product.category.label}.png`}
+                    src={`/images/garanties/${product.category?.label}.png`}
                     loading="lazy"
                     alt={product.label}
                     className="object-cover min-w-16 max-w-16 rounded-lg"
