@@ -26,11 +26,11 @@ export default function SilderComponent(props) {
                                         height={600}
                                         priority={true}
                                         quality={75}
-                                        className="h-auto max-h-[45vh]  object-cover max-w-[40vw] bg-center"
+                                        className="h-auto max-h-[45vh]  object-cover md:max-w-[40vw] bg-center"
                                     />
                                     <div className=" flex flex-col basis-1/3 items-center justify-center p-4 gap-6 ms-6">
-                                        <h2 className="text-left w-full">{item.title}</h2>
-                                        <p className="text-left">{item.description}</p>
+                                        <h2 className="text-left w-full text-base md:text-3xl">{item.title}</h2>
+                                        <p className="text-left text-xs md:text-base">{item.description}</p>
 
                                     </div>
                                 </div>
