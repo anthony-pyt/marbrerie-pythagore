@@ -1,4 +1,5 @@
-import { title } from "process";
+"use client"
+
 import MainMenu from "./../components/MainMenu";
 import SlideComponent from "./../components/sliders/sliderComponent";
 import Cards from '../components/cards/cardComponent';
@@ -87,7 +88,7 @@ const provideds = [
 ]
 export default function Page() {
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen antialiased">
       <MainMenu />
       <h1>Nos métiers</h1>
       <SectionWorkShop />
@@ -142,7 +143,7 @@ const Provided = () => (
       <div className="grid md:grid-cols-3 sm:gap-6 mb-5 gap-5 mt-12 p-2 ">
         {provideds.map((item, index) => (
           <Cards key={index} description={item.description} chidren={item.title} image={item.image_url}
-            cardClass=" min-w-48 bg-white rounded-xl   my-10 "
+            cardClass=" min-w-64  rounded-xl   my-10 "
             imageClass=" rounded-md  max-w-64 w-auto  "
             imageContainerClass="flex justify-center -mt-24"
             cildrenClass='text-xs normal-case rounded-xl  inline-flex px-2 text-center  items-center py-0.5 border border-slate-600 hover:bg-slate-800 hover:text-white font-normal' />
@@ -153,43 +154,46 @@ const Provided = () => (
 )
 
 const Candidacy = () => (
-  <div className="border rounded-md p-4 my-8">
-    <h2 className="mb-4">CANDIDATURES</h2>
-    <form className="flex flex-col space-y-4" >
-      <div>
-        <label htmlFor="first_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Votre nom *</label>
-        <input type="text" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-1.5 outline-none" placeholder="Nom" required />
-      </div>
-      <div>
-        <label htmlFor="last_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Vos prénoms *</label>
-        <input type="text" id="last_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-1.5 outline-none" placeholder="Prénoms" required />
-      </div>
-      <div>
-        <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Votre adresse mail *</label>
-        <input type="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-1.5 outline-none" placeholder="Email" required />
-      </div>
-      <div>
-        <label htmlFor="fil_cv" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Laissez-nous votre CV</label>
-        <input type="file" id="fil_cv" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-1.5 outline-none" />
-      </div>
-      <div>
-        <label htmlFor="fil_lmotiv" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ajoutez une lettre de motivation</label>
-        <input type="file" id="fil_lmotiv" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-1.5 outline-none" />
-      </div>
-      <div>
-        <label htmlFor="message" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Votre message *</label>
-        <textarea id="message" rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 outline-none" placeholder="Écrivez vos pensées ici..." required></textarea>
-      </div>
-      <p className="my-4 text-xs">* Champ obligatoire</p>
-      <div className="flex items-center mb-4">
-        <input id="terms-checkbox" type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" required />
-        <label htmlFor="terms-checkbox" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{"J'accepte les conditions"}</label>
-      </div>
-      <a className="text-xs decoration-blue-600" href="#" target="_blank" rel="noopener noreferrer">
-        Lire nos CGU
-      </a>
-      <button type="submit" className="bg-blue-600 text-white rounded-lg p-2">Envoyer</button>
-    </form>
+  <div className="flex items-center w-full justify-center">
+    <div className="border rounded-md p-4 my-8 w-full max-w-lg ">
+      <h2 className="mb-4">CANDIDATURES</h2>
+      <form className="flex flex-col space-y-4" >
+        <div>
+          <label htmlFor="first_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Votre nom *</label>
+          <input type="text" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-1.5 outline-none" placeholder="Nom" required />
+        </div>
+        <div>
+          <label htmlFor="last_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Vos prénoms *</label>
+          <input type="text" id="last_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-1.5 outline-none" placeholder="Prénoms" required />
+        </div>
+        <div>
+          <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Votre adresse mail *</label>
+          <input type="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-1.5 outline-none" placeholder="Email" required />
+        </div>
+        <div>
+          <label htmlFor="fil_cv" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Laissez-nous votre CV</label>
+          <input type="file" id="fil_cv" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-1.5 outline-none" />
+        </div>
+        <div>
+          <label htmlFor="fil_lmotiv" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ajoutez une lettre de motivation</label>
+          <input type="file" id="fil_lmotiv" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-1.5 outline-none" />
+        </div>
+        <div>
+          <label htmlFor="message" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Votre message *</label>
+          <textarea id="message" rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 outline-none" placeholder="Écrivez vos pensées ici..." required></textarea>
+        </div>
+        <p className="my-4 text-xs">* Champ obligatoire</p>
+        <div className="flex items-center mb-4">
+          <input id="terms-checkbox" type="checkbox" onChange={(e) => handllechecked(e)} className="w-4 h-4 text-slate-900 outline-none  border-gray-300 rounded " required />
+          <label htmlFor="terms-checkbox" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{"J'accepte les conditions"}</label>
+        </div>
+        <a className="text-xs decoration-or text-or underline" href="#" target="_blank" rel="noopener noreferrer">
+          Lire nos CGU
+        </a>
+
+        <button type="submit" className="bg-slate-800 text-white rounded-lg p-2">Envoyer</button>
+      </form>
+    </div>
   </div>
 );
 
@@ -211,5 +215,7 @@ const handleSubmit = (e) => {
   // Ici, vous pouvez envoyer les données à un serveur ou effectuer d'autres actions
 };
 
+const handllechecked = (e) => {
 
+};
 

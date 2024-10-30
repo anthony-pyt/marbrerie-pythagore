@@ -81,7 +81,7 @@ export default function Page() {
         ]);
 
         const products = await productResponse.json();
-        console.log(products);
+        // console.log(products);
 
         const categories = await categoryResponse.json();
         const thiknesses = await thiknessResponse.json();

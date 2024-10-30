@@ -3,7 +3,7 @@ import { useState } from "react";
 import { ModalProduct } from "./ModalProduct";
 import Image from 'next/image'
 const ProductCard = ({ product, animationDelay }) => {
-  console.log(product);
+  // console.log(product);
 
   const [isOpenModal, setIsOpenModal] = useState(false);
 
