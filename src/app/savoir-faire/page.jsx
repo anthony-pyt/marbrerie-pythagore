@@ -57,20 +57,20 @@ export default function Page() {
           <TraditionalKnowlege />
           <Precision />
         </div>
-        <div>
+        {/* <div>
           <Title title="Finitions de chants" />
           <div className="m-4 ">
             <p>Les finitions de chants sont un aspect essentiel de notre savoir-faire</p>
             <div></div>
           </div>
-        </div>
+        </div> */}
       </div>
       <Footer />
     </main>
   );
 }
 const UniqueKnowlege = () => (
-  <div className="pt-24 w-full flex justify-center items-center  my-8 relative">
+  <div className="pt-24 w-full flex justify-center items-center  mb-8 relative">
     <Cards title={knowledgesUnique[0].title} image={knowledgesUnique[0].image_url}
       description={knowledgesUnique[0].description}
       titleClass="text-2xl w-full px-5"
@@ -82,7 +82,7 @@ const UniqueKnowlege = () => (
 )
 
 const TraditionalKnowlege = () => (
-  <div className="pt-24 w-full flex justify-center items-center  my-8 relative">
+  <div className=" w-full flex justify-center items-center  mb-8 relative">
     <Cards title={knowledgesTraditional[0].title} image={knowledgesTraditional[0].image_url}
       description={knowledgesTraditional[0].description}
       titleClass="text-2xl w-full px-5 "

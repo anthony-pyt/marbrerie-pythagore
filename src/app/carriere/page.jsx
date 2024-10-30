@@ -1,42 +1,49 @@
-"use client"
+"use client";
 
 import MainMenu from "./../components/MainMenu";
 import SlideComponent from "./../components/sliders/sliderComponent";
 import Cards from '../components/cards/cardComponent';
 import Footer from "../components/Footer";
+import { Icon } from "@iconify/react";
+import { useState } from "react";
+import { Description, Dialog, DialogPanel, DialogTitle, DialogBackdrop, } from '@headlessui/react'
+import PageTitle from "../components/PageTitle";
+const images = [
+  {
+    image_url: "/images/atelier/IMG_0053.JPEG",
+    alt: "IMG_0053",
+    title: 'Polisseur',
+    description: "assure la finition des surfaces en pierres naturelles, quartz ou céramique selon l’aspect final voulu par les clients. Il met en valeur l’éclat et la brillance de la pierre grâce à un polissage manuel ou automatique d’une grande précision. "
 
-const images = [{
-  image_url: "/images/atelier/IMG_0053.JPEG",
-  alt: "IMG_0053",
-  title: 'Polisseur',
-  description: "assure la finition des surfaces en pierres naturelles, quartz ou céramique selon l’aspect final voulu par les clients. Il met en valeur l’éclat et la brillance de la pierre grâce à un polissage manuel ou automatique d’une grande précision. "
+  },
+  {
+    image_url: "/images/atelier/IMG_0084.JPEG",
+    alt: "IMG_0084",
+    title: 'Polisseur',
+    description: "assure la finition des surfaces en pierres naturelles, quartz ou céramique selon l’aspect final voulu par les clients. Il met en valeur l’éclat et la brillance de la pierre grâce à un polissage manuel ou automatique d’une grande précision. "
+  },
+  {
+    image_url: "/images/atelier/IMG_1598.jpg",
+    alt: "IMG_1598",
+    title: 'Polisseur',
+    description: "assure la finition des surfaces en pierres naturelles, quartz ou céramique selon l’aspect final voulu par les clients. Il met en valeur l’éclat et la brillance de la pierre grâce à un polissage manuel ou automatique d’une grande précision. "
+  },
+  {
+    image_url: "/images/atelier/IMG_1597.png",
+    alt: "IMG_1597",
+    title: 'Polisseur',
+    description: "assure la finition des surfaces en pierres naturelles, quartz ou céramique selon l’aspect final voulu par les clients. Il met en valeur l’éclat et la brillance de la pierre grâce à un polissage manuel ou automatique d’une grande précision. "
+  },
+  {
+    image_url: "/images/atelier/IMG_1600.png",
+    alt: "IMG_1600",
+    title: 'Poseur',
+    description: "assure la finition des surfaces en pierres naturelles, quartz ou céramique selon l’aspect final voulu par les clients. Il met en valeur l’éclat et la brillance de la pierre grâce à un polissage manuel ou automatique d’une grande précision. "
+  }
+  // ... (other images)
+];
 
-},
-{
-  image_url: "/images/atelier/IMG_0084.JPEG",
-  alt: "IMG_0084",
-  title: 'Polisseur',
-  description: "assure la finition des surfaces en pierres naturelles, quartz ou céramique selon l’aspect final voulu par les clients. Il met en valeur l’éclat et la brillance de la pierre grâce à un polissage manuel ou automatique d’une grande précision. "
-},
-{
-  image_url: "/images/atelier/IMG_1598.jpg",
-  alt: "IMG_1598",
-  title: 'Polisseur',
-  description: "assure la finition des surfaces en pierres naturelles, quartz ou céramique selon l’aspect final voulu par les clients. Il met en valeur l’éclat et la brillance de la pierre grâce à un polissage manuel ou automatique d’une grande précision. "
-},
-{
-  image_url: "/images/atelier/IMG_1597.png",
-  alt: "IMG_1597",
-  title: 'Polisseur',
-  description: "assure la finition des surfaces en pierres naturelles, quartz ou céramique selon l’aspect final voulu par les clients. Il met en valeur l’éclat et la brillance de la pierre grâce à un polissage manuel ou automatique d’une grande précision. "
-},
-{
-  image_url: "/images/atelier/IMG_1600.png",
-  alt: "IMG_1600",
-  title: 'Polisseur',
-  description: "assure la finition des surfaces en pierres naturelles, quartz ou céramique selon l’aspect final voulu par les clients. Il met en valeur l’éclat et la brillance de la pierre grâce à un polissage manuel ou automatique d’une grande précision. "
-}]
-const coustomerRealtionship = [
+const customerRelationships = [
   {
     image_url: "/images/relations/relation_reunion.jpg",
     alt: "realtion_reunion",
@@ -52,24 +59,29 @@ const coustomerRealtionship = [
 
 
   }
-]
-const Commintments = [{
-  title: "Nous soutenons nos collaborateurs",
-  description: "Donner les moyens à nos collaborateurs de réaliser pleinement leur potentiel, est une valeur unanimement reconnue dans l’entreprise. Les conditions de travail sont régulièrement optimisées pour que chacun puisse offrir le meilleur de lui-même.",
-  image_url: "/images/engagements/young-colleagues-work-office-using-computers.jpg"
-},
-{
-  title: "Nous pensons à notre futur",
-  description: "Notre engagement se traduit également par des actions concrètes pour préserver notre environnement. Nous optimisons nos déchets  et privilégions le recyclage de l'eau dans notre processus de travail. Nous adoptons aussi une approche de sobriété énergétique, en réduisant notre consommation d'énergie pour un avenir plus durable.",
-  image_url: "/images/relations/relation_reunion.jpg"
-},
-{
-  title: "Nous recrutons pour l’avenir",
-  description: "Nous adoptons des politiques de recrutement inclusives, offrant des aides à la mobilité pour faciliter l’installation de nos nouveaux employés. Notre processus d’intégration permet à chacun de s’épanouir et de s’intégrer facilement au sein de notre équipe.",
-  image_url: "/images/engagements/decoupe.jpg"
-}]
+  // ... (other relationships)
+];
 
-const provideds = [
+const commitments = [
+  {
+    title: "Nous soutenons nos collaborateurs",
+    description: "Donner les moyens à nos collaborateurs de réaliser pleinement leur potentiel, est une valeur unanimement reconnue dans l’entreprise. Les conditions de travail sont régulièrement optimisées pour que chacun puisse offrir le meilleur de lui-même.",
+    image_url: "/images/engagements/young-colleagues-work-office-using-computers.jpg"
+  },
+  {
+    title: "Nous pensons à notre futur",
+    description: "Notre engagement se traduit également par des actions concrètes pour préserver notre environnement. Nous optimisons nos déchets  et privilégions le recyclage de l'eau dans notre processus de travail. Nous adoptons aussi une approche de sobriété énergétique, en réduisant notre consommation d'énergie pour un avenir plus durable.",
+    image_url: "/images/relations/relation_reunion.jpg"
+  },
+  {
+    title: "Nous recrutons pour l’avenir",
+    description: "Nous adoptons des politiques de recrutement inclusives, offrant des aides à la mobilité pour faciliter l’installation de nos nouveaux employés. Notre processus d’intégration permet à chacun de s’épanouir et de s’intégrer facilement au sein de notre équipe.",
+    image_url: "/images/engagements/decoupe.jpg"
+  }
+  // ... (other commitments)
+];
+
+const providedPositions = [
   {
     title: "Installateurs",
     description: "CDI Temps Plein",
@@ -85,40 +97,50 @@ const provideds = [
     description: "CDI Temps Plein",
     image_url: "/images/engagements/entretien.png"
   }
-]
+  // ... (other positions)
+];
+
 export default function Page() {
+  const [isOpenModal, setIsOpenModal] = useState(false);
+
+  const openModal = (value) => {
+    setIsOpenModal(value);
+  };
   return (
     <main className="min-h-screen antialiased">
       <MainMenu />
-      <h1>Nos métiers</h1>
+      <PageTitle title={'Nos métier'} />
       <SectionWorkShop />
-      <RelationShip />
-      <SectionCommintments />
+      <SectionCommitments />
       <Footer />
     </main>
   );
 }
 
 const SectionWorkShop = () => (
-  <fieldset className="container flex justify-center mx-auto my-8 border border-or rounded-lg">
-    <legend className="text-3xl ms-5">À L’ATELIER</legend>
-    <SlideComponent images={images} />
-  </fieldset>
-)
-const RelationShip = () => (
-  <fieldset className="container flex justify-center mx-auto my-8 border border-or rounded-lg">
-    <legend className="text-3xl ms-5">EN RELATION AVEC NOS CLIENTS</legend>
-    <SlideComponent images={coustomerRealtionship} />
-  </fieldset>
-)
+  <div className="container mx-auto">
+    <fieldset className="grid my-8 border border-or rounded-lg">
+      <legend className="md:text-3xl ms-5 text-xl">À L’ATELIER</legend>
+      <SlideComponent images={images} />
+    </fieldset>
+    <RelationshipSection />
+  </div>
+);
 
-const SectionCommintments = () => (
+const RelationshipSection = () => (
+  <fieldset className="grid my-8 border border-or rounded-lg">
+    <legend className="md:text-3xl ms-5 text-xl">EN RELATION AVEC NOS CLIENTS</legend>
+    <SlideComponent images={customerRelationships} />
+  </fieldset>
+);
+
+const SectionCommitments = () => (
 
   <div className="container mx-auto">
-    <h2>NOS ENGAGEMENTS</h2>
+    <h2 className="text-xl md:text-4xl text-center md:text-left">NOS ENGAGEMENTS</h2>
     <div className="mt-8 w-full flex justify-center items-center">
       <div className="grid md:grid-cols-3 sm:gap-6 mb-5 gap-5 mt-12 p-2 ">
-        {Commintments.map((item, index) => (
+        {commitments.map((item, index) => (
           <Cards key={index} description={item.description} title={item.title} image={item.image_url} titleClass="text-base"
             cardClass=" min-w-48 bg-white rounded-xl shadow-xl border my-10 "
             imageClass=" rounded-md  max-w-64 w-auto  "
@@ -128,20 +150,20 @@ const SectionCommintments = () => (
       </div>
     </div>
     <Provided />
-    <Candidacy />
+
   </div>
 )
 
 const Provided = () => (
   <div>
-    <div className="flex items-center gap-4">
+    <div className="flex items-center gap-4 w-full">
       <h2 className="">POSTES
         À POURVOIR</h2>
-      <button type="button" className="py-2 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Postuler</button>
+      <DialogFom />
     </div>
     <div className="mt-8 w-full flex justify-center items-center  ">
       <div className="grid md:grid-cols-3 sm:gap-6 mb-5 gap-5 mt-12 p-2 ">
-        {provideds.map((item, index) => (
+        {providedPositions.map((item, index) => (
           <Cards key={index} description={item.description} chidren={item.title} image={item.image_url}
             cardClass=" min-w-64  rounded-xl   my-10 "
             imageClass=" rounded-md  max-w-64 w-auto  "
@@ -153,69 +175,177 @@ const Provided = () => (
   </div>
 )
 
-const Candidacy = () => (
-  <div className="flex items-center w-full justify-center">
-    <div className="border rounded-md p-4 my-8 w-full max-w-lg ">
-      <h2 className="mb-4">CANDIDATURES</h2>
-      <form className="flex flex-col space-y-4" >
-        <div>
-          <label htmlFor="first_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Votre nom *</label>
-          <input type="text" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-1.5 outline-none" placeholder="Nom" required />
-        </div>
-        <div>
-          <label htmlFor="last_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Vos prénoms *</label>
-          <input type="text" id="last_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-1.5 outline-none" placeholder="Prénoms" required />
-        </div>
-        <div>
-          <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Votre adresse mail *</label>
-          <input type="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-1.5 outline-none" placeholder="Email" required />
-        </div>
-        <div>
-          <label htmlFor="fil_cv" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Laissez-nous votre CV</label>
-          <input type="file" id="fil_cv" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-1.5 outline-none" />
-        </div>
-        <div>
-          <label htmlFor="fil_lmotiv" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ajoutez une lettre de motivation</label>
-          <input type="file" id="fil_lmotiv" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-1.5 outline-none" />
-        </div>
-        <div>
-          <label htmlFor="message" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Votre message *</label>
-          <textarea id="message" rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 outline-none" placeholder="Écrivez vos pensées ici..." required></textarea>
-        </div>
-        <p className="my-4 text-xs">* Champ obligatoire</p>
-        <div className="flex items-center mb-4">
-          <input id="terms-checkbox" type="checkbox" onChange={(e) => handllechecked(e)} className="w-4 h-4 text-slate-900 outline-none  border-gray-300 rounded " required />
-          <label htmlFor="terms-checkbox" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{"J'accepte les conditions"}</label>
-        </div>
-        <a className="text-xs decoration-or text-or underline" href="#" target="_blank" rel="noopener noreferrer">
-          Lire nos CGU
-        </a>
+const Candidacy = () => {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    message: '',
+    cv: null,
+    motivationLetter: null,
+    termsAccepted: false,
+  });
 
-        <button type="submit" className="bg-slate-800 text-white rounded-lg p-2">Envoyer</button>
-      </form>
+  const handleChange = (e) => {
+    const { name, value, type, checked, files } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: type === 'checkbox' ? checked : type === 'file' ? files[0] : value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('Form data submitted:', formData);
+    // Ici, vous pouvez envoyer les données à un serveur ou effectuer d'autres actions
+  };
+
+  return (
+    <div className="w-full">
+      <div className=" ">
+        <h2 className="mb-4">CANDIDATURES</h2>
+        <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+          <InlineInput
+            type="text"
+            label="Votre nom"
+            name="lastName"
+            value={formData.firstName}
+            onChange={handleChange}
+            icon="solar:user-circle-bold"
+            placeholder="Nom"
+            required
+          />
+          <InlineInput
+            type="text"
+            label="Votre prénom"
+            name="fistName"
+            value={formData.lastName}
+            onChange={handleChange}
+            icon="solar:user-circle-bold"
+            placeholder="Prénom"
+            required
+          />
+          <InlineInput
+            type="email"
+            label="Votre adresse mail"
+            name="email"
+            value={formData.email}
+            placeholder="Email"
+            onChange={handleChange}
+            icon="entypo:email"
+            required
+          />
+          <FileInput
+            id="fil_cv"
+            label="Laissez-nous votre CV"
+            name="cv"
+            onChange={handleChange}
+          />
+          <FileInput
+            id="fil_lmotiv"
+            label="Ajoutez une lettre de motivation"
+            name="motivationLetter"
+            onChange={handleChange}
+          />
+          <textarea
+            name="message"
+            rows="4"
+            value={formData.message}
+            onChange={handleChange}
+            placeholder="Écrivez vos pensées ici..."
+            required
+            className="block p-2.5 w-full text-sm text-gray-900 0 rounded-lg border border-gray-300 outline-none"
+          />
+          <div className="flex items-center mb-4">
+            <input
+              id="terms-checkbox"
+              type="checkbox"
+              name="termsAccepted"
+              checked={formData.termsAccepted}
+              onChange={handleChange}
+              className="w-4 h-4"
+              required
+            />
+            <label htmlFor="terms-checkbox" className="ms-2 text-sm font-medium text-gray-900">{"J'accepte les conditions"}</label>
+            <a className="text-xs text-blue-500 underline" href="#" target="_blank" rel="noopener noreferrer">Lire nos CGU</a>
+          </div>
+          <button type="submit" className="bg-slate-800 text-white rounded-lg p-2">Envoyer</button>
+        </form>
+      </div>
     </div>
+  );
+};
+
+const InlineInput = ({ type, label, name, value, onChange, required, icon, placeholder }) => (
+  <div >
+    <label htmlFor={name} className="block mb-2 text-sm font-medium text-gray-900">{label} {required && <span className="text-red-500">*</span>}</label>
+    <div className="relative">
+      <input
+        type={type}
+        id={name}
+        name={name}
+        value={value}
+        onChange={onChange}
+        required={required}
+        placeholder={placeholder}
+        className="border border-gray-300 rounded-lg px-4 py-2 text-sm w-full focus:outline-none shadow-sm transition duration-300 ease-in-out"
+      />
+      <Icon
+        icon={icon}
+        width="30"
+        height="30"
+        className="absolute transform -translate-y-1/2 top-1/2 right-1 text-gray-300 hover:text-blue-500 transition-colors duration-200 ease-in-out"
+      />
+    </div>
+  </div>
+
+);
+
+const FileInput = ({ id, label, name, onChange }) => (
+  <div>
+    <label htmlFor={id} className="block mb-2 text-sm font-medium text-gray-900">{label}</label>
+    <input
+      type="file"
+      id={id}
+      name={name}
+      onChange={onChange}
+      className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-1.5"
+    />
   </div>
 );
 
-const handleSubmit = (e) => {
-  e.preventDefault();
 
-  const formData = new FormData(e.target);
-  const data = {
-    firstName: formData.get('first_name'),
-    lastName: formData.get('last_name'),
-    email: formData.get('email'),
-    message: formData.get('message'),
-    cv: formData.get('fil_cv'),
-    motivationLetter: formData.get('fil_lmotiv'),
-    termsAccepted: formData.get('terms-checkbox'),
-  };
 
-  console.log('Form data submitted:', data);
-  // Ici, vous pouvez envoyer les données à un serveur ou effectuer d'autres actions
-};
-
-const handllechecked = (e) => {
-
-};
-
+const DialogFom = () => {
+  let [isOpen, setIsOpen] = useState(false)
+  return (
+    <>
+      <button onClick={() => setIsOpen(true)} type="button" className="py-2 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Postuler</button>
+      <Dialog
+        open={isOpen}
+        onClose={() => setIsOpen(false)}
+        transition
+        className="relative z-50"
+      >
+        <DialogBackdrop
+          transition
+          className="fixed inset-0 bg-black/30 duration-300 ease-out data-[closed]:opacity-0"
+        />
+        <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
+          <DialogPanel transition
+            className=" space-y-4 bg-white p-6 rounded-lg duration-300 ease-out data-[closed]:scale-95 data-[closed]:opacity-0">
+            <div className="flex gap-4 justify-end">
+              <button onClick={() => setIsOpen(false)} type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="static-modal">
+                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                </svg>
+                <span class="sr-only">Close modal</span>
+              </button>
+            </div>
+            <Candidacy />
+          </DialogPanel>
+        </div>
+      </Dialog>
+    </>
+  )
+}
