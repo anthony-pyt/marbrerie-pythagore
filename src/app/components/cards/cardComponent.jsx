@@ -1,6 +1,6 @@
 "use client"
 import Image from 'next/image'
-const titileClassName = 'mb-2 text-xs tracking-tight  dark:text-white'
+const titileClassName = 'mb-2  tracking-tight  dark:text-white'
 const cardClassName = "mx-auto max-w-sm bg-white  rounded-lg  dark:bg-gray-800 dark:border-gray-700 "
 const descriptionCalssName = "my-3 text-gray-700 dark:text-gray-400"
 const imageClassName = "object-cover rounded-lg max-h-48 h-full"
@@ -19,7 +19,7 @@ const PythagoreHistory = ({ description, image, title,
             </div>
             <div className="p-5">
                 <div >
-                    <h5 className={titleClass}>{title}</h5>
+                    <h2 className={titleClass}>{title}</h2>
                 </div>
                 <div className={cildrenClass}>
                     <span>{chidren}</span>

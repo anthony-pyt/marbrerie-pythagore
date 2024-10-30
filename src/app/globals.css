@@ -12,7 +12,8 @@
 @font-face {
   font-family: 'SUSE';
   src: url('/fonts/SUSE-VariableFont_wght.ttf') format('truetype');
-  font-weight: 100 900; /* Définir la plage de poids si nécessaire */
+  font-weight: 100 900;
+  /* Définir la plage de poids si nécessaire */
   font-style: normal;
 }
 
@@ -52,37 +53,45 @@ body {
 }
 
 @layer components {
+
   h1,
   h2,
   h3,
   h4,
   h5,
   h6 {
-    @apply text-gray-800 font-title font-semibold uppercase; /* Appliquer une police en gras et une couleur de texte */
+    @apply text-gray-800 font-title font-semibold uppercase;
+    /* Appliquer une police en gras et une couleur de texte */
   }
 
   h1 {
-    @apply text-6xl; /* Taille du texte pour <h1> et marge inférieure */
+    @apply text-6xl;
+    /* Taille du texte pour <h1> et marge inférieure */
   }
 
   h2 {
-    @apply text-4xl; /* Taille du texte pour <h2> et marge inférieure */
+    @apply text-4xl;
+    /* Taille du texte pour <h2> et marge inférieure */
   }
 
   h3 {
-    @apply text-2xl; /* Taille du texte pour <h3> et marge inférieure */
+    @apply text-2xl;
+    /* Taille du texte pour <h3> et marge inférieure */
   }
 
   h4 {
-    @apply text-xl; /* Taille du texte pour <h4> et marge inférieure */
+    @apply text-xl;
+    /* Taille du texte pour <h4> et marge inférieure */
   }
 
   h5 {
-    @apply text-lg; /* Taille du texte pour <h5> et marge inférieure */
+    @apply text-lg;
+    /* Taille du texte pour <h5> et marge inférieure */
   }
 
   h6 {
-    @apply text-base; /* Taille du texte pour <h6> et marge inférieure */
+    @apply text-base;
+    /* Taille du texte pour <h6> et marge inférieure */
   }
 }
 
@@ -90,7 +99,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%; /* Assure-toi que la hauteur est définie */
+  height: 100%;
+  /* Assure-toi que la hauteur est définie */
   width: 100%;
 }
 
@@ -100,12 +110,14 @@ body {
   align-items: center;
   height: 100%;
   background-position: center;
-  object-fit: cover; /* Ajuste l'image pour couvrir le conteneur sans déformation */
+  object-fit: cover;
+  /* Ajuste l'image pour couvrir le conteneur sans déformation */
 }
 
 .truncate-multiline {
   display: -webkit-box;
-  -webkit-line-clamp: 5; /* Nombre de lignes à afficher avant troncature */
+  -webkit-line-clamp: 5;
+  /* Nombre de lignes à afficher avant troncature */
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -116,4 +128,9 @@ body {
   background-position: top;
   background-repeat: no-repeat;
   background-size: contain;
+}
+
+input[type="checkbox"].checkboxInput {
+  @apply w-4 h-4 text-slate-900 bg-gray-100 border-slate-900 peer-checked:bg-inherit rounded focus:ring-slate-900 dark:focus:ring-slate-900;
+
 }
