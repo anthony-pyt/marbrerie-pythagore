@@ -1,4 +1,5 @@
 "use client";
+/* eslint react/no-unescaped-entities: off */
 
 import MainMenu from "./../components/MainMenu";
 import Image from "next/image";
@@ -227,7 +228,7 @@ const OurValues = () => {
             return (
               <ServiceCard
                 key={index}
-                title="Outils d'aide à la vente"
+                title={data.title}
                 image={data.image}
               >
                 <div>
