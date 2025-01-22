@@ -36,7 +36,7 @@ export const Timeline = ({ data }) => {
           a timeline of my journey.
         </p>
       </div> */}
-      <div ref={ref} className="relative max-w-7xl mx-auto pb-44 border rounded-xl shadow-xl">
+      <div ref={ref} className="relative max-w-7xl pb-44 border rounded-xl shadow-xl">
         {data.map((item, index) => (
           <div
             key={index}

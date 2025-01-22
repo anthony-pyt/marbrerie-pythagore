@@ -25,9 +25,11 @@ export default function Page() {
           en fournissant des produits et un service de la plus haute qualité.
         </div>
       </div>
+      <div className="space-y-20">
       <HistoricalData />
       <OurValues />
       <Team />
+      </div>
       <Footer />
     </main>
   );
@@ -188,9 +190,9 @@ const HistoricalData = () => {
     },
   ];
   return (
-    <div className="mx-4 my-12 flex flex-col xl:flex-row">
-      <h2 className="lg:w-1/3 text-center lg:text-left">NOTRE HISTOIRE</h2>
-      <div className="lg:w-9/12">
+    <div className="flex flex-col xl:flex-row">
+      <h2 className="lg:w-2/12 text-center lg:text-left">NOTRE HISTOIRE</h2>
+      <div className="lg:w-10/12">
         <Timeline data={data} />
       </div>
     </div>
@@ -220,17 +222,13 @@ const OurValues = () => {
   ];
 
   return (
-    <div className="mx-4 my-12 flex flex-col xl:flex-row">
-      <h2 className="lg:w-1/3 text-center lg:text-left">NOS VALEURS</h2>
-      <div className="lg:w-9/12">
-        <div className="flex flex-wrap justify-between">
+    <div className="flex flex-col xl:flex-row">
+      <h2 className="lg:w-2/12 text-center lg:text-left">NOS VALEURS</h2>
+      <div className="lg:w-10/12 max-w-7xl md:mx-10 bg-white pt-20 border rounded-xl shadow-xl">
+        <div className="flex flex-wrap justify-between ">
           {datas.map((data, index) => {
             return (
-              <ServiceCard
-                key={index}
-                title={data.title}
-                image={data.image}
-              >
+              <ServiceCard key={index} title={data.title} image={data.image}>
                 <div>
                   <p>{data.content}</p>
                 </div>
@@ -296,9 +294,9 @@ const Team = () => {
     },
   ];
   return (
-    <div className="mx-4 my-12 flex flex-col xl:flex-row">
-      <h2 className="lg:w-1/3 text-center lg:text-left">L'ENCADREMENT</h2>
-      <div className="lg:w-9/12">
+    <div className="flex flex-col xl:flex-row">
+      <h2 className="lg:w-2/12 text-center lg:text-left">L'ENCADREMENT</h2>
+      <div className="lg:w-10/12 max-w-7xl md:mx-10 border rounded-xl shadow-xl py-20 px-4">
         <FocusCards cards={cards} />
       </div>
     </div>
