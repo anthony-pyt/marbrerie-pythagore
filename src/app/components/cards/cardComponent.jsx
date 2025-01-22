@@ -5,11 +5,12 @@ const cardClassName = "mx-auto max-w-sm bg-white  rounded-lg  dark:bg-gray-800 d
 const descriptionCalssName = "my-3 text-gray-700 dark:text-gray-400"
 const imageClassName = "object-cover rounded-lg max-h-48 h-full"
 const imageContainerClassName = ''
-const cildrenClassName = ''
-const PythagoreHistory = ({ description, image, title,
+const childrenClassName = ''
+
+const Card = ({ description, image, title,
     titleClass = titileClassName, cardClass = cardClassName,
     desciptionClass = descriptionCalssName, imageClass = imageClassName,
-    imageContainerClass = imageContainerClassName, chidren, cildrenClass = cildrenClassName }) => {
+    imageContainerClass = imageContainerClassName, chidren, childrenClass = childrenClassName }) => {
     return (
         <div className={cardClass}>
             <div >
@@ -21,7 +22,7 @@ const PythagoreHistory = ({ description, image, title,
                 <div >
                     <h2 className={titleClass}>{title}</h2>
                 </div>
-                <div className={cildrenClass}>
+                <div className={childrenClass}>
                     <span>{chidren}</span>
                 </div>
                 <p className={desciptionClass}>{description}</p>
@@ -30,4 +31,5 @@ const PythagoreHistory = ({ description, image, title,
     );
 
 };
-export default PythagoreHistory;
+
+export default Card;

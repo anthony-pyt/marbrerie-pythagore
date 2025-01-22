@@ -26,9 +26,12 @@ export default function Page() {
         </div>
       </div>
       <div className="space-y-20">
-      <HistoricalData />
-      <OurValues />
-      <Team />
+        <HistoricalData />
+        <OurValues />
+        <Team />
+      </div>
+      <div>
+        <DeliveryArea />
       </div>
       <Footer />
     </main>
@@ -211,7 +214,7 @@ const OurValues = () => {
       title: "La satisfaction clients",
       content:
         "Nous œuvrons chaque jour pour améliorer votre expérience avec des produits de haute qualité et un service client dévoué.",
-        "image": "/images/formation.jpg",
+      image: "/images/formation.jpg",
     },
     {
       title: "L'engagement",
@@ -298,6 +301,47 @@ const Team = () => {
       <h2 className="lg:w-2/12 text-center lg:text-left">L'ENCADREMENT</h2>
       <div className="lg:w-10/12 max-w-7xl md:mx-10 border rounded-xl shadow-xl py-20 px-4">
         <FocusCards cards={cards} />
+      </div>
+    </div>
+  );
+};
+
+const DeliveryArea = () => {
+  const mapSource = "/images/maps/carte-zone-presta-02.png";
+  const zones = [
+    {
+      name: "Notre Atelier",
+      address: "ZA Pen Ar Hoat 22570 Laniscat",
+    },
+    {
+      name: "Dépot logisitque de Rouen",
+      // address: "ZA de Caillemare 27310 Saint-Ouen-de-Thouberville",
+    },
+  ];
+  return (
+    <div className="p-2 flex justify-center items-center mx-auto mt-20 w-full md:w-11/12 border rounded-xl shadow-xl">
+      <div className="max-w-7xl mx-auto mb-5 items-center flex flex-wrap md:flex-nowrap">
+        <div className="flex w-full items-end justify-center">
+          <div>
+            {zones.map((zone, index) => (
+              <div key={index} className="flex flex-col">
+                <p className="md:text-4xl py-4 text-xl ">{zone.name}</p>
+                <p className="text-base text-wrap w-auto md:max-w-56 max-w-64">
+                  {zone.address}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="flex flex-col items-center w-full md:basis-1/2">
+          <Image
+            src={mapSource}
+            width={400}
+            height={500}
+            alt="Zones de prestation"
+            className="h-auto w-auto"
+          />
+        </div>
       </div>
     </div>
   );

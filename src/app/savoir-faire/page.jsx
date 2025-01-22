@@ -69,6 +69,7 @@ export default function Page() {
     </main>
   );
 }
+
 const UniqueKnowlege = () => (
   <div className="pt-24 w-full flex justify-center items-center  mb-8 relative">
     <Cards title={knowledgesUnique[0].title} image={knowledgesUnique[0].image_url}
@@ -77,7 +78,8 @@ const UniqueKnowlege = () => (
       desciptionClass="mx-auto p-5"
       cardClass="flex items-start rounded-lg shadow max-w-5xl ite mx-auto max-h-96 gap-8"
       imageContainerClass="container mx-auto"
-      imageClass="sm:-ms-24 -mt-24 max-w-96 relative" />
+      imageClass="sm:-ms-24 -mt-24 max-w-96 relative" 
+      />
   </div>
 )
 
