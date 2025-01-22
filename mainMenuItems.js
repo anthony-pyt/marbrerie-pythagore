@@ -108,8 +108,8 @@ const listMenu = [
     label: "Qui sommes-nous ?",
     active: true,
     children: [],
-    slug: "a-propos",
-    link: "/a-propos",
+    slug: "qui-sommes-nous",
+    link: "/qui-sommes-nous",
     icon: "solar:info-circle-linear",
   },
   {
