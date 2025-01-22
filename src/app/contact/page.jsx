@@ -9,13 +9,14 @@ import Footer from "../components/Footer";
 import Button from "../components/Button";
 import CompanyInfos from "../components/CompanyInfos"; // Nouveau composant
 import Alert from "../components/Alert";
+import Select from "../components/Select";
 
 export default function Page() {
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
   });
-  const [hasProject, setHasProject] = useState("");
+  const [hasProject, setHasProject] = useState("yes");
   const [showAlert, setShowAlert] = useState(false);
 
   const handleInputChange = (id, newValue) => {
@@ -133,8 +134,8 @@ export default function Page() {
                   onClick={() => handleHasProject("no")}
                   className={`rounded-2xl flex flex-col items-center justify-center space-y-4 w-64 h-36 group ${
                     hasProject === "no"
-                      ? "ring ring-red-600 bg-red-50"
-                      : "bg-gray-100 hover:bg-white hover:ring ring-red-600 transform duration-200"
+                      ? "ring ring-red-400 bg-red-50"
+                      : "bg-gray-100 hover:bg-white hover:ring ring-red-400 transform duration-200"
                   }`}
                 >
                   <Icon
@@ -143,15 +144,15 @@ export default function Page() {
                     height="48"
                     className={` ${
                       hasProject == "no"
-                        ? "text-red-600"
-                        : "text-gray-500 group-hover:text-red-600 transform duration-700"
+                        ? "text-red-400"
+                        : "text-gray-500 group-hover:text-red-400 transform duration-700"
                     }`}
                   />
                   <p
                     className={`${
                       hasProject == "no"
-                        ? "text-red-600"
-                        : "text-gray-500 group-hover:text-red-600 transform duration-700"
+                        ? "text-red-400"
+                        : "text-gray-500 group-hover:text-red-400 transform duration-700"
                     } text-gray-500 uppercase font-bold text-2xl`}
                   >
                     NON
@@ -160,8 +161,26 @@ export default function Page() {
               </div>
             </div>
             {hasProject === "yes" && (
-              <div className="flex flex-col items-center mt-12">
-                Descriptif du projet
+              <div className="flex items-center mt-12">
+                <div className="flex flex-wrap items-center justify-center">
+                  <Select
+                    options={rooms}
+                    placeholder="Choisissez une pièce"
+                    onSelectChange={(value) =>
+                      console.log("Valeur sélectionnée :", value)
+                    }
+                  />
+                  <Select
+                    options={[
+                      { label: "Neuf", value: "new" },
+                      { label: "Rénovation", value: "renovation" },
+                    ]}
+                    placeholder="Type de projet"
+                    onSelectChange={(value) =>
+                      console.log("Valeur sélectionnée :", value)
+                    }
+                  />
+                </div>
               </div>
             )}
             {hasProject === "no" && (
@@ -193,3 +212,34 @@ export default function Page() {
     </main>
   );
 }
+
+export const rooms = [
+  {
+    label: "Cuisine",
+    value: "kitchen",
+  },
+  {
+    label: "Salon",
+    value: "living-room",
+  },
+  {
+    label: "Salle de bain",
+    value: "bathroom",
+  },
+  {
+    label: "Bureau",
+    value: "office",
+  },
+  {
+    label: "Extérieur",
+    value: "outside",
+  },
+  {
+    label: "Chambre",
+    value: "bedroom",
+  },
+  {
+    label: "Autre",
+    value: "other",
+  },
+]
