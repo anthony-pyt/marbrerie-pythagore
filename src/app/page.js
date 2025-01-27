@@ -10,31 +10,16 @@ import Footer from "./components/Footer";
 import { useEffect, useState, useRef } from "react";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
+import {TextGenerateEffect} from "./components/ui/text-generate-effect";
+
+const message = "bienvenue chez pythagore";
+
 
 export default function Home() {
-  const [text, setText] = useState("");
-  const message = "bienvenue chez pythagore";
-  const textRef = useRef("");
 
   // État pour la visibilité des sections
   const [visibleSections, setVisibleSections] = useState({});
   const sectionRefs = useRef([]);
-
-  useEffect(() => {
-    let index = 0;
-    const interval = setInterval(() => {
-      // Met à jour le texte dans la ref et dans l'état
-      textRef.current = textRef.current + message[index];
-      setText(textRef.current);
-      index++;
-
-      if (index >= message.length) {
-        clearInterval(interval);
-      }
-    }, 100);
-
-    return () => clearInterval(interval);
-  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -79,9 +64,7 @@ export default function Home() {
             className="opacity-40 blur w-full object-cover"
           />
           <div className="absolute transform left-1/2 -translate-x-1/2 w-full">
-            <h1 className="text-8xl text-white text-center font-sans font-bold">
-              {text}
-            </h1>
+          <ShowTextGenerateEffect />
           </div>
         </div>
         <div className="transform absolute bottom-4 left-1/2 -translate-x-1/2">
@@ -240,4 +223,9 @@ export default function Home() {
       <Footer />
     </main>
   );
+}
+
+export function ShowTextGenerateEffect() {
+  // return "Bojour";
+  return <TextGenerateEffect duration={2} filter={false} words={message} />;
 }

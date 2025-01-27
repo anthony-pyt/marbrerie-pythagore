@@ -1,8 +1,9 @@
 'use client'
 import { useState } from "react";
 import { Icon } from "@iconify/react";
+import clsx from "clsx";
 
-const Input = ({ icon, type, id, placeholder, onInputChange }) => {
+const Input = ({ icon, type, id, placeholder, onInputChange, className }) => {
   const [value, setValue] = useState("");
 
   // Gérer le changement de la valeur de l'input
@@ -13,7 +14,7 @@ const Input = ({ icon, type, id, placeholder, onInputChange }) => {
   };
 
   return (
-    <div className="relative inline-block w-80 m-1">
+    <div className={clsx("relative m-1", className)}>
       <input
         type={type}
         name={id}
@@ -27,7 +28,7 @@ const Input = ({ icon, type, id, placeholder, onInputChange }) => {
         icon={icon}
         width="30"
         height="30"
-        className="absolute transform -translate-y-1/2 top-1/2 right-1 text-gray-300 hover:text-blue-500 transition-colors duration-200 ease-in-out"
+        className="absolute transform -translate-y-1/2 top-1/2 right-1 text-gray-300 hover:text-or transition-colors duration-200 ease-in-out"
       />
     </div>
   );
