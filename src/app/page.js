@@ -225,7 +225,7 @@ export default function Home() {
   );
 }
 
-export function ShowTextGenerateEffect() {
+const ShowTextGenerateEffect = () => {
   // return "Bojour";
   return <TextGenerateEffect duration={2} filter={false} words={message} />;
 }
