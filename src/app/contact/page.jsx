@@ -12,6 +12,7 @@ import Alert from "../components/Alert";
 import Select from "../components/Select";
 import { FileUpload } from "../components/ui/file-upload";
 import FormServices from "../../../services/formServices";
+import codesPostaux from "codes-postaux";
 
 export default function Page() {
   const [formData, setFormData] = useState({});
@@ -20,6 +21,8 @@ export default function Page() {
   const [isWithPro, setIsWithPro] = useState("no");
   const [formErrors, setFormErrors] = useState({});
   const { VerifyAndSendEmail } = FormServices();
+  const [cities, setCities] = useState([]);
+  const [proCities, setProCities] = useState([]);
 
   useEffect(() => {
     console.log("formData", formData);
@@ -44,13 +47,29 @@ export default function Page() {
     // if (!validateForm()) {
     //   return; // Si la validation échoue, ne pas envoyer
     // }
-    VerifyAndSendEmail(formData);
+    // VerifyAndSendEmail(formData);
 
     setShowAlert(true);
     window.scrollTo({
       top: 0,
       behavior: "smooth", // pour un effet de défilement fluide
     });
+  };
+
+  const findCity = (zipcode, type) => {
+    const response = codesPostaux.find(zipcode);
+    const transformedCities = response.map((city) => ({
+      label: city.nomCommune,
+      value: city.libelleAcheminement,
+    }));
+    if (type === "cities") {
+      setCities(transformedCities);
+    }
+    console.log("response", response);
+
+    if (type === "proCities") {
+      setProCities(transformedCities);
+    }
   };
 
   const validateForm = () => {
@@ -256,13 +275,23 @@ export default function Page() {
                       type="text"
                       id="zipcode"
                       placeholder="Code postal"
-                      onInputChange={(newValue) =>
-                        handleInputChange("zipcode", newValue)
-                      }
+                      onInputChange={(newValue) => {
+                        handleInputChange("zipcode", newValue);
+                        findCity(newValue, "cities");
+                      }}
                       className={"w-full sm:w-52"}
                       error={formErrors.zipcode}
                     />
-                    <Input
+                    <Select
+                      id="city"
+                      options={cities}
+                      placeholder={`Choisissez une ville (${cities.length})`}
+                      onSelectChange={(value) =>
+                        handleInputChange("city", value)
+                      }
+                      className={"w-full -mr-0"}
+                    />
+                    {/* <Input
                       // icon="solar:map-point-add-bold"
                       type="text"
                       id="city"
@@ -272,7 +301,7 @@ export default function Page() {
                       }
                       className={"w-full -mr-0"}
                       error={formErrors.city}
-                    />
+                    /> */}
                   </div>
                 </div>
                 <div className="border rounded-2xl px-2 md:px-12 py-2 md:py-12 my-4 bg-white">
@@ -398,23 +427,34 @@ export default function Page() {
                             type="text"
                             id="proZipcode"
                             placeholder="Code postal"
-                            onInputChange={(newValue) =>
-                              handleInputChange("proZipcode", newValue)
-                            }
+                            onInputChange={(newValue) => {
+                              handleInputChange("proZipcode", newValue);
+                              findCity(newValue, "proCities");
+                            }}
                             className={"w-full sm:w-52"}
                             error={formErrors.proZipcode}
                           />
-                          <Input
+                          <Select
+                            id="proCity"
+                            options={proCities}
+                            placeholder={`Choisissez une ville (${proCities.length})`}
+                            onSelectChange={(value) => {
+                              handleInputChange("proCity", value);
+                            }}
+                            className={"w-full -mr-0"}
+                          />
+                          {/* <Input
                             // icon="solar:map-point-add-bold"
                             type="text"
                             id="proCity"
                             placeholder="Ville"
-                            onInputChange={(newValue) =>
-                              handleInputChange("proCity", newValue)
-                            }
+                            onInputChange={(newValue) => {
+                              handleInputChange("proCity", newValue);
+                              findCity(newValue, "proCities");
+                            }}
                             className={"w-full sm:w-full"}
                             error={formErrors.proCity}
-                          />
+                          /> */}
                         </div>
                         <div className="">
                           <Input
@@ -444,7 +484,9 @@ export default function Page() {
                 </div>
                 <div className="border rounded-2xl px-2 md:px-12 py-2 md:py-12 my-4 bg-white">
                   <h5 className="mb-4">Avez-vous des documents à fournir ?</h5>
-                  <FileUpload onChange={(e) => console.log(e)} />
+                  <FileUpload
+                    onChange={(newValue) => handleInputChange("files", newValue)}
+                  />
                 </div>
               </div>
             )}
@@ -496,7 +538,7 @@ export default function Page() {
   );
 }
 
-export const rooms = [
+const rooms = [
   {
     label: "Cuisine",
     value: "kitchen",

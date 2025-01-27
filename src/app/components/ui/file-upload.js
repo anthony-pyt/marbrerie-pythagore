@@ -75,7 +75,7 @@ export const FileUpload = ({ onChange }) => {
   };
 
   return (
-    <div className="w-full" {...getRootProps()}>
+    <div className="group relative w-full" {...getRootProps()}>
       <motion.div
         onClick={handleClick}
         whileHover="animate"
@@ -92,9 +92,11 @@ export const FileUpload = ({ onChange }) => {
           <GridPattern />
         </div> */}
         <div className="flex flex-col items-center justify-center">
-          <p className="relative font-sans font-bold text-neutral-700 text-base">
-            Cliquez ou glissez-déposez pour ajouter un fichier
-          </p>
+          <div className="relative">
+            <p className="font-sans font-bold text-neutral-700">
+             <span className="group-hover:bg-or transform duration-500 group-hover:px-2 rounded">Cliquez</span>  ou glissez-déposez pour ajouter un fichier
+            </p>
+          </div>
           <p className="relative font-sans font-normal text-neutral-400 text-sm mt-2">
             Formats acceptés: .png .jpg .jpeg .pdf
           </p>
@@ -109,18 +111,18 @@ export const FileUpload = ({ onChange }) => {
                     "shadow border"
                   )}
                 >
-                <div className="mr-4">
-                  {file.type.startsWith("image/") &&
-                    filePreviews[file.name] && (
-                      <div className="mt-2 mb-4 w-full flex justify-center border rounded-xl overflow-hidden">
-                        <img
-                          src={filePreviews[file.name]}
-                          alt={file.name}
-                          className="h-16 w-16 object-cover rounded-md"
-                        />
-                      </div>
-                    )}
-                </div>
+                  <div className="mr-4">
+                    {file.type.startsWith("image/") &&
+                      filePreviews[file.name] && (
+                        <div className="mt-2 mb-4 w-full flex justify-center border rounded-xl overflow-hidden">
+                          <img
+                            src={filePreviews[file.name]}
+                            alt={file.name}
+                            className="h-16 w-16 object-cover rounded-md"
+                          />
+                        </div>
+                      )}
+                  </div>
                   <div className="w-full flex flex-col items-center md:items-start gap-4">
                     <motion.p
                       initial={{ opacity: 0 }}
