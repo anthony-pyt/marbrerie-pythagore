@@ -14,62 +14,82 @@ import {
   DialogBackdrop,
 } from "@headlessui/react";
 import PageTitle from "../components/PageTitle";
-const images = [
+import AnimatedTestimonials from "./../components/ui/animated-testimonials";
+import ServiceCard from "../components/services/serviceCard";
+import { PinContainer, PinPerspective } from "../components/ui/3d-pin";
+import Image from "next/image";
+import Button from "../components/Button";
+
+const metiersAtelier = [
   {
-    image_url: "/images/atelier/IMG_0053.JPEG",
+    src: "/images/atelier/IMG_0053.JPEG",
     alt: "IMG_0053",
-    title: "Polisseur",
-    description:
-      "assure la finition des surfaces en pierres naturelles, quartz ou céramique selon l’aspect final voulu par les clients. Il met en valeur l’éclat et la brillance de la pierre grâce à un polissage manuel ou automatique d’une grande précision. ",
+    name: "Polisseur",
+    quote:
+      "assure la finition des surfaces en pierres naturelles, quartz ou céramique selon l’aspect final voulu par les clients. Il met en valeur l’éclat et la brillance de la pierre grâce à un polissage manuel ou automatique d’une grande précision.",
   },
   {
-    image_url: "/images/atelier/IMG_0084.JPEG",
+    src: "/images/atelier/IMG_0084.JPEG",
     alt: "IMG_0084",
-    title: "Polisseur",
-    description:
-      "assure la finition des surfaces en pierres naturelles, quartz ou céramique selon l’aspect final voulu par les clients. Il met en valeur l’éclat et la brillance de la pierre grâce à un polissage manuel ou automatique d’une grande précision. ",
+    name: "Débiteur",
+    quote:
+      "assure la découpe en machine des surfaces en pierre naturelle, quartz ou céramique conformément aux plans transmis par le bureau d’étude.",
   },
   {
-    image_url: "/images/atelier/IMG_1598.jpg",
+    src: "/images/atelier/IMG_1598.jpg",
     alt: "IMG_1598",
-    title: "Polisseur",
-    description:
-      "assure la finition des surfaces en pierres naturelles, quartz ou céramique selon l’aspect final voulu par les clients. Il met en valeur l’éclat et la brillance de la pierre grâce à un polissage manuel ou automatique d’une grande précision. ",
+    name: "Contrôleur",
+    quote:
+      "intervient à la fin de la chaîne de transformation pour vérifier la conformité du plan de travail et le préparer avant expédition. ",
   },
-  {
-    image_url: "/images/atelier/IMG_1597.png",
-    alt: "IMG_1597",
-    title: "Polisseur",
-    description:
-      "assure la finition des surfaces en pierres naturelles, quartz ou céramique selon l’aspect final voulu par les clients. Il met en valeur l’éclat et la brillance de la pierre grâce à un polissage manuel ou automatique d’une grande précision. ",
-  },
-  {
-    image_url: "/images/atelier/IMG_1600.png",
-    alt: "IMG_1600",
-    title: "Poseur",
-    description:
-      "assure la finition des surfaces en pierres naturelles, quartz ou céramique selon l’aspect final voulu par les clients. Il met en valeur l’éclat et la brillance de la pierre grâce à un polissage manuel ou automatique d’une grande précision. ",
-  },
-  // ... (other images)
 ];
 
-const customerRelationships = [
+const metiersClient = [
   {
-    image_url: "/images/relations/relation_reunion.jpg",
+    src: "/images/relations/relation_reunion.jpg",
     alt: "realtion_reunion",
-    title: "Assistant administration des ventes",
-    description:
-      "Est en charge d’assurer la relation client par la création d’une réelle relation de confiance et d’élaborer les commandes clients de son propre secteur géographique. ",
+    name: "Assistant commercial/ADV",
+    quote:
+      "est en charge d’assurer la relation client par la création d’une réelle relation de confiance et d’élaborer les commandes clients de son propre secteur géographique.",
   },
   {
-    image_url:
-      "/images/relations/excited-multiracial-colleagues-enjoying-triumph-together-in-3931634-scaled.jpeg",
+    src: "/images/relations/excited-multiracial-colleagues-enjoying-triumph-together-in-3931634-scaled.jpeg",
     alt: "realtion_reunion",
-    title: "Assistant administration des ventes",
-    description:
-      "Est en charge d’assurer la relation client par la création d’une réelle relation de confiance et d’élaborer les commandes clients de son propre secteur géographique. ",
+    name: "Chargé de planning",
+    quote:
+      "organise la pose des plans de travail choisis. Pour cela, il gère les échanges clients, et planifie les tournées des installateurs.",
   },
-  // ... (other relationships)
+  {
+    src: "/images/relations/excited-multiracial-colleagues-enjoying-triumph-together-in-3931634-scaled.jpeg",
+    alt: "realtion_reunion",
+    name: "Chargé de Clientèle",
+    quote:
+      "développe un portefeuille client de son propre secteur géographique, en organisant des visites clients, en les formant, et en collaborant avec les équipes commerciales pour maximiser la visibilité et les ventes des produits.",
+  },
+];
+
+const metiersTerrain = [
+  {
+    src: "/images/relations/relation_reunion.jpg",
+    alt: "realtion_reunion",
+    name: "Dessinateur DAO",
+    quote:
+      "étudie les projets, puis réalise des plans de fabrication 2D sur logiciel pour permettre la conception de plans de travail en pierres naturelles, quartz ou céramique par l’entreprise.",
+  },
+  {
+    src: "/images/relations/excited-multiracial-colleagues-enjoying-triumph-together-in-3931634-scaled.jpeg",
+    alt: "realtion_reunion",
+    name: "Installateur ",
+    quote:
+      " intervient auprès des clients pour monter et assembler des surfaces en pierres naturelles, quartz ou céramique préalablement transformés par l’entreprise pour réaliser différents types d’agencement. (Organisation des chantiers, Pose et Installation, Assurer le bon déroulement de la commande)",
+  },
+  {
+    src: "/images/relations/excited-multiracial-colleagues-enjoying-triumph-together-in-3931634-scaled.jpeg",
+    alt: "realtion_reunion",
+    name: "Coteur ",
+    quote:
+      "intervient auprès des clients pour effectuer des relevés de mesures sur différents agencements, en vue de la fabrication des plans en pierre naturelle, quartz ou céramique par l’entreprise. (Organisation et préparation des interventions, Prise de cotes, Assure la relation client au moment de la prise de cotes, Réalisation du dossier de cotes)",
+  },
 ];
 
 const commitments = [
@@ -77,41 +97,47 @@ const commitments = [
     title: "Nous soutenons nos collaborateurs",
     description:
       "Donner les moyens à nos collaborateurs de réaliser pleinement leur potentiel, est une valeur unanimement reconnue dans l’entreprise. Les conditions de travail sont régulièrement optimisées pour que chacun puisse offrir le meilleur de lui-même.",
-    image_url:
-      "/images/engagements/young-colleagues-work-office-using-computers.jpg",
+    src: "/images/engagements/young-colleagues-work-office-using-computers.jpg",
   },
   {
     title: "Nous pensons à notre futur",
     description:
       "Notre engagement se traduit également par des actions concrètes pour préserver notre environnement. Nous optimisons nos déchets  et privilégions le recyclage de l'eau dans notre processus de travail. Nous adoptons aussi une approche de sobriété énergétique, en réduisant notre consommation d'énergie pour un avenir plus durable.",
-    image_url: "/images/relations/relation_reunion.jpg",
+    src: "/images/relations/relation_reunion.jpg",
   },
   {
     title: "Nous recrutons pour l’avenir",
     description:
       "Nous adoptons des politiques de recrutement inclusives, offrant des aides à la mobilité pour faciliter l’installation de nos nouveaux employés. Notre processus d’intégration permet à chacun de s’épanouir et de s’intégrer facilement au sein de notre équipe.",
-    image_url: "/images/engagements/decoupe.jpg",
+    src: "/images/engagements/decoupe.jpg",
   },
-  // ... (other commitments)
 ];
 
 const providedPositions = [
   {
-    title: "Installateurs",
-    description: "CDI Temps Plein",
-    image_url: "/images/engagements/installateurs.png",
+    title: "Installateurs H/F",
+    description:
+      "Vos missions : Vous êtes chargé(e) d'assurer la finition des plans de travail en pierres naturelles, quartz ou céramique selon l'aspect final voulu par les clients. Vous mettez en valeur le plan de travail par des opérations de polissage extrêmement précises qu'elles soient manuelles ou automatiques ; à l'aide d'un outillage électroportatif (polissage, collage, assemblage). Vous êtes à l'aise avec ce type de matériel. Port de charge et manipulation à prévoir. ",
+    type: "CDI Temps Plein",
+    src: "/images/engagements/installateurs.png",
+    date: "2022-12-12",
   },
   {
-    title: "Polisseurs",
-    description: "CDI Temps Plein",
-    image_url: "/images/engagements/polisseur.png",
+    title: "Polisseurs H/F",
+    description:
+      "Prendre connaissance des commandes prévues et leurs spécificités - Savoir lire les plans",
+    type: "CDI Temps Plein",
+    src: "/images/engagements/polisseur.png",
+    date: "2022-12-12",
   },
   {
-    title: "Chargé de clientèle",
-    description: "CDI Temps Plein",
-    image_url: "/images/engagements/entretien.png",
+    title: "Chargé de clientèle H/F",
+    description:
+      "Vous êtes autonome, minutieux (e). La lecture de plans ne vous pose aucun problème et votre travail est soigné. Vous aimez travailler en équipe. Idéalement vous justifiez d'une expérience en tant que marbrier(ère), ou tout autre métier manuel (travail du métal, du verre, du bois) ou d'un métier du second œuvre.",
+    type: "CDD mi-temps",
+    src: "/images/engagements/entretien.png",
+    date: "2022-12-12",
   },
-  // ... (other positions)
 ];
 
 export default function Page() {
@@ -124,51 +150,36 @@ export default function Page() {
     <main className="min-h-screen antialiased">
       <MainMenu />
       <PageTitle title={"Nos métier"} />
-      <SectionWorkShop />
+      <div className="m-4  bg-gray-100 p-4 rounded-xl ">
+        <SectionTestimonials
+          title={"EN RELATION AVEC NOS CLIENTS"}
+          images={metiersClient}
+        />
+        <SectionTestimonials title={"À L’ATELIER"} images={metiersAtelier} />
+        <SectionTestimonials title={"SUR LE TERRAIN"} images={metiersTerrain} />
+      </div>
       <SectionCommitments />
       <Footer />
     </main>
   );
 }
 
-const SectionWorkShop = () => (
-  <div className="container mx-auto">
-    <fieldset className="grid my-8 border border-or rounded-lg">
-      <legend className="md:text-3xl ms-5 text-xl">À L’ATELIER</legend>
-      <SlideComponent images={images} />
-    </fieldset>
-    <RelationshipSection />
+const SectionTestimonials = ({ title, images }) => (
+  <div className="mx-auto m-2">
+    <h2 className="text-4xl text-center md:text-left">{title}</h2>
+    <AnimatedTestimonials testimonials={images} />
   </div>
 );
 
-const RelationshipSection = () => (
-  <fieldset className="grid my-8 border border-or rounded-lg">
-    <legend className="md:text-3xl ms-5 text-xl">
-      EN RELATION AVEC NOS CLIENTS
-    </legend>
-    <SlideComponent images={customerRelationships} />
-  </fieldset>
-);
-
 const SectionCommitments = () => (
-  <div className="container mx-auto">
-    <h2 className="text-xl md:text-4xl text-center md:text-left">
-      NOS ENGAGEMENTS
-    </h2>
-    <div className="mt-8 w-full flex justify-center items-center">
+  <div className="container mx-auto my-8">
+    <h2 className="text-4xl text-center md:text-left">NOS ENGAGEMENTS</h2>
+    <div className="w-full flex justify-center items-center">
       <div className="grid md:grid-cols-3 sm:gap-6 mb-5 gap-5 mt-12 p-2 ">
         {commitments.map((item, index) => (
-          <Cards
-            key={index}
-            description={item.description}
-            title={item.title}
-            image={item.image_url}
-            titleClass="text-base"
-            cardClass=" min-w-48 bg-white rounded-xl shadow-xl border my-10 "
-            imageClass=" rounded-md  max-w-64 w-auto  "
-            imageContainerClass="flex justify-center -mt-24"
-            cildrenClass="text-gray-400"
-          />
+          <ServiceCard key={index} title={item.title} image={item.src}>
+            <div>{item.description}</div>
+          </ServiceCard>
         ))}
       </div>
     </div>
@@ -177,24 +188,40 @@ const SectionCommitments = () => (
 );
 
 const Provided = () => (
-  <div>
-    <div className="flex items-center gap-4 w-full">
-      <h2 className="">POSTES À POURVOIR</h2>
-      <DialogFom />
+  <div className="mt-12 mx-auto bg-secondary p-12 rounded-xl">
+    <div className="flex items-center justify-center w-full">
+      <div className="mb-12 flex items-center space-x-3">
+        <h2 className="text-white">Nos dernières offres d'emploi</h2>
+        <Button
+          onClick={() => setIsOpenModal(true)}
+          text={"Voir plus"}
+          color="or"
+          icon={"solar:arrow-right-outline"}
+        />
+      </div>
     </div>
-    <div className="mt-8 w-full flex justify-center items-center  ">
-      <div className="grid md:grid-cols-3 sm:gap-6 mb-5 gap-5 mt-12 p-2 ">
+    <div className="w-full flex justify-center items-center max-w-5xl mx-auto">
+      <div className="">
         {providedPositions.map((item, index) => (
-          <Cards
+          <div
             key={index}
-            description={item.description}
-            chidren={item.title}
-            image={item.image_url}
-            cardClass=" min-w-64  rounded-xl   my-10 "
-            imageClass=" rounded-md  max-w-64 w-auto  "
-            imageContainerClass="flex justify-center -mt-24"
-            cildrenClass="text-xs normal-case rounded-xl  inline-flex px-2 text-center  items-center py-0.5 border border-slate-600 hover:bg-slate-800 hover:text-white font-normal"
-          />
+            className="border rounded-xl shadow p-4 mb-4 bg-white"
+          >
+            <div>
+              <div className="flex justify-between items-center mb-2">
+                <p className="font-bold uppercase">{item.title}</p>
+                <p className="text-xs border shadow rounded px-2">
+                  {item.type}
+                </p>
+              </div>
+              <p className="text-sm line-clamp-2">{item.description}</p>
+            </div>
+            <div className="flex justify-end">
+              <span className="text-xs text-gray-500">
+                publié le {item.date}
+              </span>
+            </div>
+          </div>
         ))}
       </div>
     </div>

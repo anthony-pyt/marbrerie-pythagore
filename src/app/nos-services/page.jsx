@@ -9,7 +9,7 @@ export default function Page() {
       <MainMenu />
       <div className="p-4">
         <PageTitle title={"Nos services pour les professionnels"} />
-        <div className="flex items-stretch justify-center lg:justify-start flex-wrap my-12 mx-6">
+        <div className="flex items-stretch justify-center flex-wrap my-12 mx-6">
           <ServiceCard title="Conseil" image="/images/conseil.jpg">
             <ul>
               <li>- Sur les produits</li>
@@ -36,7 +36,7 @@ export default function Page() {
             </ul>
           </ServiceCard>
         </div>
-        <div className="flex items-stretch justify-center lg:justify-start flex-wrap my-12 mx-6">
+        <div className="flex items-stretch justify-center flex-wrap my-12 mx-6">
           <ServiceCard title="SAV" image="/images/sav.jpg">
             <p>
               Notre service après-vente est à votre disposition pour répondre à

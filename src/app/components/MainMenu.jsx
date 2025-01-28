@@ -147,7 +147,7 @@ export default function MainMenu({ page }) {
                   href={item.link}
                   className="group-hover:text-primary text-secondary transform duration-500 flex items-center space-x-1 px-4 py-2"
                 >
-                  <Icon
+                  {/* <Icon
                     icon={item.icon}
                     width="24"
                     height="24"
@@ -157,7 +157,7 @@ export default function MainMenu({ page }) {
                           : "group-hover:text-black text-white"
                         : "group-hover:text-primary text-secondary"
                       } cursor-pointer transform duration-700 delay-300`}
-                  />
+                  /> */}
                   <span
                     className={`${page == "home"
                         ? isHeightReduced
