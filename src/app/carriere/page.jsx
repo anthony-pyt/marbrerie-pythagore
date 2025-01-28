@@ -149,8 +149,8 @@ export default function Page() {
   return (
     <main className="min-h-screen antialiased">
       <MainMenu />
-      <PageTitle title={"Nos métier"} />
-      <div className="m-4  bg-gray-100 p-4 rounded-xl ">
+      <PageTitle title={"Nos métiers"} />
+      <div className="m-4 bg-gray-100 p-4 rounded-xl ">
         <SectionTestimonials
           title={"EN RELATION AVEC NOS CLIENTS"}
           images={metiersClient}
@@ -165,7 +165,7 @@ export default function Page() {
 }
 
 const SectionTestimonials = ({ title, images }) => (
-  <div className="mx-auto m-2">
+  <div className="container mx-auto m-2">
     <h2 className="text-4xl text-center md:text-left">{title}</h2>
     <AnimatedTestimonials testimonials={images} />
   </div>
@@ -173,7 +173,7 @@ const SectionTestimonials = ({ title, images }) => (
 
 const SectionCommitments = () => (
   <div className="container mx-auto my-8">
-    <h2 className="text-4xl text-center md:text-left">NOS ENGAGEMENTS</h2>
+    <h2 className="text-4xl">NOS ENGAGEMENTS</h2>
     <div className="w-full flex justify-center items-center">
       <div className="grid md:grid-cols-3 sm:gap-6 mb-5 gap-5 mt-12 p-2 ">
         {commitments.map((item, index) => (

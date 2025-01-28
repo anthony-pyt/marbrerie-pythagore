@@ -241,15 +241,15 @@ const OurValues = () => {
         </div>
         <div className="flex justify-between space-x-1 divide-x-2 divide-or my-20">
           <div className="w-full flex flex-col items-center justify-center py-12">
-            <p className="text-6xl font-bold font-serif">96%</p>
+            <p className="text-6xl font-bold">96%</p>
             <p className="text-xl">de satisfation clients</p>
           </div>
           <div className="w-full flex flex-col items-center justify-center">
-            <p className="text-6xl font-bold font-serif">7000+</p>
+            <p className="text-6xl font-bold">7000+</p>
             <p className="text-xl">projets par an</p>
           </div>
           <div className="w-full flex flex-col items-center justify-center">
-            <p className="text-6xl font-bold font-serif">100+</p>
+            <p className="text-6xl font-bold">100+</p>
             <p className="text-xl">collaborateurs</p>
           </div>
         </div>
