@@ -11,8 +11,9 @@ import CompanyInfos from "../components/CompanyInfos"; // Nouveau composant
 import Alert from "../components/Alert";
 import Select from "../components/Select";
 import { FileUpload } from "../components/ui/file-upload";
-import FormServices from "../../../services/formServices";
+import FormServices from "../../../api/services/formServices";
 import codesPostaux from "codes-postaux";
+import ReCAPTCHA from "react-google-recaptcha";
 
 export default function Page() {
   const [formData, setFormData] = useState({});
@@ -23,10 +24,8 @@ export default function Page() {
   const { VerifyAndSendEmail } = FormServices();
   const [cities, setCities] = useState([]);
   const [proCities, setProCities] = useState([]);
-
-  useEffect(() => {
-    console.log("formData", formData);
-  }, [formData]);
+  const [recaptchaToken, setRecaptchaToken] = useState(null);
+  const [messageStatus, setMessageStatus] = useState("");
 
   const handleInputChange = (id, newValue) => {
     setFormData((prevFormData) => ({
@@ -43,17 +42,37 @@ export default function Page() {
     setIsWithPro(value);
   };
 
-  const sendForm = () => {
+  const sendForm = async () => {
     // if (!validateForm()) {
-    //   return; // Si la validation échoue, ne pas envoyer
+    //   return; // Arrêter si la validation échoue
     // }
-    // VerifyAndSendEmail(formData);
 
-    setShowAlert(true);
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth", // pour un effet de défilement fluide
+    if (!recaptchaToken) {
+      setMessageStatus("Veuillez valider le reCAPTCHA.");
+      return;
+    }
+
+    // Vérification du reCAPTCHA côté serveur
+    const recaptchaResponse = await fetch("/api/route", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ token: recaptchaToken }),
     });
+
+    const recaptchaData = await recaptchaResponse.json();
+
+    if (recaptchaResponse.status !== 200) {
+      setMessageStatus("Échec de la vérification reCAPTCHA.");
+      return;
+    }
+
+    VerifyAndSendEmail(formData);
+    setShowAlert(true);
+    setMessageStatus("Formulaire envoyé avec succès !");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    setRecaptchaToken(null);
   };
 
   const findCity = (zipcode, type) => {
@@ -485,7 +504,9 @@ export default function Page() {
                 <div className="border rounded-2xl px-2 md:px-12 py-2 md:py-12 my-4 bg-white">
                   <h5 className="mb-4">Avez-vous des documents à fournir ?</h5>
                   <FileUpload
-                    onChange={(newValue) => handleInputChange("files", newValue)}
+                    onChange={(newValue) =>
+                      handleInputChange("files", newValue)
+                    }
                   />
                 </div>
               </div>
@@ -500,6 +521,13 @@ export default function Page() {
                       handleInputChange("message", newValue)
                     }
                     error={formErrors.message}
+                  />
+                </div>
+                {/* reCAPTCHA */}
+                <div className="mt-4">
+                  <ReCAPTCHA
+                    sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                    onChange={(token) => setRecaptchaToken(token)}
                   />
                 </div>
                 <div className="flex justify-center mt-12">

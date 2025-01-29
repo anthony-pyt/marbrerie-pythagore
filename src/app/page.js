@@ -11,15 +11,21 @@ import { useEffect, useState, useRef } from "react";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
 import {TextGenerateEffect} from "./components/ui/text-generate-effect";
+import { Carousel, Card } from "./components/ui/apple-cards-carousel"
+import { useRouter } from "next/navigation";
 
 const message = "bienvenue chez pythagore";
-
 
 export default function Home() {
 
   // État pour la visibilité des sections
   const [visibleSections, setVisibleSections] = useState({});
   const sectionRefs = useRef([]);
+  const router = useRouter()
+
+  const cards = data.map((card, index) => (
+    <Card key={card.src} card={card} index={index} />
+  ));
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -51,6 +57,10 @@ export default function Home() {
     };
   }, []);
 
+  const navigateTo = (href) => {
+    router.push(href)
+  }
+
   return (
     <main className="min-h-screen">
       <MainMenu page="home" />
@@ -64,7 +74,7 @@ export default function Home() {
             className="opacity-40 blur w-full object-cover"
           />
           <div className="absolute transform left-1/2 -translate-x-1/2 w-full">
-          <ShowTextGenerateEffect />
+            <ShowTextGenerateEffect />
           </div>
         </div>
         <div className="transform absolute bottom-4 left-1/2 -translate-x-1/2">
@@ -84,8 +94,7 @@ export default function Home() {
         ref={(el) => (sectionRefs.current[0] = el)}
         data-id="slider"
         id="slider"
-        className={`flex justify-center animate__animated ${visibleSections["slider"] ? "animate__fadeInUpBig" : "opacity-0"
-          }`}
+        className={`flex justify-center animate__animated`}
       >
         <div className="bg-white flex h-auto lg:h-[500px] justify-between rounded-xl overflow-hidden my-12 shadow-lg flex-wrap w-11/12 border">
           <div className="flex-1">
@@ -105,6 +114,7 @@ export default function Home() {
                   text="Découvrir"
                   size="normal"
                   icon="watch"
+                  onClick={() => navigateTo('/savoir-faire')}
                 />
               </div>
             </div>
@@ -118,17 +128,25 @@ export default function Home() {
       <section
         ref={(el) => (sectionRefs.current[1] = el)}
         data-id="inspiration"
-        className={`py-20 animate__animated ${visibleSections["inspiration"] ? "animate__fadeInDown" : "opacity-0"
-          }`}
+        className={`py-20 animate__animated 
+          ${ visibleSections["inspiration"] ? "animate__fadeInRight" : "opacity-0"}
+        `}
       >
-        <InspirationWidget />
+        <div className="w-full h-full">
+          <h2 className="max-w-7xl pl-4 mx-auto text-xl md:text-5xl font-bold text-neutral-800 font-sans">
+            Inspirez-vous !
+          </h2>
+          <Carousel items={cards} />
+        </div>
+        {/* <InspirationWidget /> */}
       </section>
 
       <section
         ref={(el) => (sectionRefs.current[2] = el)}
         data-id="catalogue"
-        className={`animate__animated ${visibleSections["catalogue"] ? "animate__fadeInRight" : "opacity-0"
-          }`}
+        className={`animate__animated ${
+          visibleSections["catalogue"] ? "animate__fadeInLeft" : "opacity-0"
+        }`}
       >
         <ActionCatalogue />
       </section>
@@ -136,8 +154,9 @@ export default function Home() {
       <section
         ref={(el) => (sectionRefs.current[3] = el)}
         data-id="services"
-        className={`py-20 animate__animated bg-gray-100 ${visibleSections["services"] ? "animate__fadeIn" : "opacity-0"
-          }`}
+        className={`py-20 animate__animated bg-gray-100 ${
+          visibleSections["services"] ? "animate__fadeIn" : "opacity-0"
+        }`}
       >
         <h2 className="text-center mb-12 text-secondary">
           Services pour les professionnels
@@ -163,8 +182,9 @@ export default function Home() {
       <section
         ref={(el) => (sectionRefs.current[4] = el)}
         data-id="reviews"
-        className={`py-20 animate__animated ${visibleSections["reviews"] ? "animate__fadeIn" : "opacity-0"
-          }`}
+        className={`py-20 animate__animated ${
+          visibleSections["reviews"] ? "animate__fadeIn" : "opacity-0"
+        }`}
       >
         <div className="flex flex-col items-center my-8">
           <h2 className="text-center">Avis de nos clients</h2>
@@ -228,3 +248,68 @@ export default function Home() {
 const ShowTextGenerateEffect = () => {
   return <TextGenerateEffect duration={2} filter={false} words={message} />;
 }
+
+const DummyContent = () => {
+  return (
+    <>
+      {[...new Array(3).fill(1)].map((_, index) => {
+        return (
+          <div
+            key={"dummy-content" + index}
+            className="bg-[#F5F5F7] dark:bg-neutral-800 p-8 md:p-14 rounded-3xl mb-4"
+          >
+            <p className="text-neutral-600 dark:text-neutral-400 text-base md:text-2xl font-sans max-w-3xl mx-auto">
+              <span className="font-bold text-neutral-700 dark:text-neutral-200">
+                The first rule of Apple club is that you boast about Apple club.
+              </span>{" "}
+              Keep a journal, quickly jot down a grocery list, and take amazing
+              class notes. Want to convert those notes to text? No problem.
+              Langotiya jeetu ka mara hua yaar is ready to capture every
+              thought.
+            </p>
+            <Image
+              src="https://assets.aceternity.com/macbook.png"
+              alt="Macbook mockup from Aceternity UI"
+              height="500"
+              width="500"
+              className="md:w-1/2 md:h-1/2 h-full w-full mx-auto object-contain"
+            />
+          </div>
+        );
+      })}
+    </>
+  );
+};
+
+const data = [
+  {
+    category: "Xtone",
+    title: "Ars Beige",
+    src: "/images/romantic.jpg",
+    content: <DummyContent />,
+  },
+  {
+    category: "Dekton",
+    title: "Sirius",
+    src: "/images/versailles.jpg",
+    content: <DummyContent />,
+  },
+  {
+    category: "Verrazzo",
+    title: "Topaze",
+    src: "/images/credence-marbre-dore-3.png",
+    content: <DummyContent />,
+  },
+  {
+    category: "Ostrea",
+    title: "Saint Jacques",
+    src: "/images/IMG-4058.JPG",
+    content: <DummyContent />,
+  },
+  {
+    category: "Marazzi",
+    title: "Golden White",
+    src: "/images/atr.jpg",
+    content: <DummyContent />,
+  },
+];

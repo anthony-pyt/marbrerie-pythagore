@@ -4,7 +4,7 @@ export default function FormServices() {
   const VerifyAndSendEmail = async (datas) => {
     try {
         const response = await axios.post(
-          `${process.env.NEXT_PUBLIC_URL}/marbrerie-pythagore/verify_and_send_mail`,
+          `${process.env.NEXT_PUBLIC_GATEWAY_URL}/marbrerie-pythagore/verify_and_send_mail`,
           { datas }
         );
         

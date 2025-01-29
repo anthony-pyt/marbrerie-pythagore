@@ -9,6 +9,7 @@ const InspirationWidget = () => {
         <ProductItem link="/images/romantic.jpg" />
         <ProductItem link="/images/versailles.jpg" />
         <ProductItem link="/images/IMG-4058.JPG" />
+        <ProductItem link="/images/IMG-4058.JPG" />S
       </div>
     </div>
   );

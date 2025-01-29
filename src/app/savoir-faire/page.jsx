@@ -241,7 +241,7 @@ export default function Page() {
           {/* Galerie d'images */}
           <div className="mt-12">
             <h4 className="text-2xl font-bold text-gray-800 mb-6 text-center">
-              Galerie de l'atelier
+              Quelques photos
             </h4>
             <ImageGrid images={images} />
           </div>
