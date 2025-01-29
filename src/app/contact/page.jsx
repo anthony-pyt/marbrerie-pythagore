@@ -27,6 +27,10 @@ export default function Page() {
   const [recaptchaToken, setRecaptchaToken] = useState(null);
   const [messageStatus, setMessageStatus] = useState("");
 
+  useEffect(() => {
+    console.log("Clé secrète:", process.env.RECAPTCHA_SECRET_KEY);
+  }, []);
+
   const handleInputChange = (id, newValue) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
