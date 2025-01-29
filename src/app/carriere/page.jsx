@@ -22,6 +22,7 @@ import Button from "../components/Button";
 
 const metiersAtelier = [
   {
+    id: 1,
     src: "/images/atelier/IMG_0053.JPEG",
     alt: "IMG_0053",
     name: "Polisseur",
@@ -29,6 +30,7 @@ const metiersAtelier = [
       "assure la finition des surfaces en pierres naturelles, quartz ou céramique selon l’aspect final voulu par les clients. Il met en valeur l’éclat et la brillance de la pierre grâce à un polissage manuel ou automatique d’une grande précision.",
   },
   {
+    id: 2,
     src: "/images/atelier/IMG_0084.JPEG",
     alt: "IMG_0084",
     name: "Débiteur",
@@ -36,6 +38,7 @@ const metiersAtelier = [
       "assure la découpe en machine des surfaces en pierre naturelle, quartz ou céramique conformément aux plans transmis par le bureau d’étude.",
   },
   {
+    id: 3,
     src: "/images/atelier/IMG_1598.jpg",
     alt: "IMG_1598",
     name: "Contrôleur",
@@ -46,6 +49,7 @@ const metiersAtelier = [
 
 const metiersClient = [
   {
+    id: 1,
     src: "/images/relations/relation_reunion.jpg",
     alt: "realtion_reunion",
     name: "Assistant commercial/ADV",
@@ -53,6 +57,7 @@ const metiersClient = [
       "est en charge d’assurer la relation client par la création d’une réelle relation de confiance et d’élaborer les commandes clients de son propre secteur géographique.",
   },
   {
+    id: 2,
     src: "/images/relations/excited-multiracial-colleagues-enjoying-triumph-together-in-3931634-scaled.jpeg",
     alt: "realtion_reunion",
     name: "Chargé de planning",
@@ -60,6 +65,7 @@ const metiersClient = [
       "organise la pose des plans de travail choisis. Pour cela, il gère les échanges clients, et planifie les tournées des installateurs.",
   },
   {
+    id: 3,
     src: "/images/relations/excited-multiracial-colleagues-enjoying-triumph-together-in-3931634-scaled.jpeg",
     alt: "realtion_reunion",
     name: "Chargé de Clientèle",
@@ -70,6 +76,7 @@ const metiersClient = [
 
 const metiersTerrain = [
   {
+    id:1,
     src: "/images/relations/relation_reunion.jpg",
     alt: "realtion_reunion",
     name: "Dessinateur DAO",
@@ -77,6 +84,7 @@ const metiersTerrain = [
       "étudie les projets, puis réalise des plans de fabrication 2D sur logiciel pour permettre la conception de plans de travail en pierres naturelles, quartz ou céramique par l’entreprise.",
   },
   {
+    id:2,
     src: "/images/relations/excited-multiracial-colleagues-enjoying-triumph-together-in-3931634-scaled.jpeg",
     alt: "realtion_reunion",
     name: "Installateur ",
@@ -84,6 +92,7 @@ const metiersTerrain = [
       " intervient auprès des clients pour monter et assembler des surfaces en pierres naturelles, quartz ou céramique préalablement transformés par l’entreprise pour réaliser différents types d’agencement. (Organisation des chantiers, Pose et Installation, Assurer le bon déroulement de la commande)",
   },
   {
+    id:3,
     src: "/images/relations/excited-multiracial-colleagues-enjoying-triumph-together-in-3931634-scaled.jpeg",
     alt: "realtion_reunion",
     name: "Coteur ",
@@ -94,27 +103,31 @@ const metiersTerrain = [
 
 const commitments = [
   {
+    id: 1,
     title: "Nous soutenons nos collaborateurs",
     description:
       "Donner les moyens à nos collaborateurs de réaliser pleinement leur potentiel, est une valeur unanimement reconnue dans l’entreprise. Les conditions de travail sont régulièrement optimisées pour que chacun puisse offrir le meilleur de lui-même.",
     src: "/images/engagements/young-colleagues-work-office-using-computers.jpg",
   },
   {
+    id: 2,
     title: "Nous pensons à notre futur",
     description:
       "Notre engagement se traduit également par des actions concrètes pour préserver notre environnement. Nous optimisons nos déchets  et privilégions le recyclage de l'eau dans notre processus de travail. Nous adoptons aussi une approche de sobriété énergétique, en réduisant notre consommation d'énergie pour un avenir plus durable.",
     src: "/images/relations/relation_reunion.jpg",
   },
   {
+    id: 3,
     title: "Nous recrutons pour l’avenir",
     description:
-      "Nous adoptons des politiques de recrutement inclusives, offrant des aides à la mobilité pour faciliter l’installation de nos nouveaux employés. Notre processus d’intégration permet à chacun de s’épanouir et de s’intégrer facilement au sein de notre équipe.",
+      "En tant qu'acteur économique de notre territoire, nous adoptons des politiques de recrutement inclusives, offrant des aides à la mobilité pour faciliter l’installation de nos nouveaux employés. Notre processus d’intégration permet à chacun de s’épanouir et de s’intégrer facilement au sein de notre équipe.",
     src: "/images/engagements/decoupe.jpg",
   },
 ];
 
 const providedPositions = [
   {
+    id:1,
     title: "Installateurs H/F",
     description:
       "Vos missions : Vous êtes chargé(e) d'assurer la finition des plans de travail en pierres naturelles, quartz ou céramique selon l'aspect final voulu par les clients. Vous mettez en valeur le plan de travail par des opérations de polissage extrêmement précises qu'elles soient manuelles ou automatiques ; à l'aide d'un outillage électroportatif (polissage, collage, assemblage). Vous êtes à l'aise avec ce type de matériel. Port de charge et manipulation à prévoir. ",
@@ -123,6 +136,7 @@ const providedPositions = [
     date: "2022-12-12",
   },
   {
+    id:2,
     title: "Polisseurs H/F",
     description:
       "Prendre connaissance des commandes prévues et leurs spécificités - Savoir lire les plans",
@@ -131,6 +145,7 @@ const providedPositions = [
     date: "2022-12-12",
   },
   {
+    id:3,
     title: "Chargé de clientèle H/F",
     description:
       "Vous êtes autonome, minutieux (e). La lecture de plans ne vous pose aucun problème et votre travail est soigné. Vous aimez travailler en équipe. Idéalement vous justifiez d'une expérience en tant que marbrier(ère), ou tout autre métier manuel (travail du métal, du verre, du bois) ou d'un métier du second œuvre.",

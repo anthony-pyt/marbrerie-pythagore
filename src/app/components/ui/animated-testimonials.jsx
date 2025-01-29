@@ -6,6 +6,11 @@ import { useEffect, useState } from "react";
 
 export const AnimatedTestimonials = ({ testimonials, autoplay = false }) => {
   const [active, setActive] = useState(0);
+  const [rotateValues, setRotateValues] = useState([]);
+
+  useEffect(() => {
+    setRotateValues(testimonials.map(() => randomRotateY()));
+  }, []);
 
   const handleNext = () => {
     setActive((prev) => (prev + 1) % testimonials.length);
@@ -27,8 +32,10 @@ export const AnimatedTestimonials = ({ testimonials, autoplay = false }) => {
   }, [autoplay]);
 
   const randomRotateY = () => {
+    if (typeof window === "undefined") return 0; // Valeur fixe côté serveur
     return Math.floor(Math.random() * 21) - 10;
   };
+  
   return (
     <div className="max-w-sm md:max-w-7xl mx-auto antialiased font-sans lg:px-12 py-12">
       <div className="relative grid grid-cols-1 md:grid-cols-2 gap-20">
@@ -37,12 +44,12 @@ export const AnimatedTestimonials = ({ testimonials, autoplay = false }) => {
             <AnimatePresence>
               {testimonials.map((testimonial, index) => (
                 <motion.div
-                  key={testimonial.src}
+                  key={index}
                   initial={{
                     opacity: 0,
                     scale: 0.9,
                     z: -100,
-                    rotate: randomRotateY(),
+                    rotate: rotateValues[index] || 0,
                   }}
                   animate={{
                     opacity: isActive(index) ? 1 : 0.7,
