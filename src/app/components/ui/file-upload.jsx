@@ -76,11 +76,6 @@ export const FileUpload = ({ onChange }) => {
     setFiles((prevFiles) => prevFiles.filter((file) => file !== fileToRemove));
   };
 
-  useEffect(() => {
-    console.log(files);
-    
-  }, [files])
-
   return (
     <div className="group relative w-full" {...getRootProps()}>
       <motion.div
