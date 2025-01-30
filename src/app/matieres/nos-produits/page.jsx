@@ -70,14 +70,14 @@ export default function Page() {
           finitionsResponse,
         ] = await Promise.all([
           fetch(
-            process.env.NEXT_PUBLIC_API_URL + "/stock/products_only_matieres"
+            process.env.NEXT_PUBLIC_API_STOCK_URL + "/stock/products_only_matieres"
           ),
           fetch(
-            process.env.NEXT_PUBLIC_API_URL +
+            process.env.NEXT_PUBLIC_API_STOCK_URL +
             "/stock/categories-with-parent-matieres"
           ),
-          fetch(process.env.NEXT_PUBLIC_API_URL + "/thiknesses"),
-          fetch(process.env.NEXT_PUBLIC_API_URL + "/finitions"),
+          fetch(process.env.NEXT_PUBLIC_API_STOCK_URL + "/thiknesses"),
+          fetch(process.env.NEXT_PUBLIC_API_STOCK_URL + "/finitions"),
         ]);
 
         const products = await productResponse.json();

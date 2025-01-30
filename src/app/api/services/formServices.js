@@ -6,7 +6,7 @@ export default function FormServices() {
     
     try {
         const response = await axios.post(
-          `${process.env.NEXT_PUBLIC_GATEWAY_URL}/verify_and_send_mail`,
+          `${process.env.NEXT_PUBLIC_URL}/verify_and_send_mail`,
           { datas },
           {
             headers: {
