@@ -6,7 +6,8 @@ export default function FormServices() {
     
     try {
         const response = await axios.post(
-          `${process.env.NEXT_PUBLIC_API_URL}/verify_and_send_mail`,
+          // `${process.env.NEXT_PUBLIC_API_URL}/verify_and_send_mail`,
+          "https://api.marbrerie-pythagore.fr/api/verify_and_send_mail",
           { datas },
           {
             headers: {
