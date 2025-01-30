@@ -71,8 +71,15 @@ export const FileUpload = ({ onChange }) => {
   });
 
   const handleRemoveFile = (fileToRemove) => {
+    console.log(fileToRemove);
+    
     setFiles((prevFiles) => prevFiles.filter((file) => file !== fileToRemove));
   };
+
+  useEffect(() => {
+    console.log(files);
+    
+  }, [files])
 
   return (
     <div className="group relative w-full" {...getRootProps()}>
@@ -157,7 +164,7 @@ export const FileUpload = ({ onChange }) => {
                       e.stopPropagation();
                       handleRemoveFile(file);
                     }}
-                    className="text-red-500 text-sm h-5 w-5 border border-red-500 rounded-full hover:bg-red-500 hover:text-white absolute top-2 -right-8
+                    className="text-red-500 text-sm h-5 w-5 border border-red-500 rounded-full hover:bg-red-500 hover:text-white absolute top-2 right-2
                     flex items-center justify-center bg-white"
                   >
                     <Icon icon="akar-icons:trash-can" className="h-3 w-3" />

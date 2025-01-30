@@ -1,6 +1,7 @@
 import axios from "axios";
 
-export async function POST() {
+export async function POST(req) {
+  console.log(req);
   if (req.method !== "POST") {
     return new Response(
       JSON.stringify({ message: "Only POST requests allowed" }),
@@ -9,6 +10,7 @@ export async function POST() {
   }
 
   const data = await req.json();
+  
   const { token } = data;
   const secretKey = process.env.RECAPTCHA_SECRET_KEY;
 
@@ -27,7 +29,8 @@ export async function POST() {
       return new Response(JSON.stringify({ message: "Success" }), {
         status: 200,
       });
-    } else {
+    } 
+    else {
       return new Response(JSON.stringify({ message: "Failed to verify" }), {
         status: 405,
       });

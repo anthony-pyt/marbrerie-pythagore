@@ -76,7 +76,7 @@ const metiersClient = [
 
 const metiersTerrain = [
   {
-    id:1,
+    id: 1,
     src: "/images/relations/relation_reunion.jpg",
     alt: "realtion_reunion",
     name: "Dessinateur DAO",
@@ -84,7 +84,7 @@ const metiersTerrain = [
       "étudie les projets, puis réalise des plans de fabrication 2D sur logiciel pour permettre la conception de plans de travail en pierres naturelles, quartz ou céramique par l’entreprise.",
   },
   {
-    id:2,
+    id: 2,
     src: "/images/relations/excited-multiracial-colleagues-enjoying-triumph-together-in-3931634-scaled.jpeg",
     alt: "realtion_reunion",
     name: "Installateur ",
@@ -92,7 +92,7 @@ const metiersTerrain = [
       " intervient auprès des clients pour monter et assembler des surfaces en pierres naturelles, quartz ou céramique préalablement transformés par l’entreprise pour réaliser différents types d’agencement. (Organisation des chantiers, Pose et Installation, Assurer le bon déroulement de la commande)",
   },
   {
-    id:3,
+    id: 3,
     src: "/images/relations/excited-multiracial-colleagues-enjoying-triumph-together-in-3931634-scaled.jpeg",
     alt: "realtion_reunion",
     name: "Coteur ",
@@ -127,7 +127,7 @@ const commitments = [
 
 const providedPositions = [
   {
-    id:1,
+    id: 1,
     title: "Installateurs H/F",
     description:
       "Vos missions : Vous êtes chargé(e) d'assurer la finition des plans de travail en pierres naturelles, quartz ou céramique selon l'aspect final voulu par les clients. Vous mettez en valeur le plan de travail par des opérations de polissage extrêmement précises qu'elles soient manuelles ou automatiques ; à l'aide d'un outillage électroportatif (polissage, collage, assemblage). Vous êtes à l'aise avec ce type de matériel. Port de charge et manipulation à prévoir. ",
@@ -136,7 +136,7 @@ const providedPositions = [
     date: "2022-12-12",
   },
   {
-    id:2,
+    id: 2,
     title: "Polisseurs H/F",
     description:
       "Prendre connaissance des commandes prévues et leurs spécificités - Savoir lire les plans",
@@ -145,7 +145,7 @@ const providedPositions = [
     date: "2022-12-12",
   },
   {
-    id:3,
+    id: 3,
     title: "Chargé de clientèle H/F",
     description:
       "Vous êtes autonome, minutieux (e). La lecture de plans ne vous pose aucun problème et votre travail est soigné. Vous aimez travailler en équipe. Idéalement vous justifiez d'une expérience en tant que marbrier(ère), ou tout autre métier manuel (travail du métal, du verre, du bois) ou d'un métier du second œuvre.",
@@ -169,9 +169,18 @@ export default function Page() {
         <SectionTestimonials
           title={"EN RELATION AVEC NOS CLIENTS"}
           images={metiersClient}
+          // retardInterval={0}
         />
-        <SectionTestimonials title={"À L’ATELIER"} images={metiersAtelier} />
-        <SectionTestimonials title={"SUR LE TERRAIN"} images={metiersTerrain} />
+        <SectionTestimonials
+          title={"À L’ATELIER"}
+          images={metiersAtelier}
+          // retardInterval={1000}
+        />
+        <SectionTestimonials
+          title={"SUR LE TERRAIN"}
+          images={metiersTerrain}
+          // retardInterval={2000}
+        />
       </div>
       <SectionCommitments />
       <Footer />
@@ -179,10 +188,14 @@ export default function Page() {
   );
 }
 
-const SectionTestimonials = ({ title, images }) => (
+const SectionTestimonials = ({ title, images, retardInterval }) => (
   <div className="container mx-auto m-2">
     <h2 className="text-4xl text-center md:text-left">{title}</h2>
-    <AnimatedTestimonials testimonials={images} />
+    <AnimatedTestimonials
+      testimonials={images}
+      // autoplay
+      retardInterval={retardInterval}
+    />
   </div>
 );
 

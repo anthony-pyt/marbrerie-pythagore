@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-export const AnimatedTestimonials = ({ testimonials, autoplay = false }) => {
+export const AnimatedTestimonials = ({ testimonials, autoplay = false, retardInterval }) => {
   const [active, setActive] = useState(0);
   const [rotateValues, setRotateValues] = useState([]);
 
@@ -26,8 +26,12 @@ export const AnimatedTestimonials = ({ testimonials, autoplay = false }) => {
 
   useEffect(() => {
     if (autoplay) {
-      const interval = setInterval(handleNext, 5000);
-      return () => clearInterval(interval);
+      const timeout = setTimeout(() => {
+        const interval = setInterval(handleNext, 5000);
+        return () => clearInterval(interval);
+      }, retardInterval);
+
+      return () => clearTimeout(timeout);
     }
   }, [autoplay]);
 
@@ -141,15 +145,15 @@ export const AnimatedTestimonials = ({ testimonials, autoplay = false }) => {
           <div className="flex justify-end gap-4 pt-12 md:pt-0">
             <button
               onClick={handlePrev}
-              className="h-10 w-10 rounded-full bg-secondary flex items-center justify-center group/button"
+              className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center group/button"
             >
-              <IconArrowLeft className="h-5 w-5 text-black text-white group-hover/button:rotate-12 transition-transform duration-300" />
+              <IconArrowLeft className="h-5 w-5 text-black group-hover/button:rotate-12 transition-transform duration-300" />
             </button>
             <button
               onClick={handleNext}
-              className="h-10 w-10 rounded-full bg-secondary flex items-center justify-center group/button"
+              className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center group/button"
             >
-              <IconArrowRight className="h-5 w-5 text-black text-white group-hover/button:-rotate-12 transition-transform duration-300" />
+              <IconArrowRight className="h-5 w-5 text-black group-hover/button:-rotate-12 transition-transform duration-300" />
             </button>
           </div>
         </div>

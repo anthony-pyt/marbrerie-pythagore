@@ -1,19 +1,22 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Icon } from "@iconify/react";
 
-const Alert = ({ message, type = "info", duration = 5000, onClose }) => {
-  const [isVisible, setIsVisible] = useState(true);
-
+const Alert = ({
+  message,
+  type = "info",
+  duration = 5000,
+  onClose,
+  isVisible,
+}) => {
   useEffect(() => {
-    if (duration) {
+    if (isVisible && duration) {
       const timer = setTimeout(() => {
-        setIsVisible(false);
         onClose && onClose();
       }, duration);
 
       return () => clearTimeout(timer);
     }
-  }, [duration, onClose]);
+  }, [isVisible, duration, onClose]);
 
   const getColor = () => {
     switch (type) {
@@ -53,7 +56,7 @@ const Alert = ({ message, type = "info", duration = 5000, onClose }) => {
           <p className="text-sm">{message}</p>
         </div>
         <button
-          onClick={() => setIsVisible(false)}
+          onClick={onClose}
           className="font-bold text-lg leading-none text-gray-700"
         >
           &times;
