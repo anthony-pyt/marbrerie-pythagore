@@ -16,6 +16,7 @@ import codesPostaux from "codes-postaux";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { MultiStepLoader } from "./../components/ui/multi-step-loader";
 
 export default function Page() {
   const [formData, setFormData] = useState({});
@@ -31,6 +32,8 @@ export default function Page() {
   const [typeOfStatus, setTypeOfStatus] = useState(null);
   const { executeRecaptcha } = useGoogleReCaptcha();
   const router = useRouter();
+  const [sendingInProgress, setSendingInProgress] = useState(false);
+  const [stepChanger, setStepChanger] = useState(0);
 
   const handleInputChange = (id, newValue) => {
     setFormData((prevFormData) => ({
@@ -38,10 +41,6 @@ export default function Page() {
       [id]: newValue,
     }));
   };
-
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
 
   const handleHasProject = (type) => {
     setHasProject(type);
@@ -56,6 +55,9 @@ export default function Page() {
       return; // Si la validation échoue, ne pas envoyer
     }
 
+    setSendingInProgress(true);
+    setStepChanger(0);
+
     if (!executeRecaptcha) {
       setMessageStatus("Erreur avec le reCAPTCHA.");
       setTypeOfStatus("error");
@@ -68,42 +70,53 @@ export default function Page() {
     setRecaptchaToken(token);
 
     // Vérification du reCAPTCHA côté serveur
-    const recaptchaResponse = await axios.post(
-      "/api/recaptcha",
-      { token: token }, // Le corps de la requête
-      {
-        headers: {
-          "Content-Type": "application/json", // Si c'est un JSON, sinon "multipart/form-data"
-        },
-      }
-    );
-
-    if (recaptchaResponse.status !== 200) {
-      setMessageStatus("Échec de la vérification reCAPTCHA.");
-      setTypeOfStatus("error");
-      setShowAlert(true);
-      return;
-    }
-
-    const responseStatus = await VerifyAndSendEmail(formData);
-    if (responseStatus === 200) {
-      setTypeOfStatus("success");
-      setMessageStatus(
-        "Formulaire envoyé avec succès ! Redirection vers la page d'accueil en cours..."
+    try {
+      const recaptchaResponse = await axios.post(
+        "/api/recaptcha",
+        { token: token }, // Le corps de la requête
+        {
+          headers: {
+            "Content-Type": "application/json", // Si c'est un JSON, sinon "multipart/form-data"
+          },
+        }
       );
-      // setTimeout(() => {
-      //   router.push("/");
-      // }, 2000);
-    } else {
+      if (recaptchaResponse.status !== 200) {
+        setMessageStatus("Échec de la vérification reCAPTCHA.");
+        setSendingInProgress(true);
+        // setTypeOfStatus("error");
+        // setShowAlert(true);
+        return;
+      }
+
+      const responseStatus = await VerifyAndSendEmail(formData);
+      if (responseStatus === 200) {
+        setStepChanger(1);
+        // setTypeOfStatus("success");
+        // setMessageStatus(
+        //   "Formulaire envoyé avec succès ! Redirection vers la page d'accueil en cours..."
+        // );
+        setStepChanger(2);
+
+        setTimeout(() => {
+          router.push("/");
+        }, 2000);
+      } else {
+        setSendingInProgress(false);
+        setTypeOfStatus("error");
+        setMessageStatus("Une erreur s'est produite, veuillez recommencer...");
+        setShowAlert(true);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      // Réinitialiser le token pour forcer la régénération lors du prochain envoi
+      setRecaptchaToken(null);
+    } catch (error) {
+      setSendingInProgress(false);
       setTypeOfStatus("error");
       setMessageStatus("Une erreur s'est produite, veuillez recommencer...");
+      setShowAlert(true);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
-
-    setShowAlert(true);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-
-    // Réinitialiser le token pour forcer la régénération lors du prochain envoi
-    setRecaptchaToken(null);
   };
 
   const findCity = (zipcode, type) => {
@@ -139,7 +152,7 @@ export default function Page() {
     if (!formData.message || formData.message.trim() === "") {
       errors.message = "Votre message ne peut pas être vide";
     }
-    if (hasProject === 'yes') {
+    if (hasProject === "yes") {
       if (!formData.address || formData.address.trim() === "") {
         errors.address = "L'adresse du projet est requise";
       }
@@ -149,8 +162,8 @@ export default function Page() {
       if (!formData.city || formData.city.trim() === "") {
         errors.city = "La ville du projet est requise";
       }
-      if(!formData.typeProject) {
-        errors.typeProject = "Le type de projet doit être renseigné"
+      if (!formData.typeProject) {
+        errors.typeProject = "Le type de projet doit être renseigné";
       }
       // if (!formData.room) {
       //   errors.room = "La pièce doit être renseignée";
@@ -193,6 +206,15 @@ export default function Page() {
           onClose={() => setShowAlert(false)}
         />
       )}
+      <MultiStepLoader
+        loadingStates={[
+          { text: "Vérification des fichiers en cours" },
+          { text: "Envoi du message" },
+          { text: "Redirection vers la page d'accueil" },
+        ]}
+        loading={sendingInProgress}
+        onStepChange={stepChanger}
+      />
       <div className="w-full flex justify-center">
         {/* <div className="w-96 sticky">
           <CompanyInfos />
