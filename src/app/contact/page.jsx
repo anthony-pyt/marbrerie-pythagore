@@ -39,9 +39,9 @@ export default function Page() {
     }));
   };
 
-  // useEffect(() => {
-  //   console.log(formData);
-  // }, [formData]);
+  useEffect(() => {
+    console.log(formData);
+  }, [formData]);
 
   const handleHasProject = (type) => {
     setHasProject(type);
@@ -52,6 +52,10 @@ export default function Page() {
   };
 
   const sendForm = async () => {
+    if (!validateForm()) {
+      return; // Si la validation échoue, ne pas envoyer
+    }
+
     if (!executeRecaptcha) {
       setMessageStatus("Erreur avec le reCAPTCHA.");
       setTypeOfStatus("error");
@@ -73,7 +77,6 @@ export default function Page() {
         },
       }
     );
-
 
     if (recaptchaResponse.status !== 200) {
       setMessageStatus("Échec de la vérification reCAPTCHA.");
@@ -136,25 +139,42 @@ export default function Page() {
     if (!formData.message || formData.message.trim() === "") {
       errors.message = "Votre message ne peut pas être vide";
     }
-    if (isWithPro === "yes") {
-      if (!formData.proAddress || formData.proAddress.trim() === "") {
-        errors.proAddress = "L'adresse du projet est requise";
+    if (hasProject === 'yes') {
+      if (!formData.address || formData.address.trim() === "") {
+        errors.address = "L'adresse du projet est requise";
       }
+      if (!formData.zipcode || formData.zipcode.trim() === "") {
+        errors.zipcode = "Le code postal du projet est requis";
+      }
+      if (!formData.city || formData.city.trim() === "") {
+        errors.city = "La ville du projet est requise";
+      }
+      if(!formData.typeProject) {
+        errors.typeProject = "Le type de projet doit être renseigné"
+      }
+      // if (!formData.room) {
+      //   errors.room = "La pièce doit être renseignée";
+      // }
+    }
+    if (isWithPro === "yes") {
+      // if (!formData.proAddress || formData.proAddress.trim() === "") {
+      //   errors.proAddress = "L'adresse du projet est requise";
+      // }
       if (!formData.proZipcode || formData.proZipcode.trim() === "") {
-        errors.proZipcode = "Le code postal est requis";
+        errors.proZipcode = "Le code postal du professionnel est requis";
       }
       if (!formData.proCity || formData.proCity.trim() === "") {
-        errors.proCity = "La ville est requise";
+        errors.proCity = "La ville du professionnel est requise";
       }
       if (!formData.proName || formData.proName.trim() === "") {
         errors.proName = "Le nom du professionnel est requis";
       }
-      if (!formData.proEmail || !/\S+@\S+\.\S+/.test(formData.proEmail)) {
-        errors.proEmail = "Un email valide est requis";
-      }
-      if (!formData.proTel || formData.proTel.trim() === "") {
-        errors.proTel = "Le numéro de téléphone est requis";
-      }
+      // if (!formData.proEmail || !/\S+@\S+\.\S+/.test(formData.proEmail)) {
+      //   errors.proEmail = "Un email valide est requis";
+      // }
+      // if (!formData.proTel || formData.proTel.trim() === "") {
+      //   errors.proTel = "Le numéro de téléphone est requis";
+      // }
     }
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
@@ -220,7 +240,6 @@ export default function Page() {
                   icon="solar:mailbox-bold"
                   type="mail"
                   id="email"
-                  name="email"
                   placeholder="Votre email"
                   onInputChange={(newValue) =>
                     handleInputChange("email", newValue)
@@ -546,7 +565,6 @@ export default function Page() {
                 <div className="w-full h-60">
                   <Textarea
                     id={"message"}
-                    name={"message"}
                     placeholder={"Votre message"}
                     onInputChange={(newValue) =>
                       handleInputChange("message", newValue)
@@ -567,7 +585,7 @@ export default function Page() {
                   <div className="m-8 border border-red-500 bg-red-50 rounded-2xl p-2 text-sm shadow-xl">
                     <p className="text-red-600 font-bold">
                       Veuillez corriger les erreurs suivantes avant l'envoi du
-                      formulaire
+                      message
                     </p>
                     <div>
                       {Object.keys(formErrors).map((key, index) => {
