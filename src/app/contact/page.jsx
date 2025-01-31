@@ -91,9 +91,9 @@ export default function Page() {
       setMessageStatus(
         "Formulaire envoyé avec succès ! Redirection vers la page d'accueil en cours..."
       );
-      setTimeout(() => {
-        router.push("/");
-      }, 2000);
+      // setTimeout(() => {
+      //   router.push("/");
+      // }, 2000);
     } else {
       setTypeOfStatus("error");
       setMessageStatus("Une erreur s'est produite, veuillez recommencer...");

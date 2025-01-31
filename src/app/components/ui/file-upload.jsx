@@ -53,8 +53,16 @@ export const FileUpload = ({ onChange }) => {
   }, [files]);
 
   const handleFileChange = (newFiles) => {
-    setFiles((prevFiles) => [...prevFiles, ...newFiles]);
-    onChange && onChange(newFiles);
+    setFiles((prevFiles) => {
+      const updatedFiles = [...prevFiles, ...newFiles];
+
+      // Utiliser useEffect pour éviter l'update directe dans le render
+      setTimeout(() => {
+        onChange && onChange(updatedFiles);
+      }, 0);
+
+      return updatedFiles;
+    });
   };
 
   const handleClick = () => {
@@ -71,8 +79,6 @@ export const FileUpload = ({ onChange }) => {
   });
 
   const handleRemoveFile = (fileToRemove) => {
-    console.log(fileToRemove);
-    
     setFiles((prevFiles) => prevFiles.filter((file) => file !== fileToRemove));
   };
 
