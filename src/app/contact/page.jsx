@@ -146,6 +146,14 @@ export default function Page() {
     if (!formData.phone_number || formData.phone_number.trim() === "") {
       errors.phone_number = "Un numéro de téléphone est requis";
     }
+    if (
+      formData.phone_number &&
+      !/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/.test(
+        formData.phone_number
+      )
+    ) {
+      errors.phone_number = "Le numéro de téléphone n'est pas correct";
+    }
     if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email)) {
       errors.email = "Un email valide est requis";
     }
@@ -185,9 +193,15 @@ export default function Page() {
       // if (!formData.proEmail || !/\S+@\S+\.\S+/.test(formData.proEmail)) {
       //   errors.proEmail = "Un email valide est requis";
       // }
-      // if (!formData.proTel || formData.proTel.trim() === "") {
-      //   errors.proTel = "Le numéro de téléphone est requis";
-      // }
+      if (
+        formData.proTel &&
+        !/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/.test(
+          formData.proTel
+        )
+      ) {
+        errors.proTel =
+          "Le numéro de téléphone du professionnel n'est pas correct";
+      }
     }
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
