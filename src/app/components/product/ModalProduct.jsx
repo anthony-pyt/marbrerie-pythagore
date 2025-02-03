@@ -10,6 +10,8 @@ import {
 import { Icon } from "@iconify/react";
 
 export function ModalProduct({ setOpen, open, product }) {
+  console.log(product);
+  
   return (
     <Dialog open={open} onClose={setOpen} className="relative z-20 ">
       <DialogBackdrop
@@ -98,7 +100,7 @@ export function ModalProduct({ setOpen, open, product }) {
                       key={item.id}
                     >
                       <span className="text-secondary">
-                        {item.label}
+                        {item.finition.label}
                       </span>
                     </div>
                   ))}
@@ -115,7 +117,7 @@ export function ModalProduct({ setOpen, open, product }) {
                       key={item.id}
                     >
                       <span className="text-secondary">
-                        {item.label}
+                        {item.thikness_plan.label}
                       </span>
                     </div>
                   ))}

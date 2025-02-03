@@ -104,9 +104,9 @@ export default function Home() {
               </h2>
               <p className="mt-12">
                 <span className="text-or">Pythagore </span>
-                est avant tout une équipe d’hommes et de femmes, qui grâce à la
-                passion de leur métier, ont su créer l’entreprise que nous
-                incarnons aujourd’hui.
+                est une équipe d’hommes et de femmes, qui de par leur
+                passion pour leur métier et les matériaux, incarnent ce que nous
+                sommes aujourd'hui !
               </p>
               <div className="flex justify-end mt-12">
                 <Button
@@ -114,7 +114,7 @@ export default function Home() {
                   text="Découvrir"
                   size="normal"
                   icon="watch"
-                  onClick={() => navigateTo('/savoir-faire')}
+                  onClick={() => navigateTo("/savoir-faire")}
                 />
               </div>
             </div>
@@ -129,7 +129,11 @@ export default function Home() {
         ref={(el) => (sectionRefs.current[1] = el)}
         data-id="inspiration"
         className={`py-20 animate__animated 
-          ${ visibleSections["inspiration"] ? "animate__fadeInRight" : "opacity-0"}
+          ${
+            visibleSections["inspiration"]
+              ? "animate__fadeInRight"
+              : "opacity-0"
+          }
         `}
       >
         <div className="w-full h-full">

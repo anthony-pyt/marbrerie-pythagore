@@ -2,9 +2,9 @@
 
 import Button from "../../components/Button";
 import MainMenu from "../../components/MainMenu";
-import Footer from '../../components/Footer'
+import Footer from "../../components/Footer";
 import PageTitle from "../../components/PageTitle";
-import ProductCard from "../../components/product/ProductCard"
+import ProductCard from "../../components/product/ProductCard";
 import { Icon } from "@iconify/react";
 import { useEffect, useState } from "react";
 import Filter from "../../components/catalogue/Filter";
@@ -70,11 +70,12 @@ export default function Page() {
           finitionsResponse,
         ] = await Promise.all([
           fetch(
-            process.env.NEXT_PUBLIC_API_STOCK_URL + "/stock/products_only_matieres"
+            process.env.NEXT_PUBLIC_API_STOCK_URL +
+              "/stock/products_only_matieres"
           ),
           fetch(
             process.env.NEXT_PUBLIC_API_STOCK_URL +
-            "/stock/categories-with-parent-matieres"
+              "/stock/categories-with-parent-matieres"
           ),
           fetch(process.env.NEXT_PUBLIC_API_STOCK_URL + "/thiknesses"),
           fetch(process.env.NEXT_PUBLIC_API_STOCK_URL + "/finitions"),
@@ -91,7 +92,6 @@ export default function Page() {
         setCategories(categories);
         setThiknesses(thiknesses);
         setFinitions(finitions);
-
       } catch (error) {
         console.error(error);
       } finally {
@@ -119,13 +119,13 @@ export default function Page() {
     const updatedFilters = isCategorySelected
       ? filters.filter((filter) => filter.type !== "matieres") // Retire le filtre existant si la catégorie est désélectionnée
       : [
-        ...filters.filter((filter) => filter.type !== "matieres"), // Enlève les filtres existants avec le même label
-        {
-          type: "matieres",
-          text: category.label,
-          icon: null,
-        },
-      ];
+          ...filters.filter((filter) => filter.type !== "matieres"), // Enlève les filtres existants avec le même label
+          {
+            type: "matieres",
+            text: category.label,
+            icon: null,
+          },
+        ];
 
     setFilters(updatedFilters);
   };
@@ -275,51 +275,57 @@ export default function Page() {
     });
   };
 
-  const filteredProducts = products.filter((product) => {
+  const filteredProducts = products.filter((external_product) => {
     const matchesSearchTerm =
       searchTerm.length > 2
-        ? product.label.toLowerCase().includes(searchTerm.toLowerCase())
+        ? external_product.label
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase())
         : true;
 
     const matchesCategory =
       selectedCategories.length > 0
-        ? selectedCategories.includes(product.product.category?.parent?.id) ||
-        selectedCategories.includes(product.product.category?.id)
+        ? selectedCategories.includes(
+            external_product.product.category?.parent?.id
+          ) ||
+          selectedCategories.includes(external_product.product.category?.id)
         : true;
 
     const matchesThikness =
       selectedThiknesses.length > 0
         ? selectedThiknesses.every((selectedThikness) =>
-          product.thiknesses.map(
-            (thikness) => thikness.id === selectedThikness
+            external_product.thiknesses.map(
+              (thikness) => thikness.id === selectedThikness
+            )
           )
-        )
         : true;
 
     const matchesFinition =
       selectedFinitions.length > 0
-        ? product.finitions.some((finition) =>
-          selectedFinitions.includes(finition.id)
-        )
+        ? external_product.finitions.some((finition) =>
+            selectedFinitions.includes(finition.id)
+          )
         : true;
 
     const matchesMotif =
       selectedMotifs.length > 0
-        ? selectedMotifs.includes(product.motif) ||
-        selectedMotifs.includes(product.motif)
+        ? selectedMotifs.includes(external_product.motif) ||
+          selectedMotifs.includes(external_product.motif)
         : true;
 
     const matchesColor =
       selectedColors.length > 0
-        ? product.colories.some((color) => selectedColors.includes(color.name))
+        ? external_product.colories.some((color) =>
+            selectedColors.includes(color.name)
+          )
         : true;
 
     const matchesCoupDeCoeur = selectedFilters.coupDeCoeur
-      ? product.heart == 1
+      ? external_product.heart == 1
       : true;
 
     const matchesEcoResponsable = selectedFilters.ecoResponsable
-      ? product.eco == 1
+      ? external_product.eco == 1
       : true;
 
     return (

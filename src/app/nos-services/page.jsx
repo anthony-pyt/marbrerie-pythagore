@@ -10,60 +10,68 @@ export default function Page() {
       <div className="p-4">
         <PageTitle title={"Nos services pour les professionnels"} />
         <div className="flex items-stretch justify-center flex-wrap my-12 mx-6">
-          <ServiceCard title="Conseil" image="/images/conseil.jpg">
-            <ul>
-              <li>- Sur les produits</li>
-              <li>- Les caractéristiques des matières</li>
+          <ServiceCard title="Suivi commercial" image="/images/conseil.jpg">
+            <ul className="list-disc ml-4">
+              <li>Suivi de votre réalisation du devis à la commande</li>
               <li>
-                - La bonne utilisation de sproduits pour chaque agencement
+                Accompagnement technique pour une adaptation du produit à votre
+                réalisation
               </li>
             </ul>
           </ServiceCard>
           <ServiceCard title="Formation" image="/images/formation.jpg">
-            <ul>
-              <li>- Pour les installateurs pour des agencements</li>
+            <ul className="list-disc ml-4">
+              <li>En magasin ou en nos locaux</li>
+              <li>Des concepteurs</li>
+              <li>Des installateurs</li>
               <li>
-                - Connaissances des impératifs techniques nécessaires pour
-                garantir une installation optimale
+                Transmission des impératifs techniques pour une garantie
+                maximale de votre ouvrage
               </li>
             </ul>
           </ServiceCard>
-          <ServiceCard title="Prestation complète" image="/images/prestation.jpg">
-            <ul>
-              <li>- Prise de cote</li>
-              <li>- Fabrication</li>
-              <li>- Pose des agencements sur mesure</li>
-            </ul>
+          <ServiceCard
+            title="Un service à la carte"
+            image="/images/prestation.jpg"
+          >
+            <p>
+              De la prise de mesures à la pose. Nos équipes totalement
+              internalisées vous accompagnent au quotidien. Selon votre besoin
+              nous adaptons notre offre
+            </p>
           </ServiceCard>
         </div>
         <div className="flex items-stretch justify-center flex-wrap my-12 mx-6">
-          <ServiceCard title="SAV" image="/images/sav.jpg">
-            <p>
-              Notre service après-vente est à votre disposition pour répondre à
-              toutes vos demandes.
-            </p>
+          <ServiceCard title="Service après-vente" image="/images/sav.jpg">
+            <ul className="list-disc ml-4">
+              <li>Assistance technique</li>
+              <li>Ecoute</li>
+              <li>Réactivité</li>
+            </ul>
           </ServiceCard>
           <ServiceCard
-            title="Choix et disponibilité produits"
+            title="Produits & disponibilités"
             image="/images/choix.jpg"
           >
-            Nous sommes présents pour vous accompagner dans le choix des
-            produits et garantir leur disponibilité.
+            <p>
+              Granit, Quartzite, Marbres, Pierre reconstituée, Céramiques Selon
+              votre utilisation, nous vous conseillons dans votre choix Un stock
+              permanent pour une meilleure réactivité
+            </p>
           </ServiceCard>
           <ServiceCard
             title="Outils d'aide à la vente"
             image="/images/outils.jpg"
           >
-            <ul>
+            <ul className="list-disc ml-4">
+              <li>Un catalogue synthétisant toutes les offres Produits</li>
               <li>
-                - Un catalogue répertoriant toutes nos références et leurs
-                caractéristiques détaillées
+                Possiblité de télécharger notre catalogue sur Cyncly (Winner)
               </li>
-              <li>- Des échantillons de matériaux</li>
-              <li>
-                - Un espace professionnel vous permettant de réaliser des devis
-                en ligne rapidement
-              </li>
+              <li>Un logiciel de chiffrage en ligne via notre "Extranet"</li>
+              <li>Un-e chargé-e de clientèle sur votre secteur</li>
+              <li>un ADV pour un suivi personnalisé</li>
+              <li>Échnatillonnage selon votre besoin</li>
             </ul>
           </ServiceCard>
         </div>
