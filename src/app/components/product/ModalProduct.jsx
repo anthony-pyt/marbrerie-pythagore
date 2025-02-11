@@ -8,10 +8,15 @@ import {
   DialogTitle,
 } from "@headlessui/react";
 import { Icon } from "@iconify/react";
+import Button from "../Button";
+import { useRouter } from "next/navigation";
 
 export function ModalProduct({ setOpen, open, product }) {
-  console.log(product);
-  
+  const router = useRouter();
+
+  const handleNavigate = (product) => {
+    router.push(`/matieres/produits/${product.id}`);
+  };
   return (
     <Dialog open={open} onClose={setOpen} className="relative z-20 ">
       <DialogBackdrop
@@ -23,38 +28,36 @@ export function ModalProduct({ setOpen, open, product }) {
         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
           <DialogPanel
             transition
-            className="relative transform overflow-hidden rounded-lg bg-white shadow-xl p-8 flex flex-col lg:flex-row lg:space-x-6 xl:space-x-12"
+            className="relative transform overflow-hidden rounded-xl bg-white w-full md:w-auto shadow-xl p-8 flex flex-col md:flex-row md:space-x-6 xl:space-x-12"
           >
             <div className="rounded-lg overflow-hidden flex flex-col items-center">
               <img
-                src={product?.main_image?.image_url ?? product.image_url}
+                src={product.image_url}
                 loading="lazy"
                 alt={product.label}
                 className="object-cover h-72 w-72 rounded-lg"
               />
               <div className="flex items-center justify-between w-full mt-2">
-                {product.images && product.images.length > 0 ? (
-                  product.images.map((image, imageIndex) => (
-                    <img
-                      src={image.image_url}
-                      loading="lazy"
-                      alt={product.label}
-                      className="object-cover h-20 w-20 rounded-lg"
-                      key={imageIndex}
-                    />
-                  ))
-                ) : (
-                  // Images par défaut
-                  [1, 2, 3].map((_, index) => (
-                    <img
-                      src={product.image_url} // Remplace par le chemin de tes images par défaut
-                      loading="lazy"
-                      alt={`Image par défaut ${index + 1}`}
-                      className="object-cover h-20 w-20 rounded-lg"
-                      key={index}
-                    />
-                  ))
-                )}
+                {product.images && product.images.length > 0
+                  ? product.images.map((image, imageIndex) => (
+                      <img
+                        src={image.image_url}
+                        loading="lazy"
+                        alt={product.label}
+                        className="object-cover h-20 w-20 rounded-lg"
+                        key={imageIndex}
+                      />
+                    ))
+                  : // Images par défaut
+                    [1, 2, 3].map((_, index) => (
+                      <img
+                        src={product.image_url} // Remplace par le chemin de tes images par défaut
+                        loading="lazy"
+                        alt={`Image par défaut ${index + 1}`}
+                        className="object-cover h-20 w-20 rounded-lg"
+                        key={index}
+                      />
+                    ))}
               </div>
             </div>
 
@@ -64,8 +67,15 @@ export function ModalProduct({ setOpen, open, product }) {
                   as="h3"
                   className="font-semibold text-2xl flex items-center space-x-4"
                 >
-                  <span>{product.label}</span>
-                  {product.eco && (
+                  <div className="flex items-center justify-between w-full">
+                    <span>{product.label}</span>
+                    {/* <Button
+                      text="Voir la page"
+                      size="small"
+                      onClick={() => handleNavigate(product)}
+                    /> */}
+                  </div>
+                  {product.eco == 1 && (
                     <Icon
                       icon="mdi:ecology"
                       width="24"
@@ -168,23 +178,24 @@ export function ModalProduct({ setOpen, open, product }) {
                 </div>
               </div>
               {/* GARANTIE */}
-              <div className="flex flex-col lg:flex-row items-center w-72 flex-shrink justify-center mt-12">
-                <div className="flex justify-end">
-                  <img
-                    src={`/images/garanties/${product.category?.label}.png`}
-                    loading="lazy"
-                    alt={product.label}
-                    className="object-cover min-w-16 max-w-16 rounded-lg"
-                  />
+              {product.product.category.waranty && (
+                <div className="flex flex-col lg:flex-row items-center w-72 flex-shrink justify-center mt-12">
+                  <div className="flex justify-end">
+                    <img
+                      src={`${product.product.category.waranty.image_url}`}
+                      loading="lazy"
+                      alt={product.product.category.waranty.title}
+                      className="object-cover min-w-24 max-w-24 rounded-full p-4 bg-white"
+                    />
+                  </div>
+                  <div className="flex flex-col items-start">
+                    <h6>Garantie</h6>
+                    <p className="text-left text-xs">
+                      {product.product.category.waranty.description}
+                    </p>
+                  </div>
                 </div>
-                <div className=" flex flex-col items-start">
-                  <h6>Garantie</h6>
-                  <p className="text-xs text-left">
-                    Nous offrons la garantie sur l’ensemble des matériaux
-                    manufacturés et posés par nos équipes ou simplement livrés.
-                  </p>
-                </div>
-              </div>
+              )}
               {/* <div className="mt-2">
                   <p className="text-sm text-gray-500">
                     Lorem ipsum, dolor sit amet consectetur adipisicing elit.

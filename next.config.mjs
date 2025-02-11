@@ -24,7 +24,12 @@ const nextConfig = {
       //     hostname: process.env.NEXT_PUBLIC_IMAGE_URL,
       //   },
     ],
-    domains: ["assets.aceternity.com", "images.unsplash.com", "pbs.twimg.com"],
+    domains: [
+      "assets.aceternity.com",
+      "images.unsplash.com",
+      "pbs.twimg.com",
+      "pythagore.doliplus.com",
+    ],
   },
   eslint: {
     ignoreDuringBuilds: true,

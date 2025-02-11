@@ -2,10 +2,11 @@ import { Icon } from "@iconify/react";
 import { useState } from "react";
 import { ModalProduct } from "./ModalProduct";
 import Image from 'next/image'
+import { useRouter } from "next/navigation";
 const ProductCard = ({ product, animationDelay }) => {
-  // console.log(product);
 
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const router = useRouter()
 
   const openModal = (value) => {
     setIsOpenModal(value);
@@ -29,12 +30,12 @@ const ProductCard = ({ product, animationDelay }) => {
               className="group relative h-48 bg-primary w-11/12 flex items-center justify-center rounded-xl shadow-lg -mt-6 overflow-hidden"
               style={{ animationDelay }}
             >
-              {(product.image_url || product?.main_image?.image_url) && (
+              {product.image_url&& (
                 <Image
                   lazy="true"
                   width={300}
                   height={300}
-                  src={product?.main_image?.image_url ?? product.image_url}
+                  src={product.image_url}
                   loading="lazy"
                   alt={product.label}
                   className="object-cover w-full h-full"
@@ -42,7 +43,7 @@ const ProductCard = ({ product, animationDelay }) => {
               )}
 
               {/* Overlay qui apparaît au survol */}
-              <div className="absolute inset-0 bg-secondary/80 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col items-center justify-center">
+              <div className="absolute inset-0 bg-secondary/75 transform -translate-x-[calc(100%+1px)] group-hover:translate-x-0 transition-transform duration-200 ease-in-out flex flex-col items-center justify-center">
                 <Icon
                   icon="solar:link-round-angle-outline"
                   color="#fff"
@@ -83,9 +84,9 @@ const ProductCard = ({ product, animationDelay }) => {
             {product.finitions.map((item, index) => (
               <div
                 className="lowercase bg-primary/25 px-2 py-0.5 rounded"
-                key={item.finition.id}
+                key={index}
               >
-                <span className="text-secondary">{item.finition.label}</span>
+                <span className="text-secondary">{item?.finition?.label}</span>
               </div>
             ))}
           </div>
@@ -94,14 +95,14 @@ const ProductCard = ({ product, animationDelay }) => {
             {product?.thiknesses.map((item, index) => (
               <div
                 className="lowercase bg-primary/25 px-2 py-0.5 rounded"
-                key={item.thikness_plan.id}
+                key={index}
               >
-                <span className="text-secondary">{item.thikness_plan.label}</span>
+                <span className="text-secondary">{item?.thikness_plan?.label}</span>
               </div>
             ))}
           </div>
           <div className="flex items-center space-x-1 absolute right-3 bottom-3 ">
-            {product.eco === 1 && (
+            {product.durable === 1 && (
               <Icon
                 icon="mdi:ecology"
                 width="24"

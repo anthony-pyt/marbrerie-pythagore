@@ -28,7 +28,7 @@ const Input = ({ icon, type, id, placeholder, onInputChange, className }) => {
         icon={icon}
         width="30"
         height="30"
-        className="absolute transform -translate-y-1/2 top-1/2 right-1 text-gray-300 hover:text-or transition-colors duration-200 ease-in-out"
+        className="absolute transform -translate-y-1/2 top-1/2 right-2 text-gray-300 hover:text-or transition-colors duration-200 ease-in-out"
       />
     </div>
   );

@@ -1,7 +1,8 @@
 "use client";
+import clsx from "clsx";
 import { useState } from "react";
+const Textarea = ({ id, placeholder, onInputChange, className }) => {
 
-const Textarea = ({id, placeholder, onInputChange }) => {
   const [value, setValue] = useState("");
 
   // Gérer le changement de la valeur du textarea
@@ -12,7 +13,7 @@ const Textarea = ({id, placeholder, onInputChange }) => {
   };
 
   return (
-    <div className="relative inline-block w-full h-full">
+    <div className={clsx([className, "relative inline-block w-full h-60"])}>
       <textarea
         name={id}
         id={id}

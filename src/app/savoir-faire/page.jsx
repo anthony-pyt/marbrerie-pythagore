@@ -6,6 +6,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import clsx from "clsx";
+import ServiceCard from "../components/services/serviceCard";
 
 // const knowledges = [
 //   {
@@ -136,7 +137,7 @@ export default function Page() {
           />
           <SquareSkeleton
             className={"col-span-1 bg-secondary bg-opacity-10"}
-            number="1000+"
+            number="500+"
             text="de clients"
           />
           <RectangleSkeleton
@@ -191,50 +192,58 @@ export default function Page() {
           </div>
 
           {/* Liste des savoir-faire */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Carte 1 */}
-            <div className="bg-white shadow-md rounded-lg p-6">
-              <h4 className="text-xl font-semibold text-gray-800 mb-4">
-                Finitions de chant
-              </h4>
-              <p className="text-gray-600">
-                Chant droit, arrondi, biseauté, bec de corbin… Nous proposons
-                des finitions adaptées à vos besoins et projets.
-              </p>
+            <div className="mx-auto">
+              <ServiceCard
+                title={"Finitions de chant"}
+                image={"/images/atelier/IMG_0053.JPEG"}
+              >
+                <p className="text-gray-600">
+                  Chant droit, arrondi, biseauté, bec de corbin… Nous proposons
+                  des finitions adaptées à vos besoins et projets.
+                </p>
+              </ServiceCard>
             </div>
 
             {/* Carte 2 */}
-            <div className="bg-white shadow-md rounded-lg p-6">
-              <h4 className="text-xl font-semibold text-gray-800 mb-4">
-                Découpe sur mesure
-              </h4>
-              <p className="text-gray-600">
-                Grâce à nos machines de découpe, nous réalisons des ajustements
-                précis pour arrondis, angles spécifiques ou ajustements
-                millimétriques.
-              </p>
+            <div className="mx-auto">
+              <ServiceCard
+                title={"Découpe sur mesure"}
+                image={"/images/atelier/IMG_0084.JPEG"}
+              >
+                <p className="text-gray-600">
+                  Grâce à nos machines de découpe, nous réalisons des
+                  ajustements précis pour arrondis, angles spécifiques ou
+                  ajustements millimétriques.
+                </p>
+              </ServiceCard>
             </div>
 
             {/* Carte 3 */}
-            <div className="bg-white shadow-md rounded-lg p-6">
-              <h4 className="text-xl font-semibold text-gray-800 mb-4">
-                Joint parfait
-              </h4>
-              <p className="text-gray-600">
-                Obtenez un résultat visiblement net et continu grâce à notre
-                technique de joint parfait.
-              </p>
+            <div className="mx-auto">
+              <ServiceCard
+                title={"Joint parfait"}
+                image={"/images/atelier/IMG_1597.png"}
+              >
+                <p className="text-gray-600">
+                  Obtenez un résultat visiblement net et continu grâce à notre
+                  technique de joint parfait.
+                </p>
+              </ServiceCard>
             </div>
 
             {/* Carte 4 */}
-            <div className="bg-white shadow-md rounded-lg p-6">
-              <h4 className="text-xl font-semibold text-gray-800 mb-4">
-                Façonnages spécifiques
-              </h4>
-              <p className="text-gray-600">
-                Polissage sous plan, assemblage à l’onglet, suivi du mur en
-                pierre... Nous peaufinons les moindres détails.
-              </p>
+            <div className="mx-auto">
+              <ServiceCard
+                title={"Façonnages spécifiques"}
+                image={"/images/atelier/IMG_1598.jpg"}
+              >
+                <p className="text-gray-600">
+                  Polissage sous plan, assemblage à l’onglet, suivi du mur en
+                  pierre... Nous peaufinons les moindres détails.
+                </p>
+              </ServiceCard>
             </div>
           </div>
 

@@ -51,15 +51,12 @@ const LoaderCore = ({ loadingStates, value = 0 }) => {
             transition={{ duration: 0.5 }}
           >
             <div>
-              {index > value && (
-                <CheckIcon className="text-black" />
-              )}
+              {index > value && <CheckIcon className="text-black" />}
               {index <= value && (
                 <CheckFilled
                   className={cn(
                     "text-black",
-                    value === index &&
-                      "text-black opacity-100"
+                    value === index && "text-black opacity-100"
                   )}
                 />
               )}
@@ -84,8 +81,6 @@ export const MultiStepLoader = ({
   loading,
   onStepChange, // Nouvelle prop pour changer d’étape manuellement
 }) => {
-    console.log(onStepChange);
-    
   const [currentState, setCurrentState] = useState(0);
 
   useEffect(() => {
@@ -98,7 +93,7 @@ export const MultiStepLoader = ({
   // Expose la fonction pour changer d'étape
   useEffect(() => {
     if (onStepChange) {
-        setCurrentState(onStepChange)
+      setCurrentState(onStepChange);
     }
   }, [onStepChange]);
 
@@ -109,8 +104,17 @@ export const MultiStepLoader = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="w-full h-full fixed inset-0 z-[100] flex items-center justify-center backdrop-blur-2xl"
+          className="w-full h-full fixed inset-0 z-[100] flex flex-col items-center justify-center backdrop-blur-2xl"
         >
+          <div className="mt-28 flex flex-col items-center">
+            <div className="h-32 overflow-hidden flex justify-center items-center">
+              <img
+                src="/images/loaders/loader-pythagore.gif"
+                className="h-40"
+              />
+            </div>
+            <p>Envoi en cours...</p>
+          </div>
           <div className="h-96 relative">
             <LoaderCore value={currentState} loadingStates={loadingStates} />
           </div>
@@ -119,4 +123,3 @@ export const MultiStepLoader = ({
     </AnimatePresence>
   );
 };
-

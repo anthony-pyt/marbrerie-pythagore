@@ -132,7 +132,7 @@ export default function MainMenu({ page }) {
           <Logo theme={classLogo} />
         </div>
         <div className={`${classMainMenu}  justify-center w-full flex-1`}>
-          <div className="flex items-center justify-center space-x-2">
+          <div className="flex items-center justify-center space-x-1">
             {listMenu.map((item) => (
               <div
                 key={item.label}

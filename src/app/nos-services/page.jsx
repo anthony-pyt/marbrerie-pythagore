@@ -31,14 +31,16 @@ export default function Page() {
             </ul>
           </ServiceCard>
           <ServiceCard
-            title="Un service à la carte"
+            title="Un service sur mesure"
             image="/images/prestation.jpg"
           >
-            <p>
-              De la prise de mesures à la pose. Nos équipes totalement
-              internalisées vous accompagnent au quotidien. Selon votre besoin
-              nous adaptons notre offre
-            </p>
+            <ul className="list-disc ml-4">
+              <li>De la prise de mesures à la pose.</li>
+              <li>Nos équipes totalement
+              internalisées vous accompagnent au quotidien. </li>
+              <li>Selon votre besoin
+              nous adaptons notre offre</li>
+            </ul>
           </ServiceCard>
         </div>
         <div className="flex items-stretch justify-center flex-wrap my-12 mx-6">
@@ -53,11 +55,15 @@ export default function Page() {
             title="Produits & disponibilités"
             image="/images/choix.jpg"
           >
-            <p>
-              Granit, Quartzite, Marbres, Pierre reconstituée, Céramiques Selon
-              votre utilisation, nous vous conseillons dans votre choix Un stock
-              permanent pour une meilleure réactivité
-            </p>
+            <ul className="list-disc ml-4">
+              <li>
+                Granit, Quartzite, Marbres, Pierre reconstituées, Céramiques
+              </li>
+              <li>
+                Selon votre utilisation, nous vous conseillons dans votre choix
+              </li>
+              <li>Un stock permanent pour une meilleure réactivité</li>
+            </ul>
           </ServiceCard>
           <ServiceCard
             title="Outils d'aide à la vente"

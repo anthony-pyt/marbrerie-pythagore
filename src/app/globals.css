@@ -134,3 +134,7 @@ input[type="checkbox"].checkboxInput {
   @apply w-4 h-4 text-slate-900 bg-gray-100 border-slate-900 peer-checked:bg-inherit rounded focus:ring-slate-900 dark:focus:ring-slate-900;
 
 }
+
+.error-message{
+  @apply text-red-500 text-xs;
+}

@@ -8,6 +8,8 @@ import ProductCard from "../../components/product/ProductCard";
 import { Icon } from "@iconify/react";
 import { useEffect, useState } from "react";
 import Filter from "../../components/catalogue/Filter";
+import FiltersMenu from "./../../components/catalogue/FilterMenus";
+import axios from "axios";
 
 export default function Page() {
   const [loadProducts, setLoadProducts] = useState(true);
@@ -18,17 +20,21 @@ export default function Page() {
   const [categories, setCategories] = useState([]);
   const [thiknesses, setThiknesses] = useState([]);
   const [finitions, setFinitions] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
   const [selectedMotifs, setSelectedMotifs] = useState([]);
   const [selectedColors, setSelectedColors] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedThiknesses, setSelectedThiknesses] = useState([]);
   const [selectedFinitions, setSelectedFinitions] = useState([]);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalProducts, setTotalProducts] = useState(0);
   const [selectedFilters, setSelectedFilters] = useState({
-    coupDeCoeur: true,
-    ecoResponsable: false,
+    coupDeCoeur: false,
+    produitDurable: false,
   });
+  const [openMenuMobile, setOpenMenuMobile] = useState(false);
   const [filters, setFilters] = useState([
-    { type: "filter", text: "Coup de cœur", icon: "solar:heart-bold" },
+    // { type: "filter", text: "Coup de cœur", icon: "solar:heart-bold" },
   ]);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -55,24 +61,30 @@ export default function Page() {
     { name: "Veiné", slug: "veine" },
   ];
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoadProducts(true);
-      setLoadCategories(true);
-      setLoadThiknesses(true);
-      setLoadFinitions(true);
+  const filterParams = {
+    categories: selectedCategories,
+    thiknesses: selectedThiknesses,
+    finitions: selectedFinitions,
+    motifs: selectedMotifs,
+    colors: selectedColors,
+    coupDeCoeur: selectedFilters.coupDeCoeur,
+    produitDurable: selectedFilters.produitDurable,
+    searchTerm: searchTerm,
+    page: currentPage,
+    limit: 50,
+  };
 
-      try {
-        const [
-          productResponse,
-          categoryResponse,
-          thiknessResponse,
-          finitionsResponse,
-        ] = await Promise.all([
-          fetch(
-            process.env.NEXT_PUBLIC_API_STOCK_URL +
-              "/stock/products_only_matieres"
-          ),
+  const queryParams = new URLSearchParams(filterParams).toString();
+
+  const fetchData = async () => {
+    setLoadProducts(true);
+    setLoadCategories(true);
+    setLoadThiknesses(true);
+    setLoadFinitions(true);
+
+    try {
+      const [categoryResponse, thiknessResponse, finitionsResponse] =
+        await Promise.all([
           fetch(
             process.env.NEXT_PUBLIC_API_STOCK_URL +
               "/stock/categories-with-parent-matieres"
@@ -81,52 +93,116 @@ export default function Page() {
           fetch(process.env.NEXT_PUBLIC_API_STOCK_URL + "/finitions"),
         ]);
 
-        const products = await productResponse.json();
-        // console.log(products);
+      const categories = await categoryResponse.json();
+      const thiknesses = await thiknessResponse.json();
+      const finitions = await finitionsResponse.json();
 
-        const categories = await categoryResponse.json();
-        const thiknesses = await thiknessResponse.json();
-        const finitions = await finitionsResponse.json();
+      setCategories(categories);
+      setThiknesses(thiknesses);
+      setFinitions(finitions);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoadCategories(false);
+      setLoadThiknesses(false);
+      setLoadFinitions(false);
+    }
+  };
 
-        setProducts(products);
-        setCategories(categories);
-        setThiknesses(thiknesses);
-        setFinitions(finitions);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoadProducts(false);
-        setLoadCategories(false);
-        setLoadThiknesses(false);
-        setLoadFinitions(false);
-      }
-    };
+  const fetchProducts = async () => {
+    try {
+      setLoadProducts(true);
+      const productsResponse = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_STOCK_URL}/stock/products_only_matieres?${queryParams}`
+      );
+      setTotalProducts(productsResponse.data.total);
+      setTotalPages(productsResponse.data.last_page);
+      setProducts(productsResponse.data.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoadProducts(false);
+    }
+  };
 
+  useEffect(() => {
     fetchData();
+    fetchProducts();
   }, []);
 
-  const handleCategoryChange = (category) => {
+  useEffect(() => {
+    setCurrentPage(1)
+    fetchProducts();
+  }, [
+    selectedCategories,
+    selectedMotifs,
+    selectedColors,
+    selectedThiknesses,
+    selectedFinitions,
+    selectedFilters,
+    searchTerm,
+    currentPage,
+  ]);
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+      window.scrollTo({ top: 200, behavior: "smooth" });
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+      window.scrollTo({ top: 200, behavior: "smooth" });
+    }
+  };
+
+  const handleCategoryChange = (category, isParent) => {
     const isCategorySelected = selectedCategories.includes(category.id);
 
-    // Met à jour les catégories sélectionnées
-    const updatedCategories = isCategorySelected
-      ? [] // Si la catégorie est déjà sélectionnée, vide la liste
-      : [category.id]; // Sinon, remplace la liste par la nouvelle catégorie
+    let updatedCategories;
+    let updatedFilters;
+
+    if (isCategorySelected) {
+      // Supprime la catégorie et ses enfants s'ils sont sélectionnés
+      updatedCategories = selectedCategories.filter(
+        (id) =>
+          id !== category.id &&
+          !category.children?.some((child) => child.id === id)
+      );
+
+      updatedFilters = filters.filter(
+        (filter) =>
+          filter.type !== "matieres" ||
+          (filter.text !== category.label &&
+            !category.children?.some((child) => child.label === filter.text))
+      );
+    } else {
+      // Ajoute la catégorie et ses enfants (si isParent est true)
+      const categoryIds = [
+        category.id,
+        ...(category.children?.map((child) => child.id) || []),
+      ];
+      updatedCategories = [...selectedCategories, ...categoryIds];
+
+      const newFilters = [
+        {
+          type: "matieres",
+          text: category.label,
+          icon: null,
+        },
+        ...(category.children?.map((child) => ({
+          type: "matieres",
+          text: child.label,
+          icon: null,
+        })) || []),
+      ];
+
+      updatedFilters = [...filters, ...newFilters];
+    }
 
     setSelectedCategories(updatedCategories);
-
-    // Met à jour les filtres
-    const updatedFilters = isCategorySelected
-      ? filters.filter((filter) => filter.type !== "matieres") // Retire le filtre existant si la catégorie est désélectionnée
-      : [
-          ...filters.filter((filter) => filter.type !== "matieres"), // Enlève les filtres existants avec le même label
-          {
-            type: "matieres",
-            text: category.label,
-            icon: null,
-          },
-        ];
-
     setFilters(updatedFilters);
   };
 
@@ -324,8 +400,8 @@ export default function Page() {
       ? external_product.heart == 1
       : true;
 
-    const matchesEcoResponsable = selectedFilters.ecoResponsable
-      ? external_product.eco == 1
+    const matchesproduitDurable = selectedFilters.produitDurable
+      ? external_product.durable == 1
       : true;
 
     return (
@@ -334,11 +410,22 @@ export default function Page() {
       matchesThikness &&
       matchesFinition &&
       matchesCoupDeCoeur &&
-      matchesEcoResponsable &&
+      matchesproduitDurable &&
       matchesColor &&
       matchesMotif
     );
   });
+
+  const removeFilter = (filterToRemove) => {
+    setFilters((prevFilters) =>
+      prevFilters.filter((filter) => filter.text !== filterToRemove.text)
+    );
+  };
+
+  const toggleFiltersMenu = () => {
+    setOpenMenuMobile(!openMenuMobile);
+    console.log(openMenuMobile);
+  };
 
   return (
     <main className="min-h-screen">
@@ -346,316 +433,83 @@ export default function Page() {
       <PageTitle title={"Nos produits"} />
       <div className="mt-2">
         <div className="lg:hidden flex justify-end mx-2">
-          <Button text="Filtres" color="or" size="small" icon="check" />
+          <Button
+            text="Filtres"
+            color="or"
+            size="small"
+            icon="check"
+            onClick={toggleFiltersMenu}
+          />
         </div>
         <div className="flex">
-          <div className="border p-4 shadow-lg rounded-xl bg-white m-2 w-72 hidden lg:block">
-            <div className="mb-12">
-              <label htmlFor="account-number" className="sr-only">
-                Recherche
-              </label>
-              <div className="relative mt-2 rounded-md shadow-sm">
-                <input
-                  id="account-number"
-                  name="account-number"
-                  type="search"
-                  placeholder="Ex: sirius, zimbabwe"
-                  className="block w-full rounded-md border-0 p-1.5 pl-8 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-1">
-                  <Icon
-                    icon="f7:search-circle-fill"
-                    width="24"
-                    height="24"
-                    className="text-secondary"
-                  />
-                </div>
-              </div>
-            </div>
-            <div>
-              <div className="my-4">
-                <fieldset>
-                  <legend className="border-b border-or w-full mb-2">
-                    Filtres
-                  </legend>
-                  <div className="relative flex items-start">
-                    <div className="flex h-6 items-center">
-                      <input
-                        id={"coup_de_coeur"}
-                        name={"coup_de_coeur"}
-                        type="checkbox"
-                        aria-describedby={"coup de cœur"}
-                        checked={selectedFilters.coupDeCoeur}
-                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                        onChange={() =>
-                          handleFilterChange(
-                            "coupDeCoeur",
-                            "Coup de cœur",
-                            "solar:heart-bold"
-                          )
-                        }
-                      />
-                    </div>
-                    <div className="ml-3 text-sm leading-6">
-                      <label
-                        htmlFor={"coup_de_coeur"}
-                        className="font-medium flex space-x-1 items-center"
-                      >
-                        <span>Coup de cœur</span>
-                        <Icon
-                          icon="solar:heart-bold"
-                          width="20"
-                          height="20"
-                          style={{ color: "#ff0000" }}
-                        />
-                      </label>
-                    </div>
-                  </div>
-                  <div className="relative flex items-start">
-                    <div className="flex h-6 items-center">
-                      <input
-                        id={"eco_responsable"}
-                        name={"Eco responsable"}
-                        type="checkbox"
-                        aria-describedby={"eco responsable"}
-                        checked={selectedFilters.ecoResponsable}
-                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                        onChange={() =>
-                          handleFilterChange(
-                            "ecoResponsable",
-                            "Eco responsable",
-                            "mdi:ecology"
-                          )
-                        }
-                      />
-                    </div>
-                    <div className="ml-3 text-sm leading-6">
-                      <label
-                        htmlFor={"eco_responsable"}
-                        className="font-medium flex space-x-1 items-center"
-                      >
-                        <span>Eco responsable </span>
-                        <Icon
-                          icon="mdi:ecology"
-                          width="20"
-                          height="20"
-                          className="text-green-600"
-                        />
-                      </label>
-                    </div>
-                  </div>
-                </fieldset>
-              </div>
-              <div className="my-4">
-                <fieldset>
-                  <legend className="border-b border-or w-full mb-2">
-                    Matières
-                  </legend>
-                  {loadCategories && (
-                    <div className="flex flex-col items-center">
-                      <Icon
-                        icon="ph:spinner-gap"
-                        className="w-6 h-6 animate-spin"
-                      />
-                    </div>
-                  )}
-                  {categories?.map((category) => (
-                    <div key={category.id}>
-                      <div className="relative flex items-center my-2">
-                        <div className="flex items-center">
-                          <input
-                            id={category.id}
-                            name={category.id}
-                            type="checkbox"
-                            aria-describedby={category.label}
-                            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                            checked={selectedCategories.includes(category.id)}
-                            onChange={() => handleCategoryChange(category)}
-                          />
-                        </div>
-                        <div className="ml-3 text-sm">
-                          <label htmlFor={category.id} className="font-medium">
-                            {category.label.charAt(0).toUpperCase() +
-                              category.label.slice(1).toLowerCase()}
-                          </label>
-                        </div>
-                      </div>
-                      {category.children.map((child) => {
-                        return (
-                          <div
-                            className="relative flex items-start ml-5"
-                            key={child.id}
-                          >
-                            <div className="flex items-center">
-                              <input
-                                id={child.id}
-                                name={child.id}
-                                type="checkbox"
-                                aria-describedby={child.label}
-                                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                                checked={selectedCategories.includes(child.id)}
-                                onChange={() => handleCategoryChange(child)}
-                              />
-                            </div>
-                            <div className="ml-3 text-sm">
-                              <label htmlFor={child.id} className="font-medium">
-                                {child.label.charAt(0).toUpperCase() +
-                                  child.label.slice(1).toLowerCase()}
-                              </label>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  ))}
-                </fieldset>
-              </div>
-              <div className="my-4">
-                <fieldset>
-                  <legend className="border-b border-or w-full mb-2">
-                    Epaisseurs
-                  </legend>
-                  {loadThiknesses && (
-                    <div className="flex flex-col items-center">
-                      <Icon
-                        icon="ph:spinner-gap"
-                        className="w-6 h-6 animate-spin"
-                      />
-                    </div>
-                  )}
-                  {thiknesses?.map((thikness) => {
-                    return (
-                      <div
-                        className="relative flex items-start"
-                        key={thikness.id}
-                      >
-                        <div className="flex h-6 items-center">
-                          <input
-                            name={thikness.label}
-                            id={thikness.label}
-                            type="checkbox"
-                            aria-describedby={"coup de coeur"}
-                            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                            onChange={() => handleThiknessChange(thikness)}
-                          />
-                        </div>
-                        <div className="ml-3 text-sm leading-6">
-                          <label
-                            htmlFor={thikness.label}
-                            className="font-medium flex space-x-1 items-center"
-                          >
-                            <span className="lowercase">{thikness.label}</span>
-                          </label>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </fieldset>
-              </div>
-              <div className="my-4">
-                <fieldset>
-                  <legend className="border-b border-or w-full mb-2">
-                    Finitions
-                  </legend>
-                  {loadFinitions && (
-                    <div className="flex flex-col items-center">
-                      <Icon
-                        icon="ph:spinner-gap"
-                        className="w-6 h-6 animate-spin"
-                      />
-                    </div>
-                  )}
-                  {finitions?.map((finition) => {
-                    return (
-                      <div
-                        className="relative flex items-start"
-                        key={finition.id}
-                      >
-                        <div className="flex h-6 items-center">
-                          <input
-                            name={finition.label}
-                            id={finition.label}
-                            type="checkbox"
-                            aria-describedby={finition.label}
-                            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                            onChange={() => handleFinitionChange(finition)}
-                          />
-                        </div>
-                        <div className="ml-3 text-sm leading-6">
-                          <label
-                            htmlFor={finition.label}
-                            className="font-medium flex space-x-1 items-center"
-                          >
-                            <span className="lowercase">{finition.label}</span>
-                          </label>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </fieldset>
-              </div>
-              <div className="my-4">
-                <fieldset>
-                  <legend className="border-b border-or w-full mb-2">
-                    Motifs
-                  </legend>
-                  {motifs.map((motif, index) => {
-                    return (
-                      <div className="relative flex items-start" key={index}>
-                        <div className="flex h-6 items-center">
-                          <input
-                            name={motif.name}
-                            id={motif.name}
-                            type="checkbox"
-                            aria-describedby={"coup de coeur"}
-                            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                            onChange={() => handleMotifChange(motif)}
-                          />
-                        </div>
-                        <div className="ml-3 text-sm leading-6">
-                          <label
-                            htmlFor={motif.name}
-                            className="font-medium flex space-x-1 items-center"
-                          >
-                            <span>{motif.name}</span>
-                          </label>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </fieldset>
-              </div>
-              <div className="my-4">
-                <fieldset className="mt-3">
-                  <legend className="border-b border-or w-full mb-2">
-                    Couleurs
-                  </legend>
-                  {colors?.map((color, index) => (
-                    <div className="space-y-5" key={index}>
-                      <div className="relative flex items-start">
-                        <div className="flex h-6 items-center">
-                          <input
-                            id={index}
-                            name={index}
-                            type="checkbox"
-                            aria-describedby={color.name}
-                            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                            onChange={() => handleColorChange(color)}
-                          />
-                        </div>
-                        <div className="ml-3 text-sm leading-6">
-                          <label htmlFor={index} className="font-medium">
-                            {color.name}
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </fieldset>
-              </div>
-            </div>
+          <div className="border p-4 shadow-lg rounded-xl bg-white m-2 min-w-72 hidden lg:block">
+            <FiltersMenu
+              categories={categories}
+              thiknesses={thiknesses}
+              finitions={finitions}
+              motifs={motifs}
+              colors={colors}
+              selectedCategories={selectedCategories}
+              selectedThiknesses={selectedThiknesses}
+              selectedFinitions={selectedFinitions}
+              selectedMotifs={selectedMotifs}
+              selectedColors={selectedColors}
+              handleFilterChange={handleFilterChange}
+              handleCategoryChange={handleCategoryChange}
+              handleThiknessChange={handleThiknessChange}
+              handleFinitionChange={handleFinitionChange}
+              handleMotifChange={handleMotifChange}
+              handleColorChange={handleColorChange}
+              filters={filters}
+              setFilters={setFilters}
+              removeFilter={removeFilter}
+              selectedFilters={selectedFilters}
+              loadCategories={loadCategories}
+              loadFinitions={loadFinitions}
+              loadThiknesses={loadThiknesses}
+              setSearchTerm={setSearchTerm}
+            />
           </div>
+          {openMenuMobile && (
+            <div className="lg:hidden fixed inset-0 z-50 bg-primary/50 overflow-auto p-12">
+              <div>
+                <button
+                  className="fixed top-3 right-3"
+                  onClick={toggleFiltersMenu}
+                >
+                  <Icon icon={"carbon:close-outline"} width="42" height="42" />
+                </button>
+              </div>
+              <div className="bg-white p-4 rounded-xl">
+                <FiltersMenu
+                  categories={categories}
+                  thiknesses={thiknesses}
+                  finitions={finitions}
+                  motifs={motifs}
+                  colors={colors}
+                  selectedCategories={selectedCategories}
+                  selectedThiknesses={selectedThiknesses}
+                  selectedFinitions={selectedFinitions}
+                  selectedMotifs={selectedMotifs}
+                  selectedColors={selectedColors}
+                  handleFilterChange={handleFilterChange}
+                  handleCategoryChange={handleCategoryChange}
+                  handleThiknessChange={handleThiknessChange}
+                  handleFinitionChange={handleFinitionChange}
+                  handleMotifChange={handleMotifChange}
+                  handleColorChange={handleColorChange}
+                  filters={filters}
+                  setFilters={setFilters}
+                  removeFilter={removeFilter}
+                  selectedFilters={selectedFilters}
+                  loadCategories={loadCategories}
+                  loadFinitions={loadFinitions}
+                  loadThiknesses={loadThiknesses}
+                  setSearchTerm={setSearchTerm}
+                />
+              </div>
+            </div>
+          )}
           <div className="w-full bg-white p-4 rounded-xl shadow-lg border m-2 min-h-screen">
             {loadProducts && (
               <div className="mt-28 flex flex-col items-center">
@@ -668,10 +522,15 @@ export default function Page() {
                 <p>Chargement des données...</p>
               </div>
             )}
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center flex-wrap truncate w-full text-xs">
               {filters?.map((filter, index) => {
                 return (
-                  <Filter text={filter.text} icon={filter.icon} key={index} />
+                  <Filter
+                    text={filter.text}
+                    icon={filter.icon}
+                    key={index}
+                    onClick={() => console.log(filter)}
+                  />
                 );
               })}
             </div>
@@ -695,6 +554,28 @@ export default function Page() {
                   </div>
                 )
               )}
+            </div>
+
+            <div className="pagination-controls flex justify-center items-center mt-12">
+              <Button
+                text={"Précédente"}
+                color={"primary"}
+                onClick={handlePreviousPage}
+                disabled={currentPage === 1}
+              >
+                Précédent
+              </Button>
+              <span className="mx-4">
+                Page {currentPage} sur {totalPages}
+              </span>
+              <Button
+                text={"Suivante"}
+                color="primary"
+                onClick={handleNextPage}
+                disabled={currentPage === totalPages}
+              >
+                Suivant
+              </Button>
             </div>
           </div>
         </div>

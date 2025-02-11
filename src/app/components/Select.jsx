@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Icon } from "@iconify/react";
 import clsx from "clsx";
 
-const Select = ({ icon, id, options, placeholder, onSelectChange, className }) => {
+const Select = ({ icon, id, options, placeholder, onSelectChange, className, error }) => {
   const [selected, setSelected] = useState("");
 
   // Gérer le changement de la valeur sélectionnée
