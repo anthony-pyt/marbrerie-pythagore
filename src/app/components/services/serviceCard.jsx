@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const ServiceCard = ({ title, children, image }) => {
   return (
-    <div className="max-w-96 min-w-96 bg-white rounded-xl shadow-xl border m-6">
+    <div className="max-w-96 min-w-96 bg-white rounded-xl shadow-xl border m-6 h-full">
       <div className="flex justify-center">
         <div className="bg-primary h-48 w-11/12 flex items-center justify-center rounded-xl shadow-lg -mt-6 overflow-hidden">
           <Image

@@ -58,14 +58,14 @@ const images = [
 //       </div>
 //       <div className="w-full md:w-1/2 text-center md:text-left">
 //         <h3 className="text-2xl font-bold mb-4 text-gray-800">{title}</h3>
-//         <p className="text-gray-600 leading-relaxed">{description}</p>
+//         <p className=" leading-relaxed">{description}</p>
 //       </div>
 //     </motion.div>
 //   );
 // };
 
 const ImageGrid = ({ images }) => (
-  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-7xl mx-auto p-6">
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-7xl mx-auto p-6">
     {images.map((image, index) => (
       <motion.div
         key={index}
@@ -88,9 +88,9 @@ const ImageGrid = ({ images }) => (
 const SquareSkeleton = ({ className, number, text }) => {
   return (
     <div className={clsx("rounded-xl shadow-lg p-4", className)}>
-      <h4 className="text-6xl">{number}</h4>
+      <h4 className="text-7xl">{number}</h4>
       <div className="py-6">
-        <p className="">{text}</p>
+        <p className="text-lg">{text}</p>
       </div>
     </div>
   );
@@ -100,7 +100,7 @@ const RectangleSkeleton = ({ className, image_url, title, text }) => {
   return (
     <div
       className={clsx(
-        "rounded-xl shadow-lg p-2 flex items-center justify-between",
+        "rounded-xl shadow-lg p-2 flex flex-col md:flex-row items-center justify-between",
         className
       )}
       whileHover={{ scale: 1.02 }}
@@ -116,7 +116,7 @@ const RectangleSkeleton = ({ className, image_url, title, text }) => {
         />
       </div>
       <div className="flex-1 flex flex-col justify-between h-full">
-        <p className="text-gray-600 text-sm">{text}</p>
+        <p className=" text-sm">{text}</p>
         <h6 className="font-bold mt-2 text-sm">{title}</h6>
       </div>
     </div>
@@ -132,13 +132,13 @@ export default function Page() {
         <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 m-4 flex-1">
           <SquareSkeleton
             className={"col-span-1 bg-or bg-opacity-10"}
-            number="96%"
-            text="de satisfation clients"
+            number="30+"
+            text="années d’expérience dans le domaine de la marbrerie de décoration"
           />
           <SquareSkeleton
             className={"col-span-1 bg-secondary bg-opacity-10"}
-            number="500+"
-            text="de clients"
+            number="99%"
+            text="de l’eau utilisée est recyclée, et a permis de réduire de 96% notre consommation d’eau"
           />
           <RectangleSkeleton
             className={"col-span-1 sm:col-span-2 bg-gray-50"}
@@ -157,12 +157,12 @@ export default function Page() {
           <SquareSkeleton
             className={"col-span-1  bg-or bg-opacity-10"}
             number="100+"
-            text="de collaborateurs"
+            text="machines présentes dans notre atelier : machine à commande numérique, machine à découpe jet d’eau, polisseuse..."
           />
           <SquareSkeleton
             className={"col-span-1 bg-secondary bg-opacity-10"}
             number="7000+"
-            text="de projets par an"
+            text="Projets réalisés : cuisine, salle de bain, habillement murale, comptoir d’accueil, cheminé..."
           />
         </div>
       </div>
@@ -180,26 +180,26 @@ export default function Page() {
       </section> */}
 
       <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="mx-auto px-6">
           <div className="text-center mb-12">
             <h3 className="text-3xl font-extrabold text-gray-800 mb-4">
               Les précisions de notre savoir-faire
             </h3>
-            <p className="text-gray-600 text-lg">
+            <p className=" text-lg">
               Découvrez les techniques et finitions qui font la renommée de
               notre expertise.
             </p>
           </div>
 
           {/* Liste des savoir-faire */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4">
             {/* Carte 1 */}
             <div className="mx-auto">
               <ServiceCard
                 title={"Finitions de chant"}
                 image={"/images/atelier/IMG_0053.JPEG"}
               >
-                <p className="text-gray-600">
+                <p className="">
                   Chant droit, arrondi, biseauté, bec de corbin… Nous proposons
                   des finitions adaptées à vos besoins et projets.
                 </p>
@@ -212,7 +212,7 @@ export default function Page() {
                 title={"Découpe sur mesure"}
                 image={"/images/savoir-faire/decoupe_sur_mesure.JPEG"}
               >
-                <p className="text-gray-600">
+                <p className="">
                   Grâce à nos machines de découpe, nous réalisons des
                   ajustements précis pour arrondis, angles spécifiques ou
                   ajustements millimétriques.
@@ -226,7 +226,7 @@ export default function Page() {
                 title={"Joint parfait"}
                 image={"/images/savoir-faire/ventouse1.jpg"}
               >
-                <p className="text-gray-600">
+                <p className="">
                   Obtenez un résultat visiblement net et continu grâce à notre
                   technique de joint parfait.
                 </p>
@@ -239,7 +239,7 @@ export default function Page() {
                 title={"Façonnages spécifiques"}
                 image={"/images/savoir-faire/faconnage_specifique.JPEG"}
               >
-                <p className="text-gray-600">
+                <p className="">
                   Polissage sous plan, assemblage à l’onglet, suivi du mur en
                   pierre... Nous peaufinons les moindres détails.
                 </p>
@@ -249,7 +249,7 @@ export default function Page() {
 
           {/* Galerie d'images */}
           <div className="mt-12">
-            <h4 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+            <h4 className="text-2xl font-bold mb-6 text-center">
               Quelques photos
             </h4>
             <ImageGrid images={images} />

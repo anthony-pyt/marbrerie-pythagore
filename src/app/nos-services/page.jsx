@@ -9,7 +9,7 @@ export default function Page() {
       <MainMenu />
       <div className="p-4">
         <PageTitle title={"Nos services pour les professionnels"} />
-        <div className="flex items-stretch justify-center flex-wrap my-12 mx-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 my-12 gap-16">
           <ServiceCard title="Suivi commercial" image="/images/conseil.jpg">
             <ul className="list-disc ml-4">
               <li>Suivi de votre réalisation du devis à la commande</li>
@@ -36,14 +36,15 @@ export default function Page() {
           >
             <ul className="list-disc ml-4">
               <li>De la prise de mesures à la pose.</li>
-              <li>Nos équipes totalement
-              internalisées vous accompagnent au quotidien. </li>
-              <li>Selon votre besoin
-              nous adaptons notre offre</li>
+              <li>
+                Nos équipes totalement internalisées vous accompagnent au
+                quotidien.{" "}
+              </li>
+              <li>Selon votre besoin nous adaptons notre offre</li>
             </ul>
           </ServiceCard>
         </div>
-        <div className="flex items-stretch justify-center flex-wrap my-12 mx-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 my-12 gap-16">
           <ServiceCard title="Service après-vente" image="/images/sav.jpg">
             <ul className="list-disc ml-4">
               <li>Assistance technique</li>
