@@ -131,7 +131,6 @@ export default function Page() {
   }, []);
 
   useEffect(() => {
-    setCurrentPage(1)
     fetchProducts();
   }, [
     selectedCategories,
@@ -159,6 +158,8 @@ export default function Page() {
   };
 
   const handleCategoryChange = (category, isParent) => {
+    setCurrentPage(1);
+
     const isCategorySelected = selectedCategories.includes(category.id);
 
     let updatedCategories;
@@ -207,6 +208,8 @@ export default function Page() {
   };
 
   const handleThiknessChange = (thikness) => {
+    setCurrentPage(1);
+
     if (selectedThiknesses.includes(thikness.id)) {
       setSelectedThiknesses(
         selectedThiknesses.filter((id) => id !== thikness.id)
@@ -236,6 +239,8 @@ export default function Page() {
   };
 
   const handleFinitionChange = (finition) => {
+    setCurrentPage(1);
+
     if (selectedFinitions.includes(finition.id)) {
       setSelectedFinitions(
         selectedFinitions.filter((id) => id !== finition.id)
@@ -267,6 +272,8 @@ export default function Page() {
   };
 
   const handleMotifChange = (motif) => {
+    setCurrentPage(1);
+
     if (selectedMotifs.includes(motif.slug)) {
       setSelectedMotifs(selectedMotifs.filter((name) => name !== motif.slug));
     } else {
@@ -296,6 +303,8 @@ export default function Page() {
   };
 
   const handleColorChange = (color) => {
+    setCurrentPage(1);
+
     if (selectedColors.includes(color.name)) {
       setSelectedColors(selectedColors.filter((name) => name !== color.name));
     } else {
@@ -325,6 +334,8 @@ export default function Page() {
   };
 
   const handleFilterChange = (filterName, filterText, filterIcon) => {
+    setCurrentPage(1);
+
     setSelectedFilters((prevFilters) => ({
       ...prevFilters,
       [filterName]: !prevFilters[filterName],

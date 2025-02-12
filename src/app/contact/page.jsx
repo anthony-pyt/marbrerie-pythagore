@@ -25,7 +25,7 @@ export default function Page() {
   const [isAPro, setIsAPro] = useState(null);
   const [isWithPro, setIsWithPro] = useState("no");
   const [formErrors, setFormErrors] = useState({});
-  const { VerifyAndSendEmail } = FormServices();
+  const { VerifyAndSendContact } = FormServices();
   const [cities, setCities] = useState([]);
   const [proCities, setProCities] = useState([]);
   const [recaptchaToken, setRecaptchaToken] = useState(null);
@@ -42,10 +42,6 @@ export default function Page() {
       [id]: newValue,
     }));
   };
-
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
 
   const handleHasProject = (type) => {
     setHasProject(type);
@@ -97,7 +93,7 @@ export default function Page() {
         return;
       }
 
-      const responseStatus = await VerifyAndSendEmail(formData);
+      const responseStatus = await VerifyAndSendContact(formData);
       if (responseStatus === 200) {
         setStepChanger(1);
         // setTypeOfStatus("success");
@@ -137,7 +133,6 @@ export default function Page() {
     if (type === "cities") {
       setCities(transformedCities);
     }
-    console.log("response", response);
 
     if (type === "proCities") {
       setProCities(transformedCities);

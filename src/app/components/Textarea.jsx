@@ -13,7 +13,7 @@ const Textarea = ({ id, placeholder, onInputChange, className }) => {
   };
 
   return (
-    <div className={clsx([className, "relative inline-block w-full h-60"])}>
+    <div className={clsx([className, "relative inline-block w-full"])}>
       <textarea
         name={id}
         id={id}

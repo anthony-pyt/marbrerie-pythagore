@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { useState } from "react";
 import { Icon } from "@iconify/react";
 import clsx from "clsx";
@@ -8,7 +8,8 @@ const Input = ({ icon, type, id, placeholder, onInputChange, className }) => {
 
   // Gérer le changement de la valeur de l'input
   const handleChange = (e) => {
-    const newValue = e.target.value;
+    const newValue = type != "file" ? e.target.value : e.target.files[0];
+
     setValue(newValue); // Met à jour l'état local
     onInputChange(newValue); // Transmet la nouvelle valeur au parent
   };
@@ -19,7 +20,7 @@ const Input = ({ icon, type, id, placeholder, onInputChange, className }) => {
         type={type}
         name={id}
         id={id}
-        value={value} // Liaison de la valeur
+        {...(type !== "file" ? { value } : {})}
         onChange={handleChange} // Gestionnaire de changement
         className="border border-gray-300 rounded-full px-4 py-2 text-sm w-full focus:outline-none shadow-sm transition duration-300 ease-in-out"
         placeholder={placeholder}

@@ -13,6 +13,7 @@ import Link from "next/link";
 import {TextGenerateEffect} from "./components/ui/text-generate-effect";
 import { Carousel, Card } from "./components/ui/apple-cards-carousel"
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const message = "bienvenue chez pythagore";
 
@@ -66,12 +67,22 @@ export default function Home() {
       <MainMenu page="home" />
       <section className="relative hidden xl:flex">
         <div className="w-full h-screen overflow-hidden flex justify-center items-center bg-black animate__animated animate__fadeIn">
-          <video
+          {/* <video
             src="/videos/presentation.mp4"
             loop
             autoPlay
             muted
             className="opacity-40 blur w-full object-cover"
+          /> */}
+          <Image
+            alt="acceuil"
+            fill
+            style={{
+              objectFit: "cover",
+              objectPosition: "center",
+            }}
+            src={"/images/2.jpg"}
+            className="opacity-40"
           />
           <div className="absolute transform left-1/2 -translate-x-1/2 w-full">
             <ShowTextGenerateEffect />
@@ -104,9 +115,9 @@ export default function Home() {
               </h2>
               <p className="mt-12">
                 <span className="text-or">Pythagore </span>
-                est une équipe d’hommes et de femmes, qui de par leur
-                passion pour leur métier et les matériaux, incarnent ce que nous
-                sommes aujourd'hui !
+                est une équipe d’hommes et de femmes, qui de par leur passion
+                pour leur métier et les matériaux, incarnent ce que nous sommes
+                aujourd'hui !
               </p>
               <div className="flex justify-end mt-12">
                 <Button
