@@ -210,7 +210,7 @@ export default function Page() {
             <div className="mx-auto">
               <ServiceCard
                 title={"Découpe sur mesure"}
-                image={"/images/atelier/IMG_0084.JPEG"}
+                image={"/images/savoir-faire/decoupe_sur_mesure.JPEG"}
               >
                 <p className="text-gray-600">
                   Grâce à nos machines de découpe, nous réalisons des
@@ -224,7 +224,7 @@ export default function Page() {
             <div className="mx-auto">
               <ServiceCard
                 title={"Joint parfait"}
-                image={"/images/atelier/IMG_1597.png"}
+                image={"/images/savoir-faire/ventouse1.jpg"}
               >
                 <p className="text-gray-600">
                   Obtenez un résultat visiblement net et continu grâce à notre
@@ -237,7 +237,7 @@ export default function Page() {
             <div className="mx-auto">
               <ServiceCard
                 title={"Façonnages spécifiques"}
-                image={"/images/atelier/IMG_1598.jpg"}
+                image={"/images/savoir-faire/faconnage_specifique.JPEG"}
               >
                 <p className="text-gray-600">
                   Polissage sous plan, assemblage à l’onglet, suivi du mur en
