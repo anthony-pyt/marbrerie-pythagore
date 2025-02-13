@@ -30,7 +30,7 @@ const nextConfig = {
       "pbs.twimg.com",
       "pythagore.doliplus.com",
       "192.168.1.63",
-      "api.marbrerie-pythagore.fr",
+      "api.stock.marbrerie-pythagore.fr",
     ],
   },
   eslint: {
