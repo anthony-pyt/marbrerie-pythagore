@@ -29,6 +29,8 @@ const nextConfig = {
       "images.unsplash.com",
       "pbs.twimg.com",
       "pythagore.doliplus.com",
+      "192.168.1.63",
+      "api.marbrerie-pythagore.fr",
     ],
   },
   eslint: {

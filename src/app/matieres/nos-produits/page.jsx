@@ -387,12 +387,12 @@ export default function Page() {
           )
         : true;
 
-    const matchesFinition =
-      selectedFinitions.length > 0
-        ? external_product.finitions.some((finition) =>
-            selectedFinitions.includes(finition.id)
-          )
-        : true;
+    // const matchesFinition =
+    //   selectedFinitions.length > 0
+    //     ? external_product.finitions.some((finition) =>
+    //         selectedFinitions.includes(finition.id)
+    //       )
+    //     : true;
 
     const matchesMotif =
       selectedMotifs.length > 0
@@ -419,7 +419,7 @@ export default function Page() {
       matchesSearchTerm &&
       matchesCategory &&
       matchesThikness &&
-      matchesFinition &&
+      // matchesFinition &&
       matchesCoupDeCoeur &&
       matchesproduitDurable &&
       matchesColor &&

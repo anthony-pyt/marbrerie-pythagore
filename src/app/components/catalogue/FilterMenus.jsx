@@ -132,7 +132,9 @@ const FilterMenus = ({
                 <Icon icon="ph:spinner-gap" className="w-6 h-6 animate-spin" />
               </div>
             )}
-            {categories?.map((category) => (
+            {categories
+            .sort((a, b) => a.label.localeCompare(b.label))
+            .map((category) => (
               <div key={category.id}>
                 <div className="relative flex items-center my-2">
                   <div className="flex items-center">
@@ -153,32 +155,38 @@ const FilterMenus = ({
                     </label>
                   </div>
                 </div>
-                {category.children.map((child) => {
-                  return (
-                    <div
-                      className="relative flex items-start ml-5"
-                      key={child.id}
-                    >
-                      <div className="flex items-center">
-                        <input
-                          id={child.id}
-                          name={child.id}
-                          type="checkbox"
-                          aria-describedby={child.label}
-                          className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                          checked={selectedCategories.includes(child.id)}
-                          onChange={() => handleCategoryChange(child)}
-                        />
+                {category.children
+                  .sort((a, b) => a.label.localeCompare(b.label)) // Tri alphabétique
+                  .map((child) => {
+                    const formattedLabel =
+                      child.label.charAt(0).toUpperCase() +
+                      child.label.slice(1).toLowerCase();
+                    const inputId = `category-${child.id}`;
+
+                    return (
+                      <div
+                        className="relative flex items-start ml-5"
+                        key={child.id}
+                      >
+                        <div className="flex items-center">
+                          <input
+                            id={inputId}
+                            name={inputId}
+                            type="checkbox"
+                            aria-describedby={formattedLabel}
+                            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                            checked={selectedCategories.includes(child.id)}
+                            onChange={() => handleCategoryChange(child.id)}
+                          />
+                        </div>
+                        <div className="ml-3 text-sm">
+                          <label htmlFor={inputId} className="font-medium">
+                            {formattedLabel}
+                          </label>
+                        </div>
                       </div>
-                      <div className="ml-3 text-sm">
-                        <label htmlFor={child.id} className="font-medium">
-                          {child.label.charAt(0).toUpperCase() +
-                            child.label.slice(1).toLowerCase()}
-                        </label>
-                      </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
               </div>
             ))}
           </fieldset>
@@ -219,7 +227,7 @@ const FilterMenus = ({
             })}
           </fieldset>
         </div>
-        <div className="my-4">
+        {/* <div className="my-4">
           <fieldset>
             <legend className="border-b border-or w-full mb-2">
               Finitions
@@ -254,7 +262,7 @@ const FilterMenus = ({
               );
             })}
           </fieldset>
-        </div>
+        </div> */}
         <div className="my-4">
           <fieldset>
             <legend className="border-b border-or w-full mb-2">Motifs</legend>

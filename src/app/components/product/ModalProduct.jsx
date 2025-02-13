@@ -35,9 +35,9 @@ export function ModalProduct({ setOpen, open, product }) {
                 src={product.image_url}
                 loading="lazy"
                 alt={product.label}
-                className="object-cover h-72 w-72 rounded-lg"
+                className="object-cover h-72 lg:h-[500px] w-72 lg:w-[500px] rounded-lg"
               />
-              <div className="flex items-center justify-between w-full mt-2">
+              {/* <div className="flex items-center justify-between w-full mt-2">
                 {product.images && product.images.length > 0
                   ? product.images.map((image, imageIndex) => (
                       <img
@@ -58,7 +58,7 @@ export function ModalProduct({ setOpen, open, product }) {
                         key={index}
                       />
                     ))}
-              </div>
+              </div> */}
             </div>
 
             <div className="mt-3 text-center lg:text-left sm:mt-5 flex flex-col justify-between">
