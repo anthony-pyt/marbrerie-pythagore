@@ -158,11 +158,6 @@ const FilterMenus = ({
                 {category.children
                   .sort((a, b) => a.label.localeCompare(b.label)) // Tri alphabétique
                   .map((child) => {
-                    const formattedLabel =
-                      child.label.charAt(0).toUpperCase() +
-                      child.label.slice(1).toLowerCase();
-                    const inputId = `category-${child.id}`;
-
                     return (
                       <div
                         className="relative flex items-start ml-5"
@@ -170,18 +165,19 @@ const FilterMenus = ({
                       >
                         <div className="flex items-center">
                           <input
-                            id={inputId}
-                            name={inputId}
+                            id={child.id}
+                            name={child.id}
                             type="checkbox"
-                            aria-describedby={formattedLabel}
+                            aria-describedby={child.label}
                             className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                             checked={selectedCategories.includes(child.id)}
-                            onChange={() => handleCategoryChange(child.id)}
+                            onChange={() => handleCategoryChange(child)}
                           />
                         </div>
                         <div className="ml-3 text-sm">
-                          <label htmlFor={inputId} className="font-medium">
-                            {formattedLabel}
+                          <label htmlFor={child.id} className="font-medium">
+                            {child.label.charAt(0).toUpperCase() +
+                              child.label.slice(1).toLowerCase()}
                           </label>
                         </div>
                       </div>

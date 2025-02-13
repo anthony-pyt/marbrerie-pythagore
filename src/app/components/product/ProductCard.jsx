@@ -1,12 +1,11 @@
 import { Icon } from "@iconify/react";
 import { useState } from "react";
 import { ModalProduct } from "./ModalProduct";
-import Image from 'next/image'
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 const ProductCard = ({ product, animationDelay }) => {
-
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const router = useRouter()
+  const router = useRouter();
 
   const openModal = (value) => {
     setIsOpenModal(value);
@@ -30,7 +29,7 @@ const ProductCard = ({ product, animationDelay }) => {
               className="group relative h-48 bg-primary w-11/12 flex items-center justify-center rounded-xl shadow-lg -mt-6 overflow-hidden"
               style={{ animationDelay }}
             >
-              {product.image_url&& (
+              {product.image_url && (
                 <Image
                   lazy="true"
                   width={300}
@@ -57,7 +56,8 @@ const ProductCard = ({ product, animationDelay }) => {
 
               <div className="absolute top-1 right-1">
                 {product.product.category.logo_url != null ? (
-                  <Image src={product.product.category?.logo_url}
+                  <Image
+                    src={product.product.category?.logo_url}
                     className="h-4 p-0.5 bg-white rounded px-2"
                     alt={product.product.category.label}
                     width={100}
@@ -69,8 +69,7 @@ const ProductCard = ({ product, animationDelay }) => {
                       {product.product.category.label}
                     </span>
                   </div>
-                )
-                }
+                )}
               </div>
             </button>
           </div>
@@ -78,28 +77,46 @@ const ProductCard = ({ product, animationDelay }) => {
             <p className="font-semibold font-title mb-0.5">{product.label}</p>
           </div>
         </div>
-        <div className="p-3 space-y-1">
-          <div className="flex flex-wrap items-center space-x-1 text-xs">
-            <Icon icon="solar:sticker-square-outline" width="18" height="18" />
-            {product.finitions.map((item, index) => (
-              <div
-                className="lowercase bg-primary/25 px-2 py-0.5 rounded"
-                key={index}
-              >
-                <span className="text-secondary">{item?.finition?.label}</span>
-              </div>
-            ))}
+        <div className="p-3 space-y-2">
+          <div className="flex">
+            <Icon
+              icon="solar:sticker-square-outline"
+              width="18"
+              height="18"
+              className="mt-0.5 mr-1"
+            />
+            <div className="flex flex-wrap items-center text-xs">
+              {product.finitions.map((item, index) => (
+                <div
+                  className="lowercase bg-primary/25 px-2 py-0.5 rounded m-0.5"
+                  key={index}
+                >
+                  <span className="text-secondary">
+                    {item?.finition?.label}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="flex flex-wrap items-center space-x-1 text-xs">
-            <Icon icon="solar:ruler-angular-outline" width="18" height="18" />
-            {product?.thiknesses.map((item, index) => (
-              <div
-                className="lowercase bg-primary/25 px-2 py-0.5 rounded"
-                key={index}
-              >
-                <span className="text-secondary">{item?.thikness_plan?.label}</span>
-              </div>
-            ))}
+          <div className="flex">
+            <Icon
+              icon="solar:ruler-angular-outline"
+              width="18"
+              height="18"
+              className="mt-0.5 mr-1"
+            />
+            <div className="flex flex-wrap items-center text-xs">
+              {product?.thiknesses.map((item, index) => (
+                <div
+                  className="lowercase bg-primary/25 px-2 py-0.5 rounded m-0.5"
+                  key={index}
+                >
+                  <span className="text-secondary">
+                    {item?.thikness_plan?.label}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
           <div className="flex items-center space-x-1 absolute right-3 bottom-3 ">
             {product.durable === 1 && (
