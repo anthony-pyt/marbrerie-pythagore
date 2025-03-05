@@ -3,9 +3,9 @@
 import React from "react";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
-import Image from 'next/image';
+import Image from "next/image";
 
-export default function HomeSwipper() {
+export default function HomeSwipper({ images }) {
   return (
     <Splide
       options={{
@@ -18,29 +18,19 @@ export default function HomeSwipper() {
       }}
       aria-label="My Favorite Images"
     >
-      <SplideSlide>
-        <Image
-          src="/images/credence-marbre-dore-3.png"
-          alt="Image 1"
-          width={500}
-          height={500}
-          className="min-h-[500px] max-h-[500px] w-full object-cover bg-center"
-        />
-      </SplideSlide>
-      <SplideSlide>
-        <img
-          src="/images/2.jpg"
-          alt="Image 2"
-          className="min-h-[500px] max-h-[500px] w-full object-cover bg-center"
-        />
-      </SplideSlide>
-      <SplideSlide>
-        <img
-          src="/images/3.jpg"
-          alt="Image 3"
-          className="min-h-[500px] max-h-[500px] w-full object-cover bg-center"
-        />
-      </SplideSlide>
+      {images.map((image) => {
+        return (
+          <SplideSlide>
+            <Image
+              src={image}
+              alt={image}
+              width={500}
+              height={500}
+              className="min-h-[500px] max-h-[500px] w-full object-cover bg-center"
+            />
+          </SplideSlide>
+        );
+      })}
     </Splide>
   );
-};
+}

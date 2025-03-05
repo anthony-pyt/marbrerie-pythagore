@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import Filter from "../../components/catalogue/Filter";
 import FiltersMenu from "./../../components/catalogue/FilterMenus";
 import axios from "axios";
+import { colors, motifs } from "./../../../../datas/filters";
 
 export default function Page() {
   const [loadProducts, setLoadProducts] = useState(true);
@@ -37,29 +38,6 @@ export default function Page() {
     // { type: "filter", text: "Coup de cœur", icon: "solar:heart-bold" },
   ]);
   const [searchTerm, setSearchTerm] = useState("");
-
-  const colors = [
-    { name: "Blanc", hex: "#FFFFFF" },
-    { name: "Beige", hex: "#F5F5DC" },
-    { name: "Marron", hex: "#8B4513" },
-    { name: "Gris", hex: "#808080" },
-    { name: "Noir", hex: "#000000" },
-    { name: "Bleu", hex: "#0000FF" },
-    { name: "Vert", hex: "#008000" },
-    { name: "Rose", hex: "#FFC0CB" },
-    { name: "Rouge", hex: "#FF0000" },
-    { name: "Orange", hex: "#FFA500" },
-    { name: "Argent", hex: "#C0C0C0" },
-    { name: "Or", hex: "#FFD700" },
-  ];
-
-  const motifs = [
-    { name: "Linéaire", slug: "lineaire" },
-    { name: "Nuageux", slug: "nuageux" },
-    { name: "Oxyde", slug: "oxyde" },
-    { name: "Uni", slug: "uni" },
-    { name: "Veiné", slug: "veine" },
-  ];
 
   const filterParams = {
     categories: selectedCategories,

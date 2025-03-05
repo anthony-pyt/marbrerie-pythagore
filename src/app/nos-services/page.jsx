@@ -10,7 +10,10 @@ export default function Page() {
       <div className="p-4">
         <PageTitle title={"Nos services pour les professionnels"} />
         <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 my-12 gap-16">
-          <ServiceCard title="Suivi commercial" image="/images/conseil.jpg">
+          <ServiceCard
+            title="Suivi commercial"
+            image="/images/savoir-faire/suivi_commercial.jpg"
+          >
             <ul className="list-disc ml-4">
               <li>Suivi de votre réalisation du devis à la commande</li>
               <li>
@@ -19,7 +22,10 @@ export default function Page() {
               </li>
             </ul>
           </ServiceCard>
-          <ServiceCard title="Formation" image="/images/formation.jpg">
+          <ServiceCard
+            title="Formation"
+            image="/images/nos-services/formation_poseurs.JPEG"
+          >
             <ul className="list-disc ml-4">
               <li>En magasin ou en nos locaux</li>
               <li>Des concepteurs</li>
@@ -32,7 +38,7 @@ export default function Page() {
           </ServiceCard>
           <ServiceCard
             title="Un service sur mesure"
-            image="/images/prestation.jpg"
+            image="/images/savoir-faire/neolith_san_simone.png"
           >
             <ul className="list-disc ml-4">
               <li>De la prise de mesures à la pose.</li>
@@ -45,7 +51,7 @@ export default function Page() {
           </ServiceCard>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 my-12 gap-16">
-          <ServiceCard title="Service après-vente" image="/images/sav.jpg">
+          <ServiceCard title="Service après-vente" image="/images/savoir-faire/SAV.jpg">
             <ul className="list-disc ml-4">
               <li>Assistance technique</li>
               <li>Ecoute</li>
@@ -54,7 +60,7 @@ export default function Page() {
           </ServiceCard>
           <ServiceCard
             title="Produits & disponibilités"
-            image="/images/choix.jpg"
+            image="/images/nos-services/produits.JPEG"
           >
             <ul className="list-disc ml-4">
               <li>
@@ -68,7 +74,7 @@ export default function Page() {
           </ServiceCard>
           <ServiceCard
             title="Outils d'aide à la vente"
-            image="/images/outils.jpg"
+            image="/images/nos-services/magazines.png"
           >
             <ul className="list-disc ml-4">
               <li>Un catalogue synthétisant toutes les offres Produits</li>

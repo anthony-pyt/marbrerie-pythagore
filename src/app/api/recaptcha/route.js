@@ -1,7 +1,6 @@
 import axios from "axios";
 
 export async function POST(req) {
-  console.log(req);
   if (req.method !== "POST") {
     return new Response(
       JSON.stringify({ message: "Only POST requests allowed" }),

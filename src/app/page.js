@@ -7,26 +7,51 @@ import InspirationWidget from "./components/home/InspirationWidget";
 import BubbleService from "./components/BubbleService";
 import Review from "./components/Review";
 import Footer from "./components/Footer";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, use } from "react";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
-import {TextGenerateEffect} from "./components/ui/text-generate-effect";
-import { Carousel, Card } from "./components/ui/apple-cards-carousel"
+import { TextGenerateEffect } from "./components/ui/text-generate-effect";
+import { Carousel, Card } from "./components/ui/apple-cards-carousel";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import axios from "axios";
+import Loader from "./components/loader";
 
 const message = "bienvenue chez pythagore";
 
 export default function Home() {
-
   // État pour la visibilité des sections
   const [visibleSections, setVisibleSections] = useState({});
+  const [imageSrc, setImageSrc] = useState("");
+  const [ images, setImages ] = useState([])
   const sectionRefs = useRef([]);
-  const router = useRouter()
+  const router = useRouter();
 
   const cards = data.map((card, index) => (
     <Card key={card.src} card={card} index={index} />
   ));
+
+  useEffect(() => {
+    fetch("/api/images/random-principal-accueil")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.src) {
+          setImageSrc(data.src);
+        }
+      })
+      .catch((err) => console.error("Failed to load image", err));
+  }, []);
+
+  useEffect(() => {
+    fetch("/api/images/accueil-savoir-faire") // Assure-toi que l'URL correspond bien à ton fichier route.js
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.images) {
+          setImages(data.images);          
+        }
+      })
+      .catch((err) => console.error("Failed to load images", err));
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -59,8 +84,8 @@ export default function Home() {
   }, []);
 
   const navigateTo = (href) => {
-    router.push(href)
-  }
+    router.push(href);
+  };
 
   return (
     <main className="min-h-screen">
@@ -74,16 +99,18 @@ export default function Home() {
             muted
             className="opacity-40 blur w-full object-cover"
           /> */}
-          <Image
-            alt="acceuil"
-            fill
-            style={{
-              objectFit: "cover",
-              objectPosition: "center",
-            }}
-            src={"/images/2.jpg"}
-            className="opacity-40"
-          />
+          {imageSrc && (
+            <Image
+              alt="acceuil"
+              fill
+              style={{
+                objectFit: "cover",
+                objectPosition: "center",
+              }}
+              src={imageSrc}
+              className="opacity-40"
+            />
+          )}
           <div className="absolute transform left-1/2 -translate-x-1/2 w-full">
             <ShowTextGenerateEffect />
           </div>
@@ -131,12 +158,12 @@ export default function Home() {
             </div>
           </div>
           <div className="flex-1 hidden lg:flex">
-            <HomeSwipper />
+            {/* <HomeSwipper images={images}/> */}
           </div>
         </div>
       </section>
 
-      <section
+      {/* <section
         ref={(el) => (sectionRefs.current[1] = el)}
         data-id="inspiration"
         className={`py-20 animate__animated 
@@ -153,7 +180,7 @@ export default function Home() {
           </h2>
           <Carousel items={cards} />
         </div>
-      </section>
+      </section> */}
 
       <section
         ref={(el) => (sectionRefs.current[2] = el)}
@@ -178,14 +205,16 @@ export default function Home() {
         <Link href={"/nos-services"}>
           <div className="flex justify-center">
             <div className="rounded-3xl flex-wrap flex flex-col lg:flex-row items-center justify-between w-full max-w-full m-4 p-8 bg-white shadow-lg lg:divide-x divide-or-light min-h-96">
-              <BubbleService urlImage={"/images/formation.jpg"}>
+              <BubbleService
+                urlImage={"/images/nos-services/suivi_commercial.jpg"}
+              >
                 Conseil & formation
               </BubbleService>
               <BubbleService urlImage={"/images/echantillons.JPEG"}>
                 Choix, disponibilité des produits & Outils d&apos;aide à la
                 vente
               </BubbleService>
-              <BubbleService urlImage={"/images/sav.jpg"}>
+              <BubbleService urlImage={"/images/nos-services/SAV.jpg"}>
                 Prestation complète & SAV
               </BubbleService>
             </div>
@@ -196,7 +225,7 @@ export default function Home() {
       <section
         ref={(el) => (sectionRefs.current[4] = el)}
         data-id="reviews"
-        className={`py-20 animate__animated ${
+        className={`py-8 animate__animated ${
           visibleSections["reviews"] ? "animate__fadeIn" : "opacity-0"
         }`}
       >
@@ -261,7 +290,7 @@ export default function Home() {
 
 const ShowTextGenerateEffect = () => {
   return <TextGenerateEffect duration={2} filter={false} words={message} />;
-}
+};
 
 const data = [
   {

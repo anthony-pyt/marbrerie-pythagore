@@ -38,19 +38,17 @@ export default function Page() {
   );
 }
 
-const ListImages = ({ images, size=32 }) => {
+const ListImages = ({ images }) => {
   return (
     <div className="flex flex-wrap justify-start items-center">
       {images.map((image, index) => {
         return (
-          <div key={index}>
+          <div key={index} className="relative">
             <a target="_blank" href={image.url}>
-              <Image
+              <img
                 src={image.url}
                 alt={image.title}
-                width={500}
-                height={500}
-                className={`rounded-lg object-cover h-${size} w-${size} m-1`}
+                className={`rounded-lg object-cover h-[200px] w-[250px] m-1`}
               />
             </a>
           </div>
@@ -255,7 +253,6 @@ const HistoricalData = () => {
             professionnel à la hauteur de nos clients.
           </p>
           <ListImages
-          size={48}
             images={[
               {
                 title: "logo 30 ans",
@@ -268,9 +265,9 @@ const HistoricalData = () => {
     },
   ];
   return (
-    <div className="flex flex-col xl:flex-row">
-      <h2 className="lg:w-2/12 text-center lg:text-left">NOTRE HISTOIRE</h2>
-      <div className="lg:w-10/12">
+    <div className="flex flex-col xl:flex-row overflow-hidden">
+      <h2 className="lg:w-3/12 text-center lg:text-left">NOTRE HISTOIRE</h2>
+      <div className="">
         <Timeline data={data} />
       </div>
     </div>
@@ -283,50 +280,44 @@ const OurValues = () => {
       title: "La passion",
       content:
         "Chaque jour, nous nous engageons avec passion dans notre travail pour réaliser vos projets et donner vie à votre créativité.",
-      image: "/images/conseil.jpg",
+      image: "/images/qui-sommes-nous/nos-valeurs/atelier-poncage.JPEG",
     },
     {
       title: "La satisfaction clients",
       content:
         "Nous œuvrons chaque jour pour améliorer votre expérience avec des produits de haute qualité et un service client dévoué.",
-      image: "/images/formation.jpg",
+      image: "/images/qui-sommes-nous/nos-valeurs/together.jpeg",
     },
     {
       title: "L'engagement",
       content:
         "Chaque année, nous minimisons notre impact environnemental en éliminant nos déchets, recyclant nos eaux usées et réduisant l'utilisation de produits chimiques.",
-      image: "/images/prestation.jpg",
+      image: "/images/qui-sommes-nous/nos-valeurs/atelier.jpg",
+    },
+    {
+      title: "L'inovation",
+      content:
+        "Nous plaçons l'innovation au coeur de notre développement, en optimisant nos processus, en investissant dans les outils de production et en développement des logiciels pour optimiser le travaile de chaque collaborateur.",
+      image: "/images/qui-sommes-nous/nos-valeurs/innovation.jpg",
     },
   ];
 
   return (
-    <div className="flex flex-col xl:flex-row">
-      <h2 className="lg:w-2/12 text-center lg:text-left">NOS VALEURS</h2>
-      <div className="lg:w-10/12 max-w-7xl md:mx-10 mt-12">
-        <div className="flex flex-wrap justify-between">
+    <div className="flex flex-col xl:flex-row overflow-hidden">
+      <h2 className="lg:w-3/12 text-center lg:text-left m-2">NOS VALEURS</h2>
+      <div className="max-w-7xl m-12 mx-auto">
+        <div className="grid lg:grid-cols-2 gap-4">
           {datas.map((data, index) => {
             return (
-              <ServiceCard key={index} title={data.title} image={data.image}>
+              <div className="p-4" key={index}>
+              <ServiceCard title={data.title} image={data.image}>
                 <div>
                   <p>{data.content}</p>
                 </div>
               </ServiceCard>
+              </div>
             );
           })}
-        </div>
-        <div className="flex justify-between space-x-1 divide-x-2 divide-or my-20">
-          <div className="w-full flex flex-col items-center justify-center py-12">
-            <p className="text-6xl font-bold">96%</p>
-            <p className="text-xl">de satisfation clients</p>
-          </div>
-          <div className="w-full flex flex-col items-center justify-center">
-            <p className="text-6xl font-bold">7000+</p>
-            <p className="text-xl">projets par an</p>
-          </div>
-          <div className="w-full flex flex-col items-center justify-center">
-            <p className="text-6xl font-bold">100+</p>
-            <p className="text-xl">collaborateurs</p>
-          </div>
         </div>
       </div>
     </div>
@@ -336,13 +327,18 @@ const OurValues = () => {
 const Team = () => {
   const cards = [
     {
+      name: "Sylvie Owen",
+      job: "Présidente",
+      src: "https://images.unsplash.com/photo-1737202777198-7a913f95aa01?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+    {
       name: "Mathieu MONDAN",
       job: "Directeur d'exploitation",
       src: "https://images.unsplash.com/photo-1734335225921-06e1b6d94ed0?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
       name: "Christelle MORIN",
-      job: "Resposable commerciale",
+      job: "Directrice commerciale",
       src: "https://images.unsplash.com/photo-1737202777198-7a913f95aa01?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
@@ -362,7 +358,7 @@ const Team = () => {
     },
     {
       name: "Galle KERZHERO",
-      job: "Directrice des ressources humaines",
+      job: "Responsable des ressources humaines",
       src: "https://images.unsplash.com/photo-1737202777198-7a913f95aa01?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
@@ -373,8 +369,8 @@ const Team = () => {
   ];
   return (
     <div className="flex flex-col xl:flex-row">
-      <h2 className="lg:w-2/12 text-center lg:text-left">L'ENCADREMENT</h2>
-      <div className="lg:w-10/12 max-w-7xl md:mx-10 px-4">
+      <h2 className="lg:w-3/12 text-center lg:text-left m-2">L'ENCADREMENT</h2>
+      <div className="lg:w-10/12 max-w-7xl m-12">
         <FocusCards cards={cards} />
       </div>
     </div>
@@ -394,27 +390,33 @@ const DeliveryArea = () => {
     },
   ];
   return (
-    <div className="p-2 flex justify-center items-center mx-auto mt-20 w-full md:w-11/12 border rounded-xl shadow-xl">
-      <div className="max-w-7xl mx-auto mb-5 items-center flex flex-wrap md:flex-nowrap">
-        <div className="flex w-full items-end justify-center">
-          <div>
-            {zones.map((zone, index) => (
-              <div key={index} className="flex flex-col">
-                <p className="md:text-4xl py-4 text-xl ">{zone.name}</p>
-                <p className="text-base text-wrap w-auto md:max-w-56 max-w-64">
-                  {zone.address}
-                </p>
-              </div>
-            ))}
-          </div>
+    <div className="p-6 mx-auto mt-20 w-full bg-primary">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+        {/* Liste des zones */}
+        <div className="space-y-6">
+          {zones.map((zone, index) => (
+            <div
+              key={index}
+              className="p-4 bg-gray-50 rounded-xl shadow-md transition-transform hover:scale-105"
+            >
+              <h3 className="text-xl md:text-2xl font-semibold">
+                {zone.name}
+              </h3>
+              <p className="text-sm md:text-base mt-2">
+                {zone.address}
+              </p>
+            </div>
+          ))}
         </div>
-        <div className="flex flex-col items-center w-full md:basis-1/2">
+
+        {/* Image de la carte */}
+        <div className="flex justify-end">
           <Image
             src={mapSource}
-            width={400}
+            width={250}
             height={500}
             alt="Zones de prestation"
-            className="h-auto w-auto"
+            className="bg-white rounded-2xl p-4"
           />
         </div>
       </div>

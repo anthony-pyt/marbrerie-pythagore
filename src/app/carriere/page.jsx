@@ -29,7 +29,7 @@ import Input from "../components/Input";
 import FormServices from "./../api/services/formServices";
 
 const SectionTestimonials = ({ title, images, retardInterval }) => (
-  <div className="container mx-auto m-2">
+  <div className="container mx-auto m-4 bg-gray-50 rounded-xl p-4">
     <h2 className="text-4xl text-center md:text-left">{title}</h2>
     <AnimatedTestimonials
       testimonials={images}
@@ -57,12 +57,25 @@ const SectionCommitments = () => (
 const ListJobs = () => (
   <div className="mt-12 mx-auto bg-secondary p-12 rounded-xl lg:w-10/12 w-full">
     <div className="flex items-center justify-center w-full">
-      <div className="mb-12 flex items-center space-x-3">
+      <div className="mb-6 flex items-center space-x-3">
         <h2 className="text-white">Nos dernières offres d'emploi</h2>
         <ModalSendForm />
       </div>
     </div>
     <div className="w-full flex justify-center items-center max-w-5xl mx-auto">
+      {jobs.length === 0 && (
+        <div className="text-center p-2 text-white flex flex-col items-center">
+          <Icon icon="fluent:live-off-20-regular" width="64" height="64" className="mb-8"/>
+          <p className="text-lg font-semibold">
+            Aucune offre n'est disponible pour le moment... mais votre talent
+            nous intéresse !
+          </p>
+          <p className="mt-2">
+            N’hésitez pas à nous envoyer votre candidature spontanée. Nous
+            sommes toujours à la recherche de personnes motivées !
+          </p>
+        </div>
+      )}
       <div className="">
         {jobs.map((item, index) => (
           <div
@@ -101,7 +114,7 @@ const ModalSendForm = () => {
       [id]: newValue,
     }));
   };
-  
+
   const sendForm = async () => {
     if (!validateForm()) {
       return; // Si la validation échoue, ne pas envoyer
@@ -144,7 +157,8 @@ const ModalSendForm = () => {
 
   return (
     <Modal>
-      <ModalTrigger className="bg-or-light rounded-xl hover:bg-white transform duration-300">
+      <ModalTrigger className="bg-or-light rounded-xl hover:bg-white transform duration-300 flex items-center space-x-2">
+        <Icon icon="tabler:send" width="16" height="16" />
         <span className="group-hover/modal-btn:translate-x-40 text-center transition duration-500">
           Postuler
         </span>
@@ -275,7 +289,7 @@ export default function Page() {
     <main className="min-h-screen antialiased">
       <MainMenu />
       <PageTitle title={"Nos métiers"} />
-      <div className="m-4 bg-gray-100 p-4 rounded-xl ">
+      <div className="m-4 p-4 rounded-xl ">
         <SectionTestimonials
           title={"EN RELATION AVEC NOS CLIENTS"}
           images={metiersClient}
