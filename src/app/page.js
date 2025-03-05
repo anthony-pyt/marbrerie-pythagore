@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import axios from "axios";
 import Loader from "./components/loader";
+import { FadeLoader, ScaleLoader } from "react-spinners";
 
 const message = "bienvenue chez pythagore";
 
@@ -23,7 +24,8 @@ export default function Home() {
   // État pour la visibilité des sections
   const [visibleSections, setVisibleSections] = useState({});
   const [imageSrc, setImageSrc] = useState("");
-  const [ images, setImages ] = useState([])
+  const [images, setImages] = useState([]);
+  const [loadImages, setLoadingImages] = useState(true)
   const sectionRefs = useRef([]);
   const router = useRouter();
 
@@ -47,10 +49,11 @@ export default function Home() {
       .then((res) => res.json())
       .then((data) => {
         if (data.images) {
-          setImages(data.images);          
+          setImages(data.images);
         }
       })
-      .catch((err) => console.error("Failed to load images", err));
+      .catch((err) => console.error("Failed to load images", err))
+      .finally(() => setLoadingImages(false))
   }, []);
 
   useEffect(() => {
@@ -158,12 +161,15 @@ export default function Home() {
             </div>
           </div>
           <div className="flex-1 hidden lg:flex">
-            {/* <HomeSwipper images={images}/> */}
+            <div className="flex items-center justify-center w-full">
+              <ScaleLoader color="#EBC74F" loading={loadImages}/>
+            <HomeSwipper images={images}/>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* <section
+      <section
         ref={(el) => (sectionRefs.current[1] = el)}
         data-id="inspiration"
         className={`py-20 animate__animated 
@@ -180,7 +186,7 @@ export default function Home() {
           </h2>
           <Carousel items={cards} />
         </div>
-      </section> */}
+      </section>
 
       <section
         ref={(el) => (sectionRefs.current[2] = el)}

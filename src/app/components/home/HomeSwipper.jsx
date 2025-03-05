@@ -18,12 +18,12 @@ export default function HomeSwipper({ images }) {
       }}
       aria-label="My Favorite Images"
     >
-      {images.map((image) => {
+      {images.map((image, index) => {
         return (
-          <SplideSlide>
+          <SplideSlide key={index}>
             <Image
               src={image}
-              alt={image}
+              alt={index}
               width={500}
               height={500}
               className="min-h-[500px] max-h-[500px] w-full object-cover bg-center"

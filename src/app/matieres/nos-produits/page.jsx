@@ -431,7 +431,7 @@ export default function Page() {
           />
         </div>
         <div className="flex">
-          <div className="border p-4 shadow-lg rounded-xl bg-white m-2 min-w-72 hidden lg:block">
+          <div className="p-4 rounded-xl bg-white m-2 min-w-72 hidden lg:block">
             <FiltersMenu
               categories={categories}
               thiknesses={thiknesses}
@@ -499,7 +499,7 @@ export default function Page() {
               </div>
             </div>
           )}
-          <div className="w-full bg-white p-4 rounded-xl shadow-lg border m-2 min-h-screen">
+          <div className="w-full bg-white p-4 rounded-xl m-2 min-h-screen">
             {loadProducts && (
               <div className="mt-28 flex flex-col items-center">
                 <div className="h-32 overflow-hidden flex justify-center items-center">

@@ -37,7 +37,7 @@ export default function Page() {
             </ul>
           </ServiceCard>
           <ServiceCard
-            title="Un service sur mesure"
+            title="service sur mesure"
             image="/images/savoir-faire/neolith_san_simone.png"
           >
             <ul className="list-disc ml-4">
