@@ -1,9 +1,11 @@
 "use client";
+import { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import { ParallaxScroll } from "../components/ui/parallax-scroll.jsx";
 import MainMenu from "./../components/MainMenu";
 import PageTitle from "./../components/PageTitle";
 import { LayoutGrid } from "./../components/ui/layout-grid";
+import axios from "axios";
 
 const Skeleton = ({name}) => {
   return (
@@ -87,6 +89,23 @@ const shuffle = (array) => {
 };
 
 export default function Page() {
+  const [inspirations, setInspirations] = useState([]);
+
+  useEffect(() => {
+    const fetchInspirations = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_STOCK_URL}/stock/inspirations`
+        );
+        console.log(response.data);
+        setInspirations(response.data);
+      } catch (error) {
+        console.error("Erreur lors de la récupération du produit :", error);
+      }
+    };
+
+    fetchInspirations();
+  }, []);
   return (
     <main className="min-h-screen">
       <MainMenu />

@@ -20,14 +20,17 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "strictNullChecks": true
   },
   "include": [
     "next-env.d.ts",
     ".next/types/**/*.ts",
     "**/*.ts",
-    "**/*.tsx"
-, "src/app/components/ui/timeline.jsx", "api/recaptcha/route.js"  ],
+    "**/*.tsx",
+    "src/app/components/ui/timeline.jsx",
+    "api/recaptcha/route.js"
+  ],
   "exclude": [
     "node_modules"
   ]
