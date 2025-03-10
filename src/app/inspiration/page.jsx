@@ -6,6 +6,7 @@ import MainMenu from "./../components/MainMenu";
 import PageTitle from "./../components/PageTitle";
 import { LayoutGrid } from "./../components/ui/layout-grid";
 import axios from "axios";
+import useImageServices from "./../api/services/imageService";
 
 const Skeleton = ({name}) => {
   return (
@@ -81,23 +82,24 @@ const cards = [
 ];
 
 const shuffle = (array) => {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
+  if (array){
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
   }
-  return array;
+  return []
 };
 
 export default function Page() {
+  const {fetchAllInspirationPhotos } = useImageServices()
   const [inspirations, setInspirations] = useState([]);
 
   useEffect(() => {
     const fetchInspirations = async () => {
       try {
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_STOCK_URL}/stock/inspirations`
-        );
-        console.log(response.data);
+        const response = await fetchAllInspirationPhotos()
         setInspirations(response.data);
       } catch (error) {
         console.error("Erreur lors de la récupération du produit :", error);
@@ -106,12 +108,13 @@ export default function Page() {
 
     fetchInspirations();
   }, []);
+
   return (
     <main className="min-h-screen">
       <MainMenu />
       <PageTitle title={"Inspiration"} />
       <div className="h-auto overflow-auto">
-        <LayoutGrid cards={shuffle(cards)} />
+        <LayoutGrid cards={shuffle(inspirations)} />
       </div>
       <Footer />
     </main>

@@ -1,35 +1,39 @@
 "use client";
-import Button from "./components/Button";
-import HomeSwipper from "./components/home/HomeSwipper";
-import ActionCatalogue from "./components/home/ActionCatalogue";
-import MainMenu from "./components/MainMenu";
-import InspirationWidget from "./components/home/InspirationWidget";
-import BubbleService from "./components/BubbleService";
-import Review from "./components/Review";
-import Footer from "./components/Footer";
+import Button from "@/components/Button";
+import HomeSwipper from "@/components/home/HomeSwipper";
+import ActionCatalogue from "@/components/home/ActionCatalogue";
+import MainMenu from "@/components/MainMenu";
+import InspirationWidget from "@/components/home/InspirationWidget";
+import BubbleService from "@/components/BubbleService";
+import Review from "@/components/Review";
+import Footer from "@/components/Footer";
 import { useEffect, useState, useRef, use } from "react";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
-import { TextGenerateEffect } from "./components/ui/text-generate-effect";
-import { Carousel, Card } from "./components/ui/apple-cards-carousel";
+import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
+import { Carousel, Card } from "@/components/ui/apple-cards-carousel";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import axios from "axios";
-import Loader from "./components/loader";
+import Loader from "@/components/loader";
 import { FadeLoader, ScaleLoader } from "react-spinners";
+import useImageServices from "@/api/services/imageService";
 
 const message = "bienvenue chez pythagore";
 
 export default function Home() {
+  const { fetchAllInspirationPhotos } = useImageServices();
+  const [inspirations, setInspirations] = useState([]);
   // État pour la visibilité des sections
   const [visibleSections, setVisibleSections] = useState({});
   const [imageSrc, setImageSrc] = useState("");
   const [images, setImages] = useState([]);
-  const [loadImages, setLoadingImages] = useState(true)
+  const [loadImages, setLoadingImages] = useState(true);
+  const [cardsInspiration, setCardsInspiration] = useState([]);
   const sectionRefs = useRef([]);
   const router = useRouter();
 
-  const cards = data.map((card, index) => (
+  const cards = inspirations.map((card, index) => (
     <Card key={card.src} card={card} index={index} />
   ));
 
@@ -53,7 +57,7 @@ export default function Home() {
         }
       })
       .catch((err) => console.error("Failed to load images", err))
-      .finally(() => setLoadingImages(false))
+      .finally(() => setLoadingImages(false));
   }, []);
 
   useEffect(() => {
@@ -84,6 +88,24 @@ export default function Home() {
         if (ref) observer.unobserve(ref);
       });
     };
+  }, []);
+
+  useEffect(() => {
+    const fetchInspirations = async () => {
+      try {
+        const response = await fetchAllInspirationPhotos(8);
+        // setInspirations(response.data);
+        setInspirations(
+          response.data.map((card, index) => (
+            <Card key={card.id} card={card} index={index} />
+          ))
+        );
+      } catch (error) {
+        console.error("Erreur lors de la récupération du produit :", error);
+      }
+    };
+
+    fetchInspirations();
   }, []);
 
   const navigateTo = (href) => {
@@ -162,8 +184,8 @@ export default function Home() {
           </div>
           <div className="flex-1 hidden lg:flex">
             <div className="flex items-center justify-center w-full">
-              <ScaleLoader color="#EBC74F" loading={loadImages}/>
-            <HomeSwipper images={images}/>
+              <ScaleLoader color="#EBC74F" loading={loadImages} />
+              <HomeSwipper images={images} />
             </div>
           </div>
         </div>
@@ -184,7 +206,7 @@ export default function Home() {
           <h2 className="max-w-7xl pl-4 mx-auto text-xl md:text-5xl font-bold text-neutral-800 font-sans">
             Inspirez-vous !
           </h2>
-          <Carousel items={cards} />
+          {inspirations && <Carousel items={inspirations} />}
         </div>
       </section>
 
