@@ -24,6 +24,7 @@ const message = "bienvenue chez pythagore";
 export default function Home() {
   const { fetchAllInspirationPhotos } = useImageServices();
   const [inspirations, setInspirations] = useState([]);
+  const [loadInspirations, setLoadInspirations] = useState(true);
   // État pour la visibilité des sections
   const [visibleSections, setVisibleSections] = useState({});
   const [imageSrc, setImageSrc] = useState("");
@@ -102,6 +103,8 @@ export default function Home() {
         );
       } catch (error) {
         console.error("Erreur lors de la récupération du produit :", error);
+      } finally{
+        setLoadInspirations(false)
       }
     };
 
@@ -206,7 +209,7 @@ export default function Home() {
           <h2 className="max-w-7xl pl-4 mx-auto text-xl md:text-5xl font-bold text-neutral-800 font-sans">
             Inspirez-vous !
           </h2>
-          {inspirations && <Carousel items={inspirations} />}
+          {inspirations && !loadInspirations && <Carousel items={inspirations} />}
         </div>
       </section>
 
