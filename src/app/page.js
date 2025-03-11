@@ -7,7 +7,7 @@ import InspirationWidget from "@/components/home/InspirationWidget";
 import BubbleService from "@/components/BubbleService";
 import Review from "@/components/Review";
 import Footer from "@/components/Footer";
-import { useEffect, useState, useRef, use } from "react";
+import { useEffect, useState, useRef, use, useMemo } from "react";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
@@ -34,82 +34,87 @@ export default function Home() {
   const sectionRefs = useRef([]);
   const router = useRouter();
 
-  const cards = inspirations.map((card, index) => (
-    <Card key={card.src} card={card} index={index} />
-  ));
-
+  // Récupération des images en une seule fonction
   useEffect(() => {
-    fetch("/api/images/random-principal-accueil")
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.src) {
-          setImageSrc(data.src);
-        }
-      })
-      .catch((err) => console.error("Failed to load image", err));
-  }, []);
+    const fetchData = async () => {
+      try {
+        const [principalRes, savoirFaireRes] = await Promise.all([
+          fetch("/api/images/random-principal-accueil").then((res) =>
+            res.json()
+          ),
+          fetch("/api/images/accueil-savoir-faire").then((res) => res.json()),
+        ]);
 
-  useEffect(() => {
-    fetch("/api/images/accueil-savoir-faire") // Assure-toi que l'URL correspond bien à ton fichier route.js
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.images) {
-          setImages(data.images);
-        }
-      })
-      .catch((err) => console.error("Failed to load images", err))
-      .finally(() => setLoadingImages(false));
-  }, []);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const sectionId = entry.target.dataset.id; // Utilise l'ID de la section
-            setVisibleSections((prev) => ({
-              ...prev,
-              [sectionId]: true,
-            }));
-          }
-        });
-      },
-      {
-        threshold: 0.25, // Le pourcentage d'affichage du composant avant d'activer l'animation
+        if (principalRes.src) setImageSrc(principalRes.src);
+        if (savoirFaireRes.images) setImages(savoirFaireRes.images);
+      } catch (err) {
+        console.error("Failed to load images", err);
+      } finally {
+        setLoadingImages(false);
       }
-    );
-
-    // Observer chaque section
-    sectionRefs.current.forEach((ref) => {
-      if (ref) observer.observe(ref);
-    });
-
-    return () => {
-      sectionRefs.current.forEach((ref) => {
-        if (ref) observer.unobserve(ref);
-      });
     };
+
+    fetchData();
   }, []);
 
+  // Récupération des inspirations
   useEffect(() => {
     const fetchInspirations = async () => {
       try {
         const response = await fetchAllInspirationPhotos(8);
-        // setInspirations(response.data);
-        setInspirations(
-          response.data.map((card, index) => (
-            <Card key={card.id} card={card} index={index} />
-          ))
-        );
+        setInspirations(response.data);
       } catch (error) {
-        console.error("Erreur lors de la récupération du produit :", error);
-      } finally{
-        setLoadInspirations(false)
+        console.error(
+          "Erreur lors de la récupération des inspirations :",
+          error
+        );
+      } finally {
+        setLoadInspirations(false);
       }
     };
 
     fetchInspirations();
   }, []);
+
+  // Intersection Observer pour les animations
+ useEffect(() => {
+   const observer = new IntersectionObserver(
+     (entries) => {
+       entries.forEach((entry) => {
+         if (entry.isIntersecting) {
+           const sectionId = entry.target.dataset.id; // Utilise l'ID de la section
+           setVisibleSections((prev) => ({
+             ...prev,
+             [sectionId]: true,
+           }));
+         }
+       });
+     },
+     {
+       threshold: 0.25, // Le pourcentage d'affichage du composant avant d'activer l'animation
+     }
+   );
+
+   // Observer chaque section
+   sectionRefs.current.forEach((ref) => {
+     if (ref) observer.observe(ref);
+   });
+
+   return () => {
+     sectionRefs.current.forEach((ref) => {
+       if (ref) observer.unobserve(ref);
+     });
+   };
+ }, []);
+
+  // Génération des cartes avec useMemo pour éviter les recalculs inutiles
+  const cards = useMemo(
+    () =>
+      inspirations.map((card, index) => (
+        <Card key={card.id} card={card} index={index} />
+      )),
+    [inspirations]
+  );
 
   const navigateTo = (href) => {
     router.push(href);
@@ -209,7 +214,7 @@ export default function Home() {
           <h2 className="max-w-7xl pl-4 mx-auto text-xl md:text-5xl font-bold text-neutral-800 font-sans">
             Inspirez-vous !
           </h2>
-          {inspirations && !loadInspirations && <Carousel items={inspirations} />}
+          {inspirations && <Carousel items={cards} />}
         </div>
       </section>
 
