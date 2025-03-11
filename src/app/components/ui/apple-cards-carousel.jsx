@@ -189,7 +189,7 @@ export const Card = ({ card, index, layout = false }) => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               ref={containerRef}
-              layoutId={layout ? `card-${card.imageable.product.label}` : undefined}
+              layoutId={layout ? `card-${card.imageable?.product?.label}` : undefined}
               className="max-w-5xl mx-auto bg-white  h-fit  z-[60] my-10 p-4 md:p-10 rounded-3xl font-sans relative"
             >
               <button
@@ -199,16 +199,16 @@ export const Card = ({ card, index, layout = false }) => {
                 <IconX className="h-6 w-6 text-neutral-100 " />
               </button>
               <motion.p
-                layoutId={layout ? `category-${card.imageable.product.label}` : undefined}
+                layoutId={layout ? `category-${card.imageable?.product?.label}` : undefined}
                 className="text-base font-medium text-black "
               >
-                {card.imageable.product.category.label}
+                {card.imageable?.product?.category?.label}
               </motion.p>
               <motion.p
-                layoutId={layout ? `title-${card.imageable.product.label}` : undefined}
+                layoutId={layout ? `title-${card.imageable?.product?.label}` : undefined}
                 className="text-2xl md:text-5xl font-semibold text-neutral-700 mt-4 "
               >
-                {card.imageable.product.label}
+                {card.imageable?.product?.label}
               </motion.p>
               {/* <div className="py-10">{card.content}</div> */}
             </motion.div>
@@ -217,28 +217,28 @@ export const Card = ({ card, index, layout = false }) => {
       </AnimatePresence>
       <motion.div
       
-        layoutId={layout ? `card-${card.imageable.product.label}` : undefined}
+        layoutId={layout ? `card-${card.imageable?.product?.label}` : undefined}
         // onClick={handleOpen}
         className="rounded-3xl bg-gray-100  h-80 w-56 md:h-[40rem] md:w-96 overflow-hidden flex flex-col items-start justify-start relative z-10"
       >
         <div className="absolute h-full top-0 inset-x-0 bg-gradient-to-b from-black/50 via-transparent to-transparent z-30 pointer-events-none" />
         <div className="relative z-40 p-8">
           <motion.p
-            layoutId={layout ? `category-${card.imageable.product.category.label}` : undefined}
+            layoutId={layout ? `category-${card.imageable?.product?.category?.label}` : undefined}
             className="text-white text-sm md:text-base font-medium font-sans text-left"
           >
-            {card.imageable.product.category.label}
+            {card.imageable?.product?.category?.label}
           </motion.p>
           <motion.p
-            layoutId={layout ? `title-${card.imageable.product.label}` : undefined}
+            layoutId={layout ? `title-${card.imageable?.product?.label}` : undefined}
             className="text-white text-xl md:text-3xl font-semibold max-w-xs text-left [text-wrap:balance] font-sans mt-2"
           >
-            {card.imageable.product.label}
+            {card.imageable?.product?.label}
           </motion.p>
         </div>
         <BlurImage
           src={card.image_url}
-          alt={card.imageable.product.label}
+          alt={card.imageable?.product?.label}
           fill
           className="object-cover absolute z-10 inset-0"
         />
