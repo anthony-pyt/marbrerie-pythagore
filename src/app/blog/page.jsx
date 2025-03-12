@@ -52,7 +52,6 @@ const Skeleton = ( {src} ) => (
   </div>
 );
 
-
 const items = [
   {
     title: "The Dawn of Innovation",

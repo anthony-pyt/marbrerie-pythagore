@@ -69,11 +69,6 @@ export function ModalProduct({ setOpen, open, product }) {
                 >
                   <div className="flex items-center justify-between w-full">
                     <span>{product.label}</span>
-                    {/* <Button
-                      text="Voir la page"
-                      size="small"
-                      onClick={() => handleNavigate(product)}
-                    /> */}
                   </div>
                   {product.eco == 1 && (
                     <Icon
@@ -98,73 +93,78 @@ export function ModalProduct({ setOpen, open, product }) {
                     </div>
                   )}
                 </div>
-                <div className="flex flex-wrap items-center space-x-1 text-xs m-3">
-                  <Icon
-                    icon="solar:sticker-square-outline"
-                    width="18"
-                    height="18"
-                  />
-                  {product?.finitions.map((item, index) => (
-                    <div
-                      className="lowercase bg-primary/25 px-2 py-0.5 rounded"
-                      key={item.id}
-                    >
+                <div className="border rounded-lg my-8 py-2">
+                  <div className="flex flex-wrap items-center space-x-1 text-xs m-3">
+                    <Icon
+                      icon="solar:sticker-square-outline"
+                      width="18"
+                      height="18"
+                    />
+                    {product?.finitions.map((item, index) => (
+                      <div
+                        className="lowercase bg-primary/25 px-2 py-0.5 rounded"
+                        key={item.id}
+                      >
+                        <span className="text-secondary">
+                          {item.finition.label}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex flex-wrap items-center space-x-1 text-xs m-3">
+                    <Icon
+                      icon="solar:ruler-angular-outline"
+                      width="18"
+                      height="18"
+                    />
+                    {product?.thiknesses.map((item, index) => (
+                      <div
+                        className="lowercase bg-primary/25 px-2 py-0.5 rounded"
+                        key={item.id}
+                      >
+                        <span className="text-secondary">
+                          {item.thikness_plan.label}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex flex-wrap items-center space-x-1 text-xs m-3">
+                    <Icon
+                      icon="fluent:color-24-regular"
+                      width="18"
+                      height="18"
+                    />
+                    <div className="lowercase bg-primary/25 px-2 py-0.5 rounded">
+                      <span className="text-secondary">Blanc</span>
+                    </div>
+                    <div className="lowercase bg-primary/25 px-2 py-0.5 rounded">
+                      <span className="text-secondary">Gris</span>
+                    </div>
+                    <div className="lowercase bg-primary/25 px-2 py-0.5 rounded">
+                      <span className="text-secondary">Noir</span>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap items-center space-x-1 text-xs m-3">
+                    <Icon
+                      icon="icon-park-outline:lattice-pattern"
+                      width="18"
+                      height="18"
+                    />
+                    <div className="bg-primary/25 px-2 py-0.5 rounded">
                       <span className="text-secondary">
-                        {item.finition.label}
+                        {product.motif ?? "Non spécifié"}
                       </span>
                     </div>
-                  ))}
-                </div>
-                <div className="flex flex-wrap items-center space-x-1 text-xs m-3">
-                  <Icon
-                    icon="solar:ruler-angular-outline"
-                    width="18"
-                    height="18"
-                  />
-                  {product?.thiknesses.map((item, index) => (
-                    <div
-                      className="lowercase bg-primary/25 px-2 py-0.5 rounded"
-                      key={item.id}
-                    >
+                  </div>
+                  <div className="flex flex-wrap items-center space-x-1 text-xs m-3">
+                    <Icon icon="mdi:planet" width="18" height="18" />
+                    <div className="bg-primary/25 px-2 py-0.5 rounded">
                       <span className="text-secondary">
-                        {item.thikness_plan.label}
+                        {product.origine ?? "Non spécifié"}
                       </span>
                     </div>
-                  ))}
-                </div>
-                <div className="flex flex-wrap items-center space-x-1 text-xs m-3">
-                  <Icon icon="fluent:color-24-regular" width="18" height="18" />
-                  <div className="lowercase bg-primary/25 px-2 py-0.5 rounded">
-                    <span className="text-secondary">Blanc</span>
                   </div>
-                  <div className="lowercase bg-primary/25 px-2 py-0.5 rounded">
-                    <span className="text-secondary">Gris</span>
-                  </div>
-                  <div className="lowercase bg-primary/25 px-2 py-0.5 rounded">
-                    <span className="text-secondary">Noir</span>
-                  </div>
-                </div>
-                <div className="flex flex-wrap items-center space-x-1 text-xs m-3">
-                  <Icon
-                    icon="icon-park-outline:lattice-pattern"
-                    width="18"
-                    height="18"
-                  />
-                  <div className="bg-primary/25 px-2 py-0.5 rounded">
-                    <span className="text-secondary">
-                      {product.motif ?? "Non spécifié"}
-                    </span>
-                  </div>
-                </div>
-                <div className="flex flex-wrap items-center space-x-1 text-xs m-3">
-                  <Icon icon="mdi:planet" width="18" height="18" />
-                  <div className="bg-primary/25 px-2 py-0.5 rounded">
-                    <span className="text-secondary">
-                      {product.origine ?? "Non spécifié"}
-                    </span>
-                  </div>
-                </div>
-                <div className="flex flex-wrap items-center space-x-1 text-xs m-3">
+                  {/* <div className="flex flex-wrap items-center space-x-1 text-xs m-3">
                   <Icon
                     icon="arcticons:rocksndiamonds"
                     width="18"
@@ -175,6 +175,7 @@ export function ModalProduct({ setOpen, open, product }) {
                       {product.type_materiau ?? "Non spécifié"}
                     </span>
                   </div>
+                </div> */}
                 </div>
               </div>
               {/* GARANTIE */}
@@ -196,32 +197,17 @@ export function ModalProduct({ setOpen, open, product }) {
                   </div>
                 </div>
               )}
-              {/* <div className="mt-2">
-                  <p className="text-sm text-gray-500">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Eius aliquam laudantium explicabo pariatur iste dolorem
-                    animi vitae error totam. At sapiente aliquam accusamus
-                    facere veritatis.
-                  </p>
-                </div> */}
+              <div className="mt-4">
+                <button
+                  text="Voir la page"
+                  size="small"
+                  onClick={() => handleNavigate(product)}
+                  className="w-full border rounded hover:shadow-inner shadow"
+                >
+                  Voir le produit
+                </button>
+              </div>
             </div>
-            {/* <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
-              <button
-                type="button"
-                onClick={() => setOpen(false)}
-                className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-2"
-              >
-                Deactivate
-              </button>
-              <button
-                type="button"
-                data-autofocus
-                onClick={() => setOpen(false)}
-                className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"
-              >
-                Cancel
-              </button>
-            </div> */}
           </DialogPanel>
         </div>
       </div>
