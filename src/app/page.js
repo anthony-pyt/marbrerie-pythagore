@@ -16,15 +16,14 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import axios from "axios";
 import Loader from "@/components/loader";
+import GoogleReviews from "@/components/googleReviews";
 import { FadeLoader, ScaleLoader } from "react-spinners";
 import useImageServices from "@/api/services/imageService";
-import useGoogleServices from "@/api/services/googleServices";
 
 const message = "bienvenue chez pythagore";
 
 export default function Home() {
   const { fetchAllInspirationPhotos } = useImageServices();
-  const { getGoogleReviews } = useGoogleServices();
   const [inspirations, setInspirations] = useState([]);
   const [loadInspirations, setLoadInspirations] = useState(true);
   // État pour la visibilité des sections
@@ -45,8 +44,6 @@ export default function Home() {
             fetch("/api/images/random-principal-accueil").then((res) =>
               res.json()
             ),
-            fetch("/api/images/accueil-savoir-faire").then((res) => res.json()),
-            // getGoogleReviews().then((res) => res.json()),
           ]);
 
         if (principalRes.src) setImageSrc(principalRes.src);
@@ -269,59 +266,7 @@ export default function Home() {
           visibleSections["reviews"] ? "animate__fadeIn" : "opacity-0"
         }`}
       >
-        <div className="flex flex-col items-center my-8">
-          <h2 className="text-center">Avis de nos clients</h2>
-          <div className="flex items-center space-x-1">
-            <span>4,8</span>
-            <div className="flex">
-              {Array.from({ length: 5 }, (_, index) => (
-                <Icon
-                  key={index}
-                  icon="line-md:star-filled"
-                  className="text-xl text-or-light"
-                />
-              ))}
-            </div>
-            <span>148 avis</span>
-          </div>
-        </div>
-        <div className="flex items-start justify-evenly flex-wrap">
-          <Review
-            note={5}
-            name="Alain Connu"
-            text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          e et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequa"
-            date="07/08/2024"
-          />
-          <Review
-            note={5}
-            name="Jean Neymar"
-            text="Lorem ipsum dolor sit amet, consecte, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequa"
-            date="24/06/2024"
-          />
-          <Review
-            note={4}
-            name="Guy Tare"
-            text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exer"
-            date="17/04/2024"
-          />
-          <Review
-            note={5}
-            name="Gérard Manvussa"
-            text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor iagna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequa"
-            date="07/02/2024"
-          />
-        </div>
+        <GoogleReviews />
       </section>
       <Footer />
     </main>
