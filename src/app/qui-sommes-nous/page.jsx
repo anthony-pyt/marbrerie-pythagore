@@ -173,7 +173,7 @@ const ListImages = ({ images }) => {
   );
 };
 
-export const story = [
+const story = [
   {
     id: 1,
     title: "1995",
@@ -387,7 +387,7 @@ export const story = [
   },
 ];
 
-export const our_values = [
+const our_values = [
   {
     title: "La passion",
     content:
