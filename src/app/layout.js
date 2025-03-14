@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import "animate.css";
 import { Analytics } from "@vercel/analytics/react";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import Loader from "./components/loader";
 import { metadata } from "./../../datas/metadata";
 import { useEffect, useState } from "react";
@@ -12,7 +12,6 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({ children }) {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -30,7 +29,7 @@ export default function RootLayout({ children }) {
 
   useEffect(() => {
     setLoading(false); // Arrête le loader quand la page a changé
-  }, [pathname, searchParams]);
+  }, [pathname]);
 
   return (
     <html lang="fr">
