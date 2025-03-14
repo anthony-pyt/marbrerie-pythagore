@@ -10,7 +10,6 @@ import { Timeline } from "../components/ui/timeline";
 import { FocusCards } from "../components/ui/focus-cards";
 import ServiceCard from "../components/services/serviceCard";
 import { Carousel } from "../components/ui/carousel";
-// import { story, our_values } from "./../../../datas/story";
 import { leads } from "./../../../datas/leads";
 import FullMaps from "@/components/maps/full_maps";
 
