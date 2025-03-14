@@ -35,7 +35,7 @@ export default function Page() {
             Cliquez sur une date pour y accéder directement
           </p>
           <div className="relative border-t-2 border-secondary flex justify-between items-center px-4 md:px-12">
-            {story.map((event, index) => (
+            {story?.map((event, index) => (
               <div
                 key={index}
                 className="relative text-center cursor-pointer"
