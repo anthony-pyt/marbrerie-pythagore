@@ -18,7 +18,8 @@ export const motifs = [
   { name: "Effet bois", slug: "effet_bois" },
   { name: "Effet pierre", slug: "effet_pierre" },
   { name: "Marbré", slug: "marbre" },
-  { name: "Mettalique", slug: "metallique" },
+  { name: "Métallique", slug: "metallique" },
+  { name: "Onyx", slug: "onyx" },
   { name: "Uni", slug: "uni" },
   { name: "Veiné", slug: "veine" },
 ];

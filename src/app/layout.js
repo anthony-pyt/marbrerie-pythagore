@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import "animate.css";
 import { Analytics } from "@vercel/analytics/react";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import Loader from "./components/loader";
 import { metadata } from "./../../datas/metadata";
 import { useEffect, useState } from "react";
@@ -12,14 +12,25 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({ children }) {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
-    const timeout = setTimeout(() => setLoading(false), 250);
+    const handleClick = (event) => {
+      const target = event.target.closest("a");
+      if (target && target.href.startsWith(window.location.origin)) {
+        setLoading(true);
+      }
+    };
 
-    return () => clearTimeout(timeout);
-  }, [pathname]);
+    document.addEventListener("click", handleClick);
+
+    return () => document.removeEventListener("click", handleClick);
+  }, []);
+
+  useEffect(() => {
+    setLoading(false); // Arrête le loader quand la page a changé
+  }, [pathname, searchParams]);
 
   return (
     <html lang="fr">
@@ -32,7 +43,7 @@ export default function RootLayout({ children }) {
         <title>{metadata.title}</title>
       </head>
       <body className={[inter.className]} suppressHydrationWarning={true}>
-        {/* {loading && <Loader />} */}
+        {loading && <Loader />}
         {children}
         <Analytics />
       </body>

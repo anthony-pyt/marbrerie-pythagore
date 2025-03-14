@@ -90,7 +90,7 @@ export default function Page() {
       <MainMenu />
       <PageTitle title={"Notre savoir-faire"} />
       <div className="mt-24 mx-auto max-w-5xl">
-        <div class="grid grid-cols-1 gap-4 m-4 flex-1">
+        <div className="grid grid-cols-1 gap-4 m-4 flex-1">
           <RectangleSkeleton
             className={"col-span-1 sm:col-span-2 bg-gray-50"}
             image_url={"/images/savoir-faire/IMG_0129.JPEG"}
@@ -155,10 +155,16 @@ export default function Page() {
           <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4 gap-y-12">
             {/* Carte 1 */}
             <div className="mx-auto">
-              <ServiceCard
-                title={"Finitions de chant"}
-                image={"/images/"}
-              >
+              <ServiceCard title={"Façonnages spécifiques"} image={"/images/"}>
+                <p className="">
+                  Polissage sous plan, assemblage à l’onglet, suivi du mur en
+                  pierre... Nous peaufinons les moindres détails.
+                </p>
+              </ServiceCard>
+            </div>
+            {/* Carte 2 */}
+            <div className="mx-auto">
+              <ServiceCard title={"Finitions de chant"} image={"/images/"}>
                 <p className="">
                   Chant droit, arrondi, biseauté, bec de corbin… Nous proposons
                   des finitions adaptées à vos besoins et projets.
@@ -166,7 +172,7 @@ export default function Page() {
               </ServiceCard>
             </div>
 
-            {/* Carte 2 */}
+            {/* Carte 3 */}
             <div className="mx-auto">
               <ServiceCard
                 title={"Découpe sur mesure"}
@@ -180,7 +186,7 @@ export default function Page() {
               </ServiceCard>
             </div>
 
-            {/* Carte 3 */}
+            {/* Carte 4 */}
             <div className="mx-auto">
               <ServiceCard
                 title={"Joint parfait"}
@@ -189,19 +195,6 @@ export default function Page() {
                 <p className="">
                   Obtenez un résultat visiblement net et continu grâce à notre
                   technique de joint parfait.
-                </p>
-              </ServiceCard>
-            </div>
-
-            {/* Carte 4 */}
-            <div className="mx-auto">
-              <ServiceCard
-                title={"Façonnages spécifiques"}
-                image={"/images/"}
-              >
-                <p className="">
-                  Polissage sous plan, assemblage à l’onglet, suivi du mur en
-                  pierre... Nous peaufinons les moindres détails.
                 </p>
               </ServiceCard>
             </div>

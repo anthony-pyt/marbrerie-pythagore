@@ -77,7 +77,7 @@ const ListJobs = () => (
             nous intéresse !
           </p>
           <p className="mt-2">
-            N’hésitez pas à nous envoyer votre candidature spontanée. Nous
+            Envoyez nous votre candidature spontanée. Nous
             sommes toujours à la recherche de personnes motivées !
           </p>
         </div>

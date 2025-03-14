@@ -74,18 +74,16 @@ export default function Page({ params }) {
                 )}
               </div>
             </div>
-            {product.durable == 1 && (
-              <div className="flex items-center space-x-2">
-                <span>Produit durable</span>
-                <Icon
-                  icon="mdi:ecology"
-                  width="24"
-                  height="24"
-                  className="text-green-600"
-                />
-              </div>
-            )}
+
             <div className="divide-y divide-gray-300 divi text-sm">
+              <div className="flex flex-wrap justify-between items-center p-2">
+                <p>Matériau</p>
+                <div className="font-bold">
+                  <span className="text-secondary">
+                    {product.product.category.parent.label ?? "Non spécifié"}
+                  </span>
+                </div>
+              </div>
               <div className="flex flex-wrap justify-between items-center p-2">
                 <p>Finitions</p>
                 <div className="flex items-center space-x-1">
@@ -158,6 +156,17 @@ export default function Page({ params }) {
               </div>
             </div> */}
             </div>
+            {product.durable == 1 && (
+              <div className="flex items-center justify-end mt-4 space-x-2 text-sm">
+                <span>Produit durable</span>
+                <Icon
+                  icon="mdi:ecology"
+                  width="24"
+                  height="24"
+                  className="text-green-600"
+                />
+              </div>
+            )}
           </div>
           {product.product.category.waranty && (
             <div className="flex-1 bg-primary/20 rounded-xl p-3 my-2 ml-2 flex flex-col lg:flex-row items-center  space-x-4 justify-center">

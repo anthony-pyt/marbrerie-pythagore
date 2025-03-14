@@ -65,16 +65,16 @@ const ImageComponent = ({ card, selected }) => {
       {!selected && (
         <>
           <div className="z-10 absolute top-1 right-1 flex items-center">
-            {card.imageable.product.category.logo_url != null ? (
+            {card.imageable?.product?.category?.logo_url != null ? (
               <img
-                src={card.imageable.product.category?.logo_url}
+                src={card.imageable?.product?.category?.logo_url}
                 className="h-4 p-0.5 bg-white rounded-lg px-2"
-                alt={card.imageable.product.category.label}
+                alt={card.imageable?.product?.category?.label}
               />
             ) : (
               <div className="border border-or inline-flex justify-self-center items-center px-2 rounded-lg bg-white">
                 <span className="text-or text-xs">
-                  {card.imageable.product.category.label}
+                  {card.imageable?.product?.category?.label}
                 </span>
               </div>
             )}

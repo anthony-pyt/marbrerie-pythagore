@@ -23,14 +23,12 @@ export const Timeline = ({ data }) => {
   const opacityTransform = useTransform(scrollYProgress, [0, 0.1], [0, 1]);
 
   return (
-    <div
-      className="w-full md:px-10"
-      ref={containerRef}
-    >
+    <div className="w-full md:px-10" ref={containerRef}>
       <div ref={ref} className="relative max-w-7xl">
         {data.map((item, index) => (
           <div
             key={index}
+            id={`timeline-event-${item.id}`} // ID corrigé pour éviter la confusion avec la frise
             className="flex justify-start pt-10 md:gap-10"
           >
             <div className="sticky flex flex-col md:flex-row items-center top-40 self-start max-w-xs lg:max-w-sm md:w-full">
@@ -46,7 +44,7 @@ export const Timeline = ({ data }) => {
               <h3 className="md:hidden block text-2xl mb-4 text-left font-bold text-secondary">
                 {item.title}
               </h3>
-              {item.content}{" "}
+              {item.content}
             </div>
           </div>
         ))}

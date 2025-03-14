@@ -18,11 +18,13 @@ import axios from "axios";
 import Loader from "@/components/loader";
 import { FadeLoader, ScaleLoader } from "react-spinners";
 import useImageServices from "@/api/services/imageService";
+import useGoogleServices from "@/api/services/googleServices";
 
 const message = "bienvenue chez pythagore";
 
 export default function Home() {
   const { fetchAllInspirationPhotos } = useImageServices();
+  const { getGoogleReviews } = useGoogleServices();
   const [inspirations, setInspirations] = useState([]);
   const [loadInspirations, setLoadInspirations] = useState(true);
   // État pour la visibilité des sections
@@ -38,12 +40,14 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [principalRes, savoirFaireRes] = await Promise.all([
-          fetch("/api/images/random-principal-accueil")
-            .then((res) => res.json()),
-          fetch("/api/images/accueil-savoir-faire")
-            .then((res) => res.json()),
-        ]);
+        const [principalRes, savoirFaireRes, googleReviewsRes] =
+          await Promise.all([
+            fetch("/api/images/random-principal-accueil").then((res) =>
+              res.json()
+            ),
+            fetch("/api/images/accueil-savoir-faire").then((res) => res.json()),
+            // getGoogleReviews().then((res) => res.json()),
+          ]);
 
         if (principalRes.src) setImageSrc(principalRes.src);
         if (savoirFaireRes.images) setImages(savoirFaireRes.images);
@@ -77,35 +81,35 @@ export default function Home() {
   }, []);
 
   // Intersection Observer pour les animations
- useEffect(() => {
-   const observer = new IntersectionObserver(
-     (entries) => {
-       entries.forEach((entry) => {
-         if (entry.isIntersecting) {
-           const sectionId = entry.target.dataset.id; // Utilise l'ID de la section
-           setVisibleSections((prev) => ({
-             ...prev,
-             [sectionId]: true,
-           }));
-         }
-       });
-     },
-     {
-       threshold: 0.25, // Le pourcentage d'affichage du composant avant d'activer l'animation
-     }
-   );
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const sectionId = entry.target.dataset.id; // Utilise l'ID de la section
+            setVisibleSections((prev) => ({
+              ...prev,
+              [sectionId]: true,
+            }));
+          }
+        });
+      },
+      {
+        threshold: 0.25, // Le pourcentage d'affichage du composant avant d'activer l'animation
+      }
+    );
 
-   // Observer chaque section
-   sectionRefs.current.forEach((ref) => {
-     if (ref) observer.observe(ref);
-   });
+    // Observer chaque section
+    sectionRefs.current.forEach((ref) => {
+      if (ref) observer.observe(ref);
+    });
 
-   return () => {
-     sectionRefs.current.forEach((ref) => {
-       if (ref) observer.unobserve(ref);
-     });
-   };
- }, []);
+    return () => {
+      sectionRefs.current.forEach((ref) => {
+        if (ref) observer.unobserve(ref);
+      });
+    };
+  }, []);
 
   // Génération des cartes avec useMemo pour éviter les recalculs inutiles
   const cards = useMemo(

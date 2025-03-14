@@ -64,7 +64,7 @@ export default function Page() {
           >
             <ul className="list-disc ml-4">
               <li>
-                Granit, Quartzite, Marbres, Pierre reconstituées, Céramiques
+                Granit, Quartzite, Marbre, Pierre reconstituée, Céramique
               </li>
               <li>
                 Selon votre utilisation, nous vous conseillons dans votre choix
@@ -84,7 +84,7 @@ export default function Page() {
               <li>Un logiciel de chiffrage en ligne via notre "Extranet"</li>
               <li>Un-e chargé-e de clientèle sur votre secteur</li>
               <li>un ADV pour un suivi personnalisé</li>
-              <li>Échnatillonnage selon votre besoin</li>
+              <li>Échantillonnage selon votre besoin</li>
             </ul>
           </ServiceCard>
         </div>

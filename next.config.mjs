@@ -29,6 +29,7 @@ const nextConfig = {
       "images.unsplash.com",
       "pbs.twimg.com",
       "pythagore.doliplus.com",
+      "localhost",
       "192.168.1.210",
       "api.stock.marbrerie-pythagore.fr",
     ],
