@@ -8,6 +8,8 @@ import Image from "next/image";
 export const LayoutGrid = ({ cards }) => {
   const [selected, setSelected] = useState(null);
   const [lastSelected, setLastSelected] = useState(null);
+  console.log(cards);
+  
 
   const handleClick = (card) => {
     setLastSelected(selected);
@@ -80,7 +82,7 @@ const ImageComponent = ({ card, selected }) => {
             )}
           </div>
           <div className="z-10 absolute bottom-1 left-1 bg-secondary bg-opacity-50 px-2 rounded-lg">
-            <p className="text-white">{card.imageable.label}</p>
+            <p className="text-white">{card.imageable?.label}</p>
           </div>
         </>
       )}
@@ -92,7 +94,7 @@ const ImageComponent = ({ card, selected }) => {
         className={cn(
           "object-cover object-top absolute inset-0 h-full w-full transition duration-200"
         )}
-        alt={card.imageable.label}
+        alt={card.imageable?.label}
       />
     </motion.div>
   );
@@ -100,7 +102,7 @@ const ImageComponent = ({ card, selected }) => {
 
 const SelectedCard = ({ selected }) => {
   const goToDetails = (card) => {
-    const url = `/matieres/produits/${card.imageable.id}`;
+    const url = `/matieres/produits/${card.imageable?.id}`;
     window.open(url, "_blank");
   };
 
