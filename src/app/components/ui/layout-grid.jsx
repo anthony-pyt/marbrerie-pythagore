@@ -8,8 +8,6 @@ import Image from "next/image";
 export const LayoutGrid = ({ cards }) => {
   const [selected, setSelected] = useState(null);
   const [lastSelected, setLastSelected] = useState(null);
-  console.log(cards);
-  
 
   const handleClick = (card) => {
     setLastSelected(selected);
