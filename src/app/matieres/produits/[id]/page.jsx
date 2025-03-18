@@ -55,7 +55,7 @@ export default function Page({ params }) {
         )}
         <div className="text-center lg:text-left flex flex-col items-stretch justify-between lg:flex-row ">
           <div className="flex-1 bg-primary/20 rounded-xl p-3 my-2 mr-2">
-            <div className="flex justify-between items-center mb-4">
+            <div className="flex justify-between items-start mb-4">
               <h3 className="font-semibold text-xl flex items-center space-x-4">
                 Plus d'infos...
               </h3>
@@ -168,24 +168,36 @@ export default function Page({ params }) {
               </div>
             )}
           </div>
-          {product.product.category.waranty && (
-            <div className="flex-1 bg-primary/20 rounded-xl p-3 my-2 ml-2 flex flex-col lg:flex-row items-center  space-x-4 justify-center">
-              <div className="flex justify-end">
-                <img
-                  src={`${product.product.category.waranty.image_url}`}
-                  loading="lazy"
-                  alt={product.product.category.waranty.title}
-                  className="object-cover min-w-48 max-w-48 min-h-48 max-h-48 rounded-full p-2"
-                />
-              </div>
-              <div className="flex flex-col items-start">
-                <h6>Garantie</h6>
-                <p className="text-left">
-                  {product.product.category.waranty.description}
-                </p>
-              </div>
+          <div className="flex-1 bg-primary/20 rounded-xl p-3 my-2 ml-2 flex flex-col justify-between">
+            <div>
+              <h6 className="font-semibold text-xl flex items-center space-x-4">
+                Garantie
+              </h6>
+              <p className="text-justify">
+                Nous offrons une garantie sur l’ensemble des matériaux
+                manufacturés et posés par nos équipes ou simplement livrés ;
+                ceci sous réserve que ces matériaux soient transformés et
+                installés dans le respect des bonnes pratiques.
+              </p>
             </div>
-          )}
+            {product.product.category.waranty && (
+              <div className="flex flex-col lg:flex-row items-center space-x-4 justify-center">
+                <div className="flex justify-end">
+                  <img
+                    src={`${product.product.category.waranty.imageSrc}`}
+                    loading="lazy"
+                    alt={product.product.category.waranty.title}
+                    className="object-cover min-w-48 max-w-48 min-h-48 max-h-48 rounded-full p-2"
+                  />
+                </div>
+                <div className="flex flex-col items-start">
+                  <p className="text-justify">
+                    {product.product.category.waranty.description}
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
         <div className="my-8">
           <Slider images={product.images} principal_image={product.image_url} />
