@@ -41,6 +41,7 @@ const BubbleService = ({ children, urlImage }) => {
           alt="Conseil et Formation"
           width={500}
           height={500}
+          priority={true}
         />
       </div>
       <p className="mt-2 text-gray-500">{children}</p>

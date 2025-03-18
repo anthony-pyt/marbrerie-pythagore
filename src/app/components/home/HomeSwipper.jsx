@@ -26,7 +26,8 @@ export default function HomeSwipper({ images }) {
               alt={index}
               width={500}
               height={500}
-              className="min-h-[500px] max-h-[500px] w-full object-cover bg-center"
+              className="h-full w-full object-cover bg-center"
+              priority={true}
             />
           </SplideSlide>
         );
