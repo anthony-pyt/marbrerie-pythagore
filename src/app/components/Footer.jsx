@@ -28,8 +28,13 @@ const Footer = () => {
             </p>
           </div>
         </div>
-        <div className="flex-1 flex flex-col items-center justify-center">
+        <div className="flex-1 flex flex-col items-center justify-center space-y-6">
           {/* <p>Suivez nous !</p> */}
+          <div className="flex flex-col items-center">
+            <p className="font-semibold">Horaires d'ouverture (sur RDV)</p>
+            <p className="text-sm">Du lundi au jeudi : 9h00-13h00, 14h00-17h30</p>
+            <p className="text-sm">Vendredi : 9h00-13h00, 14h00-16h30</p>
+          </div>
           <div className="flex items-center space-x-4">
             <Link
               href="https://www.instagram.com/pythagoremarbrerie/"

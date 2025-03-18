@@ -143,7 +143,7 @@ export default function Page() {
         <div className="mx-auto px-6">
           <div className="text-center mb-12">
             <h3 className="text-3xl font-extrabold text-gray-800 mb-4">
-              Les précisions de notre savoir-faire
+              Notre expertise technique
             </h3>
             <p className=" text-lg">
               Découvrez les techniques et finitions qui font la renommée de

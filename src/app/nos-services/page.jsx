@@ -15,10 +15,15 @@ export default function Page() {
             image="/images/savoir-faire/suivi_commercial.jpg"
           >
             <ul className="list-disc ml-4">
-              <li>Suivi de votre réalisation du devis à la commande</li>
-              <li>
+              <li className="text-justify">Suivi de votre réalisation du devis à la commande</li>
+              <li className="text-justify">
                 Accompagnement technique pour une adaptation du produit à votre
                 réalisation
+              </li>
+              <li className="text-justify">
+                Accueil client sur rendez-vous, en accord avec le professionnel
+                en charge du projet, pour valider le matériau et la tranche
+                choisie
               </li>
             </ul>
           </ServiceCard>
@@ -27,10 +32,10 @@ export default function Page() {
             image="/images/nos-services/formation_poseurs.JPEG"
           >
             <ul className="list-disc ml-4">
-              <li>En magasin ou en nos locaux</li>
-              <li>Des concepteurs</li>
-              <li>Des installateurs</li>
-              <li>
+              <li className="text-justify">En magasin ou en nos locaux</li>
+              <li className="text-justify">Des concepteurs</li>
+              <li className="text-justify">Des installateurs</li>
+              <li className="text-justify">
                 Transmission des impératifs techniques pour une garantie
                 maximale de votre ouvrage
               </li>
@@ -41,21 +46,24 @@ export default function Page() {
             image="/images/savoir-faire/neolith_san_simone.png"
           >
             <ul className="list-disc ml-4">
-              <li>De la prise de mesures à la pose.</li>
-              <li>
+              <li className="text-justify">De la prise de mesures à la pose.</li>
+              <li className="text-justify">
                 Nos équipes totalement internalisées vous accompagnent au
                 quotidien.{" "}
               </li>
-              <li>Selon votre besoin nous adaptons notre offre</li>
+              <li className="text-justify">Selon votre besoin nous adaptons notre offre</li>
             </ul>
           </ServiceCard>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 my-12 gap-16">
-          <ServiceCard title="Service après-vente" image="/images/savoir-faire/SAV.jpg">
+          <ServiceCard
+            title="Service après-vente"
+            image="/images/savoir-faire/SAV.jpg"
+          >
             <ul className="list-disc ml-4">
-              <li>Assistance technique</li>
-              <li>Ecoute</li>
-              <li>Réactivité</li>
+              <li className="text-justify">Assistance technique</li>
+              <li className="text-justify">Ecoute</li>
+              <li className="text-justify">Réactivité</li>
             </ul>
           </ServiceCard>
           <ServiceCard
@@ -63,13 +71,11 @@ export default function Page() {
             image="/images/nos-services/produits.JPEG"
           >
             <ul className="list-disc ml-4">
-              <li>
-                Granit, Quartzite, Marbre, Pierre reconstituée, Céramique
-              </li>
-              <li>
+              <li className="text-justify">Granit, Quartzite, Marbre, Pierre reconstituée, Céramique</li>
+              <li className="text-justify">
                 Selon votre utilisation, nous vous conseillons dans votre choix
               </li>
-              <li>Un stock permanent pour une meilleure réactivité</li>
+              <li className="text-justify">Un stock permanent pour une meilleure réactivité</li>
             </ul>
           </ServiceCard>
           <ServiceCard
@@ -77,14 +83,14 @@ export default function Page() {
             image="/images/nos-services/magazines.png"
           >
             <ul className="list-disc ml-4">
-              <li>Un catalogue synthétisant toutes les offres Produits</li>
-              <li>
+              <li className="text-justify">Un catalogue synthétisant toutes les offres Produits</li>
+              <li className="text-justify">
                 Possiblité de télécharger notre catalogue sur Cyncly (Winner)
               </li>
-              <li>Un logiciel de chiffrage en ligne via notre "Extranet"</li>
-              <li>Un-e chargé-e de clientèle sur votre secteur</li>
-              <li>un ADV pour un suivi personnalisé</li>
-              <li>Échantillonnage selon votre besoin</li>
+              <li className="text-justify">Un logiciel de chiffrage en ligne via notre "Extranet"</li>
+              <li className="text-justify">Un-e chargé-e de clientèle sur votre secteur</li>
+              <li className="text-justify">un ADV pour un suivi personnalisé</li>
+              <li className="text-justify">Échantillonnage selon votre besoin</li>
             </ul>
           </ServiceCard>
         </div>

@@ -296,6 +296,26 @@ const story = [
   },
   {
     id: 6,
+    title: "2020",
+    content: (
+      <div>
+        <p className="">
+          Changement de logo pour l’entreprise. Le logo a été retravaillé pour
+          devenir plus élégant et plus représentatif de notre métier.
+        </p>
+        <ListImages
+          images={[
+            {
+              title: "batiment en construction",
+              url: "/images/logos/ancien_logo_pythagore.png",
+            },
+          ]}
+        />
+      </div>
+    ),
+  },
+  {
+    id: 7,
     title: "2023",
     content: (
       <div>
@@ -341,7 +361,7 @@ const story = [
     ),
   },
   {
-    id: 7,
+    id: 8,
     title: "2024",
     content: (
       <div>
@@ -365,7 +385,7 @@ const story = [
     ),
   },
   {
-    id: 8,
+    id: 9,
     title: "2025",
     content: (
       <div>
