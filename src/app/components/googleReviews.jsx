@@ -72,8 +72,8 @@ export default function GoogleReviews() {
           </p>
         </div>
       )}
-      <div className="flex items-start justify-evenly flex-wrap">
-        {reviews?.map((review) => {
+      <div className="flex items-stretch justify-evenly flex-wrap">
+        {reviews?.map((review) => {          
           return (
             <Review
               key={review.reviewId}
@@ -81,7 +81,7 @@ export default function GoogleReviews() {
               name={review.reviewer.displayName}
               comment={review.comment}
               date={review.createTime}
-              id={review.reviewId}
+              avatar={review.reviewer.profilePhotoUrl}
             />
           );
         })}
