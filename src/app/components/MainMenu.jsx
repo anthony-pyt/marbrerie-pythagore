@@ -207,9 +207,9 @@ export default function MainMenu({ page }) {
               : "animate__animated animate__fadeInLeft"
             }`}
         >
-          <div className="w-full flex justify-end absolute top-2 right-2">
+          <div className="w-full flex justify-end absolute top-6 right-6">
             <button onClick={toggleOpenMenu}>
-              <Icon icon="material-symbols:close" width="36" height="36" />
+              <Icon icon="material-symbols:close" width="48" height="48" />
             </button>
           </div>
           <div>

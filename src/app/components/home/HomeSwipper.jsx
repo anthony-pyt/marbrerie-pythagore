@@ -16,7 +16,7 @@ export default function HomeSwipper({ images }) {
         interval: 3000,
         pagination: false,
       }}
-      aria-label="My Favorite Images"
+      aria-label="Images de notre savoir-faire"
     >
       {images.map((image, index) => {
         return (
