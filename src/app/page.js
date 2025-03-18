@@ -133,7 +133,7 @@ export default function Home() {
             muted
             className="opacity-40 blur w-full object-cover"
           /> */}
-          {imageSrc && (
+          {/* {imageSrc && (
             <Image
               alt="acceuil"
               fill
@@ -144,7 +144,7 @@ export default function Home() {
               src={imageSrc}
               className="opacity-40"
             />
-          )}
+          )} */}
           <div className="absolute transform left-1/2 -translate-x-1/2 w-full">
             <ShowTextGenerateEffect />
           </div>
@@ -200,7 +200,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section
+      {/* <section
         ref={(el) => (sectionRefs.current[1] = el)}
         data-id="inspiration"
         className={`py-20 animate__animated 
@@ -217,7 +217,7 @@ export default function Home() {
           </h2>
           {inspirations && <Carousel items={cards} />}
         </div>
-      </section>
+      </section> */}
 
       <section
         ref={(el) => (sectionRefs.current[2] = el)}
