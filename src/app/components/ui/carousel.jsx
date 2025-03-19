@@ -78,8 +78,10 @@ const Slide = ({ slide, index, current, handleSlideClick }) => {
           }}
         >
           <img
-            className="absolute inset-0 object-cover opacity-100 transition-opacity duration-600 ease-in-out"
+            className="absolute inset-0 object-cover w-full h-full opacity-100 transition-opacity duration-600 ease-in-out"
             style={{
+              objectFit:"cover",
+              objectPosition:"top",
               opacity: current === index ? 1 : 0.5,
             }}
             alt={title}
