@@ -1,8 +1,9 @@
 "use client";
 import { useScroll, useTransform, motion } from "framer-motion";
 import React, { useEffect, useRef, useState } from "react";
+import { story } from "@/datas/story"
 
-export const Timeline = ({ data }) => {
+export const Timeline = () => {
   const ref = useRef(null);
   const containerRef = useRef(null);
   const [height, setHeight] = useState(0);
@@ -25,7 +26,7 @@ export const Timeline = ({ data }) => {
   return (
     <div className="w-full md:px-10" ref={containerRef}>
       <div ref={ref} className="relative max-w-7xl">
-        {data.map((item, index) => (
+        {story.map((item, index) => (
           <div
             key={index}
             id={`timeline-event-${item.id}`} // ID corrigé pour éviter la confusion avec la frise
@@ -40,7 +41,7 @@ export const Timeline = ({ data }) => {
               </h3>
             </div>
 
-            <div className="relative py-4 px-12 w-full border rounded-xl shadow-lg">
+            <div className="relative py-4 px-12 w-full">
               <h3 className="md:hidden block text-2xl mb-4 text-left font-bold text-secondary">
                 {item.title}
               </h3>

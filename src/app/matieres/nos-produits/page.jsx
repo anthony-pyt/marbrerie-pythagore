@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import Filter from "../../components/catalogue/Filter";
 import FiltersMenu from "./../../components/catalogue/FilterMenus";
 import axios from "axios";
-import { colors, motifs } from "./../../../../datas/filters";
+import { colors, motifs } from "../../datas/filters";
 
 export default function Page() {
   const [loadProducts, setLoadProducts] = useState(true);

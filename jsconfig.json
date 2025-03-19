@@ -4,7 +4,7 @@
     "paths": {
       "@/*": ["./src/app/*"],
       "@components/*": ["./src/app/components/*"],
-      "@lib/*": ['./']
+      "@lib/*": ['./'],
     }
   }
 }

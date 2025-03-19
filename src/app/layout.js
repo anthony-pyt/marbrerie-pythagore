@@ -5,7 +5,7 @@ import "animate.css";
 import { Analytics } from "@vercel/analytics/react";
 import { usePathname } from "next/navigation";
 import Loader from "./components/loader";
-import { metadata } from "./../../datas/metadata";
+import { metadata } from "./datas/metadata";
 import { useEffect, useState } from "react";
 
 const inter = Inter({ subsets: ["latin"] });

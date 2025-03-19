@@ -2,7 +2,7 @@ import Image from "next/image";
 import Logo from "./Logo";
 import Link from "next/link";
 import InfiniteMovingLogos from "./ui/infinite-moving-logos";
-import { fournisseurs } from "./../../../datas/fournisseurs";
+import { fournisseurs } from "../datas/fournisseurs";
 
 const Footer = () => {
   return (

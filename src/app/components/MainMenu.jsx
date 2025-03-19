@@ -3,7 +3,7 @@
 import { Icon } from "@iconify/react";
 import Logo from "./Logo";
 import Button from "./Button";
-import { listMenu } from "../../../datas/mainMenuItems";
+import { listMenu } from "../datas/mainMenuItems";
 import Link from "next/link";
 import { Hamburger } from "./Hamburger";
 import { useEffect, useState } from "react";

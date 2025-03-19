@@ -23,7 +23,7 @@ import {
   metiersTerrain,
   commitments,
   jobs,
-} from "../../../datas/infosCarriere";
+} from "../datas/infosCarriere";
 import Textarea from "../components/Textarea";
 import Input from "../components/Input";
 import FormServices from "./../api/services/formServices";
