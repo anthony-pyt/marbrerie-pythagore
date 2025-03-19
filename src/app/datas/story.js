@@ -114,7 +114,7 @@ export const story = [
             },
             {
               title: "le batiment",
-              url: "/images/qui-sommes-nous/notre-histoire/pythagore-laniscat.jpg",
+              url: "/images/qui-sommes-nous/notre-histoire/Pythagore-laniscat.jpg",
             },
           ]}
         />
