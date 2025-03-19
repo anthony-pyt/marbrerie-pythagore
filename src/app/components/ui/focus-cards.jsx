@@ -20,20 +20,16 @@ export const Card = React.memo(({ card, index, hovered, setHovered }) => (
     />
     <div
       className={cn(
-        "absolute inset-0 bg-black/50 flex flex-col justify-end py-8 px-4 transition-opacity duration-300",
+        "absolute inset-0 bg-black/5 flex flex-col justify-end py-8 px-4 transition-opacity duration-300",
         hovered === index ? "opacity-100" : "opacity-50"
       )}
     >
-      <div className="text-xl md:text-2xl font-medium bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-200">
-        {card.name}
+      <div className="bg-white rounded-lg px-2">
+        <div className="text-xl md:text-2xl font-medium text-gray-700">
+          {card.name}
+        </div>
+        {card.job && <div className="text-xs text-gray-700">{card.job}</div>}
       </div>
-      {
-        card.job && (
-          <div className="text-xs font-light bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-200">
-            {card.job}
-          </div>
-        )
-      }
     </div>
   </div>
 ));
