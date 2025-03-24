@@ -9,7 +9,8 @@ import useBlogServices from "@/api/services/blogServices";
 import useTagService from "@/api/services/tagsServices";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+// const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+import QuillEditor from "@/components/QuillEditor";
 
 
 export default function ArticleForm() {
@@ -25,22 +26,31 @@ export default function ArticleForm() {
   const router = useRouter()
 
   useEffect(() => {
-    if (typeof window !== "undefined" && quillRef.current) {
-      const editor = quillRef.current.getEditor();
-      const toolbar = editor.getModule("toolbar");
-      if (toolbar) {
-        const toolbarContainer = toolbar.container;
-        toolbarContainer.style.border = "none";
-        toolbarContainer.style.display = "flex";
-        toolbarContainer.style.justifyContent = "center";
-        toolbarContainer.style.margin = "1.5rem 0 0.5rem 0";
-        const editorContainer = editor.root;
-        editorContainer.style.minHeight = "400px";
-        editorContainer.style.border = "1px solid rgb(209 213 219)";
-        editorContainer.style.borderRadius = "0.5rem";
-      }
+    if (typeof window !== "undefined") {
+      const interval = setInterval(() => {
+        const editor = document.querySelector(".ql-editor"); // Sélectionne l'éditeur par sa classe
+
+        if (editor) {
+          editor.style.minHeight = "400px";
+          editor.style.border = "1px solid rgb(209 213 219)";
+          editor.style.borderRadius = "0.5rem";
+
+          const toolbar = document.querySelector(".ql-toolbar");
+          if (toolbar) {
+            toolbar.style.border = "none";
+            toolbar.style.display = "flex";
+            toolbar.style.justifyContent = "center";
+            toolbar.style.margin = "1.5rem 0 0.5rem 0";
+          }
+
+          clearInterval(interval);
+        }
+      }, 100);
+
+      return () => clearInterval(interval);
     }
   }, []);
+
 
   useEffect(() => {
     const getTags = async () => {
@@ -138,8 +148,7 @@ export default function ArticleForm() {
         {/* Editeur de texte */}
         <div>
           <label className="block font-medium text-gray-700">Contenu</label>
-          <ReactQuill
-            ref={quillRef}
+          <QuillEditor
             value={content}
             onChange={setContent}
             modules={modules}
