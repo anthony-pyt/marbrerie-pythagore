@@ -3,11 +3,14 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Icon } from "@iconify/react";
 import Button from "@/components/Button";
-import ReactQuill, { Quill } from "react-quill";
+// import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import useBlogServices from "@/api/services/blogServices";
 import useTagService from "@/api/services/tagsServices";
 import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+
 
 export default function ArticleForm() {
   const { storeArticle } = useBlogServices();
