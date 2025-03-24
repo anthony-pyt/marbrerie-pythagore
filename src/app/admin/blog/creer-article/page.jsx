@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import dynamic from "next/dynamic";
 import { Icon } from "@iconify/react";
 import Button from "@/components/Button";
 import ReactQuill, { Quill } from "react-quill";
@@ -23,23 +22,20 @@ export default function ArticleForm() {
   const router = useRouter()
 
   useEffect(() => {
-    if (quillRef.current) {
+    if (typeof window !== "undefined" && quillRef.current) {
       const editor = quillRef.current.getEditor();
-
-      // Cibler le conteneur de la toolbar et supprimer les bordures
       const toolbar = editor.getModule("toolbar");
-      const toolbarContainer = toolbar.container;
-      toolbarContainer.style.border = "none"; // Supprimer la bordure de la toolbar
-
-      // Centrer la toolbar horizontalement
-      toolbarContainer.style.display = "flex";
-      toolbarContainer.style.justifyContent = "center"; // Centrer les éléments de la toolbar
-      toolbarContainer.style.margin = "1.5rem 0 0.5rem 0"; // Ajouter un espace en haut et en bas
-      // Cibler l'élément interne de l'éditeur et enlever la bordure
-      const editorContainer = editor.root;
-      editorContainer.style.minHeight = "400px"; // Appliquer la hauteur minimale
-      editorContainer.style.border = "1px solid rgb(209 213 219)"; // Ajouter une bordure
-      editorContainer.style.borderRadius = "0.5rem"; // Arrondir les coins
+      if (toolbar) {
+        const toolbarContainer = toolbar.container;
+        toolbarContainer.style.border = "none";
+        toolbarContainer.style.display = "flex";
+        toolbarContainer.style.justifyContent = "center";
+        toolbarContainer.style.margin = "1.5rem 0 0.5rem 0";
+        const editorContainer = editor.root;
+        editorContainer.style.minHeight = "400px";
+        editorContainer.style.border = "1px solid rgb(209 213 219)";
+        editorContainer.style.borderRadius = "0.5rem";
+      }
     }
   }, []);
 
