@@ -22,6 +22,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "codes-postaux": "^4.1.2",
+    "dompurify": "^3.2.4",
     "framer-motion": "^11.18.2",
     "lucide-react": "^0.479.0",
     "mini-svg-data-uri": "^1.4.4",
@@ -32,6 +33,7 @@
     "react-dom": "^18",
     "react-dropzone": "^14.3.5",
     "react-google-recaptcha-v3": "^1.10.1",
+    "react-quill": "^2.0.0",
     "react-spinners": "^0.15.0",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7"

@@ -13,7 +13,15 @@ export default function useImageServices() {
     }
   };
 
+  const storeImageInPost = async (data) => {
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/image_in_post`, data
+    );
+    return response;
+  }
+
   return {
     fetchAllInspirationPhotos,
+    storeImageInPost
   };
 }

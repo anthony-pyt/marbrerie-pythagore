@@ -139,3 +139,7 @@ input[type="checkbox"].checkboxInput {
 .error-message{
   @apply text-red-500 text-xs;
 }
+
+.ql-container {
+  border: none !important; /* Supprimer la bordure de la ql-container */
+}
