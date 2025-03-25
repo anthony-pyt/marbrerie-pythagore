@@ -1,7 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { cn } from "../../lib/utils";
 import React, { useEffect, useState } from "react";
+import { Icon } from "@iconify/react";
 
 const InfiniteMovingLogos = ({
   items,
@@ -72,18 +74,26 @@ const InfiniteMovingLogos = ({
         className={cn(
           " flex min-w-full shrink-0 gap-x-20 w-max flex-nowrap",
           start && "animate-scroll ",
+          pauseOnHover && "hover:[animation-play-state:paused]"
         )}
       >
         {items.map((item, idx) => (
           <li
-            className="max-w-full relative  flex-shrink-0 flex items-center"
+            className="relative max-w-full flex-shrink-0 flex items-center group overflow-hidden"
             key={item.name}
           >
-            <blockquote>
-
-              <img src={item.image_url} className="w-[100px]"/>
-                
-            </blockquote>
+            <Link href={item.url} target="_blank">
+              <img
+                src={item.image_url}
+                className="w-[100px] group-hover:-translate-y-2 duration-500"
+              />
+              <div className="absolute top-0 w-full bg-black/80 duration-500 rounded px-1 flex items-center justify-center space-x-0.5 opacity-0 group-hover:opacity-100">
+                <p className="text-center text-xs text-white">
+                  Visitez le site{" "}
+                </p>
+                <img src="/images/extern_link_48.png" className="w-3 h-3" />
+              </div>
+            </Link>
           </li>
         ))}
       </ul>

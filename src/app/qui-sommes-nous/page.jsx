@@ -13,6 +13,11 @@ import { Carousel } from "../components/ui/carousel";
 import { leads } from "@/datas/leads";
 // import FullMaps from "@/components/maps/full_maps";
 import { story, our_values } from "@/datas/story"
+import dynamic from "next/dynamic";
+const FooterMaps = dynamic(
+  () => import("@/components/qui-sommes-nous/FooterMaps"),
+  { ssr: false }
+);
 
 export default function Page() {
   return (
@@ -107,54 +112,28 @@ const Team = () => {
 };
 
 const DeliveryArea = () => {
-  const mapSource = "/images/maps/carte-zone-presta-02.png";
-  const zones = [
-    {
-      name: "Notre Atelier",
-      address: "ZA Pen Ar Hoat 22570 Laniscat",
-      url: "https://www.google.fr/maps/place/Pythagore/@48.2380163,-3.1308951,16.54z/data=!4m6!3m5!1s0x4811b862bc91a1cd:0xc20dcfe6332b25b7!8m2!3d48.2363331!4d-3.1331111!16s%2Fg%2F1tj9bdl0?entry=ttu&g_ep=EgoyMDI1MDMxMi4wIKXMDSoJLDEwMjExNDU1SAFQAw%3D%3D",
-    },
-    {
-      name: "Dépot logisitque de Rouen",
-      address:
-        "ZA de Caillemare, 3 Pl. Caillemare, 27310 Saint-Ouen-de-Thouberville",
-      url: "https://www.google.fr/maps/place/Pythagore+Normandie/@49.3560945,0.8804588,17z/data=!3m1!4b1!4m6!3m5!1s0x47e11d4aac9a4ce1:0x68331a7b936e18f0!8m2!3d49.356091!4d0.8830337!16s%2Fg%2F11vylz5_74?entry=ttu&g_ep=EgoyMDI1MDMxMi4wIKXMDSoJLDEwMjExNDU1SAFQAw%3D%3D",
-    },
-  ];
   return (
-    <div className="p-6 mx-auto mt-20 w-full bg-primary">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-        {/* Liste des zones */}
+    <div className=" relative p-6 mx-auto mt-20 w-full bg-or-light h-[400px]">
+      {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
         <div className="space-y-6">
           {zones.map((zone, index) => (
             <a
               href={zone.url}
               target="_blank"
               key={index}
-              className="block p-4 bg-gray-50 rounded-xl shadow-md transition-transform hover:scale-105"
+              className="block p-4 bg-gray-50 rounded-xl shadow-md transition-transform hover:scale-105 z-50"
             >
               <h3 className="text-xl md:text-2xl font-semibold">{zone.name}</h3>
               <p className="text-sm md:text-base mt-2">{zone.address}</p>
             </a>
           ))}
         </div>
-
-        {/* Image de la carte */}
-        <div className="flex justify-end">
-          <Image
-            src={mapSource}
-            width={250}
-            height={500}
-            alt="Zones de prestation"
-            className="bg-white rounded-2xl p-4"
-          />
-        </div>
-      </div>
+      </div> */}
+      <FooterMaps />
     </div>
   );
 };
 
-// const ListImages = ({ images }) => {
 //   return (
 //     <div className="flex flex-wrap justify-start items-center">
 //       {images.map((image, index) => {

@@ -139,7 +139,7 @@ export default function Page() {
         </div>
       </div>
 
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-gray-50 max-w-[120rem] mx-auto">
         <div className="mx-auto px-6">
           <div className="text-center mb-12">
             <h3 className="text-3xl font-extrabold text-gray-800 mb-4">

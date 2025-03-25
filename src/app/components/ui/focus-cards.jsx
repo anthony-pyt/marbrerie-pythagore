@@ -2,9 +2,10 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import { cn } from "../../lib/utils";
+import Link from "next/link";
 
 export const Card = React.memo(({ card, index, hovered, setHovered }) => (
-  <div
+  <Link href={card.linkedin} passHref target="_blank"
     onMouseEnter={() => setHovered(index)}
     onMouseLeave={() => setHovered(null)}
     className={cn(
@@ -16,6 +17,7 @@ export const Card = React.memo(({ card, index, hovered, setHovered }) => (
       src={card.src}
       alt={card.name}
       fill
+      sizes="(min-width: 250px) 33vw, (min-width: 640px) 50vw, 100vw"
       className="object-cover absolute inset-0"
     />
     <div
@@ -31,7 +33,7 @@ export const Card = React.memo(({ card, index, hovered, setHovered }) => (
         {card.job && <div className="text-xs text-gray-700">{card.job}</div>}
       </div>
     </div>
-  </div>
+  </Link>
 ));
 
 Card.displayName = "Card";
