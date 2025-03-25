@@ -70,9 +70,9 @@ export default function AdminDashboard() {
                   {new Date(article.created_at).toLocaleDateString("fr-FR")}
                 </td>
                 <td className="px-3 py-4">{article.user_name}</td>
-                <td className="px-3 p flex space-x-2 justify-end items-center">
+                <td className="p-3 flex space-x-2 justify-end items-center">
                   <button
-                    className="text-green-600 hover:text-green-800"
+                    className="hover:text-green-600"
                     onClick={() => handleNavigation(article.id)}
                   >
                     <Icon
@@ -81,7 +81,7 @@ export default function AdminDashboard() {
                     />
                   </button>
                   <button
-                    className="text-blue-600 hover:text-blue-800"
+                    className="hover:text-blue-600"
                     onClick={() => handleToUpdate(article)}
                   >
                     <Icon
@@ -90,7 +90,7 @@ export default function AdminDashboard() {
                     />
                   </button>
                   <button
-                    className="text-red-600 hover:text-red-800"
+                    className="hover:text-red-600"
                     onClick={() => handleDelete(article.id)}
                   >
                     <Icon

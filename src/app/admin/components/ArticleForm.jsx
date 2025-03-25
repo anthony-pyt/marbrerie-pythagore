@@ -135,9 +135,8 @@ export default function ArticleForm({ articleId = null }) {
     setErrorMessage(null);
     try {
       const userName = user ? user.full_name : "Anonyme";
-      let response = null;
       if (articleId) {
-        response = await updateArticle(articleId, {
+        await updateArticle(articleId, {
           title,
           photo,
           content,
@@ -145,7 +144,7 @@ export default function ArticleForm({ articleId = null }) {
           userName,
         });
       } else {
-        response = await storeArticle({
+        await storeArticle({
           title,
           photo,
           content,
@@ -153,8 +152,7 @@ export default function ArticleForm({ articleId = null }) {
           userName,
         });
       }
-
-      router.push("/admin");
+      // router.push("/admin");
     } catch (error) {
       setErrorMessage(error.response.data.message);
       console.log(error.response.data.message);
