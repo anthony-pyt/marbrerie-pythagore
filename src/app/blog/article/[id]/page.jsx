@@ -54,7 +54,7 @@ export default function ArticlePage({ params }) {
     <main className="min-h-screen">
       <MainMenu />
       <PageTitle title={article.title} />
-      {article.imageSrc && (
+      {article.coverImage && (
         <div className="relative h-[500px] overflow-hidden">
           <div
             className="absolute inset-0 bg-cover bg-center bg-fixed"
@@ -74,7 +74,7 @@ export default function ArticlePage({ params }) {
           </div>
         )}
         <div
-          className="text-gray-700 leading-relaxed p-8"
+          className="prose text-gray-700 leading-relaxed p-8"
           dangerouslySetInnerHTML={{ __html: article.body }}
         >
           {/* {article.body} */}

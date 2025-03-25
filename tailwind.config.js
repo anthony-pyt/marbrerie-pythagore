@@ -15,6 +15,12 @@ module.exports = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  safelist: [
+    "ql-align-center",
+    "ql-align-right",
+    "ql-align-left",
+    "ql-align-justify",
+  ],
   theme: {
     extend: {
       animation: {

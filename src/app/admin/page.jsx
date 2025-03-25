@@ -6,7 +6,7 @@ import { Icon } from "@iconify/react";
 import { useRouter } from "next/navigation";
 
 export default function AdminDashboard() {
-  const { fetchArticles } = useBlogServices();
+  const { fetchArticles, deleteArticle } = useBlogServices();
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -38,7 +38,11 @@ export default function AdminDashboard() {
 
   const handleNavigation = (id) => {
     rooter.push(`/blog/article/${id}`);
-  }
+  };
+
+  const handleToUpdate = (article) => {
+    rooter.push(`/admin/blog/modifier-article/${article.id}`);
+  };
 
   return (
     <div>
@@ -65,9 +69,7 @@ export default function AdminDashboard() {
                 <td className="px-3 py-4">
                   {new Date(article.created_at).toLocaleDateString("fr-FR")}
                 </td>
-                <td className="px-3 py-4">
-                  {article.user_name}
-                </td>
+                <td className="px-3 py-4">{article.user_name}</td>
                 <td className="px-3 p flex space-x-2 justify-end items-center">
                   <button
                     className="text-green-600 hover:text-green-800"
@@ -80,7 +82,7 @@ export default function AdminDashboard() {
                   </button>
                   <button
                     className="text-blue-600 hover:text-blue-800"
-                    onClick={() => alert("Modifier l'article " + article.id)}
+                    onClick={() => handleToUpdate(article)}
                   >
                     <Icon
                       icon="mdi:pencil"

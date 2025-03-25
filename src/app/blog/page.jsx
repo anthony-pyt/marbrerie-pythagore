@@ -90,7 +90,7 @@ const BlogItem = ({ article }) => {
             ))}
           </div>
         )}
-        <div className="line-clamp-3"
+        <div className="prose line-clamp-3"
           dangerouslySetInnerHTML={{ __html: article.body }}
         >
           {/* {article.body} */}

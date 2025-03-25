@@ -31,19 +31,19 @@ export async function logout() {
   }
 }
 
-export async function isUserLoggedIn() {
-  try {
-    const response = await gateway_instance.get("/api/cookies", {
-      params: { name: "pythagore_gateway_session" }, // Passe le nom du cookie à vérifier
-    });
+// export async function isUserLoggedIn() {
+//   try {
+//     const response = await gateway_instance.get("/api/cookies", {
+//       params: { name: "pythagore_gateway_session" }, // Passe le nom du cookie à vérifier
+//     });
 
-    if (response.status === 200) {
-      return true; // Si la session est valide
-    } else {
-      return false; // Si la session est invalide
-    }
-  } catch (error) {
-    console.error("Erreur lors de la vérification de la session", error);
-    return false; // En cas d'erreur, on considère que la session n'est pas valide
-  }
-}
+//     if (response.status === 200) {
+//       return true; // Si la session est valide
+//     } else {
+//       return false; // Si la session est invalide
+//     }
+//   } catch (error) {
+//     console.error("Erreur lors de la vérification de la session", error);
+//     return false; // En cas d'erreur, on considère que la session n'est pas valide
+//   }
+// }

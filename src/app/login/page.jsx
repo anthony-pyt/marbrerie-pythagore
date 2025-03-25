@@ -78,7 +78,7 @@ export default function LoginPage() {
             <Button
               text={loading ? "Connexion..." : "Se connecter"}
               type="submit"
-              disabled={loading}
+              loading={loading}
             />
           </div>
         </form>

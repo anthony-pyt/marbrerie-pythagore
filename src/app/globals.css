@@ -143,3 +143,74 @@ input[type="checkbox"].checkboxInput {
 .ql-container {
   border: none !important; /* Supprimer la bordure de la ql-container */
 }
+.ql-align-center {
+  @apply text-center;
+}
+.ql-align-right {
+  @apply text-right;
+}
+.ql-align-left {
+  @apply text-left;
+}
+.ql-align-justify {
+  @apply text-justify;
+}
+.ql-bold {
+  @apply font-bold;
+}
+.ql-italic {
+  @apply italic;
+}
+.ql-underline {
+  @apply underline;
+}
+.ql-strike {
+  @apply line-through;
+}
+.ql-size-small {
+  @apply text-sm;
+}
+.ql-size-large {
+  @apply text-lg;
+}
+.ql-size-huge {
+  @apply text-2xl;
+}
+.ql-header-1 {
+  @apply text-3xl font-bold;
+}
+.ql-header-2 {
+  @apply text-2xl font-bold;
+}
+.ql-header-3 {
+  @apply text-xl font-bold;
+}
+.ql-list-ordered {
+  @apply list-decimal ml-5;
+}
+.ql-list-bullet {
+  @apply list-disc ml-5;
+}
+.ql-blockquote {
+  @apply border-l-4 border-gray-500 pl-4 italic;
+}
+.ql-code-block {
+  @apply bg-gray-100 p-2 rounded font-mono text-sm;
+}
+.ql-link {
+  @apply text-blue-600 underline;
+}
+.ql-color-red {
+  @apply text-red-500;
+}
+.ql-color-blue {
+  @apply text-blue-500;
+}
+.ql-background-yellow {
+  @apply bg-yellow-200;
+}
+.ql-background-gray {
+  @apply bg-gray-200;
+}
+
+
