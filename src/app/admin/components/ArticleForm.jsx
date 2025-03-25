@@ -152,7 +152,7 @@ export default function ArticleForm({ articleId = null }) {
           userName,
         });
       }
-      // router.push("/admin");
+      router.push("/admin");
     } catch (error) {
       setErrorMessage(error.response.data.message);
       console.log(error.response.data.message);
