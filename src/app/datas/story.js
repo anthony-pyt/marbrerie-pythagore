@@ -53,8 +53,29 @@ export default ListImages;
 
 export const story = [
   {
-    id: 1,
-    title: "1995",
+    year: "1950",
+    title: "Le départ",
+    content: (
+      <div>
+        <p className=" mb-8">
+          À cette époque, l’entreprise avait pour activité l’extraction de
+          minerais. Puis, elle a fait l’objet de deux transmissions familiales,
+          au fils puis au petit-fils du fondateur.
+        </p>
+        {/* <ListImages
+          images={[
+            {
+              title: "Ancien bâtiment",
+              url: "/images/qui-sommes-nous/notre-histoire/batiment_ancien_logo_pythagore.jpg",
+            },
+          ]}
+        /> */}
+      </div>
+    ),
+  },
+  {
+    year: "1995",
+    title: "Création de la marbrerie",
     content: (
       <div>
         <p className=" mb-8">
@@ -72,8 +93,8 @@ export const story = [
     ),
   },
   {
-    id: 2,
-    title: "2003",
+    year: "2003",
+    title: "Premier centre d'usinage",
     content: (
       <div>
         <p className=" mb-8">
@@ -93,8 +114,29 @@ export const story = [
     ),
   },
   {
-    id: 3,
-    title: "2007",
+    year: "2005",
+    title: "Reprise par Jérôme Tronel",
+    content: (
+      <div>
+        <p className=" mb-8">
+          Reprise de la société par Mr Jérôme Tronel, qui décide de se
+          positionner sur le secteur de la cuisine. L’entreprise compte alors 12
+          salariés.
+        </p>
+        {/* <ListImages
+          images={[
+            {
+              title: "Commande Numérique",
+              url: "/images/qui-sommes-nous/notre-histoire/CN_2.jpg",
+            },
+          ]}
+        /> */}
+      </div>
+    ),
+  },
+  {
+    year: "2007",
+    title: "Déménagement",
     content: (
       <div>
         <p className=" mb-8">
@@ -122,8 +164,8 @@ export const story = [
     ),
   },
   {
-    id: 4,
-    title: "2011",
+    year: "2011",
+    title: "Automatisation",
     content: (
       <div>
         <p className="">
@@ -147,8 +189,30 @@ export const story = [
     ),
   },
   {
-    id: 5,
-    title: "2019",
+    year: "2014",
+    title: "Reprise par Nicolas Perrine",
+    content: (
+      <div>
+        <p className="">Nicolas Perrine acquiert l’entreprise Pythagore.</p>
+        <p className=" mb-8">
+          Dans les années qui suivent, l’entreprise étend sa zone
+          d’intervention, notamment vers les régions de la Normandie et des Pays
+          de la Loire, et développe de nouveaux marchés.
+        </p>
+        {/* <ListImages
+          images={[
+            {
+              title: "CN",
+              url: "/images/qui-sommes-nous/notre-histoire/CN.JPEG",
+            },
+          ]}
+        /> */}
+      </div>
+    ),
+  },
+  {
+    year: "2019",
+    title: "Agrandissement",
     content: (
       <div>
         <p className="">
@@ -173,13 +237,14 @@ export const story = [
     ),
   },
   {
-    id: 6,
-    title: "2020",
+    year: "2020",
+    title: "Changement de logo",
     content: (
       <div>
         <p className="">
           Changement de logo pour l’entreprise. Le logo a été retravaillé pour
           devenir plus élégant et plus représentatif de notre métier.
+          L’entreprise compte 57 collaborateurs.
         </p>
         <ListImages
           images={[
@@ -187,14 +252,18 @@ export const story = [
               title: "L'ancien logo",
               url: "/images/logos/ancien_logo_pythagore.png",
             },
+            {
+              title: "Le nouveau logo",
+              url: "/images/logo_pythagore_texte_noir_dore.png",
+            },
           ]}
         />
       </div>
     ),
   },
   {
-    id: 7,
-    title: "2023",
+    year: "2023",
+    title: "Agrandissement",
     content: (
       <div>
         <p className="">
@@ -239,8 +308,8 @@ export const story = [
     ),
   },
   {
-    id: 8,
-    title: "2024",
+    year: "2024",
+    title: "Nouveau dépot",
     content: (
       <div>
         <p className=" mb-8">
@@ -263,8 +332,8 @@ export const story = [
     ),
   },
   {
-    id: 9,
-    title: "2025",
+    year: "2025",
+    title: "30 ans",
     content: (
       <div>
         <p className=" mb-8">
@@ -305,9 +374,9 @@ export const our_values = [
     src: "/images/qui-sommes-nous/nos-valeurs/atelier.jpg",
   },
   {
-    title: "L'inovation",
+    title: "L'innovation",
     content:
-      "Nous plaçons l'innovation au coeur de notre développement, en optimisant nos processus, en investissant dans les outils de production et en développement des logiciels pour optimiser le travaile de chaque collaborateur.",
+      "Nous plaçons l’innovation au cœur de notre développement, en optimisant nos processus, en investissant dans des outils de production et en développant des logiciels pour optimiser le travail de chaque collaborateur",
     src: "/images/qui-sommes-nous/nos-valeurs/innovation.jpg",
   },
 ];

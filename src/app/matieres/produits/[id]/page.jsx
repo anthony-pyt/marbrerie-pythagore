@@ -8,6 +8,7 @@ import MainMenu from "@/components/MainMenu";
 import PageTitle from "@/components/PageTitle";
 import Footer from "@/components/Footer";
 import Slider from "@/components/product/Slider";
+import Link from "next/link";
 
 export default function Page({ params }) {
   const [product, setProduct] = useState({});
@@ -169,19 +170,8 @@ export default function Page({ params }) {
             )}
           </div>
           <div className="flex-1 bg-primary/20 rounded-xl p-3 my-2 ml-2 flex flex-col justify-between">
-            <div>
-              <h6 className="font-semibold text-xl flex items-center space-x-4">
-                Garantie
-              </h6>
-              <p className="text-justify">
-                Nous offrons une garantie sur l’ensemble des matériaux
-                manufacturés et posés par nos équipes ou simplement livrés ;
-                ceci sous réserve que ces matériaux soient transformés et
-                installés dans le respect des bonnes pratiques.
-              </p>
-            </div>
             {product.product.category.waranty && (
-              <div className="flex flex-col lg:flex-row items-center space-x-4 justify-center">
+              <div className="flex flex-col items-center space-x-4 justify-center h-full">
                 <div className="flex justify-end">
                   <img
                     src={`${product.product.category.waranty.imageSrc}`}
@@ -195,6 +185,26 @@ export default function Page({ params }) {
                     {product.product.category.waranty.description}
                   </p>
                 </div>
+                {product.product.category.waranty.url && (
+                  <div className="mt-4 p-4 bg-white border rounded-lg text-center text-sm">
+                    <p className="text-sm text-gray-700 font-medium">
+                      Votre garantie produit n'est pas encore activée ?
+                    </p>
+                    <Link
+                      href={product.product.category.waranty.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-2 inline-flex items-center gap-2 px-2 py-1 text-blue-950 bg-or-light hover:bg-or hover:text-white rounded-lg transition"
+                    >
+                      <span>Activez-la dès maintenant</span>
+                      <Icon
+                        icon="si:arrow-right-duotone"
+                        width="20"
+                        height="20"
+                      />
+                    </Link>
+                  </div>
+                )}
               </div>
             )}
           </div>

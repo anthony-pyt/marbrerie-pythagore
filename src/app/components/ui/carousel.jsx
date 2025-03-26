@@ -149,11 +149,11 @@ export function Carousel({ slides }) {
 
   return (
     <div
-      className="relative w-[45vmin] h-[45vmin] mx-auto"
+      className="relative w-[80vmin] h-[80vmin] md:w-[45vmin] md:h-[45vmin] mx-auto"
       aria-labelledby={`carousel-heading-${id}`}
     >
       <ul
-        className="absolute flex mx-[-4vmin] transition-transform duration-1000 ease-in-out"
+        className="absolute flex mx-[-24vmin] transition-transform duration-1000 ease-in-out"
         style={{
           transform: `translateX(-${current * (100 / slides.length)}%)`,
         }}
@@ -168,7 +168,7 @@ export function Carousel({ slides }) {
           />
         ))}
       </ul>
-      <div className="absolute flex justify-center w-full top-[calc(100%+1rem)]">
+      <div className="absolute flex justify-center w-full top-[calc(80%)] md:top-[calc(100%+1rem)]">
         <CarouselControl
           type="previous"
           title="Précédente"

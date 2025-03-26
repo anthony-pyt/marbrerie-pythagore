@@ -44,100 +44,12 @@ const ImageGrid = ({ images }) => (
   </div>
 );
 
-const RectangleSkeleton = ({
-  className,
-  image_url,
-  title,
-  text,
-  number,
-  imagePosition = "left",
-}) => {
-  const isImageRight = imagePosition === "right";
-
-  return (
-    <div
-      className={clsx(
-        "rounded-xl shadow-lg flex flex-col md:flex-row items-center gap-6 overflow-hiddens",
-        isImageRight ? "md:flex-row-reverse" : "md:flex-row",
-        className
-      )}
-    >
-      {/* Image */}
-      <div className="w-[350px] h-[250px] flex-shrink-0">
-        <Image
-          src={image_url}
-          alt={text}
-          width={350}
-          height={250}
-          className="rounded-lg object-cover w-full h-full"
-        />
-      </div>
-
-      {/* Contenu */}
-      <div className="flex-1 text-center md:text-left p-4">
-        <h4 className="text-7xl font-bold">{number}</h4>
-        <div className="py-6">
-          <p className="text-lg">{text}</p>
-        </div>
-      </div>
-    </div>
-  );
-};
-
 export default function Page() {
   return (
     <main className="min-h-screen">
       <MainMenu />
       <PageTitle title={"Notre savoir-faire"} />
-      <div className="mt-24 mx-auto max-w-5xl">
-        <div className="grid grid-cols-1 gap-4 m-4 flex-1">
-          <RectangleSkeleton
-            className={"col-span-1 sm:col-span-2 bg-gray-50"}
-            image_url={"/images/savoir-faire/IMG_0129.JPEG"}
-            number="30+"
-            text="années d’expérience dans le domaine de la marbrerie de décoration"
-          />
-          <RectangleSkeleton
-            className={"col-span-1 sm:col-span-2 bg-or bg-opacity-10"}
-            imagePosition="right"
-            image_url={"/images/savoir-faire/centrale-eau.png"}
-            number="98%"
-            text="de l’eau utilisée est recyclée, et a permis de réduire de 96% notre consommation d’eau"
-          />
-          <RectangleSkeleton
-            className={"col-span-1 sm:col-span-2 bg-gray-50"}
-            image_url={"/images/echantillons.JPEG"}
-            number="15"
-            text="marques proposées dont 3 durables"
-          />
-          <RectangleSkeleton
-            className={"col-span-1 sm:col-span-2 bg-or bg-opacity-10"}
-            imagePosition="right"
-            image_url={"/images/savoir-faire/infos_inter_1_6.jpg"}
-            number="7000+"
-            text="Projets réalisés : cuisine, salle de bain, habillement murale, comptoir d’accueil, cheminé..."
-          />
-          <RectangleSkeleton
-            className={"col-span-1 sm:col-span-2 bg-gray-50"}
-            image_url={"/images/savoir-faire/machine-PYTHAGORE.png"}
-            number="10+"
-            text="machines présentes dans notre atelier : machine à commande numérique, machine à découpe jet d’eau, polisseuse..."
-          />
-          <RectangleSkeleton
-            className={"col-span-1 sm:col-span-2 bg-or bg-opacity-10"}
-            imagePosition="right"
-            image_url={"/images/savoir-faire/IMG-20231107-WA0005.jpg"}
-            number="100+"
-            text="collaborateurs répartis dans nos différents services et dépot. Commercial, atelier, pose, administratif..."
-          />
-          <RectangleSkeleton
-            className={"col-span-1 sm:col-span-2 bg-gray-50"}
-            image_url={"/images/savoir-faire/satisfaction client.jpg"}
-            number="96%"
-            text="de satisfaction client, ce qui montre l'importance de notre engagement envers la qualité, l'écoute et le suivi de projets."
-          />
-        </div>
-      </div>
+      
 
       <section className="py-16 bg-gray-50 max-w-[120rem] mx-auto">
         <div className="mx-auto px-6">

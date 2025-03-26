@@ -17,15 +17,20 @@ export default function RootLayout({ children }) {
   useEffect(() => {
     const handleClick = (event) => {
       const target = event.target.closest("a");
-      if (target && target.href.startsWith(window.location.origin)) {
-        setLoading(true);
+      if (target) {
+        const url = new URL(target.href, window.location.origin);
+        const isSamePage = url.pathname === pathname && url.hash === "";
+
+        if (!isSamePage) {
+          setLoading(true);
+        }
       }
     };
 
     document.addEventListener("click", handleClick);
 
     return () => document.removeEventListener("click", handleClick);
-  }, []);
+  }, [pathname]);
 
   useEffect(() => {
     setLoading(false); // Arrête le loader quand la page a changé
@@ -41,7 +46,7 @@ export default function RootLayout({ children }) {
         <meta name="author" content={metadata.author} />
         <title>{metadata.title}</title>
       </head>
-      <body className={[inter.className]} suppressHydrationWarning={true}>
+      <body className={inter.className} suppressHydrationWarning={true}>
         {loading && <Loader />}
         {children}
         <Analytics />

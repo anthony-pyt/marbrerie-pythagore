@@ -32,7 +32,9 @@ const Footer = () => {
           {/* <p>Suivez nous !</p> */}
           <div className="flex flex-col items-center">
             <p className="font-semibold">Horaires d'ouverture (sur RDV)</p>
-            <p className="text-sm">Du lundi au jeudi : 9h00-13h00, 14h00-17h30</p>
+            <p className="text-sm">
+              Du lundi au jeudi : 9h00-13h00, 14h00-17h30
+            </p>
             <p className="text-sm">Vendredi : 9h00-13h00, 14h00-16h30</p>
           </div>
           <div className="flex items-center space-x-4">
@@ -60,6 +62,9 @@ const Footer = () => {
         </div>
         <div className="flex-1 flex flex-col items-center">
           <div className="flex flex-col items-start">
+            <Link href={"/garanties"} className="text-sm lg:text-base">
+              Garanties
+            </Link>
             <Link href={"/contact"} className="text-sm lg:text-base">
               Contact
             </Link>

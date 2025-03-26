@@ -37,13 +37,13 @@ export const Timeline = () => {
                 <div className="h-4 w-4 rounded-full bg-or border border-or p-2" />
               </div>
               <h3 className="hidden md:block text-xl md:pl-20 md:text-5xl font-bold text-secondary">
-                {item.title}
+                {item.year}
               </h3>
             </div>
 
             <div className="relative py-4 px-12 w-full">
               <h3 className="md:hidden block text-2xl mb-4 text-left font-bold text-secondary">
-                {item.title}
+                {item.year}
               </h3>
               {item.content}
             </div>

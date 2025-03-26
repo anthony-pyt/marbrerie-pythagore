@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
 // Fix pour les icônes Leaflet qui ne s'affichent pas dans Next.js
@@ -43,7 +42,7 @@ const FooterMaps = () => {
       <MapContainer
         center={[48.99604006779647, -1.261240943902487]}
         zoom={7}
-        className="h-full w-full opacity-80"
+        className="h-full w-full"
         scrollWheelZoom={false}
       >
         {/* Fond de carte OpenStreetMap */}

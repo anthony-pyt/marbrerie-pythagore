@@ -198,22 +198,15 @@ export function ModalProduct({ setOpen, open, product }) {
               </div>
             </div>
             {/* GARANTIE */}
-            <div className="border p-4 rounded-lg mt-4 max-w-[650px] mx-auto">
-              <h6>Garantie</h6>
-              <p className="text-xs text-justify">
-                Nous offrons une garantie sur l’ensemble des matériaux
-                manufacturés et posés par nos équipes ou simplement livrés ;
-                ceci sous réserve que ces matériaux soient transformés et
-                installés dans le respect des bonnes pratiques.
-              </p>
-              {product.product.category.waranty && (
+            {product.product.category.waranty && (
+              <div className="border p-4 rounded-lg mt-4 max-w-[650px] mx-auto">
                 <div className="flex flex-col items-center flex-shrink justify-center">
                   <div className="flex justify-end">
                     <img
                       src={`${product.product.category.waranty.imageSrc}`}
                       loading="lazy"
                       alt={product.product.category.waranty.title}
-                      className="object-cover min-w-24 max-w-24 rounded-full p-4 bg-white"
+                      className="object-cover w-48 p-4 bg-white"
                     />
                   </div>
                   <div className="flex flex-col items-start">
@@ -222,8 +215,8 @@ export function ModalProduct({ setOpen, open, product }) {
                     </p>
                   </div>
                 </div>
-              )}
-            </div>
+              </div>
+            )}
           </DialogPanel>
         </div>
       </div>
