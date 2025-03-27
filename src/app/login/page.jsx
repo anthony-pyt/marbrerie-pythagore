@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Button from "@/components/Button";
-import {login} from "@/api/services/authServices";
+import { login } from "@/api/services/authServices";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -19,7 +19,7 @@ export default function LoginPage() {
 
     try {
       const res = await login({ email, password });
-
+      console.log("Login successful, redirecting to /admin");
       router.push("/admin");
     } catch (err) {
       setError("Email ou mot de passe incorrect !");
