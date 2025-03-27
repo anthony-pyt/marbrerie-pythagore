@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import clsx from "clsx";
 import ServiceCard from "../components/services/serviceCard";
+import { savoirFaire } from "@/datas/savoirFaire";
 
 const images = [
   {
@@ -49,9 +50,8 @@ export default function Page() {
     <main className="min-h-screen">
       <MainMenu />
       <PageTitle title={"Notre savoir-faire"} />
-      
 
-      <section className="py-16 bg-gray-50 max-w-[120rem] mx-auto">
+      <section className="py-16 bg-gray-50 max-w-[110rem] mx-auto">
         <div className="mx-auto px-6">
           <div className="text-center mb-12">
             <h3 className="text-3xl font-extrabold text-gray-800 mb-4">
@@ -64,56 +64,18 @@ export default function Page() {
           </div>
 
           {/* Liste des savoir-faire */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4 gap-y-12">
-            {/* Carte 1 */}
-            <div className="mx-auto">
-              <ServiceCard title={"Façonnages spécifiques"} image={"/images/"}>
-                <p className="">
-                  Polissage sous plan, assemblage à l’onglet, suivi du mur en
-                  pierre... Nous peaufinons les moindres détails.
-                </p>
-              </ServiceCard>
-            </div>
-            {/* Carte 2 */}
-            <div className="mx-auto">
-              <ServiceCard title={"Finitions de chant"} image={"/images/"}>
-                <p className="">
-                  Chant droit, arrondi, biseauté, bec de corbin… Nous proposons
-                  des finitions adaptées à vos besoins et projets.
-                </p>
-              </ServiceCard>
-            </div>
-
-            {/* Carte 3 */}
-            <div className="mx-auto">
-              <ServiceCard
-                title={"Découpe sur mesure"}
-                image={"/images/savoir-faire/silestone versailles ivory.jpg"}
-              >
-                <p className="">
-                  Grâce à nos machines de découpe, nous réalisons des
-                  ajustements précis pour arrondis, angles spécifiques ou
-                  ajustements millimétriques.
-                </p>
-              </ServiceCard>
-            </div>
-
-            {/* Carte 4 */}
-            <div className="mx-auto">
-              <ServiceCard
-                title={"Joint parfait"}
-                image={"/images/savoir-faire/ventouse1.jpg"}
-              >
-                <p className="">
-                  Obtenez un résultat visiblement net et continu grâce à notre
-                  technique de joint parfait.
-                </p>
-              </ServiceCard>
-            </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-y-12">
+            {savoirFaire.map((item, index) => (
+              <div key={index} className="mx-auto">
+                <ServiceCard title={item.title} image={item.image}>
+                  <p className="">{item.description}</p>
+                </ServiceCard>
+              </div>
+            ))}
           </div>
 
           {/* Galerie d'images */}
-          <div className="mt-12">
+          <div className="mt-24">
             <h4 className="text-2xl font-bold mb-6 text-center">
               Quelques photos
             </h4>

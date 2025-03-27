@@ -295,12 +295,20 @@ export const story = [
         <ListImages
           images={[
             {
-              title: "les tranches",
-              url: "/images/qui-sommes-nous/notre-histoire/tranches.JPEG",
+              title: "Travaux",
+              url: "/images/qui-sommes-nous/notre-histoire/travaux_2023.jpg",
             },
             {
-              title: "découpe à l'eau",
-              url: "/images/atelier/IMG_0084.JPEG",
+              title: "Travaux",
+              url: "/images/qui-sommes-nous/notre-histoire/travaux_2023_1.jpg",
+            },
+            {
+              title: "Les tranches",
+              url: "/images/qui-sommes-nous/notre-histoire/photos_abus_1.jpg",
+            },
+            {
+              title: "Le pont",
+              url: "/images/qui-sommes-nous/notre-histoire/photos_abus_2.jpg",
             },
           ]}
         />

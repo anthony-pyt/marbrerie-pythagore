@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import Loader from "./components/loader";
 import { metadata } from "./datas/metadata";
 import { useEffect, useState } from "react";
+import ChatBot from "@/components/ChatBot"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +24,9 @@ export default function RootLayout({ children }) {
 
         if (!isSamePage) {
           setLoading(true);
+          setTimeout(() => {
+            setLoading(false)
+          }, 3000);
         }
       }
     };
@@ -49,6 +53,7 @@ export default function RootLayout({ children }) {
       <body className={inter.className} suppressHydrationWarning={true}>
         {loading && <Loader />}
         {children}
+        {/* <ChatBot/> */}
         <Analytics />
       </body>
     </html>

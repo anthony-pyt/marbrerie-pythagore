@@ -62,11 +62,11 @@ const Footer = () => {
         </div>
         <div className="flex-1 flex flex-col items-center">
           <div className="flex flex-col items-start">
-            <Link href={"/garanties"} className="text-sm lg:text-base">
-              Garanties
-            </Link>
             <Link href={"/contact"} className="text-sm lg:text-base">
               Contact
+            </Link>
+            <Link href={"/garanties"} className="text-sm lg:text-base">
+              Garanties
             </Link>
             <Link href={"/mentions-legales"} className="text-sm lg:text-base">
               Mentions légales
@@ -76,6 +76,12 @@ const Footer = () => {
               className="text-sm lg:text-base"
             >
               Politique de confidentialité
+            </Link>
+            <Link
+              href={"/FAQ"}
+              className="text-sm lg:text-base"
+            >
+              FAQ
             </Link>
           </div>
         </div>
