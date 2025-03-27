@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import Loader from "./components/loader";
 import { metadata } from "./datas/metadata";
 import { useEffect, useState } from "react";
-import ChatBot from "@/components/ChatBot"
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -53,7 +53,7 @@ export default function RootLayout({ children }) {
       <body className={inter.className} suppressHydrationWarning={true}>
         {loading && <Loader />}
         {children}
-        {/* <ChatBot/> */}
+        <SpeedInsights />
         <Analytics />
       </body>
     </html>
