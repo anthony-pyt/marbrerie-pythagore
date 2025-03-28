@@ -32,6 +32,8 @@ const nextConfig = {
       "localhost",
       "192.168.1.210",
       "api.stock.marbrerie-pythagore.fr",
+      process.env.NEXT_PUBLIC_IMAGE_URL,
+
     ],
   },
   eslint: {

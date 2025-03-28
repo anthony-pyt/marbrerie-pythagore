@@ -17,7 +17,7 @@ export default function Page({ params }) {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_STOCK_URL}/external-products/${params.id}`
+          `${process.env.NEXT_PUBLIC_API_STOCK_URL}/stock/external-products/${params.id}`
         );
         console.log(response.data);
 
