@@ -59,7 +59,7 @@ const Skeleton = () => {
   );
 }
 
-export const Card = ({ title, value, description, icon, url }) => {
+const Card = ({ title, value, description, icon, url }) => {
   return (
     <div className="p-4 rounded-lg border flex items-start justify-between">
       <div>
