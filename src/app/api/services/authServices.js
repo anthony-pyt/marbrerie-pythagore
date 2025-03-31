@@ -1,13 +1,11 @@
 import axios from "axios";
 import gateway_instance from "../../lib/gatewayInstance";
 
-export async function getCsrfCookie() {
-  await gateway_instance.get("/sanctum/csrf-cookie");
-}
+const  getCsrfCookie =()=>gateway_instance.get("/sanctum/csrf-cookie")
 
 export async function login(data) {
   await getCsrfCookie();
-  const response = await gateway_instance.post("/api/login", data);
+  const response = gateway_instance.post("/api/login", data);
   const user = response.data
   
   localStorage.setItem("user", JSON.stringify(user));
