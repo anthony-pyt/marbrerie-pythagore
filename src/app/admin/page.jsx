@@ -43,7 +43,7 @@ export default function AdminDashboard() {
   );
 }
 
-export const Skeleton = () => {
+const Skeleton = () => {
   return (
     <div className="border border-gray-200 p-1 rounded-xl w-[400px] m-1">
       <div className="flex justify-between">
