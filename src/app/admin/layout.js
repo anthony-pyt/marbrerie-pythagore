@@ -77,10 +77,16 @@ export default function AdminLayout({ children }) {
               onClick={() => router.push("/admin")}
             />
             <NavItem
-              icon="mdi:post-it-note-add-outline"
-              text="Créer un article"
+              icon="mdi:format-list-bulleted"
+              text="Liste des articles"
               sidebarOpen={sidebarOpen}
-              onClick={() => router.push("/admin/blog/creer-article")}
+              onClick={() => router.push("/admin/blog/liste-articles")}
+            />
+            <NavItem
+              icon="mdi:format-list-bulleted"
+              text="Liste des jobs"
+              sidebarOpen={sidebarOpen}
+              onClick={() => router.push("/admin/blog/liste-jobs")}
             />
             <NavItem
               icon="mdi:logout"
@@ -100,7 +106,7 @@ export default function AdminLayout({ children }) {
 /* 🔹 Composant NavItem */
 const NavItem = ({ icon, text, sidebarOpen, onClick }) => (
   <div
-    className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-200 cursor-pointer transition"
+    className="flex items-center space-x-3 px-3 py-1 rounded-lg hover:bg-gray-100 cursor-pointer transition"
     onClick={onClick}
     as="button"
   >

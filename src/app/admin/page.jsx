@@ -1,109 +1,82 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import useBlogServices from "@/api/services/blogServices";
-import { Icon } from "@iconify/react";
 import { useRouter } from "next/navigation";
+import { Icon } from "@iconify/react";
+import Link from "next/link";
 
 export default function AdminDashboard() {
-  const { fetchArticles, deleteArticle } = useBlogServices();
-  const [articles, setArticles] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  const rooter = useRouter();
-
-  useEffect(() => {
-    const getArticles = async () => {
-      try {
-        const response = await fetchArticles();
-        setArticles(response.data.data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    getArticles();
-  }, []);
-
-  const handleDelete = async (id) => {
-    if (!confirm("Êtes-vous sûr de vouloir supprimer cet article ?")) return;
-    try {
-      await deleteArticle(id);
-      setArticles(articles.filter((article) => article.id !== id));
-    } catch (error) {
-      console.error("Erreur lors de la suppression", error);
-    }
-  };
-
-  const handleNavigation = (id) => {
-    rooter.push(`/blog/article/${id}`);
-  };
-
-  const handleToUpdate = (article) => {
-    rooter.push(`/admin/blog/modifier-article/${article.id}`);
-  };
+  const router = useRouter();
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-4">Liste des articles</h1>
+    <div className="p-6">
+      <div className="bg-white shadow rounded-lg p-6">
+        <h1 className="text-2xl font-bold mb-6">Dashboard</h1>
 
-      {loading ? (
-        <p className="text-center">Chargement des articles...</p>
-      ) : articles.length === 0 ? (
-        <p className="text-center">Aucun article disponible.</p>
-      ) : (
-        <table className="min-w-full overflow-hidden rounded-xl shadow-md">
-          <thead>
-            <tr className="bg-gray-100 text-left">
-              <th className="px-3 py-4">Titre</th>
-              <th className="px-3 py-4">Date</th>
-              <th className="px-3 py-4">Publié par</th>
-              <th className="px-3 py-4 flex justify-end">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {articles.map((article) => (
-              <tr key={article.id} className="hover:bg-gray-50">
-                <td className="px-3 py-4">{article.title}</td>
-                <td className="px-3 py-4">
-                  {new Date(article.created_at).toLocaleDateString("fr-FR")}
-                </td>
-                <td className="px-3 py-4">{article.user_name}</td>
-                <td className="p-3 flex space-x-2 justify-end items-center">
-                  <button
-                    className="hover:text-green-600"
-                    onClick={() => handleNavigation(article.id)}
-                  >
-                    <Icon
-                      icon="mdi:eye-outline"
-                      className="inline-block mr-1 h-6 w-6"
-                    />
-                  </button>
-                  <button
-                    className="hover:text-blue-600"
-                    onClick={() => handleToUpdate(article)}
-                  >
-                    <Icon
-                      icon="mdi:pencil"
-                      className="inline-block mr-1 h-6 w-6"
-                    />
-                  </button>
-                  <button
-                    className="hover:text-red-600"
-                    onClick={() => handleDelete(article.id)}
-                  >
-                    <Icon
-                      icon="mdi:trash-can"
-                      className="inline-block mr-1 h-6 w-6"
-                    />
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+          <Card
+            title={"Articles"}
+            value={"12"}
+            icon={"mdi:format-list-bulleted"}
+            description={"visibles sur le site"}
+            url={"/admin/blog/liste-articles"}
+          />
+          <Card
+            title={"Jobs"}
+            value={"3"}
+            icon={"mdi:format-list-bulleted"}
+            description={"annonces en cours de publication"}
+            url={"/admin/blog/liste-jobs"}
+          />
+        </div>
+
+        <div className="p-4 rounded-lg border">
+          <h2 className="text-lg font-semibold mb-4">---------</h2>
+          <div className="flex flex-wrap">
+            <Skeleton />
+            <Skeleton />
+            <Skeleton />
+            <Skeleton />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
+
+export const Skeleton = () => {
+  return (
+    <div className="border border-gray-200 p-1 rounded-xl w-[400px] m-1">
+      <div className="flex justify-between">
+        <div className="h-4 w-36 rounded bg-gray-100 my-1"></div>
+        <div className="h-8 w-8 bg-gray-100 rounded-lg"></div>
+      </div>
+      <div className="flex flex-col justify-between">
+        <div className="h-4 w-48 rounded bg-gray-100 my-1"></div>
+        <div className="h-4 w-48 rounded bg-gray-100 my-1"></div>
+        <div className="h-4 w-48 rounded bg-gray-100 my-1"></div>
+      </div>
+    </div>
+  );
+}
+
+export const Card = ({ title, value, description, icon, url }) => {
+  return (
+    <div className="p-4 rounded-lg border flex items-start justify-between">
+      <div>
+        <h2 className="text-lg font-semibold">{title}</h2>
+        <p className="text-4xl font-bold">{value}</p>
+        <p className="text-xs mt-2">{description}</p>
+      </div>
+      <div className="h-full flex flex-col justify-between items-end">
+        <Icon icon={icon} className="w-8 h-8" />
+        <Link
+          href={url}
+          className="flex items-center space-x-1 border border-transparent hover:border-gray-200 px-1 rounded"
+        >
+          <span className="text-xs">Voir</span>
+          <Icon icon={"mdi:link-variant"} className="w-4 h-6" />
+        </Link>
+      </div>
+    </div>
+  );
+};

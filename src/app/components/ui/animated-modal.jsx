@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import React, {
   createContext,
+  forwardRef,
   useContext,
   useEffect,
   useRef,
@@ -30,7 +31,7 @@ export const useModal = () => {
 };
 
 export function Modal({ children }) {
-  return <ModalProvider>{children}</ModalProvider>;
+  return <div><ModalProvider>{children}</ModalProvider></div>;
 }
 
 export const ModalTrigger = ({ children, className }) => {
@@ -65,7 +66,7 @@ export const ModalBody = ({ children, className }) => {
 
   return (
     <AnimatePresence>
-      {open && (
+      {/* {open && ( */}
         <motion.div
           initial={{
             opacity: 0,
@@ -78,7 +79,7 @@ export const ModalBody = ({ children, className }) => {
             opacity: 0,
             backdropFilter: "blur(0px)",
           }}
-          className="fixed [perspective:800px] [transform-style:preserve-3d] inset-0 h-full w-full  flex items-center justify-center z-50"
+          className="fixed [perspective:800px] [transform-style:preserve-3d] inset-0 h-full w-full flex items-center justify-center z-50"
         >
           <Overlay />
 
@@ -115,18 +116,22 @@ export const ModalBody = ({ children, className }) => {
             {children}
           </motion.div>
         </motion.div>
-      )}
+      {/* )} */}
     </AnimatePresence>
   );
 };
 
-export const ModalContent = ({ children, className }) => {
+export const ModalContent = forwardRef(({ children, className }, ref) => {
   return (
-    <div className={cn("flex flex-col flex-1 p-8 md:p-10", className)}>
+    <div
+      ref={ref}
+      className={cn("flex flex-col flex-1 p-8 md:p-10", className)}
+    >
       {children}
     </div>
   );
-};
+});
+
 
 export const ModalFooter = ({ children, className }) => {
   return (

@@ -80,7 +80,7 @@ const Button = ({
             icon={icon}
             width={width}
             height={height}
-            className="mr-2 transition-transform duration-300 ease-in-out group-hover:scale-110"
+            className="transition-transform duration-300 ease-in-out group-hover:scale-110"
           />
         )}
         <span>{text}</span>
