@@ -10,6 +10,18 @@ const nextConfig = {
     };
     return config;
   },
+  rewrites:()=>{
+  return [
+    {
+      source:"/backend/:pah*",
+      destination:"http://gateway-users.test/:pah*"
+    },
+    {
+      source:"/stocks/:pah*",
+      destination:process.env.NEXT_PUBLIC_API_STOCK_URL+"/:pah*"
+    }
+  ]
+  },
   images: {
     remotePatterns: [
       {
@@ -18,11 +30,11 @@ const nextConfig = {
         port: "",
         pathname: "/images/**",
       },
-      //   {
-      //     protocol: process.env.NODE_ENV === "production" ? "https" : "http",
-      //     port: "",
-      //     hostname: process.env.NEXT_PUBLIC_IMAGE_URL,
-      //   },
+        {
+          protocol: process.env.NODE_ENV === "production" ? "https" : "http",
+          port: "",
+          hostname: process.env.NEXT_PUBLIC_IMAGE_URL,
+        },
     ],
     domains: [
       "assets.aceternity.com",
@@ -32,6 +44,7 @@ const nextConfig = {
       "localhost",
       "192.168.1.210",
       "api.stock.marbrerie-pythagore.fr",
+
     ],
   },
   eslint: {
