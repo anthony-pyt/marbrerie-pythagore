@@ -8,25 +8,25 @@ export async function login(data) {
   const response = gateway_instance.post("/api/login", data);
   const user = response.data
   
-  localStorage.setItem("user", JSON.stringify(user)); 
+  localStorage.setItem("user", JSON.stringify(user));
 }
 
 export async function logout() {
   await gateway_instance.post("/api/logout");
   // Appel à l'API pour supprimer le cookie côté serveur
-  // try {
-  //   await axios.delete("/api/cookies", {
-  //     headers: {
-  //       "Content-Type": "application/json", // Ajoute les headers pour JSON
-  //     },
-  //     data: {
-  //       name: "pythagore_gateway_session", // Envoie un objet JSON avec le nom du cookie
-  //     },
-  //   });
-  //   localStorage.removeItem("user");
-  // } catch (error) {
-  //   console.error("Erreur lors de la suppression du cookie", error);
-  // }
+  try {
+    await axios.delete("/api/cookies", {
+      headers: {
+        "Content-Type": "application/json", // Ajoute les headers pour JSON
+      },
+      data: {
+        name: "pythagore_gateway_session", // Envoie un objet JSON avec le nom du cookie
+      },
+    });
+    localStorage.removeItem("user");
+  } catch (error) {
+    console.error("Erreur lors de la suppression du cookie", error);
+  }
 }
 
 // export async function isUserLoggedIn() {

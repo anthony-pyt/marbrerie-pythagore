@@ -19,7 +19,8 @@ export default function LoginPage() {
 
     try {
       const res = await login({ email, password });
-      console.log("Login successful, redirecting to /admin");
+      console.log("Login successful, redirecting to /admin", res);
+
       router.push("/admin");
     } catch (err) {
       setError("Email ou mot de passe incorrect !");

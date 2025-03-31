@@ -11,7 +11,6 @@ import { FocusCards } from "../components/ui/focus-cards";
 import ServiceCard from "../components/services/serviceCard";
 import { Carousel } from "../components/ui/carousel";
 import { leads } from "@/datas/leads";
-// import FullMaps from "@/components/maps/full_maps";
 import { story, our_values } from "@/datas/story"
 import dynamic from "next/dynamic";
 import clsx from "clsx";
@@ -40,7 +39,7 @@ export default function Page() {
           <div className="grid grid-cols-1 gap-4 m-4 flex-1">
             <RectangleSkeleton
               className={"col-span-1 sm:col-span-2 bg-gray-50"}
-              image_url={"/images/savoir-faire/IMG_0129.JPEG"}
+              image_url={"/images/evenements/logo_30_ans.png"}
               number="30 ans"
               text="d’expérience dans le domaine de la marbrerie de décoration"
             />
@@ -89,8 +88,9 @@ export default function Page() {
         <HistoricalData />
         <Team />
       </div>
-      <div>{/* <DeliveryArea /> */}</div>
-      {/* <FullMaps /> */}
+      <div>
+        <DeliveryArea />
+        </div>
       <Footer />
     </main>
   );
