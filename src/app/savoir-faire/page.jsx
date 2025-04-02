@@ -7,7 +7,9 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import clsx from "clsx";
 import ServiceCard from "../components/services/serviceCard";
-import { savoirFaire } from "@/datas/savoirFaire";
+import { savoirFaire, projetsSpecifiques } from "@/datas/savoirFaire";
+import { Carousel } from "../components/ui/carousel";
+import AnimatedTestimonials from "../components/ui/animated-testimonials";
 
 const images = [
   {
@@ -51,6 +53,23 @@ export default function Page() {
       <MainMenu />
       <PageTitle title={"Notre savoir-faire"} />
 
+      <section>
+        <div className="mx-auto px-6 mt-12 py-6">
+          <div className="text-center mb-12">
+            <h3 className="text-3xl font-extrabold text-gray-800 mb-4">
+              Nos projets
+            </h3>
+            <p className="max-w-4xl mx-auto">
+              Vous retrouverez des photos de projets spécifiques vous montrant
+              notre savoir-faire
+            </p>
+          </div>
+          <div className="container mx-auto m-4 rounded-xl p-4 bg-gradient-to-br from-or to-or-light">
+            <AnimatedTestimonials testimonials={projetsSpecifiques} autoplay />
+          </div>
+        </div>
+      </section>
+
       <section className="py-16 bg-gray-50 max-w-[110rem] mx-auto">
         <div className="mx-auto px-6">
           <div className="text-center mb-12">
@@ -73,14 +92,15 @@ export default function Page() {
               </div>
             ))}
           </div>
-
-          {/* Galerie d'images */}
-          <div className="mt-24">
-            <h4 className="text-2xl font-bold mb-6 text-center">
-              Quelques photos
-            </h4>
-            <ImageGrid images={images} />
-          </div>
+        </div>
+      </section>
+      <section>
+        {/* Galerie d'images */}
+        <div className="mt-24">
+          <h4 className="text-2xl font-bold mb-6 text-center">
+            Quelques photos
+          </h4>
+          <ImageGrid images={images} />
         </div>
       </section>
 

@@ -9,14 +9,19 @@ export const LayoutGrid = ({ cards }) => {
   const [selected, setSelected] = useState(null);
   const [lastSelected, setLastSelected] = useState(null);
 
-  const handleClick = (card) => {
-    setLastSelected(selected);
-    setSelected(card);
-  };
+  // const handleClick = (card) => {
+  //   setLastSelected(selected);
+  //   setSelected(card);
+  // };
 
   const handleOutsideClick = () => {
     setLastSelected(selected);
     setSelected(null);
+  };
+
+  const goToDetails = (card) => {
+    const url = `/matieres/produits/${card.imageable?.id}`;
+    window.open(url, "_blank");
   };
 
   return (
@@ -30,7 +35,7 @@ export const LayoutGrid = ({ cards }) => {
           )}
         >
           <motion.div
-            onClick={() => handleClick(card)}
+            onClick={() => goToDetails(card)}
             className={cn(
               card.className,
               "relative overflow-hidden",
@@ -98,68 +103,68 @@ const ImageComponent = ({ card, selected }) => {
   );
 };
 
-const SelectedCard = ({ selected }) => {
-  const goToDetails = (card) => {
-    const url = `/matieres/produits/${card.imageable?.id}`;
-    window.open(url, "_blank");
-  };
+// const SelectedCard = ({ selected }) => {
+//   const goToDetails = (card) => {
+//     const url = `/matieres/produits/${card.imageable?.id}`;
+//     window.open(url, "_blank");
+//   };
 
-  return (
-    <div className="h-full w-full flex flex-col justify-end relative z-[60]">
-      <motion.div
-        initial={{
-          opacity: 0,
-        }}
-        animate={{
-          opacity: 0.6,
-        }}
-        className="absolute inset-0 h-full w-full z-10"
-      />
-      <motion.div
-        layoutId={`content-${selected?.id}`}
-        initial={{
-          opacity: 0,
-          y: 100,
-        }}
-        animate={{
-          opacity: 1,
-          y: 0,
-        }}
-        exit={{
-          opacity: 0,
-          y: 100,
-        }}
-        transition={{
-          duration: 0.5,
-          ease: "easeInOut",
-        }}
-        className="p-4 z-[70] bg-black bg-opacity-50 text-white uppercase flex justify-between items-center"
-      >
-        <div className="flex items-center space-x-2">
-          <span className="flex items-center">
-            {selected.imageable.product.category.logo_url != null ? (
-              <img
-                src={selected.imageable.product.category?.logo_url}
-                className="h-4 p-0.5 bg-white rounded-lg px-2"
-                alt={selected.imageable.product.category.label}
-              />
-            ) : (
-              <div className="border border-or inline-flex justify-self-center items-center px-2 rounded-lg bg-white">
-                <span className="text-or text-xs">
-                  {selected.imageable.product.category.label}
-                </span>
-              </div>
-            )}
-          </span>
-          <span>{selected?.imageable.label}</span>
-        </div>
-        <Button
-          text="Voir la fiche"
-          color="or"
-          size="small"
-          onClick={() => goToDetails(selected)}
-        />
-      </motion.div>
-    </div>
-  );
-};
+//   return (
+//     <div className="h-full w-full flex flex-col justify-end relative z-[60]">
+//       <motion.div
+//         initial={{
+//           opacity: 0,
+//         }}
+//         animate={{
+//           opacity: 0.6,
+//         }}
+//         className="absolute inset-0 h-full w-full z-10"
+//       />
+//       <motion.div
+//         layoutId={`content-${selected?.id}`}
+//         initial={{
+//           opacity: 0,
+//           y: 100,
+//         }}
+//         animate={{
+//           opacity: 1,
+//           y: 0,
+//         }}
+//         exit={{
+//           opacity: 0,
+//           y: 100,
+//         }}
+//         transition={{
+//           duration: 0.5,
+//           ease: "easeInOut",
+//         }}
+//         className="p-4 z-[70] bg-black bg-opacity-50 text-white uppercase flex justify-between items-center"
+//       >
+//         <div className="flex items-center space-x-2">
+//           <span className="flex items-center">
+//             {selected.imageable.product.category.logo_url != null ? (
+//               <img
+//                 src={selected.imageable.product.category?.logo_url}
+//                 className="h-4 p-0.5 bg-white rounded-lg px-2"
+//                 alt={selected.imageable.product.category.label}
+//               />
+//             ) : (
+//               <div className="border border-or inline-flex justify-self-center items-center px-2 rounded-lg bg-white">
+//                 <span className="text-or text-xs">
+//                   {selected.imageable.product.category.label}
+//                 </span>
+//               </div>
+//             )}
+//           </span>
+//           <span>{selected?.imageable.label}</span>
+//         </div>
+//         <Button
+//           text="Voir la fiche"
+//           color="or"
+//           size="small"
+//           onClick={() => goToDetails(selected)}
+//         />
+//       </motion.div>
+//     </div>
+//   );
+// };
