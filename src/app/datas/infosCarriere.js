@@ -1,7 +1,7 @@
 export const metiersAtelier = [
   {
     id: 1,
-    src: "/images/carriere/IMG_0089.JPEG",
+    src: "/images/carriere/metiers/polisseur.jpg",
     alt: "IMG_0053",
     name: "Polisseur",
     quote:
@@ -9,7 +9,7 @@ export const metiersAtelier = [
   },
   {
     id: 2,
-    src: "/images/carriere/IMG_0084.JPEG",
+    src: "/images/carriere/metiers/debiteur.jpg",
     alt: "IMG_0084",
     name: "Débiteur",
     quote:
@@ -17,7 +17,7 @@ export const metiersAtelier = [
   },
   {
     id: 3,
-    src: "/images/carriere/IMG_0094.JPEG",
+    src: "/images/carriere/metiers/controleur.jpg",
     alt: "IMG_1598",
     name: "Contrôleur",
     quote:
@@ -85,7 +85,7 @@ export const commitments = [
     title: "Nous soutenons nos collaborateurs",
     description:
       "Donner les moyens à nos collaborateurs de réaliser pleinement leur potentiel, est une valeur unanimement reconnue dans l’entreprise. Les conditions de travail sont régulièrement optimisées pour que chacun puisse offrir le meilleur de lui-même.",
-    src: "/images/carriere/nos-engagements/IMG_1621.jpg",
+    src: "/images/carriere/nos-engagements/soutien.jpg",
   },
   {
     id: 2,
@@ -99,7 +99,7 @@ export const commitments = [
     title: "Nous recrutons pour l’avenir",
     description:
       "En tant qu'acteur économique de notre territoire, nous adoptons des politiques de recrutement inclusives, offrant des aides à la mobilité pour faciliter l’installation de nos nouveaux employés. Notre processus d’intégration permet à chacun de s’épanouir et de s’intégrer facilement au sein de notre équipe.",
-    src: "/images/carriere/nos-engagements/IMG_1600.png",
+    src: "/images/carriere/nos-engagements/avenir.jpg",
   },
 ];
 

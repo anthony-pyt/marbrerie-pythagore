@@ -16,8 +16,13 @@ export async function GET() {
       });
     }
 
+    // Mélanger les fichiers aléatoirement
+    const shuffledFiles = shuffleArray(files);
+
     // Construire la liste complète des URLs des images
-    const images = files.map((file) => `/images/accueil/savoir-faire/${file}`);
+    const images = shuffledFiles.map(
+      (file) => `/images/accueil/savoir-faire/${file}`
+    );
 
     return new Response(JSON.stringify({ images }), {
       headers: { "Content-Type": "application/json" },
@@ -27,4 +32,14 @@ export async function GET() {
       status: 500,
     });
   }
+}
+
+// Fonction pour mélanger un tableau
+function shuffleArray(array) {
+  const shuffled = [...array]; // Créer une copie pour éviter de modifier l'original
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const randomIndex = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[randomIndex]] = [shuffled[randomIndex], shuffled[i]];
+  }
+  return shuffled;
 }
