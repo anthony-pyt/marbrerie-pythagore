@@ -1,3 +1,5 @@
+'use client'
+
 import MainMenu from "./../components/MainMenu";
 import Footer from "../components/Footer";
 import ServiceCard from "../components/services/serviceCard";
@@ -75,7 +77,7 @@ export default function Page() {
             </ServiceCard>
             <ServiceCard
               title="Produits & disponibilités"
-              image="/images/nos-services/produits.JPEG"
+              image="/images/nos-services/showroom_3.jpg"
             >
               <ul className="list-disc ml-4">
                 <li className="text-justify">

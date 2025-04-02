@@ -64,7 +64,9 @@ export default function Page() {
         <HistoricalData />
         <Team />
       </div>
-      <div>{/* <DeliveryArea /> */}</div>
+      <div>
+        <DeliveryArea />
+      </div>
       <Footer />
     </main>
   );

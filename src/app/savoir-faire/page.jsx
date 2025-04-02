@@ -53,6 +53,30 @@ export default function Page() {
       <MainMenu />
       <PageTitle title={"Notre savoir-faire"} />
 
+      <section className="py-16 max-w-[110rem] mx-auto">
+        <div className="mx-auto px-6">
+          <div className="text-center mb-12">
+            <h3 className="text-3xl font-extrabold text-gray-800 mb-4">
+              Notre expertise technique
+            </h3>
+            <p className=" text-lg">
+              Découvrez les techniques et finitions qui font la renommée de
+              notre expertise.
+            </p>
+          </div>
+
+          {/* Liste des savoir-faire */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-y-12 max-w-7xl mx-auto">
+            {savoirFaire.map((item, index) => (
+              <div key={index} className="mx-auto">
+                <ServiceCard title={item.title} image={item.image}>
+                  <p className="">{item.description}</p>
+                </ServiceCard>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
       <section>
         <div className="mx-auto px-6 mt-12 py-6">
           <div className="text-center mb-12">
@@ -69,38 +93,59 @@ export default function Page() {
           </div>
         </div>
       </section>
-
-      <section className="py-16 bg-gray-50 max-w-[110rem] mx-auto">
-        <div className="mx-auto px-6">
+      <section>
+        <div className="mx-auto px-6 mt-12 py-6">
           <div className="text-center mb-12">
             <h3 className="text-3xl font-extrabold text-gray-800 mb-4">
-              Notre expertise technique
+              Nos prestations
             </h3>
-            <p className=" text-lg">
-              Découvrez les techniques et finitions qui font la renommée de
-              notre expertise.
+            <p className="max-w-4xl mx-auto">
+              Projets sur mesure en pierre naturelle, pierre reconstituée et
+              céramique grand format. Nous accompagnons nos clients
+              professionnels dès la conception, la fabrication et jusqu’à
+              l’installation de leurs projets, partout en France.
             </p>
           </div>
-
-          {/* Liste des savoir-faire */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-y-12">
-            {savoirFaire.map((item, index) => (
-              <div key={index} className="mx-auto">
-                <ServiceCard title={item.title} image={item.image}>
-                  <p className="">{item.description}</p>
-                </ServiceCard>
-              </div>
-            ))}
+          <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 max-w-7xl mx-auto gap-y-12">
+            <div className="mx-auto">
+              <ServiceCard
+                title="Résidentiel"
+                image="/images/savoir-faire/silestone.jpg"
+              >
+                <ul className="list-disc ml-4">
+                  <li>Cuisine intérieur et extérieur</li>
+                  <li>Salle de bains</li>
+                  <li>Habillage de cheminée</li>
+                  <li>Tables</li>
+                </ul>
+              </ServiceCard>
+            </div>
+            <div className="mx-auto">
+              <ServiceCard
+                title="Commercial"
+                image="/images/savoir-faire/neolith_san_simone.png"
+              >
+                <ul className="list-disc ml-4">
+                  <li>Boutique</li>
+                  <li>Centre commercial</li>
+                  <li>Hôtel</li>
+                  <li>Bar</li>
+                  <li>Restaurant</li>
+                </ul>
+              </ServiceCard>
+            </div>
+            <div className="mx-auto">
+              <ServiceCard
+                title="Tertiaire"
+                image="/images/savoir-faire/terrazzo.jpg"
+              >
+                <ul className="list-disc ml-4">
+                  <li>Bureau</li>
+                  <li>Cabinet dentaire ou médical</li>
+                </ul>
+              </ServiceCard>
+            </div>
           </div>
-        </div>
-      </section>
-      <section>
-        {/* Galerie d'images */}
-        <div className="mt-24">
-          <h4 className="text-2xl font-bold mb-6 text-center">
-            Quelques photos
-          </h4>
-          <ImageGrid images={images} />
         </div>
       </section>
 

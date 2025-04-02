@@ -367,10 +367,10 @@ export const our_values = [
     title: "La passion",
     content:
       "Chaque jour, nous nous engageons avec passion dans notre travail pour réaliser vos projets et donner vie à votre créativité.",
-    src: "/images/qui-sommes-nous/nos-valeurs/atelier-poncage.JPEG",
+    src: "/images/qui-sommes-nous/nos-valeurs/passion.jpg",
   },
   {
-    title: "La satisfaction clients",
+    title: "La satisfaction client",
     content:
       "Nous œuvrons chaque jour pour améliorer votre expérience avec des produits de haute qualité et un service client dévoué.",
     src: "/images/qui-sommes-nous/nos-valeurs/satisfaction.jpg",
@@ -379,7 +379,7 @@ export const our_values = [
     title: "L'engagement",
     content:
       "Chaque année, nous minimisons notre impact environnemental en éliminant nos déchets, recyclant nos eaux usées et réduisant l'utilisation de produits chimiques.",
-    src: "/images/qui-sommes-nous/nos-valeurs/atelier.jpg",
+    src: "/images/qui-sommes-nous/nos-valeurs/engagement.jpg",
   },
   {
     title: "L'innovation",

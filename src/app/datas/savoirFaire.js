@@ -21,7 +21,7 @@ export const savoirFaire = [
     title: "Façonnages spécifiques",
     description:
       "Polissage sous plan, assemblage à l’onglet, suivi du mur en pierre... Nous peaufinons les moindres détails.",
-    image: "/images/",
+    image: "/images/savoir-faire/dekton_cuisine.jpg",
   },
   {
     title: "Finitions de chant",
@@ -45,7 +45,7 @@ export const savoirFaire = [
     title: "Polissage",
     description:
       "Nos équipes réalisent un polissage précis pour sublimer chaque surface et assurer une finition impeccable, alliant esthétique et durabilité.",
-    image: "/images/g",
+    image: "/images/savoir-faire/polissage.jpg",
   },
   {
     title: "Installation",
@@ -76,7 +76,7 @@ export const projetsSpecifiques = [
     id: 3,
     src: "/images/visuel-a-venir.jpg",
     alt: "Projet 3",
-    name: "Chargé de Clientèle",
+    name: "Projet 3",
     quote:
       "Description projet (lieu, année, type de matériau, façonnage spécifique...)",
   },
