@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const gateway_instance = axios.create({
-  baseURL: 'backend',
+  baseURL: '/backend',
   headers: {
     'X-Requested-With': 'XMLHttpRequest',
   },

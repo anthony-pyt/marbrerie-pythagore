@@ -54,3 +54,30 @@ export const savoirFaire = [
     image: "/images/g",
   },
 ];
+
+export const projetsSpecifiques = [
+  {
+    id: 1,
+    src: "/images/visuel-a-venir.jpg",
+    alt: "Projet 1",
+    name: "Projet 1",
+    quote:
+      "Description projet (lieu, année, type de matériau, façonnage spécifique...)",
+  },
+  {
+    id: 2,
+    src: "/images/visuel-a-venir.jpg",
+    alt: "Projet 2",
+    name: "Projet 2",
+    quote:
+      "Description projet (lieu, année, type de matériau, façonnage spécifique...)",
+  },
+  {
+    id: 3,
+    src: "/images/visuel-a-venir.jpg",
+    alt: "Projet 3",
+    name: "Chargé de Clientèle",
+    quote:
+      "Description projet (lieu, année, type de matériau, façonnage spécifique...)",
+  },
+];

@@ -13,7 +13,7 @@ const nextConfig = {
     return [
       {
         source: "/backend/:pah*",
-        destination: "http://gateway-users.test/:pah*",
+        destination: `${process.env.NEXT_PUBLIC_API_GATEWAY_URL}/:pah*`,
       },
       {
         source: "/stocks/:pah*",

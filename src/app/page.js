@@ -179,10 +179,13 @@ export default function Home() {
                 réunit une équipe d’hommes et de femmes passionnés, dédiés à
                 sublimer les matériaux. Spécialisés dans la marbrerie de
                 décoration, nous accompagnons les professionnels de l’agencement
-                résidentiel, commercial et tertiaire. Chaque réalisation prend
+                résidentiel, commercial et tertiaire. 
+                
+                Chaque réalisation prend
                 vie dans nos ateliers, au coeur de la Bretagne, où vos projets
                 sont minutieusement découpés, façonnés et assemblés.
               </p>
+              <p></p>
               <div className="flex justify-end mt-12">
                 <Button
                   color="primary"

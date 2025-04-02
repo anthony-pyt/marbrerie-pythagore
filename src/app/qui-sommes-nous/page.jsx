@@ -51,7 +51,7 @@ export default function Page() {
       </div>
 
       <div className="space-y-12">
-        <div className="mt-24 w-full lg:w-11/12 mx-auto bg-or-light rounded-xl ">
+        <div className="mt-24 w-full lg:w-11/12 mx-auto bg-gradient-to-br from-or to-or-light rounded-xl ">
           <div className="max-w-5xl mx-auto">
             <AnimatedTestimonials
               testimonials={numbers_key}
