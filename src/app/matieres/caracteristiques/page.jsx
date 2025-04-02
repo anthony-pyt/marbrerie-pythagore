@@ -1,3 +1,5 @@
+'use client'
+
 import MainMenu from "./../../components/MainMenu";
 import PageTitle from "./../../components/PageTitle";
 
