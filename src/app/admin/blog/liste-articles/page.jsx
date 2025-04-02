@@ -71,7 +71,7 @@ export default function AdminDashboard() {
           className="hover:bg-gray-100 py-1 px-2 rounded flex items-center border space-x-1"
           onClick={() => handleNavigation("/admin/blog/creer-article")}
         >
-            <Icon icon={"mdi:plus"} className="h-4 w-4" />
+          <Icon icon={"mdi:plus"} className="h-4 w-4" />
           <span className="text-sm">Créer un article</span>
         </button>
       </div>
@@ -87,8 +87,10 @@ export default function AdminDashboard() {
           <table className="min-w-full border-collapse">
             <thead className="border-b bg-gray-100">
               <tr className="text-left">
+                <th className="px-3 py-2"></th>
                 <th className="px-3 py-2">Titre</th>
-                <th className="px-3 py-2">Date</th>
+                <th className="px-3 py-2">Créé le</th>
+                <th className="px-3 py-2">modifié le</th>
                 <th className="px-3 py-2">Publié par</th>
                 <th className="px-3 py-2 text-right sr-only">Actions</th>
               </tr>
@@ -96,9 +98,15 @@ export default function AdminDashboard() {
             <tbody>
               {articles.map((article) => (
                 <tr key={article.id} className="hover:bg-gray-50 relative">
+                  <td className="px-3 py-2">
+                    <img src={article.coverImage} className="h-12 w-12 rounded object-cover duration-200 hover:h-48 hover:w-48" />
+                  </td>
                   <td className="px-3 py-2">{article.title}</td>
                   <td className="px-3 py-2">
                     {new Date(article.created_at).toLocaleDateString("fr-FR")}
+                  </td>
+                  <td className="px-3 py-2">
+                    {new Date(article.updated_at).toLocaleDateString("fr-FR")}
                   </td>
                   <td className="px-3 py-2">{article.user_name}</td>
                   <td className="px-3 py-2 text-right relative text-sm">

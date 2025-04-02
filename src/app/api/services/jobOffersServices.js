@@ -2,6 +2,13 @@ import axios from "axios";
 import { isUserLoggedIn } from "./authServices";
 
 export default function useJobOffersServices() {
+  const countJobOffers = async () => {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/count_job_offers`
+    );
+    return response;
+  };
+
   const fetchJobOffers = async () => {
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_API_URL}/job_offers`
@@ -47,6 +54,7 @@ export default function useJobOffersServices() {
   }
 
   return {
+    countJobOffers,
     fetchJobOffers,
     fetchJobOffer,
     storeJobOffer,

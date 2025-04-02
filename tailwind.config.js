@@ -47,7 +47,8 @@ module.exports = {
         primary: "#D9D9D9",
         secondary: "#303030",
         or: "#A88512",
-        "or-light": "#EBC74F",
+        // "or-light": "#EBC74F",
+        "or-light": "#f8bc32",
       },
       zIndex: {
         9999: 9999,

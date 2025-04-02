@@ -1,7 +1,7 @@
 "use client";
-/* eslint react/no-unescaped-entities: off */
-
 import MainMenu from "./../components/MainMenu";
+import { numbers_key } from "@/datas/chiffres_cles.js";
+
 import Image from "next/image";
 import Cards from "../components/cards/cardComponent";
 import Footer from "../components/Footer";
@@ -11,9 +11,10 @@ import { FocusCards } from "../components/ui/focus-cards";
 import ServiceCard from "../components/services/serviceCard";
 import { Carousel } from "../components/ui/carousel";
 import { leads } from "@/datas/leads";
-import { story, our_values } from "@/datas/story"
+import { story, our_values } from "@/datas/story";
 import dynamic from "next/dynamic";
 import clsx from "clsx";
+import AnimatedTestimonials from "../components/ui/animated-testimonials";
 const FooterMaps = dynamic(
   () => import("@/components/qui-sommes-nous/FooterMaps"),
   { ssr: false }
@@ -24,63 +25,38 @@ export default function Page() {
     <main className="min-h-screen w-full">
       <MainMenu />
       <PageTitle title={"Qui sommes nous ?"} />
-      <div className="flex justify-center m-12">
-        <div className="w-11/12 xl:w-5/12 text-center">
-          <h3>
-            La marbrerie <span className="text-or">PYTHAGORE</span>{" "}
-          </h3>
-          accompagne depuis 30 ans ses clients professionnels dans la
-          réalisation de leurs agencements en pierre naturelle ou reconstituée,
-          en fournissant des produits et un service de la plus haute qualité.
+      <div className="flex justify-center">
+        <div
+          className="relative w-full text-center py-24 border overflow-hidden shadow-lg bg-cover bg-center"
+          style={{
+            backgroundImage: `
+        linear-gradient(to right, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.9)),
+        url('/images/bzh-drapeau.avif')
+      `,
+          }}
+        >
+          {/* Contenu principal */}
+          <div className="relative z-10 w-11/12 lg:w-5/12 mx-auto text-white">
+            <h3 className="text-3xl lg:text-4xl font-semibold mb-4 text-white">
+              La marbrerie <span className="text-or-light">PYTHAGORE</span>
+            </h3>
+            <p className="text-lg lg:text-xl leading-relaxed">
+              accompagne depuis <span className="font-bold">30 ans</span> ses
+              clients professionnels dans la réalisation de leurs agencements en
+              pierre naturelle ou reconstituée, en fournissant des produits et
+              un service de la plus haute qualité.
+            </p>
+          </div>
         </div>
       </div>
-      <div className="space-y-8">
-        <div className="mt-24 mx-auto max-w-5xl">
-          <div className="grid grid-cols-1 gap-4 m-4 flex-1">
-            <RectangleSkeleton
-              className={"col-span-1 sm:col-span-2 bg-gray-50"}
-              image_url={"/images/evenements/logo_30_ans.png"}
-              number="30 ans"
-              text="d’expérience dans le domaine de la marbrerie de décoration"
-            />
-            <RectangleSkeleton
-              className={"col-span-1 sm:col-span-2 bg-or bg-opacity-10"}
-              imagePosition="right"
-              image_url={"/images/savoir-faire/centrale-eau.png"}
-              number="98% d'eau"
-              text="tilisée est recyclée, et a permis de réduire de 96% notre consommation d’eau"
-            />
-            <RectangleSkeleton
-              className={"col-span-1 sm:col-span-2 bg-gray-50"}
-              image_url={"/images/echantillons.JPEG"}
-              number="15 marques"
-              text="proposées dont 3 durables"
-            />
-            <RectangleSkeleton
-              className={"col-span-1 sm:col-span-2 bg-or bg-opacity-10"}
-              imagePosition="right"
-              image_url={"/images/savoir-faire/infos_inter_1_6.jpg"}
-              number="7000 projets"
-              text="réalisés : cuisine, salle de bain, habillement murale, comptoir d’accueil, cheminé..."
-            />
-            <RectangleSkeleton
-              className={"col-span-1 sm:col-span-2 bg-gray-50"}
-              image_url={"/images/savoir-faire/machine-PYTHAGORE.png"}
-              number="10 machines"
-              text="présentes dans notre atelier : machine à commande numérique, machine à découpe jet d’eau, polisseuse..."
-            />
-            <RectangleSkeleton
-              className={"col-span-1 sm:col-span-2 bg-or bg-opacity-10"}
-              imagePosition="right"
-              image_url={"/images/savoir-faire/IMG-20231107-WA0005.jpg"}
-              number="100 collaborateurs"
-              text="collaborateurs répartis dans nos différents services et dépot. Commercial, atelier, pose, administratif..."
-            />
-            <RectangleSkeleton
-              className={"col-span-1 sm:col-span-2 bg-gray-50"}
-              image_url={"/images/savoir-faire/satisfaction client.jpg"}
-              number="96% de satisfaction client"
-              text="ce qui montre l'importance de notre engagement envers la qualité, l'écoute et le suivi de projets."
+
+      <div className="space-y-12">
+        <div className="mt-24 w-full lg:w-11/12 mx-auto bg-or-light rounded-xl ">
+          <div className="max-w-5xl mx-auto">
+            <AnimatedTestimonials
+              testimonials={numbers_key}
+              autoplay
+              titleSize="text-5xl"
             />
           </div>
         </div>
@@ -88,9 +64,7 @@ export default function Page() {
         <HistoricalData />
         <Team />
       </div>
-      <div>
-        <DeliveryArea />
-        </div>
+      <div>{/* <DeliveryArea /> */}</div>
       <Footer />
     </main>
   );

@@ -2,6 +2,13 @@ import axios from "axios";
 import { isUserLoggedIn } from "../services/authServices";
 
 export default function useBlogServices() {
+  const countArticles = async () =>  {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/blog/count_articles`
+    );
+    return response;
+  }
+
   const fetchArticles = async () => {
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_API_URL}/blog/get_articles`
@@ -39,6 +46,7 @@ export default function useBlogServices() {
   };
 
   return {
+    countArticles,
     fetchArticles,
     fetchArticle,
     storeArticle,

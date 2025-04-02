@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-export const AnimatedTestimonials = ({ testimonials, autoplay = false, retardInterval }) => {
+export const AnimatedTestimonials = ({ testimonials, autoplay = false, retardInterval, titleSize="text-2xl" }) => {
   const [active, setActive] = useState(0);
   const [rotateValues, setRotateValues] = useState([]);
 
@@ -27,7 +27,7 @@ export const AnimatedTestimonials = ({ testimonials, autoplay = false, retardInt
   useEffect(() => {
     if (autoplay) {
       const timeout = setTimeout(() => {
-        const interval = setInterval(handleNext, 5000);
+        const interval = setInterval(handleNext, 3500);
         return () => clearInterval(interval);
       }, retardInterval);
 
@@ -110,7 +110,7 @@ export const AnimatedTestimonials = ({ testimonials, autoplay = false, retardInt
               ease: "easeInOut",
             }}
           >
-            <h3 className="text-2xl font-bold text-black">
+            <h3 className={`${titleSize} font-bold text-black`}>
               {testimonials[active].name}
             </h3>
             <p className="text-sm">
