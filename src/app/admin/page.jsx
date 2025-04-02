@@ -3,9 +3,72 @@
 import { useRouter } from "next/navigation";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
+import useBlogServices from "@/api/services/blogServices";
+import useJobOffersServices from "@/api/services/jobOffersServices";
+import { useEffect, useState } from "react";
 
 export default function AdminDashboard() {
+  const { countArticles } = useBlogServices();
+  const { countJobOffers } = useJobOffersServices();
+  const [count, setCount] = useState({ articles: 0, jobOffers: 0 });
+  const [loading, setLoading] = useState({ articles: true, jobOffers: true });
   const router = useRouter();
+
+  useEffect(() => {
+    const getNumbers = async () => {
+      try {
+        // Lance les deux requêtes en parallèle
+        const [articlesResponse, offersResponse] = await Promise.allSettled([
+          countArticles(),
+          countJobOffers(),
+        ]);
+
+        // Traite les résultats des articles
+        if (articlesResponse.status === "fulfilled") {
+          setTimeout(() => {
+            setCount((prev) => ({
+              ...prev,
+              articles: articlesResponse.value.data,
+            }));
+            setLoading((prev) => ({
+              ...prev,
+              articles: false,
+            }));
+            
+          }, 1000);
+        } else {
+          console.error("Erreur articles:", articlesResponse.reason);
+          setLoading((prev) => ({
+            ...prev,
+            articles: false,
+          }));
+        }
+
+        // Traite les résultats des offres
+        if (offersResponse.status === "fulfilled") {
+          setCount((prev) => ({
+            ...prev,
+            jobOffers: offersResponse.value.data,
+          }));
+          setLoading((prev) => ({
+            ...prev,
+            jobOffers: false,
+          }));
+        } else {
+          console.error("Erreur offres:", offersResponse.reason);
+        }
+      } catch (error) {
+        console.error("Erreur générale:", error);
+        setLoading((prev) => ({
+          ...prev,
+          jobOffers: false,
+        }));
+      }
+    };
+
+    getNumbers();
+  }, []);
+
 
   return (
     <div className="p-6">
@@ -14,15 +77,17 @@ export default function AdminDashboard() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
           <Card
+            loading={loading.articles}
             title={"Articles"}
-            value={"12"}
+            value={count.articles}
             icon={"mdi:format-list-bulleted"}
             description={"visibles sur le site"}
             url={"/admin/blog/liste-articles"}
           />
           <Card
+            loading={loading.jobOffers}
             title={"Jobs"}
-            value={"3"}
+            value={count.jobOffers}
             icon={"mdi:format-list-bulleted"}
             description={"annonces en cours de publication"}
             url={"/admin/blog/liste-jobs"}
@@ -57,14 +122,25 @@ const Skeleton = () => {
       </div>
     </div>
   );
-}
+};
 
-const Card = ({ title, value, description, icon, url }) => {
+const Card = ({ title, value, description, icon, url, loading }) => {
   return (
     <div className="p-4 rounded-lg border flex items-start justify-between">
       <div>
         <h2 className="text-lg font-semibold">{title}</h2>
-        <p className="text-4xl font-bold">{value}</p>
+        {loading ? (
+          <div>
+            <Icon
+              icon="svg-spinners:pulse-rings-3"
+              width="24"
+              height="24"
+              className="text-black"
+            />
+          </div>
+        ) : (
+          <p className="text-4xl font-bold">{value}</p>
+        )}
         <p className="text-xs mt-2">{description}</p>
       </div>
       <div className="h-full flex flex-col justify-between items-end">

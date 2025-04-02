@@ -1,12 +1,12 @@
 "use client";
 
-import ArticleForm from "@/admin/components/ArticleForm";
+import JobOfferForm from "@/admin/components/JobOfferForm";
 
 
 export default function Page({ params }) {
   return (
     <main className="w-full mx-auto p-6">
-      <ArticleForm articleId={params.id}/>
+      <JobOfferForm jobOfferId={params.id}/>
     </main>
   );
 }

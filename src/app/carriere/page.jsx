@@ -1,8 +1,6 @@
 "use client";
 
 import MainMenu from "./../components/MainMenu";
-import SlideComponent from "./../components/sliders/sliderComponent";
-import Cards from "../components/cards/cardComponent";
 import Footer from "../components/Footer";
 import { Icon } from "@iconify/react";
 import { useEffect, useRef, useState } from "react";
@@ -151,7 +149,13 @@ const ListJobs = ({
       </div>
 
       {loading && (
-        <div className="flex items-center justify-center text-white">
+        <div className="flex flex-col items-center justify-center text-white">
+          <Icon
+            icon="svg-spinners:pulse-rings-3"
+            width="64"
+            height="64"
+            className="text-white"
+          />
           <p>Récupération des données...</p>
         </div>
       )}
@@ -165,6 +169,18 @@ const ListJobs = ({
                 height="64"
                 className="mb-8"
               />
+              <div className="text-sm flex flex-col items-center justify-center text-white border rounded-xl p-4">
+                <p className="font-semibold text-center underline underline-offset-2">
+                  Aucune offre pour le moment
+                </p>
+                <p className="mt-2">
+                  Nous vous invitons à soumettre votre candidature spontanée.
+                </p>
+                <p>
+                  Nous restons constamment à la recherche de talents motivés et
+                  ouverts à de nouvelles opportunités.
+                </p>
+              </div>
             </div>
           ) : (
             <div>
@@ -194,18 +210,20 @@ const ListJobs = ({
                   </div>
                 </div>
               ))}
+              <div className="text-sm flex flex-col items-center justify-center mt-8 text-white border rounded-xl p-4">
+                <p className="font-semibold text-center underline underline-offset-2">
+                  Aucune offre ne correspond à votre profil ?
+                </p>
+                <p className="mt-2">
+                  Nous vous invitons à soumettre votre candidature spontanée.
+                </p>
+                <p>
+                  Nous restons constamment à la recherche de talents motivés et
+                  ouverts à de nouvelles opportunités.
+                </p>
+              </div>
             </div>
           )}
-        </div>
-        <div className="text-sm flex flex-col items-center justify-center mt-8 text-white border rounded-xl p-4">
-          <p className="font-semibold">
-            Aucune offre ne correspond à votre profil ?
-          </p>
-          <p className="mt-2">
-            Nous vous invitons à soumettre votre candidature spontanée. Nous
-            restons constamment à la recherche de talents motivés et ouverts à
-            de nouvelles opportunités.
-          </p>
         </div>
       </div>
 
@@ -245,10 +263,10 @@ const ListJobs = ({
                 )}
               </p>
               <p className="flex items-center text-sm text-gray-600">
-                <span className="mr-2">💰</span> <strong>Salaire :</strong>{" "}
+                <span className="mr-2">💰</span> <strong>Salaire / mois : </strong>{" "}
                 {selectedJob.salary ? (
                   <span className="ml-1">
-                    à partir de {selectedJob.salary} €
+                    {selectedJob.salary} €
                   </span>
                 ) : (
                   <span className="ml-1">Non précisé</span>

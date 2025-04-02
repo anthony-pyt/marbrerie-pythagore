@@ -176,9 +176,12 @@ export default function Home() {
               </h2>
               <p className="mt-12">
                 <span className="text-or">Pythagore </span>
-                est une équipe d’hommes et de femmes, qui de par leur passion
-                pour leur métier et les matériaux, incarnent ce que nous sommes
-                aujourd'hui !
+                réunit une équipe d’hommes et de femmes passionnés, dédiés à
+                sublimer les matériaux. Spécialisés dans la marbrerie de
+                décoration, nous accompagnons les professionnels de l’agencement
+                résidentiel, commercial et tertiaire. Chaque réalisation prend
+                vie dans nos ateliers, au coeur de la Bretagne, où vos projets
+                sont minutieusement découpés, façonnés et assemblés.
               </p>
               <div className="flex justify-end mt-12">
                 <Button

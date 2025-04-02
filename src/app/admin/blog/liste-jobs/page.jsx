@@ -108,7 +108,7 @@ export default function AdminDashboard() {
         <h1 className="text-2xl font-bold">Liste des offres d'emploi</h1>
         <button
           className="hover:bg-gray-100 py-1 px-2 rounded flex items-center border space-x-1"
-          onClick={() => handleNavigation("/admin/blog/creer-article")}
+          onClick={() => handleNavigation("/admin/creer-offre-job")}
         >
           <Icon icon={"mdi:plus"} className="h-4 w-4" />
           <span className="text-sm">Créer une offre</span>
@@ -138,7 +138,7 @@ export default function AdminDashboard() {
                 <tr key={offer.id} className="hover:bg-gray-50 relative">
                   <td className="px-3 py-2">{offer.title}</td>
                   <td className="px-3 py-2">
-                    {new Date(offer.date).toLocaleDateString("fr-FR")}
+                    {new Date(offer.updated_at).toLocaleDateString("fr-FR")}
                   </td>
                   <td className="px-3 py-2">{offer.type}</td>
                   <td className="px-3 py-2">
@@ -188,7 +188,7 @@ export default function AdminDashboard() {
                         </button>
                         <button
                           className="flex items-center px-4 py-2 w-full hover:bg-gray-100"
-                          onClick={() => handleNavigation(``)}
+                          onClick={() => handleNavigation(`/admin/modifier-offre-job/${offer.id}`)}
                         >
                           Modifier
                         </button>

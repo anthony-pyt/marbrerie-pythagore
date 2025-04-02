@@ -34,7 +34,7 @@ export const Timeline = () => {
           >
             <div className="sticky flex flex-col md:flex-row items-center top-40 self-start max-w-xs lg:max-w-sm md:w-full">
               <div className="h-10 absolute left-3 md:left-3 w-10 rounded-full bg-white flex items-center justify-center">
-                <div className="h-4 w-4 rounded-full bg-or border border-or p-2" />
+                <div className="h-4 w-4 rounded-full bg-or-light border border-or-light p-2" />
               </div>
               <h3 className="hidden md:block text-xl md:pl-20 md:text-5xl font-bold text-secondary">
                 {item.year}
@@ -60,7 +60,7 @@ export const Timeline = () => {
               height: heightTransform,
               opacity: opacityTransform,
             }}
-            className="absolute inset-x-0 top-0 w-[2px] bg-gradient-to-t from-or via-or to-transparent from-[0%] via-[10%] rounded-full"
+            className="absolute inset-x-0 top-0 w-[2px] bg-gradient-to-t from-or-light via-or to-transparent from-[0%] via-[10%] rounded-full"
           />
         </div>
       </div>

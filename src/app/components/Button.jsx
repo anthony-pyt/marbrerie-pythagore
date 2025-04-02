@@ -85,7 +85,12 @@ const Button = ({
         )}
         <span>{text}</span>
         {loading && (
-          <span className="animate-spin h-5 w-5 border-t-2 border-r-2 border-black rounded-full"></span>
+          <Icon
+            icon="svg-spinners:pulse-rings-3"
+            width="24"
+            height="24"
+            className="text-black"
+          />
         )}
       </div>
     </button>

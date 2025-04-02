@@ -78,7 +78,7 @@ const BlogItem = ({ article }) => {
       {/* 📝 Contenu à droite */}
       <div className="w-2/3 p-6">
         <div className="text-gray-500 text-sm flex flex-col items-end">
-          <p>{moment(article.created_at).fromNow()}</p>
+          <p>{moment(article.updated_at).fromNow()}</p>
         </div>
         <h2 className="text-2xl font-semibold text-gray-800 mb-2">
           {article.title}

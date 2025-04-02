@@ -1,15 +1,12 @@
 "use client";
 
-import { use, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Icon } from "@iconify/react";
 import Button from "@/components/Button";
-// import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import useBlogServices from "@/api/services/blogServices";
 import useTagService from "@/api/services/tagsServices";
 import { useRouter } from "next/navigation";
-import dynamic from "next/dynamic";
-// const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import QuillEditor from "@/components/QuillEditor";
 
 export default function ArticleForm({ articleId = null }) {
@@ -46,7 +43,8 @@ export default function ArticleForm({ articleId = null }) {
     if (typeof window !== "undefined") {
       const interval = setInterval(() => {
         const editor = document.querySelector(".ql-editor"); // Sélectionne l'éditeur par sa classe
-
+        console.log(editor);
+        
         if (editor) {
           editor.style.minHeight = "400px";
           editor.style.border = "1px solid rgb(209 213 219)";
@@ -152,7 +150,7 @@ export default function ArticleForm({ articleId = null }) {
           userName,
         });
       }
-      router.push("/admin");
+      router.push("/admin/blog/liste-articles");
     } catch (error) {
       setErrorMessage(error.response.data.message);
       console.log(error.response.data.message);
@@ -184,12 +182,12 @@ export default function ArticleForm({ articleId = null }) {
 
         {/* Editeur de texte */}
         <div>
-          <label className="block font-medium text-gray-700">Contenu</label>
+          <label className="block font-medium text-gray-700 sr-only">Contenu</label>
           <QuillEditor
             value={content}
             onChange={setContent}
             modules={modules}
-            placeholder="Prenez votre plus belle plume 🖋️"
+            placeholder="Prenez votre plus belle plume pour rédiger cet article 🖋️"
           />
         </div>
 
