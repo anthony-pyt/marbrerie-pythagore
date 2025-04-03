@@ -17,7 +17,7 @@ export async function GET() {
   //   headers: { "Content-Type": "application/json" },
   // });
   return new Response(
-    JSON.stringify({ src: `/images/accueil/savoir-faire/batiment.jpg` }),
+    JSON.stringify({ src: `/images/accueil/principales/batiment.jpg` }),
     {
       headers: { "Content-Type": "application/json" },
     }
