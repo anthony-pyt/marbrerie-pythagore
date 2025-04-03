@@ -77,12 +77,21 @@ const Footer = () => {
             >
               Politique de confidentialité
             </Link>
-            <Link
-              href={"/FAQ"}
-              className="text-sm lg:text-base"
-            >
+            <Link href={"/FAQ"} className="text-sm lg:text-base">
               FAQ
             </Link>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div className="flex justify-end text-xs text-white p-4">
+          <div>
+          <span>Photos ©</span>{" "}
+          <a className="underline"
+            href="https://loeildepaco.fr/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >L'oeil de Paco</a>
           </div>
         </div>
       </div>
