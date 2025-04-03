@@ -21,7 +21,7 @@ export async function GET() {
 
     // Construire la liste complète des URLs des images
     const images = shuffledFiles.map(
-      (file) => `/images/accueil/savoir-faire/${file}?t=${Date.now()}`
+      (file) => `/images/accueil/savoir-faire/${file}`
     );
 
     return new Response(JSON.stringify({ images }), {

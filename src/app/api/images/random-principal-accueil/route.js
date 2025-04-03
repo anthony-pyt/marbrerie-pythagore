@@ -13,12 +13,7 @@ export async function GET() {
 
   const randomImage = files[Math.floor(Math.random() * files.length)];
 
-  return new Response(
-    JSON.stringify({
-      src: `/images/accueil/savoir-faire/${randomImage}?t=${Date.now()}`,
-    }),
-    {
-      headers: { "Content-Type": "application/json" },
-    }
-  );
+  return new Response(JSON.stringify({ src: `/images/accueil/savoir-faire/${randomImage}` }), {
+    headers: { "Content-Type": "application/json" },
+  });
 }
