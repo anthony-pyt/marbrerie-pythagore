@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import QuillEditor from "@/components/QuillEditor";
-import "react-quill/dist/quill.snow.css";
 import Button from "@/components/Button";
 import useJobOffersServices from "@/api/services/jobOffersServices";
 

@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Icon } from "@iconify/react";
 import Button from "@/components/Button";
-import "react-quill/dist/quill.snow.css";
 import useBlogServices from "@/api/services/blogServices";
 import useTagService from "@/api/services/tagsServices";
 import { useRouter } from "next/navigation";
@@ -41,9 +40,10 @@ export default function ArticleForm({ articleId = null }) {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
+      const interval = setInterval(() => {
         const editor = document.querySelector(".ql-editor"); // Sélectionne l'éditeur par sa classe
         console.log(editor);
-        
+
         if (editor) {
           editor.style.minHeight = "400px";
           editor.style.border = "1px solid rgb(209 213 219)";
@@ -57,7 +57,11 @@ export default function ArticleForm({ articleId = null }) {
             toolbar.style.margin = "1.5rem 0 0.5rem 0";
           }
 
+          clearInterval(interval);
         }
+      }, 100);
+
+      return () => clearInterval(interval);
     }
   }, []);
 

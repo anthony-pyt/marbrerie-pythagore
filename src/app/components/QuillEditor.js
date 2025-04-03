@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic";
 import { forwardRef } from "react";
+import "react-quill/dist/quill.snow.css";
 
 // Chargement dynamique du module ReactQuill
 const QuillNoSSRWrapper = dynamic(() => import("react-quill"), { ssr: false });
