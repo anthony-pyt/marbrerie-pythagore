@@ -40,10 +40,16 @@ export default function Home() {
     const fetchData = async () => {
       try {
         const [principalRes, savoirFaireRes] = await Promise.all([
-          fetch("/api/images/random-principal-accueil").then((res) =>
+          fetch("/api/images/random-principal-accueil", {
+            cache: 'no-store'
+          })
+          .then((res) =>
             res.json()
           ),
-          fetch("/api/images/accueil-savoir-faire").then((res) => res.json()),
+          fetch("/api/images/accueil-savoir-faire", {
+            cache: 'no-store'
+          })
+          .then((res) => res.json()),
         ]);
 
         if (principalRes.src) setImageSrc(principalRes.src);
