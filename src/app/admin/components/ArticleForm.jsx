@@ -41,7 +41,6 @@ export default function ArticleForm({ articleId = null }) {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const interval = setInterval(() => {
         const editor = document.querySelector(".ql-editor"); // Sélectionne l'éditeur par sa classe
         console.log(editor);
         
@@ -58,11 +57,7 @@ export default function ArticleForm({ articleId = null }) {
             toolbar.style.margin = "1.5rem 0 0.5rem 0";
           }
 
-          clearInterval(interval);
         }
-      }, 100);
-
-      return () => clearInterval(interval);
     }
   }, []);
 
@@ -76,6 +71,7 @@ export default function ArticleForm({ articleId = null }) {
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
+    
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }

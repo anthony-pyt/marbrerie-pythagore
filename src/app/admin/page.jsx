@@ -90,7 +90,7 @@ export default function AdminDashboard() {
             value={count.jobOffers}
             icon={"mdi:format-list-bulleted"}
             description={"annonces en cours de publication"}
-            url={"/admin/blog/liste-jobs"}
+            url={"/admin/liste-jobs"}
           />
         </div>
 

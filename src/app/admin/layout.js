@@ -86,7 +86,7 @@ export default function AdminLayout({ children }) {
               icon="mdi:format-list-bulleted"
               text="Liste des jobs"
               sidebarOpen={sidebarOpen}
-              onClick={() => router.push("/admin/blog/liste-jobs")}
+              onClick={() => router.push("/admin/liste-jobs")}
             />
             <NavItem
               icon="mdi:logout"

@@ -201,7 +201,10 @@ const ListJobs = ({
                       )}
                     </div>
                   </div>
-                  <p className="text-sm line-clamp-2">{item.description}</p>
+                  <p
+                    className="text-sm line-clamp-2"
+                    dangerouslySetInnerHTML={{ __html: item.description }}
+                  ></p>
                   <div className="flex justify-end">
                     <span className="text-xs text-gray-500">
                       Mise à jour le{" "}
@@ -263,11 +266,10 @@ const ListJobs = ({
                 )}
               </p>
               <p className="flex items-center text-sm text-gray-600">
-                <span className="mr-2">💰</span> <strong>Salaire / mois : </strong>{" "}
+                <span className="mr-2">💰</span>{" "}
+                <strong>Salaire / mois : </strong>{" "}
                 {selectedJob.salary ? (
-                  <span className="ml-1">
-                    {selectedJob.salary} €
-                  </span>
+                  <span className="ml-1">{selectedJob.salary} €</span>
                 ) : (
                   <span className="ml-1">Non précisé</span>
                 )}
@@ -279,9 +281,10 @@ const ListJobs = ({
               <h4 className="text-lg font-semibold text-gray-800 flex items-center">
                 📝 <span className="ml-2">Description</span>
               </h4>
-              <p className="text-sm text-gray-600 mt-1">
-                {selectedJob.description}
-              </p>
+              <p
+                className="text-sm text-gray-600 mt-1"
+                dangerouslySetInnerHTML={{__html: selectedJob.description }}
+              ></p>
             </div>
 
             {/* Profil recherché */}

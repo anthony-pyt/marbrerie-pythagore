@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import QuillEditor from "@/components/QuillEditor";
+import "react-quill/dist/quill.snow.css";
 import Button from "@/components/Button";
 import useJobOffersServices from "@/api/services/jobOffersServices";
 
@@ -20,32 +21,32 @@ export default function JobOfferForm({ jobOfferId = null }) {
   const [loadingSend, setLoadingSend] = useState(false);
   const router = useRouter();
 
-  // useEffect(() => {
-  //   if (typeof window !== "undefined") {
-  //     const interval = setInterval(() => {
-  //       const editor = document.querySelector(".ql-editor"); // Sélectionne l'éditeur par sa classe
-  //       console.log(editor);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const interval = setInterval(() => {
+        const editor = document.querySelector(".ql-editor"); // Sélectionne l'éditeur par sa classe
+        console.log(editor);
 
-  //       if (editor) {
-  //         editor.style.minHeight = "400px";
-  //         editor.style.border = "1px solid rgb(209 213 219)";
-  //         editor.style.borderRadius = "0.5rem";
+        if (editor) {
+          editor.style.minHeight = "400px";
+          editor.style.border = "1px solid rgb(209 213 219)";
+          editor.style.borderRadius = "0.5rem";
 
-  //         const toolbar = document.querySelector(".ql-toolbar");
-  //         if (toolbar) {
-  //           toolbar.style.border = "none";
-  //           toolbar.style.display = "flex";
-  //           toolbar.style.justifyContent = "center";
-  //           toolbar.style.margin = "1.5rem 0 0.5rem 0";
-  //         }
+          const toolbar = document.querySelector(".ql-toolbar");
+          if (toolbar) {
+            toolbar.style.border = "none";
+            toolbar.style.display = "flex";
+            toolbar.style.justifyContent = "center";
+            toolbar.style.margin = "1.5rem 0 0.5rem 0";
+          }
 
-  //         clearInterval(interval);
-  //       }
-  //     }, 100);
+          clearInterval(interval);
+        }
+      }, 100);
 
-  //     return () => clearInterval(interval);
-  //   }
-  // }, []);
+      return () => clearInterval(interval);
+    }
+  }, []);
 
   useEffect(() => {
     if (jobOfferId) {
@@ -118,7 +119,7 @@ export default function JobOfferForm({ jobOfferId = null }) {
           formation,
         });
       }
-      router.push("/admin/blog/liste-jobs");
+      router.push("/admin/liste-jobs");
     } catch (error) {
       setErrorMessage(
         error.response?.data?.message || "Une erreur est survenue."
@@ -193,7 +194,7 @@ export default function JobOfferForm({ jobOfferId = null }) {
         </div>
 
         {/* Editeur de texte */}
-        <div>
+        {/* <div>
           <label className="block font-medium">Contenu de l'offre</label>
           <textarea
             value={description}
@@ -202,8 +203,8 @@ export default function JobOfferForm({ jobOfferId = null }) {
             placeholder="Contenu de l'offre..."
             className="mt-1 w-full p-3 border border-gray-300 rounded-md h-36"
           />
-        </div>
-        {/* <div>
+        </div> */}
+        <div>
           <label className="block font-medium sr-only">
             Contenu de l'offre
           </label>
@@ -213,7 +214,7 @@ export default function JobOfferForm({ jobOfferId = null }) {
             modules={modules}
             placeholder="Contenu de l'offre..."
           />
-        </div> */}
+        </div>
 
         <div className="flex items-center space-x-4">
           <div className="flex-1">

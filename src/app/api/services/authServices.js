@@ -5,8 +5,8 @@ const  getCsrfCookie =()=>gateway_instance.get("/sanctum/csrf-cookie")
 
 export async function login(data) {
   await getCsrfCookie();
-  const response = gateway_instance.post("/api/login", data);
-  const user = response.data
+  const response = await gateway_instance.post("/api/login", data);
+  const user = response.data  
   
   localStorage.setItem("user", JSON.stringify(user));
 }
