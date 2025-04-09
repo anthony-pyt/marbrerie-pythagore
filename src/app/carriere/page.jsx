@@ -232,10 +232,10 @@ const ListJobs = ({
 
       {/* MODALE */}
       {selectedJob && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 px-4">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 p-4 overflow-y-auto">
           <div
             ref={modalRef}
-            className="bg-white p-6 rounded-xl shadow-lg max-w-lg w-full relative"
+            className="bg-white p-6 rounded-xl shadow-lg max-w-7xl w-full relative max-h-screen overflow-y-auto"
           >
             {/* Bouton de fermeture */}
             <button
@@ -271,7 +271,7 @@ const ListJobs = ({
                 {selectedJob.salary ? (
                   <span className="ml-1">{selectedJob.salary} €</span>
                 ) : (
-                  <span className="ml-1">Non précisé</span>
+                  <span className="ml-1">Selon profil</span>
                 )}
               </p>
             </div>
@@ -282,8 +282,8 @@ const ListJobs = ({
                 📝 <span className="ml-2">Description</span>
               </h4>
               <p
-                className="text-sm text-gray-600 mt-1"
-                dangerouslySetInnerHTML={{__html: selectedJob.description }}
+                className="text-sm text-gray-600 mt-1 p-6 border rounded-xl leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: selectedJob.description }}
               ></p>
             </div>
 
@@ -306,11 +306,11 @@ const ListJobs = ({
                 {selectedJob.formation ?? "Non précisé"}
               </p>
             </div>
-            <div className="flex justify-center mt-10">
+            <div className="flex justify-end mt-10">
               <Button
                 text={"Je postule"}
                 color="or"
-                size="small"
+                size="big"
                 onClick={() => setShowApplicationForm(true)}
               >
                 Postuler
