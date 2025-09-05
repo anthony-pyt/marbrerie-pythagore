@@ -15,7 +15,7 @@ export default function Page() {
           <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 my-12 gap-16">
             <ServiceCard
               title="Suivi commercial"
-              image="/images/savoir-faire/suivi_commercial.jpg"
+              image="/images/nos-services/suivi_commercial.jpg"
             >
               <ul className="list-disc ml-4">
                 <li className="text-justify">
@@ -67,7 +67,7 @@ export default function Page() {
           <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 my-12 gap-16">
             <ServiceCard
               title="Service après-vente"
-              image="/images/savoir-faire/SAV.jpg"
+              image="/images/nos-services/SAV.jpg"
             >
               <ul className="list-disc ml-4">
                 <li className="text-justify">Assistance technique</li>

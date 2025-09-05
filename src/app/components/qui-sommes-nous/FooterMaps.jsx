@@ -40,7 +40,7 @@ const FooterMaps = () => {
   return (
     <div className="w-full h-full absolute inset-0">
       <MapContainer
-        center={[48.99604006779647, -1.261240943902487]}
+        center={[47.99604006779647, -1.261240943902487]}
         zoom={7}
         className="h-full w-full"
         scrollWheelZoom={false}
@@ -96,8 +96,15 @@ export const zones = [
     address:
       "ZA de Caillemare, 3 Pl. Caillemare, 27310 Saint-Ouen-de-Thouberville",
     position: [49.35622727147632, 0.8830444288355398],
-    address: "ZA Pen Ar Hoat 22570 Laniscat",
     img: "/images/logo_pythagore_texte_noir.png",
     url: "https://www.google.fr/maps/place/Pythagore+Normandie/@49.3560945,0.8804588,17z/data=!3m1!4b1!4m6!3m5!1s0x47e11d4aac9a4ce1:0x68331a7b936e18f0!8m2!3d49.356091!4d0.8830337!16s%2Fg%2F11vylz5_74?entry=ttu&g_ep=EgoyMDI1MDMxMi4wIKXMDSoJLDEwMjExNDU1SAFQAw%3D%3D",
+  },
+  {
+    id: "carrara",
+    name: "Carrara",
+    address: "206 rue du Revermont 01440 Viriate",
+    position: [46.226431, 5.25396],
+    img: "/images/logos/carrara/Logo_CARRARA_fin.png",
+    url: "https://www.google.fr/maps/place/CARRARA%C2%AE/@46.228054,5.2549573,19.49z/data=!4m10!1m2!2m1!1scarrara+marbrerie!3m6!1s0x47f35263c894c68b:0x692645d742ff8f15!8m2!3d46.2280303!4d5.2551107!15sChFjYXJyYXJhIG1hcmJyZXJpZVoTIhFjYXJyYXJhIG1hcmJyZXJpZZIBEW1hcmJsZV9jb250cmFjdG9ymgEjQ2haRFNVaE5NRzluUzBWSlEwRm5TVU5ZTW1OcE9XWjNFQUWqAToQATIfEAEiG9Y4ddN-amsM_uFq4lwCMs3xQ--WUt3XeVHytjIVEAIiEWNhcnJhcmEgbWFyYnJlcmll4AEA-gEECCcQNA!16s%2Fg%2F1td7h205?hl=fr&entry=ttu&g_ep=EgoyMDI1MDkwMi4wIKXMDSoASAFQAw%3D%3D",
   },
 ];

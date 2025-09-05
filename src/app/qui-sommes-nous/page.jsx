@@ -51,7 +51,7 @@ export default function Page() {
       </div>
 
       <div className="space-y-12">
-        <div className="mt-24 w-full lg:w-11/12 mx-auto bg-gradient-to-br from-or to-or-light rounded-xl ">
+        <div className="mt-24 w-full lg:w-11/12 mx-auto bg-gradient-to-br from-white to-or-light rounded-xl ">
           <div className="max-w-5xl mx-auto">
             <AnimatedTestimonials
               testimonials={numbers_key}
@@ -131,7 +131,9 @@ const OurValues = () => {
 const Team = () => {
   return (
     <div className="flex flex-col xl:flex-row">
-      <h2 className="lg:w-3/12 text-center lg:text-left m-2">L'ENCADREMENT</h2>
+      <h2 className="lg:w-3/12 text-center lg:text-left m-2">
+        L&apos;ENCADREMENT
+      </h2>
       <div className="lg:w-10/12 max-w-7xl m-12">
         <FocusCards cards={leads} />
       </div>
@@ -141,7 +143,7 @@ const Team = () => {
 
 const DeliveryArea = () => {
   return (
-    <div className=" relative p-6 mx-auto mt-20 w-full bg-or-light h-[400px]">
+    <div className=" relative p-6 mx-auto mt-20 w-full bg-or-light h-[500px]">
       <FooterMaps />
     </div>
   );

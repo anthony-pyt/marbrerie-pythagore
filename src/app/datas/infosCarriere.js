@@ -28,7 +28,7 @@ export const metiersAtelier = [
 export const metiersClient = [
   {
     id: 1,
-    src: "/images/visuel-a-venir.jpg",
+    src: "/images/carriere/metiers/ADV.png",
     alt: "adv",
     name: "Assistant commercial/ADV",
     quote:
@@ -36,7 +36,7 @@ export const metiersClient = [
   },
   {
     id: 2,
-    src: "/images/visuel-a-venir.jpg",
+    src: "/images/carriere/metiers/planning.jpg",
     alt: "chargé de planning",
     name: "Chargé de planning",
     quote:
@@ -63,7 +63,7 @@ export const metiersTerrain = [
   },
   {
     id: 2,
-    src: "/images/visuel-a-venir.jpg",
+    src: "/images/carriere/metiers/installation.JPEG",
     alt: "installateur",
     name: "Installateur ",
     quote:
@@ -71,7 +71,7 @@ export const metiersTerrain = [
   },
   {
     id: 3,
-    src: "/images/visuel-a-venir.jpg",
+    src: "/images/carriere/metiers/PDC.JPEG",
     alt: "coteur",
     name: "Coteur ",
     quote:

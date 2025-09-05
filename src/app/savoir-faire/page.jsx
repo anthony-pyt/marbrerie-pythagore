@@ -88,7 +88,7 @@ export default function Page() {
               notre savoir-faire
             </p>
           </div>
-          <div className="container mx-auto m-4 rounded-xl p-4 bg-gradient-to-br from-or to-or-light">
+          <div className="container mx-auto m-4 rounded-3xl p-4 bg-gradient-to-br from-white to-or-light">
             <AnimatedTestimonials testimonials={projetsSpecifiques} autoplay />
           </div>
         </div>

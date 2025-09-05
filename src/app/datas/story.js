@@ -58,9 +58,8 @@ export const story = [
     content: (
       <div>
         <p className=" mb-8">
-          À cette époque, l’entreprise avait pour activité l’extraction de
-          minerais. Puis, elle a fait l’objet de deux transmissions familiales,
-          au fils puis au petit-fils du fondateur.
+          L’entreprise, d’abord tournée vers l’extraction de minerais, a ensuite
+          évolué au fil des transmissions familiales.
         </p>
         {/* <ListImages
           images={[
@@ -79,7 +78,8 @@ export const story = [
     content: (
       <div>
         <p className=" mb-8">
-          Création de l’activité de marbrerie de décoration.
+          Créée à Quinquiziou autour de la marbrerie de décoration, la SARL
+          Pythagore se spécialise ensuite dans le secteur de la cuisine.
         </p>
         <ListImages
           images={[
@@ -98,9 +98,9 @@ export const story = [
     content: (
       <div>
         <p className=" mb-8">
-          Acquisition du premier centre d’usinage numérique en France pour la
-          fabrication des agencements en pierre. Pythagore joue un rôle clé dans
-          la professionnalisation du secteur.
+          Spécialisée dans la pierre naturelle et reconstituée, Pythagore
+          élargit son savoir- faire à la céramique avec l’agrandissement du site
+          et l’acquisition d’un centre d’usinage numérique.
         </p>
         <ListImages
           images={[
@@ -114,39 +114,13 @@ export const story = [
     ),
   },
   {
-    year: "2005",
-    title: "Reprise par Jérôme Tronel",
-    content: (
-      <div>
-        <p className=" mb-8">
-          Reprise de la société par Mr Jérôme Tronel, qui décide de se
-          positionner sur le secteur de la cuisine. L’entreprise compte alors 12
-          salariés.
-        </p>
-        {/* <ListImages
-          images={[
-            {
-              title: "Commande Numérique",
-              url: "/images/qui-sommes-nous/notre-histoire/CN_2.jpg",
-            },
-          ]}
-        /> */}
-      </div>
-    ),
-  },
-  {
     year: "2007",
     title: "Déménagement",
     content: (
       <div>
         <p className=" mb-8">
-          L’entreprise déménage dans un nouvel atelier de 2500 m2 à Laniscat, à
-          quelques kilomètres de l’atelier historique.15 collaborateurs œuvrent
-          alors avec une ambition commune :{" "}
-          <span className="font-bold underline underline-offset-2">
-            la satisfaction de nos clients
-          </span>
-          .
+          L’entreprise déménage dans un nouvel atelier de 2500 <sup>2</sup> à
+          Laniscat et compte alors 17 salariés.
         </p>
         <ListImages
           images={[
@@ -169,13 +143,11 @@ export const story = [
     content: (
       <div>
         <p className="">
-          Automatisation de la production avec l’intégration d’une, puis de deux
-          nouvelles machines à commande numérique.
+          Automatisation de la production avec intégration de nouvelles machines
+          à commande numérique.
         </p>
         <p className=" mb-8">
-          L’entreprise dispose alors d’un des plus importants parcs machines en
-          France dans ce secteur. L’équipe grandit avec près de 25
-          collaborateurs, et étend son activité dans tout le Grand Ouest.
+          L’équipe grandit avec près de 25 collaborateurs.
         </p>
         <ListImages
           images={[
@@ -216,14 +188,11 @@ export const story = [
     content: (
       <div>
         <p className="">
-          L’année sera marquée par un agrandissement de 1000 m2 de l’atelier,
-          suite à l’acquisition de 2 nouvelles machines à découpe jet d’eau en
-          2018.
+          L’entreprise étend ses locaux de 1000 m2 pour intégrer les deux
+          machines de découpe au jet d’eau récemment acquises.
         </p>
         <p className=" mb-8">
-          Les années à venir seront marquées par de profonds changements
-          industriels. Pythagore compte désormais près de 40 collaborateurs
-          tournés vers ses futurs projets de développement.
+          Pythagore compte désormais près de 40 collaborateurs
         </p>
         <ListImages
           images={[
@@ -242,9 +211,8 @@ export const story = [
     content: (
       <div>
         <p className="">
-          Changement de logo pour l’entreprise. Le logo a été retravaillé pour
-          devenir plus élégant et plus représentatif de notre métier.
-          L’entreprise compte 57 collaborateurs.
+          Pythagore adopte un nouveau logo plus élégant pour mieux incarner
+          notre métier. L’entreprise compte 57 collaborateurs.
         </p>
         <ListImages
           images={[
@@ -267,13 +235,13 @@ export const story = [
     content: (
       <div>
         <p className="">
-          l’entreprise entreprend un nouvel agrandissement de plus de 3000 m2,
-          qui comprend :
+          Face à sa croissance, l’entreprise s’agrandit de 2000 m2 pour stocker
+          plus de 880 références de matières, ce qui comprend :
         </p>
         <ul className="list-disc ml-8 mb-8">
           <li>un bâtiment de stockage pouvant contenir 5000 tranches</li>
           <li>un espace dédié aux centres d’usinage à commande numérique</li>
-          <li>4000 m2 de bureaux d’atelier</li>
+          <li>de nouveaux bureaux d’atelier</li>
           <li>
             un espace totalement vitré dédié à l’accueil de nos clients et
             tourné vers les ateliers et stock (espace de réunion, cuisine,
@@ -321,8 +289,8 @@ export const story = [
     content: (
       <div>
         <p className=" mb-8">
-          Ouverture d’un dépôt à Rouen et renforcement de nos équipes
-          franchissant ainsi le cap symbolique des 100 collaborateurs !
+          Avec l’ouverture d’un dépôt à Rouen et le renforcement de nos équipes,
+          l’entreprise à franchit le cap symbolique des 100 collaborateurs !
         </p>
         <ListImages
           images={[
@@ -385,6 +353,6 @@ export const our_values = [
     title: "L'innovation",
     content:
       "Nous plaçons l’innovation au cœur de notre développement, en optimisant nos processus, en investissant dans des outils de production et en développant des logiciels pour optimiser le travail de chaque collaborateur",
-    src: "/images/qui-sommes-nous/nos-valeurs/innovation.jpg",
+    src: "/images/qui-sommes-nous/nos-valeurs/ecran_machine.jpg",
   },
 ];

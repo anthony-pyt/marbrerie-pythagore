@@ -202,7 +202,7 @@ export default function MainMenu({ page }) {
       </div>
       {isOpen && (
         <div
-          className={`fixed inset-0 h-screen w-screen bg-white z-50 shadow-xl flex flex-col justify-start overflow-y-auto py-12 ${isClosing
+          className={`fixed inset-0 h-screen w-screen bg-gray-800 text-white shadow-xl flex flex-col justify-start overflow-y-auto py-12 ${isClosing
               ? "animate__animated animate__fadeOutLeft"
               : "animate__animated animate__fadeInLeft"
             }`}
@@ -217,7 +217,7 @@ export default function MainMenu({ page }) {
               {listMenu.map((item) => (
                 <div key={item.label} className="my-1 p-1">
                   <div className="flex items-center justify-center space-x-1">
-                    <Link href={item.link} className="text-3xl">
+                    <Link href={item.link} className="text-3xl lg:text-6xl uppercase font-title">
                       {item.label}
                     </Link>
                   </div>

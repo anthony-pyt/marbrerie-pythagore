@@ -129,13 +129,13 @@ export default function Home() {
       <section className="relative hidden xl:flex">
         <div className="w-full h-screen overflow-hidden flex justify-center items-center bg-black animate__animated animate__fadeIn">
           {/* <video
-            src="/videos/presentation.mp4"
-            loop
+            src="/videos/pres1.mp4"
+            // loop
             autoPlay
             muted
             className="opacity-40 blur w-full object-cover"
           /> */}
-          {imageSrc && (
+         {imageSrc && (
             <Image
               alt="acceuil"
               fill
@@ -249,7 +249,7 @@ export default function Home() {
         </h2>
         <Link href={"/nos-services"}>
           <div className="flex justify-center">
-            <div className="rounded-3xl flex-wrap flex flex-col lg:flex-row items-center justify-between w-full max-w-full m-4 p-8 bg-white shadow-lg lg:divide-x divide-or-light min-h-96">
+            <div className="rounded-3xl flex-wrap flex flex-col lg:flex-row items-center justify-between w-full max-w-full m-4 p-8 bg-white shadow-lg min-h-96">
               <BubbleService
                 urlImage={"/images/nos-services/suivi_commercial.jpg"}
               >

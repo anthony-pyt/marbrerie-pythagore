@@ -51,6 +51,13 @@ export default function Page() {
     <main className="min-h-screen antialiased">
       <MainMenu />
       <PageTitle title={"Nos métiers"} />
+      <div className="flex justify-center mb-6">
+        <p className="font-semibold max-w-2xl">
+          Chez Pythagore nous sommes toutes et tous en lien pour répondre à vos
+          besoins. Tous nos métiers se déclinent au féminin et au masculin.
+          Découvrez ces métiers qui nous permettent d&apos;être :
+        </p>
+      </div>
       <div className="m-4 p-4 rounded-xl ">
         <SectionTestimonials
           title={"EN RELATION AVEC NOS CLIENTS"}
@@ -98,7 +105,7 @@ const SectionCommitments = () => (
   <div className="container mx-auto my-8">
     <h2 className="text-4xl">NOS ENGAGEMENTS</h2>
     <div className="w-full flex justify-center items-center">
-      <div className="grid lg:grid-cols-2 xl:grid-cols-3 sm:gap-6 mb-5 gap-5 mt-12 p-2 ">
+      <div className="grid lg:grid-cols-2 xl:grid-cols-3 sm:gap-10 mb-5 gap-5 mt-12 p-2 ">
         {commitments.map((item, index) => (
           <ServiceCard key={index} title={item.title} image={item.src}>
             <div>{item.description}</div>
@@ -138,7 +145,7 @@ const ListJobs = ({
     <div className="mt-12 mx-auto bg-secondary p-12 rounded-xl lg:w-10/12 w-full">
       <div className="flex items-center justify-center w-full">
         <div className="mb-6 flex items-center space-x-3">
-          <h2 className="text-white">Nos dernières offres d'emploi</h2>
+          <h2 className="text-white">Nos dernières offres d&apos;emploi</h2>
           <Button
             text={"Postuler"}
             color={"or"}
