@@ -12,7 +12,7 @@ export default function Page() {
       <div className="p-4">
         <PageTitle title={"Nos services pour les professionnels"} />
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 my-12 gap-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 my-12 md:gap-16 justify-items-center">
             <ServiceCard
               title="Suivi commercial"
               image="/images/nos-services/suivi_commercial.jpg"
@@ -64,7 +64,7 @@ export default function Page() {
               </ul>
             </ServiceCard>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 my-12 gap-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 my-12 gap-16 justify-items-center">
             <ServiceCard
               title="Service après-vente"
               image="/images/nos-services/SAV.jpg"

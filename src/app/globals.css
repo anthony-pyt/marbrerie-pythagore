@@ -60,7 +60,7 @@ body {
   h4,
   h5,
   h6 {
-    @apply text-gray-800 font-sans font-semibold uppercase;
+    @apply  font-sans font-semibold uppercase;
     /* Appliquer une police en gras et une couleur de texte */
   }
 

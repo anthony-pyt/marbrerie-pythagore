@@ -66,7 +66,7 @@ export default function Page() {
           </div>
 
           {/* Liste des savoir-faire */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-y-12 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-y-6 max-w-7xl mx-auto">
             {savoirFaire.map((item, index) => (
               <div key={index} className="mx-auto">
                 <ServiceCard title={item.title} image={item.image}>

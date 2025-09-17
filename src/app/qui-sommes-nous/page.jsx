@@ -50,7 +50,7 @@ export default function Page() {
         </div>
       </div>
 
-      <div className="space-y-12">
+      <div className="space-y-12 overflow-hidden">
         <div className="mt-24 w-full lg:w-11/12 mx-auto bg-gradient-to-br from-white to-or-light rounded-xl ">
           <div className="max-w-5xl mx-auto">
             <AnimatedTestimonials

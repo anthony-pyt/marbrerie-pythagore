@@ -71,8 +71,8 @@ export default function MainMenu({ page }) {
   const classDisposition = isHeightReduced
     ? "h-16 m-0 bg-white shadow-lg"
     : page != "home"
-      ? "h-32 m-2 rounded-xl bg-white"
-      : "h-32 m-2 rounded-xl bg-white xl:bg-transparent";
+    ? "h-32 m-2 rounded-xl bg-white"
+    : "h-32 m-2 rounded-xl bg-white xl:bg-transparent";
 
   const classHamburger =
     page == "home"
@@ -87,16 +87,16 @@ export default function MainMenu({ page }) {
         ? "ml-6 w-20"
         : "w-44 xl:w-80 absolute top-4 left-1/2 -translate-x-1/2"
       : isHeightReduced
-        ? "ml-6 w-20"
-        : "w-44";
+      ? "ml-6 w-20"
+      : "w-44";
 
   const classLogo =
     page == "home"
       ? isHeightReduced
         ? "color"
         : isXL
-          ? "white"
-          : "color"
+        ? "white"
+        : "color"
       : "color";
 
   const classMainMenu =
@@ -111,8 +111,8 @@ export default function MainMenu({ page }) {
       ? isHeightReduced
         ? "#000"
         : isXL
-          ? "#FFF"
-          : "#000"
+        ? "#FFF"
+        : "#000"
       : "#000";
 
   return (
@@ -136,12 +136,13 @@ export default function MainMenu({ page }) {
             {listMenu.map((item) => (
               <div
                 key={item.label}
-                className={`${page == "home"
+                className={`${
+                  page == "home"
                     ? isHeightReduced
                       ? "hover:bg-secondary"
                       : "hover:bg-or-light"
                     : "hover:bg-secondary"
-                  } rounded-lg group relative transform duration-200 z-50 cursor-pointer`}
+                } rounded-lg group relative transform duration-200 z-50 cursor-pointer`}
               >
                 <Link
                   href={item.link}
@@ -159,12 +160,13 @@ export default function MainMenu({ page }) {
                       } cursor-pointer transform duration-700 delay-300`}
                   /> */}
                   <span
-                    className={`${page == "home"
+                    className={`${
+                      page == "home"
                         ? isHeightReduced
                           ? "group-hover:text-primary text-secondary"
                           : "group-hover:text-black text-white text-lg"
                         : "group-hover:text-primary text-secondary"
-                      } transform duration-500`}
+                    } transform duration-500`}
                   >
                     {item.label}
                   </span>
@@ -202,10 +204,11 @@ export default function MainMenu({ page }) {
       </div>
       {isOpen && (
         <div
-          className={`fixed inset-0 h-screen w-screen bg-gray-800 text-white shadow-xl flex flex-col justify-start overflow-y-auto py-12 ${isClosing
+          className={`fixed inset-0 h-screen w-screen bg-gray-800 text-white shadow-xl flex flex-col justify-start overflow-y-auto py-12 ${
+            isClosing
               ? "animate__animated animate__fadeOutLeft"
               : "animate__animated animate__fadeInLeft"
-            }`}
+          }`}
         >
           <div className="w-full flex justify-end absolute top-6 right-6">
             <button onClick={toggleOpenMenu}>
@@ -214,10 +217,23 @@ export default function MainMenu({ page }) {
           </div>
           <div>
             <div className="py-20">
+              <div className="my-1 p-1">
+                <div className="flex items-center justify-center space-x-1 my-1 p-1">
+                  <Link
+                    href="/"
+                    className="text-3xl lg:text-6xl uppercase font-title"
+                  >
+                   Accueil
+                  </Link>
+                </div>
+              </div>
               {listMenu.map((item) => (
                 <div key={item.label} className="my-1 p-1">
                   <div className="flex items-center justify-center space-x-1">
-                    <Link href={item.link} className="text-3xl lg:text-6xl uppercase font-title">
+                    <Link
+                      href={item.link}
+                      className="text-3xl lg:text-6xl uppercase font-title"
+                    >
                       {item.label}
                     </Link>
                   </div>

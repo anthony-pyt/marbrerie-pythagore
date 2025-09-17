@@ -55,7 +55,7 @@ const Slide = ({ slide, index, current, handleSlideClick }) => {
     <div className="[perspective:1200px] [transform-style:preserve-3d]">
       <li
         ref={slideRef}
-        className="flex flex-1 flex-col items-center justify-center relative text-center text-white opacity-100 transition-all duration-300 ease-in-out w-[45vmin] h-[45vmin] mx-[4vmin] z-10 "
+        className="flex flex-1 flex-col items-center justify-center relative text-center text-white opacity-100 transition-all duration-300 ease-in-out w-[80vmin] h-[80vmin] md:w-[65vmin] md:h-[65vmin] mx-[4vmin] z-10 "
         onClick={() => handleSlideClick(index)}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
@@ -80,8 +80,8 @@ const Slide = ({ slide, index, current, handleSlideClick }) => {
           <img
             className="absolute inset-0 object-cover w-full h-full opacity-100 transition-opacity duration-600 ease-in-out"
             style={{
-              objectFit:"cover",
-              objectPosition:"top",
+              objectFit: "cover",
+              objectPosition: "top",
               opacity: current === index ? 1 : 0.5,
             }}
             alt={title}
@@ -149,11 +149,11 @@ export function Carousel({ slides }) {
 
   return (
     <div
-      className="relative w-[80vmin] h-[80vmin] md:w-[45vmin] md:h-[45vmin] mx-auto"
+      className="relative w-[80vmin] h-[80vmin] md:w-[65vmin] md:h-[65vmin] mx-auto"
       aria-labelledby={`carousel-heading-${id}`}
     >
       <ul
-        className="absolute flex mx-[-24vmin] transition-transform duration-1000 ease-in-out"
+        className="absolute flex lg:mx-[-20vmin] transition-transform duration-1000 ease-in-out"
         style={{
           transform: `translateX(-${current * (100 / slides.length)}%)`,
         }}
