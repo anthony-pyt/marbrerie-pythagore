@@ -27,12 +27,14 @@ import FormServices from "./../api/services/formServices";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import useJobOffersServices from "@/api/services/jobOffersServices";
 import Loader from "../components/loader";
+import Alert from "../components/Alert";
 
 export default function Page() {
   const { fetchJobOffers } = useJobOffersServices();
   const [loadingJobs, setLoadingJobs] = useState(true);
   const [jobs, setJobs] = useState([]);
   const [showApplicationForm, setShowApplicationForm] = useState(false);
+  const [ successMessage, setSuccessMessage] = useState(false)
 
   useEffect(() => {
     const getJobs = async () => {
@@ -47,6 +49,7 @@ export default function Page() {
     };
     getJobs();
   }, []);
+
   return (
     <main className="min-h-screen antialiased">
       <MainMenu />
@@ -81,9 +84,13 @@ export default function Page() {
         loading={loadingJobs}
         setShowApplicationForm={setShowApplicationForm}
         showApplicationForm={showApplicationForm}
+        successMessage={successMessage}
       />
       {showApplicationForm && (
-        <ModalSendForm onClose={() => setShowApplicationForm(false)} />
+        <ModalSendForm
+          onClose={() => setShowApplicationForm(false)}
+          setSuccessMessage={setSuccessMessage}
+        />
       )}
       <Footer />
     </main>
@@ -120,7 +127,8 @@ const ListJobs = ({
   jobs,
   loading,
   setShowApplicationForm,
-  showApplicationForm,
+  successMessage,
+  setSuccessMessage,
 }) => {
   const [selectedJob, setSelectedJob] = useState(null);
   const modalRef = useRef(null);
@@ -153,6 +161,14 @@ const ListJobs = ({
             icon={"tabler:send"}
           />
         </div>
+      </div>
+      <div>
+        <Alert
+          isVisible={successMessage}
+          message={"Votre message a bien été transmis"}
+          type="success"
+          onClose={() => setSuccessMessage(false)}
+        />
       </div>
 
       {loading && (
@@ -319,6 +335,7 @@ const ListJobs = ({
                 color="or"
                 size="big"
                 onClick={() => setShowApplicationForm(true)}
+                disabled={sendMessage}
               >
                 Postuler
               </Button>
@@ -330,9 +347,10 @@ const ListJobs = ({
   );
 };
 
-const ModalSendForm = ({ onClose }) => {
+const ModalSendForm = ({ onClose, setSuccessMessage }) => {
   const [formErrors, setFormErrors] = useState({});
   const [formData, setFormData] = useState({});
+  const [sendMessage, setSendMessage] = useState(false);
   const modalRef = useRef(null);
   const { VerifyAndSendCandidacy } = FormServices();
 
@@ -345,8 +363,6 @@ const ModalSendForm = ({ onClose }) => {
 
   // Cette fonction vérifie si le clic se fait en dehors du modal
   const handleOutsideClick = (event) => {
-    console.log(event);
-
     if (modalRef.current && !modalRef.current.contains(event.target)) {
       onClose(false);
     }
@@ -361,9 +377,23 @@ const ModalSendForm = ({ onClose }) => {
 
   const sendForm = async () => {
     if (!validateForm()) {
-      return; // Si la validation échoue, ne pas envoyer
+      return; // Ne pas envoyer si validation échoue
     }
-    VerifyAndSendCandidacy(formData);
+    try {
+      // Affiche le message 2 secondes, puis ferme la modale
+      setTimeout(() => {
+        onClose(false);
+      }, 2000);
+      await VerifyAndSendCandidacy(formData);
+      setSendMessage(true);
+      setSuccessMessage("Votre candidature a bien été envoyée !");
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setTimeout(() => {
+        setSendMessage(false);
+      }, 5000);
+    }
   };
 
   const validateForm = () => {
@@ -401,142 +431,141 @@ const ModalSendForm = ({ onClose }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 px-4">
-      <GoogleReCaptchaProvider
+      {/* <GoogleReCaptchaProvider
         reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? ""}
-      >
-        <Modal>
-          {/* <ModalTrigger className="bg-or-light rounded-xl hover:bg-white transform duration-300 flex items-center space-x-2">
+      > */}
+      <Modal>
+        {/* <ModalTrigger className="bg-or-light rounded-xl hover:bg-white transform duration-300 flex items-center space-x-2">
           <Icon icon="tabler:send" width="16" height="16" />
           <span className="group-hover/modal-btn:translate-x-40 text-center transition duration-500">
             Postuler
           </span>
         </ModalTrigger> */}
-          <ModalTrigger className={"hidden"} />
-          <ModalBody>
-            <ModalContent ref={modalRef}>
-              <h4 className="text-lg md:text-2xl font-bold text-center mb-8">
-                Votre candidature
-              </h4>
-              <div className="py-10">
-                <div className="flex flex-wrap justify-between my-2">
-                  <div className="flex-1">
-                    <Input
-                      icon="solar:user-circle-bold"
-                      type="text"
-                      id="first_name"
-                      placeholder="Votre prénom"
-                      onInputChange={(newValue) =>
-                        handleInputChange("first_name", newValue)
-                      }
-                      // className={"w-80"}
-                      // error={formErrors.email}
-                    />
-                    <p className="error-message">{formErrors["first_name"]}</p>
-                  </div>
-                  <div className="flex-1">
-                    <Input
-                      icon="solar:user-circle-bold"
-                      type="text"
-                      id="last_name"
-                      placeholder="Votre nom"
-                      onInputChange={(newValue) =>
-                        handleInputChange("last_name", newValue)
-                      }
-                      // className={"w-80"}
-                      // error={formErrors.email}
-                    />
-                    <p className="error-message">{formErrors["last_name"]}</p>
-                  </div>
-                </div>
-                <div className="flex flex-wrap justify-between my-2">
-                  <div className="flex-1">
-                    <Input
-                      icon="solar:phone-bold"
-                      type="text"
-                      id="phone_number"
-                      placeholder="Votre numéro de téléphone"
-                      onInputChange={(newValue) =>
-                        handleInputChange("phone_number", newValue)
-                      }
-                      // className={"w-80"}
-                      // error={formErrors.email}
-                    />
-                    <p className="error-message">
-                      {formErrors["phone_number"]}
-                    </p>
-                  </div>
-                  <div className="flex-1">
-                    <Input
-                      icon="lets-icons:e-mail"
-                      type="mail"
-                      id="email"
-                      placeholder="Votre email"
-                      onInputChange={(newValue) =>
-                        handleInputChange("email", newValue)
-                      }
-                      // className={"w-80"}
-                      // error={formErrors.email}
-                    />
-                    <p className="error-message">{formErrors["email"]}</p>
-                  </div>
-                </div>
-                <div className="flex flex-wrap justify-between my-6">
-                  <div className="flex-1">
-                    <label htmlFor="cv" className="text-sm ml-4">
-                      Votre CV
-                    </label>
-                    <Input
-                      icon="solar:file-text-bold"
-                      type="file"
-                      id="cv"
-                      placeholder="Votre CV"
-                      onInputChange={(event) => handleInputChange("cv", event)}
-                    />
-
-                    <p className="error-message">{formErrors["cv"]}</p>
-                  </div>
-                  <div className="flex-1">
-                    <label htmlFor="motivLetter" className="text-sm ml-4">
-                      Votre lettre de motivation
-                    </label>
-                    <Input
-                      icon="solar:file-text-bold"
-                      type="file"
-                      id="motivLetter"
-                      placeholder="Votre lettre de motivation"
-                      onInputChange={(event) =>
-                        handleInputChange("motivLetter", event)
-                      }
-                      // className={"w-80"}
-                      // error={formErrors.email}
-                    />
-                    <p className="error-message">{formErrors["motivLetter"]}</p>
-                  </div>
-                </div>
-                <div className="my-2">
-                  <Textarea
-                    id={"message"}
-                    placeholder={"Votre message"}
+        <ModalTrigger className={"hidden"} />
+        <ModalBody>
+          <ModalContent ref={modalRef}>
+            <h4 className="text-lg md:text-2xl font-bold text-center mb-8">
+              Votre candidature
+            </h4>
+            <div className="py-10">
+              <div className="flex flex-wrap justify-between my-2">
+                <div className="flex-1">
+                  <Input
+                    icon="solar:user-circle-bold"
+                    type="text"
+                    id="first_name"
+                    placeholder="Votre prénom"
                     onInputChange={(newValue) =>
-                      handleInputChange("message", newValue)
+                      handleInputChange("first_name", newValue)
                     }
-                    className={"h-48 w-full"}
-                    // error={formErrors.message}
+                    // className={"w-80"}
+                    // error={formErrors.email}
                   />
-                  <p className="error-message">{formErrors["message"]}</p>
+                  <p className="error-message">{formErrors["first_name"]}</p>
+                </div>
+                <div className="flex-1">
+                  <Input
+                    icon="solar:user-circle-bold"
+                    type="text"
+                    id="last_name"
+                    placeholder="Votre nom"
+                    onInputChange={(newValue) =>
+                      handleInputChange("last_name", newValue)
+                    }
+                    // className={"w-80"}
+                    // error={formErrors.email}
+                  />
+                  <p className="error-message">{formErrors["last_name"]}</p>
                 </div>
               </div>
-              <div className="flex justify-end">
-                <Button
-                  text={"Envoyer"}
-                  onClick={sendForm}
-                  icon={"tabler:send"}
-                />
+              <div className="flex flex-wrap justify-between my-2">
+                <div className="flex-1">
+                  <Input
+                    icon="solar:phone-bold"
+                    type="text"
+                    id="phone_number"
+                    placeholder="Votre numéro de téléphone"
+                    onInputChange={(newValue) =>
+                      handleInputChange("phone_number", newValue)
+                    }
+                    // className={"w-80"}
+                    // error={formErrors.email}
+                  />
+                  <p className="error-message">{formErrors["phone_number"]}</p>
+                </div>
+                <div className="flex-1">
+                  <Input
+                    icon="lets-icons:e-mail"
+                    type="mail"
+                    id="email"
+                    placeholder="Votre email"
+                    onInputChange={(newValue) =>
+                      handleInputChange("email", newValue)
+                    }
+                    // className={"w-80"}
+                    // error={formErrors.email}
+                  />
+                  <p className="error-message">{formErrors["email"]}</p>
+                </div>
               </div>
-            </ModalContent>
-          </ModalBody>
-        </Modal>
-      </GoogleReCaptchaProvider>
+              <div className="flex flex-wrap justify-between my-6">
+                <div className="flex-1">
+                  <label htmlFor="cv" className="text-sm ml-4">
+                    Votre CV
+                  </label>
+                  <Input
+                    icon="solar:file-text-bold"
+                    type="file"
+                    id="cv"
+                    placeholder="Votre CV"
+                    onInputChange={(event) => handleInputChange("cv", event)}
+                  />
+
+                  <p className="error-message">{formErrors["cv"]}</p>
+                </div>
+                <div className="flex-1">
+                  <label htmlFor="motivLetter" className="text-sm ml-4">
+                    Votre lettre de motivation
+                  </label>
+                  <Input
+                    icon="solar:file-text-bold"
+                    type="file"
+                    id="motivLetter"
+                    placeholder="Votre lettre de motivation"
+                    onInputChange={(event) =>
+                      handleInputChange("motivLetter", event)
+                    }
+                    // className={"w-80"}
+                    // error={formErrors.email}
+                  />
+                  <p className="error-message">{formErrors["motivLetter"]}</p>
+                </div>
+              </div>
+              <div className="my-2">
+                <Textarea
+                  id={"message"}
+                  placeholder={"Votre message"}
+                  onInputChange={(newValue) =>
+                    handleInputChange("message", newValue)
+                  }
+                  className={"h-48 w-full"}
+                  // error={formErrors.message}
+                />
+                <p className="error-message">{formErrors["message"]}</p>
+              </div>
+            </div>
+            <div className="flex justify-end">
+              <Button
+                text={"Envoyer"}
+                onClick={sendForm}
+                icon={"tabler:send"}
+                disabled={sendMessage}
+              />
+            </div>
+          </ModalContent>
+        </ModalBody>
+      </Modal>
+      {/* </GoogleReCaptchaProvider> */}
     </div>
   );
 };
