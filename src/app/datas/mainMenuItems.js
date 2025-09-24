@@ -57,14 +57,14 @@ const listMenu = [
 
     children: [],
   },
-  {
-    label: "Inspiration",
-    active: true,
-    slug: "inspiration",
-    link: "/inspiration",
-    icon: "solar:folder-open-outline",
-    children: [],
-  },
+  // {
+  //   label: "Inspiration",
+  //   active: true,
+  //   slug: "inspiration",
+  //   link: "/inspiration",
+  //   icon: "solar:folder-open-outline",
+  //   children: [],
+  // },
   // {
   //   label: "Inspiration",
   //   active: true,
