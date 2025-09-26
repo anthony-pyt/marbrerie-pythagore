@@ -505,7 +505,7 @@ export default function Page() {
                 <div className="h-32 overflow-hidden flex justify-center items-center">
                   <img
                     src="/images/loaders/loader-pythagore.gif"
-                    className="h-40"
+                    className="h-40 w-auto"
                   />
                 </div>
                 <p>Chargement des données...</p>

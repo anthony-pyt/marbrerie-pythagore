@@ -21,7 +21,7 @@ export default function HomeSwipper({ images }) {
       {images.map((image, index) => {
         return (
           <SplideSlide key={index}>
-            <Image
+            <img
               src={image}
               alt={index}
               width={500}

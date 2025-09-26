@@ -13,12 +13,12 @@ export const Card = React.memo(({ card, index, hovered, setHovered }) => (
       hovered !== null && hovered !== index && "blur-sm scale-[0.98]"
     )}
   >
-    <Image
+    <img
       src={card.src}
       alt={card.name}
-      fill
+      // fill
       sizes="(min-width: 250px) 33vw, (min-width: 640px) 50vw, 100vw"
-      className="object-cover absolute inset-0"
+      className="object-cover absolute inset-0 h-full w-full"
     />
     <div
       className={cn(
@@ -27,10 +27,10 @@ export const Card = React.memo(({ card, index, hovered, setHovered }) => (
       )}
     >
       <div className="bg-white rounded-lg px-2">
-        <div className="text-xl md:text-2xl font-medium text-gray-700">
+        <div className="text-xl md:text-xl font-medium text-gray-700">
           {card.name}
         </div>
-        {card.job && <div className="text-xs text-gray-700">{card.job}</div>}
+        {card.job && <div className="text-[0.65rem] text-gray-700">{card.job}</div>}
       </div>
     </div>
   </Link>

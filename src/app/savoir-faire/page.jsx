@@ -35,7 +35,7 @@ const ImageGrid = ({ images }) => (
         whileHover={{ scale: 1.05 }}
         transition={{ duration: 0.3 }}
       >
-        <Image
+        <img
           src={image.image_url}
           alt={image.alt}
           width={500}

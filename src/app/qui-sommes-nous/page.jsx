@@ -169,7 +169,7 @@ const RectangleSkeleton = ({
     >
       {/* Image */}
       <div className="w-[350px] h-[250px] flex-shrink-0">
-        <Image
+        <img
           src={image_url}
           alt={text}
           width={350}

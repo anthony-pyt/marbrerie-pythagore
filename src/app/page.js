@@ -61,23 +61,23 @@ export default function Home() {
   }, []);
 
   // Récupération des inspirations
-  useEffect(() => {
-    const fetchInspirations = async () => {
-      try {
-        const response = await fetchAllInspirationPhotos(8);
-        setInspirations(response.data);
-      } catch (error) {
-        console.error(
-          "Erreur lors de la récupération des inspirations :",
-          error
-        );
-      } finally {
-        setLoadInspirations(false);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchInspirations = async () => {
+  //     try {
+  //       const response = await fetchAllInspirationPhotos(8);
+  //       setInspirations(response.data);
+  //     } catch (error) {
+  //       console.error(
+  //         "Erreur lors de la récupération des inspirations :",
+  //         error
+  //       );
+  //     } finally {
+  //       setLoadInspirations(false);
+  //     }
+  //   };
 
-    fetchInspirations();
-  }, []);
+  //   fetchInspirations();
+  // }, []);
 
   // Intersection Observer pour les animations
   useEffect(() => {
@@ -136,15 +136,15 @@ export default function Home() {
             className="opacity-40 blur w-full object-cover"
           /> */}
          {imageSrc && (
-            <Image
+            <img
               alt="acceuil"
-              fill
+              // fill
               style={{
                 objectFit: "cover",
                 objectPosition: "center",
               }}
               src={imageSrc}
-              className="opacity-40"
+              className="opacity-40 w-screen"
             />
           )}
           <div className="absolute transform left-1/2 -translate-x-1/2 w-full">

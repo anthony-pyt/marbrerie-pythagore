@@ -80,7 +80,7 @@ export const AnimatedTestimonials = ({
                   onMouseLeave={() => setIsPaused(false)} // Désactiver la pause
                   className="absolute inset-0 origin-bottom"
                 >
-                  <Image
+                  <img
                     src={testimonial.src}
                     alt={testimonial.name}
                     width={750}
