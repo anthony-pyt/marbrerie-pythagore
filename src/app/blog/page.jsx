@@ -71,7 +71,7 @@ const BlogItem = ({ article }) => {
           src={article.coverImage} // Remplace par ton image par défaut
           alt={article.title}
           fill
-          className="object-cover"
+          className="object-cover w-full h-full"
         />
       </div>
 
