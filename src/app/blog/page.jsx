@@ -67,7 +67,7 @@ const BlogItem = ({ article }) => {
     <div className="bg-white shadow-lg rounded-lg overflow-hidden flex">
       {/* 📸 Image à gauche */}
       <div className="w-1/3 relative min-h-[150px]">
-        <Image
+        <img
           src={article.coverImage} // Remplace par ton image par défaut
           alt={article.title}
           fill

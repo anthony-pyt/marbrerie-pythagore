@@ -16,7 +16,7 @@ export default function Home() {
             rel="noopener noreferrer"
           >
             By{" "}
-            <Image
+            <img
               src="/vercel.svg"
               alt="Vercel Logo"
               className="dark:invert"
@@ -36,7 +36,7 @@ export default function Home() {
       after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent 
       before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]"
       >
-        {/* <Image
+        {/* <img
           className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
           src="/next.svg"
           alt="Next.js Logo"

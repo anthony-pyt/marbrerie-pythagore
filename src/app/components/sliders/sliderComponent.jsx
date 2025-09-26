@@ -18,7 +18,7 @@ export default function SilderComponent(props) {
                         {props.images.map((item, index) => (
                             <SplideSlide key={index}>
                                 <div className="flex w-full flex-col md:flex-row">
-                                    <Image
+                                    <img
                                         src={item.image_url}
                                         alt={item.alt}
                                         width={800}

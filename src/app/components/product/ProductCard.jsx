@@ -30,7 +30,7 @@ const ProductCard = ({ product, animationDelay }) => {
               style={{ animationDelay }}
             >
               {product.image_url && (
-                <Image
+                <img
                   lazy="true"
                   width={300}
                   height={300}
@@ -56,7 +56,7 @@ const ProductCard = ({ product, animationDelay }) => {
 
               <div className="absolute top-1 right-1">
                 {product.product.category.logo_url != null ? (
-                  <Image
+                  <img
                     src={product.product.category?.logo_url}
                     className="h-4 p-0.5 bg-white rounded px-2"
                     alt={product.product.category.label}

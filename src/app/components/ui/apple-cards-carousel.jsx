@@ -264,7 +264,7 @@ export const Card = ({ card, index, layout = false }) => {
 export const BlurImage = ({ height, width, src, className, alt, ...rest }) => {
   const [isLoading, setLoading] = useState(true);
   return (
-    <Image
+    <img
       className={cn(
         "transition duration-300",
         isLoading ? "blur-sm" : "blur-0",
