@@ -208,7 +208,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* <section
+      <section
         ref={(el) => (sectionRefs.current[1] = el)}
         data-id="inspiration"
         className={`py-20 animate__animated 
@@ -225,7 +225,7 @@ export default function Home() {
           </h2>
           {inspirations && <Carousel items={cards} />}
         </div>
-      </section> */}
+      </section>
 
       <section
         ref={(el) => (sectionRefs.current[2] = el)}
