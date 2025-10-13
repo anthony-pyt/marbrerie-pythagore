@@ -61,23 +61,23 @@ export default function Home() {
   }, []);
 
   // Récupération des inspirations
-  // useEffect(() => {
-  //   const fetchInspirations = async () => {
-  //     try {
-  //       const response = await fetchAllInspirationPhotos(8);
-  //       setInspirations(response.data);
-  //     } catch (error) {
-  //       console.error(
-  //         "Erreur lors de la récupération des inspirations :",
-  //         error
-  //       );
-  //     } finally {
-  //       setLoadInspirations(false);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchInspirations = async () => {
+      try {
+        const response = await fetchAllInspirationPhotos(8);
+        setInspirations(response.data);
+      } catch (error) {
+        console.error(
+          "Erreur lors de la récupération des inspirations :",
+          error
+        );
+      } finally {
+        setLoadInspirations(false);
+      }
+    };
 
-  //   fetchInspirations();
-  // }, []);
+    fetchInspirations();
+  }, []);
 
   // Intersection Observer pour les animations
   useEffect(() => {
