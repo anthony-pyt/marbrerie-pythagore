@@ -84,7 +84,7 @@ export const Carousel = ({ items, initialScroll = 0 }) => {
         >
           <div
             className={cn(
-              "absolute right-0  z-[1000] h-auto  w-[5%] overflow-hidden bg-gradient-to-l"
+              "absolute right-0 z-[1000] h-auto w-[5%] overflow-hidden bg-gradient-to-l"
             )}
           ></div>
 
@@ -254,7 +254,7 @@ export const Card = ({ card, index, layout = false }) => {
           alt={card.imageable?.product?.label}
           fill
           sizes="(max-width: 768px) 100vw, 50vw"
-          className="object-cover absolute z-10 inset-0"
+          className="h-full w-full object-cover absolute z-10 inset-0"
         />
       </motion.div>
     </>
@@ -264,6 +264,7 @@ export const Card = ({ card, index, layout = false }) => {
 export const BlurImage = ({ height, width, src, className, alt, ...rest }) => {
   const [isLoading, setLoading] = useState(true);
   return (
+    // eslint-disable-next-line @next/next/no-img-element
     <img
       className={cn(
         "transition duration-300",
