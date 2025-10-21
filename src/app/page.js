@@ -35,6 +35,70 @@ export default function Home() {
   const sectionRefs = useRef([]);
   const router = useRouter();
 
+  const testItems = [
+    {
+      image_url:
+        "https://images.unsplash.com/photo-1503602642458-232111445657?w=800&q=80",
+      imageable: {
+        product: {
+          label: "Montre de sport Garmin Fenix 7",
+          category: {
+            label: "Montres connectées",
+          },
+        },
+      },
+    },
+    {
+      image_url:
+        "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=800&q=80",
+      imageable: {
+        product: {
+          label: "Casque Sony WH-1000XM5",
+          category: {
+            label: "Audio",
+          },
+        },
+      },
+    },
+    {
+      image_url:
+        "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&q=80",
+      imageable: {
+        product: {
+          label: "Appareil photo Canon EOS R6",
+          category: {
+            label: "Photographie",
+          },
+        },
+      },
+    },
+    {
+      image_url:
+        "https://images.unsplash.com/photo-1611078489935-0cb964de46f2?w=800&q=80",
+      imageable: {
+        product: {
+          label: "Apple MacBook Pro M3",
+          category: {
+            label: "Informatique",
+          },
+        },
+      },
+    },
+    {
+      image_url:
+        "https://images.unsplash.com/photo-1593642634315-48f5414c3ad9?w=800&q=80",
+      imageable: {
+        product: {
+          label: "Clavier mécanique Keychron K6",
+          category: {
+            label: "Accessoires",
+          },
+        },
+      },
+    },
+  ];
+
+
   // Récupération des images en une seule fonction
   useEffect(() => {
     const fetchData = async () => {

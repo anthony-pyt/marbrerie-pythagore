@@ -11,75 +11,85 @@ import useImageServices from "./../api/services/imageService";
 const Skeleton = ({name}) => {
   return (
     <div>
-      <p className="font-bold md:text-4xl text-xl text-white">
+      <p className="font-bold md:text-4xl text-xl text-black">
         {name}
       </p>
     </div>
   );
 };
 
-const cards = [
-  {
-    id: 1,
-    content: <Skeleton name="nom_produit"/>,
-    // className: "md:col-span-1",
-    thumbnail: "/images/2.jpg",
-  },
-  {
-    id: 2,
-    content: <Skeleton name="nom_produit"/>,
-    // className: "col-span-1",
-    thumbnail: "/images/3.jpg",
-  },
-  {
-    id: 3,
-    content: <Skeleton name="nom_produit"/>,
-    // className: "col-span-1",
-    thumbnail: "/images/atr.jpg",
-  },
-  {
-    id: 4,
-    content: <Skeleton name="nom_produit"/>,
-    // className: "md:col-span-2",
-    thumbnail: "/images/credence-marbre-dore-3.png",
-  },
-  {
-    id: 5,
-    content: <Skeleton name="nom_produit"/>,
-    // className: "col-span-1",
-    thumbnail: "/images/IMG-4058.JPG",
-  },
-  {
-    id: 6,
-    content: <Skeleton name="nom_produit"/>,
-    // className: "md:col-span-1",
-    thumbnail: "/images/romantic.jpg",
-  },
-  {
-    id: 7,
-    content: <Skeleton name="nom_produit"/>,
-    // className: "col-span-1",
-    thumbnail: "/images/credence-marbre-dore-3.png",
-  },
-  {
-    id: 8,
-    content: <Skeleton name="nom_produit"/>,
-    // className: "md:col-span-1",
-    thumbnail: "/images/2.jpg",
-  },
-  {
-    id: 9,
-    content: <Skeleton name="nom_produit"/>,
-    // className: "md:col-span-1",
-    thumbnail: "/images/3.jpg",
-  },
-  {
-    id: 10,
-    content: <Skeleton name="nom_produit"/>,
-    // className: "md:col-span-2",
-    thumbnail: "/images/2.jpg",
-  },
-];
+// const cards = [
+//   {
+//     id: 1,
+//     content: <Skeleton name="nom_produit" />,
+//     // className: "md:col-span-1",
+//     thumbnail:
+//       "https://images.unsplash.com/photo-1503602642458-232111445657?w=800&q=80",
+//   },
+//   {
+//     id: 2,
+//     content: <Skeleton name="nom_produit" />,
+//     // className: "col-span-1",
+//     thumbnail:
+//       "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=800&q=80",
+//   },
+//   {
+//     id: 3,
+//     content: <Skeleton name="nom_produit" />,
+//     // className: "col-span-1",
+//     thumbnail:
+//       "https://images.unsplash.com/photo-1503602642458-232111445657?w=800&q=80",
+//   },
+//   {
+//     id: 4,
+//     content: <Skeleton name="nom_produit" />,
+//     // className: "md:col-span-2",
+//     thumbnail:
+//       "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&q=80",
+//   },
+//   {
+//     id: 5,
+//     content: <Skeleton name="nom_produit" />,
+//     // className: "col-span-1",
+//     thumbnail:
+//       "https://images.unsplash.com/photo-1503602642458-232111445657?w=800&q=80",
+//   },
+//   {
+//     id: 6,
+//     content: <Skeleton name="nom_produit" />,
+//     // className: "md:col-span-1",
+//     thumbnail:
+//       "https://images.unsplash.com/photo-1503602642458-232111445657?w=800&q=80",
+//   },
+//   {
+//     id: 7,
+//     content: <Skeleton name="nom_produit" />,
+//     // className: "col-span-1",
+//     thumbnail:
+//       "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&q=80",
+//   },
+//   {
+//     id: 8,
+//     content: <Skeleton name="nom_produit" />,
+//     // className: "md:col-span-1",
+//     thumbnail:
+//       "https://images.unsplash.com/photo-1593642634315-48f5414c3ad9?w=800&q=80",
+//   },
+//   {
+//     id: 9,
+//     content: <Skeleton name="nom_produit" />,
+//     // className: "md:col-span-1",
+//     thumbnail:
+//       "https://images.unsplash.com/photo-1593642634315-48f5414c3ad9?w=800&q=80",
+//   },
+//   {
+//     id: 10,
+//     content: <Skeleton name="nom_produit" />,
+//     // className: "md:col-span-2",
+//     thumbnail:
+//       "https://images.unsplash.com/photo-1593642634315-48f5414c3ad9?w=800&q=80",
+//   },
+// ];
 
 const shuffle = (array) => {
   if (array){

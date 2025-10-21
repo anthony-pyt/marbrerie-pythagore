@@ -6,6 +6,8 @@ import Button from "../Button";
 import Image from "next/image";
 
 export const LayoutGrid = ({ cards }) => {
+  console.log(cards);
+  
   const [selected, setSelected] = useState(null);
   const [lastSelected, setLastSelected] = useState(null);
 
@@ -47,8 +49,8 @@ export const LayoutGrid = ({ cards }) => {
             )}
             layoutId={`card-${card.id}`}
           >
-            {selected?.id === card.id && <SelectedCard selected={selected} />}
-            <imgComponent card={card} selected={selected} />
+            {/* {selected?.id === card.id && <SelectedCard selected={selected} />} */}
+            <ImageComponent card={card} selected={selected} />
           </motion.div>
         </motion.div>
       ))}
@@ -91,7 +93,7 @@ const ImageComponent = ({ card, selected }) => {
       )}
       <motion.img
         layoutId={`image-${card.id}-image`}
-        src={card.image_url}
+        src={card.thumbnail}
         height="500"
         width="500"
         className={cn(
