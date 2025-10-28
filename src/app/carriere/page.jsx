@@ -34,7 +34,7 @@ export default function Page() {
   const [loadingJobs, setLoadingJobs] = useState(true);
   const [jobs, setJobs] = useState([]);
   const [showApplicationForm, setShowApplicationForm] = useState(false);
-  const [ successMessage, setSuccessMessage] = useState(false)
+  const [successMessage, setSuccessMessage] = useState(false);
 
   useEffect(() => {
     const getJobs = async () => {
@@ -53,7 +53,7 @@ export default function Page() {
   return (
     <main className="min-h-screen antialiased">
       <MainMenu />
-      <PageTitle title={"Nos métiers"} />
+      <PageTitle title={"Carrière"} />
       <div className="flex justify-center mb-6">
         <p className="font-semibold max-w-2xl">
           Chez Pythagore nous sommes toutes et tous en lien pour répondre à vos
@@ -61,22 +61,25 @@ export default function Page() {
           Découvrez ces métiers qui nous permettent d&apos;être :
         </p>
       </div>
-      <div className="m-4 p-4 rounded-xl ">
-        <SectionTestimonials
-          title={"EN RELATION AVEC NOS CLIENTS"}
-          images={metiersClient}
-          // retardInterval={0}
-        />
-        <SectionTestimonials
-          title={"À L’ATELIER"}
-          images={metiersAtelier}
-          // retardInterval={1000}
-        />
-        <SectionTestimonials
-          title={"SUR LE TERRAIN"}
-          images={metiersTerrain}
-          // retardInterval={2000}
-        />
+      <div className="container mx-auto my-8">
+        <h2 className="text-4xl font-title">NOS MÉTIERS</h2>
+        <div className="m-4 p-4 rounded-xl ">
+          <SectionTestimonials
+            title={"EN RELATION AVEC NOS CLIENTS"}
+            images={metiersClient}
+            // retardInterval={0}
+          />
+          <SectionTestimonials
+            title={"À L’ATELIER"}
+            images={metiersAtelier}
+            // retardInterval={1000}
+          />
+          <SectionTestimonials
+            title={"SUR LE TERRAIN"}
+            images={metiersTerrain}
+            // retardInterval={2000}
+          />
+        </div>
       </div>
       <SectionCommitments />
       <ListJobs
@@ -99,7 +102,7 @@ export default function Page() {
 
 const SectionTestimonials = ({ title, images, retardInterval }) => (
   <div className="container mx-auto m-4 bg-gray-50 rounded-xl p-4">
-    <h2 className="text-4xl text-center md:text-left">{title}</h2>
+    <h2 className="text-2xl text-center md:text-left">{title}</h2>
     <AnimatedTestimonials
       testimonials={images}
       // autoplay
@@ -110,7 +113,7 @@ const SectionTestimonials = ({ title, images, retardInterval }) => (
 
 const SectionCommitments = () => (
   <div className="container mx-auto my-8">
-    <h2 className="text-4xl">NOS ENGAGEMENTS</h2>
+    <h2 className="text-4xl font-title">NOS ENGAGEMENTS</h2>
     <div className="w-full flex justify-center items-center">
       <div className="grid lg:grid-cols-2 xl:grid-cols-3 sm:gap-10 mb-5 gap-5 mt-12 p-2 ">
         {commitments.map((item, index) => (
@@ -335,7 +338,7 @@ const ListJobs = ({
                 color="or"
                 size="big"
                 onClick={() => setShowApplicationForm(true)}
-                disabled={sendMessage}
+                // disabled={sendMessage}
               >
                 Postuler
               </Button>
