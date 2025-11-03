@@ -46,6 +46,11 @@ export const fournisseurs = [
     url: "https://www.cosentino.com/fr-fr/sensa/",
   },
   {
+    name: "Sapienstone",
+    image_url: "/images/logos/fournisseurs/logo-sapienstone.png",
+    url: "https://www.sapienstone.fr/",
+  },
+  {
     name: "Silestone",
     image_url: "/images/logos/fournisseurs/logo_silestone_noir.png",
     url: "https://www.cosentino.com/fr-fr/silestone/",

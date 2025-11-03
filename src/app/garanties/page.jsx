@@ -39,49 +39,81 @@ export default function Page() {
           </p>
         ) : (
           <div>
-            <div className="bg-white shadow-lg rounded-2xl p-6 flex flex-col items-center text-center my-6">
-              <div>
-                <img
-                  src="/images/logo_pythagore_texte_noir_dore.png"
-                  alt="logo pythagore noir"
-                  className="h-24 mb-4"
-                />
+            <div className="bg-white shadow-xl rounded-3xl p-8 flex flex-col items-center text-center my-6 border border-gray-100">
+              <img
+                src="/images/logo_pythagore_texte_noir_dore.png"
+                alt="logo pythagore noir"
+                className="h-20 mb-6 opacity-90"
+              />
+
+              <h3 className="text-xl font-semibold tracking-wide text-gray-800 mb-4">
+                GARANTIE PYTHAGORE
+              </h3>
+
+              <div className="space-y-4 text-gray-600 text-sm leading-relaxed max-w-prose">
+                <p>
+                  Nos agencements sont garantis 2 ans en cas de défaut avéré
+                  concernant la matière, le façonnage et l&apos;installation (le
+                  cas échéant), effectués par Pythagore.
+                </p>
+
+                <p>
+                  Pour les surfaces minérales reconstituées, les fabricants de
+                  matériaux partenaires de Pythagore offrent une extension de
+                  garantie, jusqu&apos;à 25 ans, en cas de défaut du matériau
+                  (Hors refabrication & installation).
+                </p>
+
+                <p>
+                  Pour activer l&apos;extension de garantie, pensez à vous
+                  enregistrer sur le site internet du fabricant, dans les 30
+                  jours suivants l&apos;installation.
+                </p>
+
+                <p className="text-gray-800 text-[0.95rem] font-medium pt-2">
+                  Retrouvez les liens d&apos;enregistrement de nos partenaires
+                  ci-dessous.
+                </p>
               </div>
-              <h3 className="text-lg font-semibold">GARANTIE PYTHAGORE</h3>
-              <p className="text-gray-600 text-sm mt-2">
-                Nous offrons une garantie sur l’ensemble des matériaux
-                manufacturés et posés par nos équipes ou simplement livrés ;
-                ceci sous réserve que ces matériaux soient transformés et
-                installés dans le respect des bonnes pratiques.{" "}
-              </p>
+            </div>
+            <div className="flex justify-center my-8">
+              <h3 className="font-title">Extensions de garanties de nos partenaires fabricants</h3>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {waranties?.map((waranty) => (
                 <div
                   key={waranty.id}
-                  className="bg-white shadow-lg rounded-2xl p-6 flex flex-col items-center text-center"
+                  className="relative bg-white shadow-xl rounded-3xl p-2 flex flex-col items-center text-center border border-gray-100 transition hover:shadow-2xl hover:-translate-y-0.5 duration-300"
                 >
-                  <img
-                    src={waranty.imageSrc}
-                    alt={waranty.title}
-                    className="h-24 mb-4"
-                  />
-                  <h3 className="text-lg font-semibold">{waranty.title}</h3>
-                  <p className="text-gray-600 text-sm mt-2">
-                    {waranty.description}
-                  </p>
+                  <div className="absolute top-3 right-3">
+                    <img
+                      src={waranty.logoSrc}
+                      alt={waranty.title}
+                      className="object-contain opacity-90 max-w-20"
+                    />
+                  </div>
+
+                  <div className="gap-6 mb-6">
+                    <img
+                      src={waranty.imageSrc}
+                      alt={waranty.title}
+                      className="h-36 object-contain opacity-90"
+                    />
+                  </div>
+
                   {waranty.url && (
-                    <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg text-center text-sm">
-                      <p className="text-sm text-gray-700 font-medium">
-                        Votre garantie produit n'est pas encore activée ?
+                    <div className="mt-auto w-full p-4 bg-blue-50 border border-blue-200 rounded-2xl text-sm">
+                      <p className="text-gray-700 font-medium">
+                        Votre garantie produit n&apos;est pas encore activée ?
                       </p>
+
                       <Link
                         href={waranty.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="mt-2 inline-flex items-center gap-2 px-2 py-1 text-blue-950 bg-or-light hover:bg-or hover:text-white rounded-lg transition"
+                        className="mt-3 inline-flex items-center justify-center gap-2 px-3 py-2 text-blue-900 bg-or-light hover:bg-or hover:text-white rounded-lg transition-colors duration-200"
                       >
-                        <span>Activez-la dès maintenant</span>
+                        <span>Activer l&apos;extension de garantie</span>
                         <Icon
                           icon="si:arrow-right-duotone"
                           width="20"
