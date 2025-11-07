@@ -95,7 +95,7 @@ export default function Page() {
       );
 
       const filteredProducts = productsResponse.data.data.filter(
-        (product) => product.website_visite === 1
+        (product) => product.visible_website === 1
       );
 
       setTotalProducts(filteredProducts.length);
