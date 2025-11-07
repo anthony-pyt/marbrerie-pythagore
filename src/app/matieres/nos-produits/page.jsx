@@ -93,15 +93,21 @@ export default function Page() {
       const productsResponse = await axios.get(
         `${process.env.NEXT_PUBLIC_API_STOCK_URL}/stock/products_only_matieres?${queryParams}`
       );
-      setTotalProducts(productsResponse.data.total);
+
+      const filteredProducts = productsResponse.data.data.filter(
+        (product) => product.website_visite === 1
+      );
+
+      setTotalProducts(filteredProducts.length);
       setTotalPages(productsResponse.data.last_page);
-      setProducts(productsResponse.data.data);
+      setProducts(filteredProducts);
     } catch (error) {
       console.log(error);
     } finally {
       setLoadProducts(false);
     }
   };
+
 
   useEffect(() => {
     fetchData();
