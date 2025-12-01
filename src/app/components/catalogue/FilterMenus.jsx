@@ -247,7 +247,7 @@ const FilterMenus = ({
                       htmlFor={finition.name}
                       className="font-medium flex space-x-1 items-center"
                     >
-                      <span className="lowercase">{finition.name}</span>
+                      <span className="">{finition.name}</span>
                     </label>
                   </div>
                 </div>
