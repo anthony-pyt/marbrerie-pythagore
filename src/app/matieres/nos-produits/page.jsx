@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import Filter from "../../components/catalogue/Filter";
 import FiltersMenu from "./../../components/catalogue/FilterMenus";
 import axios from "axios";
-import { colors, motifs } from "../../datas/filters";
+import { colors, motifs, finitions } from "../../datas/filters";
 
 export default function Page() {
   const [loadProducts, setLoadProducts] = useState(true);
@@ -20,7 +20,6 @@ export default function Page() {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [thiknesses, setThiknesses] = useState([]);
-  const [finitions, setFinitions] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedMotifs, setSelectedMotifs] = useState([]);
   const [selectedColors, setSelectedColors] = useState([]);
@@ -58,7 +57,6 @@ export default function Page() {
     setLoadProducts(true);
     setLoadCategories(true);
     setLoadThiknesses(true);
-    setLoadFinitions(true);
 
     try {
       const [categoryResponse, thiknessResponse, finitionsResponse] =
@@ -68,22 +66,22 @@ export default function Page() {
               "/stock/categories-with-parent-matieres"
           ),
           fetch(process.env.NEXT_PUBLIC_API_STOCK_URL + "/thiknesses"),
-          fetch(process.env.NEXT_PUBLIC_API_STOCK_URL + "/finitions"),
+          // fetch(process.env.NEXT_PUBLIC_API_STOCK_URL + "/finitions"),
         ]);
 
       const categories = await categoryResponse.json();
       const thiknesses = await thiknessResponse.json();
-      const finitions = await finitionsResponse.json();
+      // const finitions = await finitionsResponse.json();
 
       setCategories(categories);
       setThiknesses(thiknesses);
-      setFinitions(finitions);
+      // setFinitions(finitions);
     } catch (error) {
       console.error(error);
     } finally {
       setLoadCategories(false);
       setLoadThiknesses(false);
-      setLoadFinitions(false);
+      // setLoadFinitions(false);
     }
   };
 
@@ -371,12 +369,12 @@ export default function Page() {
           )
         : true;
 
-    // const matchesFinition =
-    //   selectedFinitions.length > 0
-    //     ? external_product.finitions.some((finition) =>
-    //         selectedFinitions.includes(finition.id)
-    //       )
-    //     : true;
+    const matchesFinition =
+      selectedFinitions.length > 0
+        ? external_product.finitions.some((finition) =>
+            selectedFinitions.includes(finition.id)
+          )
+        : true;
 
     const matchesMotif =
       selectedMotifs.length > 0
@@ -403,7 +401,7 @@ export default function Page() {
       matchesSearchTerm &&
       matchesCategory &&
       matchesThikness &&
-      // matchesFinition &&
+      matchesFinition &&
       matchesCoupDeCoeur &&
       matchesproduitDurable &&
       matchesColor &&

@@ -1,6 +1,7 @@
 import { Icon } from "@iconify/react";
 import React from "react";
 
+
 const FilterMenus = ({
   categories,
   thiknesses,
@@ -223,42 +224,37 @@ const FilterMenus = ({
             })}
           </fieldset>
         </div>
-        {/* <div className="my-4">
+        <div className="my-4">
           <fieldset>
             <legend className="border-b border-or w-full mb-2">
               Finitions
             </legend>
-            {loadFinitions && (
-              <div className="flex flex-col items-center">
-                <Icon icon="ph:spinner-gap" className="w-6 h-6 animate-spin" />
-              </div>
-            )}
             {finitions?.map((finition) => {
               return (
                 <div className="relative flex items-start" key={finition.id}>
                   <div className="flex h-6 items-center">
                     <input
-                      name={finition.label}
-                      id={finition.label}
+                      name={finition.name}
+                      id={finition.name}
                       type="checkbox"
-                      aria-describedby={finition.label}
+                      aria-describedby={finition.name}
                       className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                       onChange={() => handleFinitionChange(finition)}
                     />
                   </div>
                   <div className="ml-3 text-sm leading-6">
                     <label
-                      htmlFor={finition.label}
+                      htmlFor={finition.name}
                       className="font-medium flex space-x-1 items-center"
                     >
-                      <span className="lowercase">{finition.label}</span>
+                      <span className="lowercase">{finition.name}</span>
                     </label>
                   </div>
                 </div>
               );
             })}
           </fieldset>
-        </div> */}
+        </div>
         <div className="my-4">
           <fieldset>
             <legend className="border-b border-or w-full mb-2">Motifs</legend>

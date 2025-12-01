@@ -14,12 +14,18 @@ export const colors = [
 ];
 
 export const motifs = [
-  { name: "Ciment", slug: "ciment" },
-  { name: "Effet bois", slug: "effet_bois" },
-  { name: "Effet pierre", slug: "effet_pierre" },
-  { name: "Marbré", slug: "marbre" },
-  { name: "Métallique", slug: "metallique" },
-  { name: "Onyx", slug: "onyx" },
-  { name: "Uni", slug: "uni" },
-  { name: "Veiné", slug: "veine" },
+  { name: "Effet bois", slug: "EFFETBOIS" },
+  { name: "Marbre", slug: "MARBRE" },
+  { name: "Morcelé", slug: "MORCELE" },
+  { name: "Stratifié", slug: "STRATIFIE" },
+  { name: "Uni", slug: "UNI" },
+  { name: "Veiné", slug: "VEINE" },
+];
+
+export const finitions = [
+  { name: "Mate", slug: "mate" },
+  { name: "Polie", slug: "polie" },
+  { name: "Satinée", slug: "satinee" },
+  { name: "Texturée", slug: "texturee" },
+  { name: "Velours", slug: "velours" },
 ];
