@@ -224,7 +224,7 @@ const FilterMenus = ({
             })}
           </fieldset>
         </div>
-        <div className="my-4">
+        {/* <div className="my-4">
           <fieldset>
             <legend className="border-b border-or w-full mb-2">
               Finitions
@@ -234,20 +234,20 @@ const FilterMenus = ({
                 <div className="relative flex items-start" key={finition.id}>
                   <div className="flex h-6 items-center">
                     <input
-                      name={finition.name}
-                      id={finition.name}
+                      name={finition.label}
+                      id={finition.label}
                       type="checkbox"
-                      aria-describedby={finition.name}
+                      aria-describedby={finition.label}
                       className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                       onChange={() => handleFinitionChange(finition)}
                     />
                   </div>
                   <div className="ml-3 text-sm leading-6">
                     <label
-                      htmlFor={finition.name}
+                      htmlFor={finition.label}
                       className="font-medium flex space-x-1 items-center"
                     >
-                      <span className="">{finition.name}</span>
+                      <span className="">{finition.label}</span>
                     </label>
                   </div>
                 </div>
@@ -309,7 +309,7 @@ const FilterMenus = ({
               </div>
             ))}
           </fieldset>
-        </div>
+        </div> */}
       </div>
     </div>
   );

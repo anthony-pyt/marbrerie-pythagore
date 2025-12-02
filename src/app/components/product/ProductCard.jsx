@@ -54,11 +54,11 @@ const ProductCard = ({ product, animationDelay }) => {
                 </span>
               </div>
 
-              <div className="absolute top-1 right-1">
+              <div className="absolute top-0 right-0 group-hover:right-1 group-hover:top-1 transform duration-700">
                 {product.product.category.logo_url != null ? (
                   <img
                     src={product.product.category?.logo_url}
-                    className="h-4 p-0.5 bg-white rounded px-2"
+                    className="p-0.5 h-6 w-auto bg-white px-2 object-contain transform duration-500 group-hover:rounded-lg "
                     alt={product.product.category.label}
                     width={100}
                     height={100}
