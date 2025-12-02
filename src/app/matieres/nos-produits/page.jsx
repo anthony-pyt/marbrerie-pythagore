@@ -245,7 +245,7 @@ export default function Page() {
           ...updatedFilters,
           {
             type: "finition",
-            text: finition.label,
+            text: finition.name,
             icon: null,
           },
         ];
