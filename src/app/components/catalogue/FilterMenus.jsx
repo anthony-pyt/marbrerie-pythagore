@@ -224,7 +224,7 @@ const FilterMenus = ({
             })}
           </fieldset>
         </div>
-        <div className="my-4">
+        {/* <div className="my-4">
           <fieldset>
             <legend className="border-b border-or w-full mb-2">
               Finitions
@@ -254,7 +254,7 @@ const FilterMenus = ({
               );
             })}
           </fieldset>
-        </div>
+        </div> */}
         <div className="my-4">
           <fieldset>
             <legend className="border-b border-or w-full mb-2">Motifs</legend>
@@ -284,7 +284,7 @@ const FilterMenus = ({
             })}
           </fieldset>
         </div>
-        <div className="my-4">
+        {/* <div className="my-4">
           <fieldset className="mt-3">
             <legend className="border-b border-or w-full mb-2">Couleurs</legend>
             {colors?.map((color, index) => (
@@ -309,7 +309,7 @@ const FilterMenus = ({
               </div>
             ))}
           </fieldset>
-        </div>
+        </div> */}
       </div>
     </div>
   );
