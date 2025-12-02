@@ -119,7 +119,7 @@ const ProductCard = ({ product, animationDelay }) => {
             </div>
           </div>
           <div className="flex items-center space-x-1 absolute right-3 bottom-3 ">
-            {product.durable === 1 && (
+            {product.durable && (
               <Icon
                 icon="mdi:ecology"
                 width="24"
@@ -127,7 +127,7 @@ const ProductCard = ({ product, animationDelay }) => {
                 className="drop-shadow text-green-600"
               />
             )}
-            {product.heart === 1 && (
+            {product.heart && (
               <Icon
                 icon="solar:heart-bold"
                 width="20"

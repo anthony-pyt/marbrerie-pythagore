@@ -224,7 +224,7 @@ const FilterMenus = ({
             })}
           </fieldset>
         </div>
-        {/* <div className="my-4">
+        <div className="my-4">
           <fieldset>
             <legend className="border-b border-or w-full mb-2">
               Finitions
@@ -309,7 +309,7 @@ const FilterMenus = ({
               </div>
             ))}
           </fieldset>
-        </div> */}
+        </div>
       </div>
     </div>
   );
