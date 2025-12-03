@@ -107,7 +107,6 @@ export default function Page() {
     }
   };
 
-
   useEffect(() => {
     fetchData();
     fetchProducts();
@@ -379,8 +378,15 @@ export default function Page() {
 
     const matchesMotif =
       selectedMotifs.length > 0
-        ? selectedMotifs.includes(external_product.motif) ||
-          selectedMotifs.includes(external_product.motif)
+        ? external_product?.patterns.some((pattern) =>
+            selectedMotifs.includes(pattern.name)
+          ) ||
+          external_product?.patterns.some((pattern) =>
+            selectedMotifs.includes(pattern.slug)
+          ) ||
+          external_product?.patterns.some((pattern) =>
+            selectedMotifs.includes(pattern.id)
+          )
         : true;
 
     const matchesColor =
