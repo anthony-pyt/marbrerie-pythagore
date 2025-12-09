@@ -119,14 +119,14 @@ const ProductCard = ({ product, animationDelay }) => {
             </div>
           </div>
           <div className="flex items-center space-x-1 absolute right-3 bottom-3 ">
-            {product.durable && (
+            {/* {product.durable && (
               <Icon
                 icon="mdi:ecology"
                 width="24"
                 height="24"
                 className="drop-shadow text-green-600"
               />
-            )}
+            )} */}
             {product.heart && (
               <Icon
                 icon="solar:heart-bold"

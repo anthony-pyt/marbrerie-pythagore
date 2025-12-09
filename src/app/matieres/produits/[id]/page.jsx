@@ -58,7 +58,7 @@ export default function Page({ params }) {
           <div className="flex-1 bg-primary/20 rounded-xl p-3 my-2 mr-2">
             <div className="flex justify-between items-start mb-4">
               <h3 className="font-semibold text-xl flex items-center space-x-4">
-                Plus d'infos...
+                Plus d&apos;infos...
               </h3>
               <div className="m-2">
                 {product.product.category.logo_url ? (
@@ -157,7 +157,7 @@ export default function Page({ params }) {
               </div>
             </div> */}
             </div>
-            {product.durable == 1 && (
+            {/* {product.durable == 1 && (
               <div className="flex items-center justify-end mt-4 space-x-2 text-sm">
                 <span>Produit durable</span>
                 <Icon
@@ -167,7 +167,7 @@ export default function Page({ params }) {
                   className="text-green-600"
                 />
               </div>
-            )}
+            )} */}
           </div>
           <div className="flex-1 bg-primary/20 rounded-xl p-3 my-2 ml-2 flex flex-col justify-between">
             {product.product.category.waranty && (
@@ -188,7 +188,7 @@ export default function Page({ params }) {
                 {product.product.category.waranty.url && (
                   <div className="mt-4 p-4 bg-white border rounded-lg text-center text-sm">
                     <p className="text-sm text-gray-700 font-medium">
-                      Votre garantie produit n'est pas encore activée ?
+                      Votre garantie produit n&apos;est pas encore activée ?
                     </p>
                     <Link
                       href={product.product.category.waranty.url}

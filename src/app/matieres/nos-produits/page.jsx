@@ -31,7 +31,7 @@ export default function Page() {
   const [totalProducts, setTotalProducts] = useState(0);
   const [selectedFilters, setSelectedFilters] = useState({
     coupDeCoeur: false,
-    produitDurable: false,
+    // produitDurable: false,
   });
   const [openMenuMobile, setOpenMenuMobile] = useState(false);
   const [filters, setFilters] = useState([
@@ -46,7 +46,7 @@ export default function Page() {
     motifs: selectedMotifs,
     colors: selectedColors,
     coupDeCoeur: selectedFilters.coupDeCoeur,
-    produitDurable: selectedFilters.produitDurable,
+    // produitDurable: selectedFilters.produitDurable,
     searchTerm: searchTerm,
     page: currentPage,
     limit: 50,
@@ -323,12 +323,11 @@ export default function Page() {
       [filterName]: !prevFilters[filterName],
     }));
     setFilters((prevFilters) => {
-      // Retire le filtre existant si déjà présent
+      
       const updatedFilters = prevFilters.filter(
         (filter) => filter.text !== filterText
       );
 
-      // Ajoute ou retire le filtre selon l'état du checkbox
       if (prevFilters.some((filter) => filter.text === filterText)) {
         return updatedFilters;
       } else {
@@ -400,9 +399,9 @@ export default function Page() {
       ? external_product.heart == 1
       : true;
 
-    const matchesproduitDurable = selectedFilters.produitDurable
-      ? external_product.durable == 1
-      : true;
+    // const matchesproduitDurable = selectedFilters.produitDurable
+    //   ? external_product.durable == 1
+    //   : true;
 
     return (
       matchesSearchTerm &&
@@ -410,7 +409,7 @@ export default function Page() {
       matchesThikness &&
       matchesFinition &&
       matchesCoupDeCoeur &&
-      matchesproduitDurable &&
+      // matchesproduitDurable &&
       matchesColor &&
       matchesMotif
     );

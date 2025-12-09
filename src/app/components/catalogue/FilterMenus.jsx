@@ -56,7 +56,7 @@ const FilterMenus = ({
       <div>
         <div className="my-4">
           <fieldset>
-            <legend className="border-b border-or w-full mb-2">Filtres</legend>
+            {/* <legend className="border-b border-or w-full mb-2">Filtres</legend> */}
             <div className="relative flex items-start">
               <div className="flex h-6 items-center">
                 <input
@@ -90,7 +90,7 @@ const FilterMenus = ({
                 </label>
               </div>
             </div>
-            <div className="relative flex items-start">
+            {/* <div className="relative flex items-start">
               <div className="flex h-6 items-center">
                 <input
                   id={"eco_responsable"}
@@ -122,7 +122,7 @@ const FilterMenus = ({
                   />
                 </label>
               </div>
-            </div>
+            </div> */}
           </fieldset>
         </div>
         <div className="my-4">
