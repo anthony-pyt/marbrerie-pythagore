@@ -31,7 +31,7 @@ export function ModalProduct({ setOpen, open, product }) {
             className="relative transform overflow-hidden rounded-xl bg-white max-w-6xl m-12 shadow-xl  p-8"
           >
             <div className="w-full flex justify-end mb-8">
-              {product.product.category.logo_url != null ? (
+              {product.product?.category?.logo_url != null ? (
                 <img
                   src={product.product.category.logo_url}
                   className="h-5 p-0.5 bg-white rounded px-2"
