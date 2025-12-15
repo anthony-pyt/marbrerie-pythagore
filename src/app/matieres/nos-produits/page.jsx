@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import Filter from "../../components/catalogue/Filter";
 import FiltersMenu from "./../../components/catalogue/FilterMenus";
 import axios from "axios";
-import { colors, motifs } from "../../datas/filters";
+//  import { colors } from "../../datas/filters";
 
 export default function Page() {
   const [loadProducts, setLoadProducts] = useState(true);
@@ -28,6 +28,8 @@ export default function Page() {
   const [selectedThiknesses, setSelectedThiknesses] = useState([]);
   const [selectedFinitions, setSelectedFinitions] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
+  const [motifs, setMotifs]= useState([]);
+  const [colors, setColors]= useState([]);
   const [totalProducts, setTotalProducts] = useState(0);
   const [selectedFilters, setSelectedFilters] = useState({
     coupDeCoeur: false,
@@ -60,23 +62,30 @@ export default function Page() {
     setLoadThiknesses(true);
 
     try {
-      const [categoryResponse, thiknessResponse, finitionsResponse] =
+      const [categoryResponse, thiknessResponse, finitionsResponse, motifsResponse, colorsResponse] =
         await Promise.all([
           fetch(
             process.env.NEXT_PUBLIC_API_STOCK_URL +
-              "/stock/categories-with-parent-matieres"
+            "/stock/categories-with-parent-matieres"
           ),
           fetch(process.env.NEXT_PUBLIC_API_STOCK_URL + "/thiknesses"),
           fetch(process.env.NEXT_PUBLIC_API_STOCK_URL + "/finitions"),
+          fetch(process.env.NEXT_PUBLIC_API_STOCK_URL + "/patterns"),
+          fetch(process.env.NEXT_PUBLIC_API_STOCK_URL + "/colors"),
         ]);
 
       const categories = await categoryResponse.json();
       const thiknesses = await thiknessResponse.json();
       const finitions = await finitionsResponse.json();
+      const motifs = await motifsResponse.json();
+      const colorsData = await colorsResponse.json();
+
 
       setCategories(categories);
       setThiknesses(thiknesses);
       setFinitions(finitions);
+      setMotifs(motifs);
+      setColors(colorsData?.colors)
     } catch (error) {
       console.error(error);
     } finally {
@@ -347,52 +356,46 @@ export default function Page() {
     const matchesSearchTerm =
       searchTerm.length > 2
         ? external_product.label
-            .toLowerCase()
-            .includes(searchTerm.toLowerCase())
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase())
         : true;
 
     const matchesCategory =
       selectedCategories.length > 0
         ? selectedCategories.includes(
-            external_product.product.category?.parent?.id
-          ) ||
-          selectedCategories.includes(external_product.product.category?.id)
+          external_product.product.category?.parent?.id
+        ) ||
+        selectedCategories.includes(external_product.product.category?.id)
         : true;
 
     const matchesThikness =
       selectedThiknesses.length > 0
         ? selectedThiknesses.every((selectedThikness) =>
-            external_product.thiknesses.map(
-              (thikness) => thikness.id === selectedThikness
-            )
+          external_product.thiknesses.map(
+            (thikness) => thikness.id === selectedThikness
           )
+        )
         : true;
 
     const matchesFinition =
       selectedFinitions.length > 0
         ? external_product.finitions.some((finition) =>
-            selectedFinitions.includes(finition.id)
-          )
+          finition
+        )
         : true;
 
     const matchesMotif =
       selectedMotifs.length > 0
-        ? external_product?.patterns.some((pattern) =>
-            selectedMotifs.includes(pattern.name)
-          ) ||
-          external_product?.patterns.some((pattern) =>
-            selectedMotifs.includes(pattern.slug)
-          ) ||
-          external_product?.patterns.some((pattern) =>
-            selectedMotifs.includes(pattern.id)
-          )
+        ? external_product?.patterns.some((pattern) => selectedMotifs.includes(pattern.name)) ||
+        external_product?.patterns.some((pattern) => selectedMotifs.includes(pattern.slug))
+        || external_product?.patterns.some((pattern) => selectedMotifs.includes(pattern.id))
         : true;
 
     const matchesColor =
       selectedColors.length > 0
         ? external_product.colories.some((color) =>
-            selectedColors.includes(color.name)
-          )
+          selectedColors.includes(color.name)
+        )
         : true;
 
     const matchesCoupDeCoeur = selectedFilters.coupDeCoeur
