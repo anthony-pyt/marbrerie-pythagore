@@ -27,9 +27,9 @@ const PageTitle = ({ title }) => {
       />
 
       {/* Dégradé pour assurer la transition douce avec le reste de la page blanche */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white z-10" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white" />
 
-      <div className="relative z-20 flex flex-col items-center px-4">
+      <div className="relative flex flex-col items-center px-4">
         {/* Petit label au dessus (optionnel mais très 'luxe') */}
         <motion.span
           initial={{ opacity: 0, y: 10 }}

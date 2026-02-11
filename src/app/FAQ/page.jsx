@@ -3,6 +3,7 @@
 import { useState } from "react";
 import MainMenu from "../components/MainMenu";
 import PageTitle from "../components/PageTitle";
+import Footer from "../components/Footer";
 
 const faqData = [
   {
@@ -105,6 +106,7 @@ export default function Page() {
           </div>
         ))}
       </div>
+      <Footer/>
     </main>
   );
 }

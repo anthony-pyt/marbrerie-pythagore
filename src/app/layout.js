@@ -66,19 +66,8 @@ export default function RootLayout({ children }) {
           {children}
           <SpeedInsights />
           <Analytics />
-          <Script id="axeptio-setup" strategy="afterInteractive">
-            {`
-              window.axeptioSettings = {
-                clientId: "691c886703323c0d56aa44fe",
-                cookiesVersion: "fr-eu-gpdr-18-11-2025",
-              };
-              
-              (function(d, s) {
-                var t = d.getElementsByTagName(s)[0], e = d.createElement(s);
-                e.async = true; e.src = "//static.axept.io/sdk.js";
-                t.parentNode.insertBefore(e, t);
-              })(document, "script");
-            `}
+          <Script id="clickio-setup" strategy="afterInteractive">
+            {``}
           </Script>
         </GoogleReCaptchaProvider>
       </body>
