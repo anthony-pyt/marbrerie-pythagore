@@ -1,25 +1,35 @@
 import { Icon } from "@iconify/react";
-import Image from "next/image";
 
 const ServiceCard = ({ title, children, image }) => {
   return (
-    <div className="md:w-96 w-full bg-white rounded-xl shadow-xl border h-full group">
-      <div className="flex justify-center">
-        <div className="bg-primary h-48 w-full flex items-center justify-center rounded-xl shadow-lg m-2 group-hover:-translate-y-6 translate-y-0 overflow-hidden duration-300">
-          <img
-            className="w-full h-48 object-cover"
-            src={`${image}`}
-            loading="lazy"
-            width={600}
-            height={200}
-            alt=""
-          />
+    <div className="md:w-96 w-full bg-white border border-gray-100 h-full group flex flex-col transition-all duration-500 hover:border-or/70">
+      {/* Conteneur Image avec effet de zoom au survol */}
+      <div className="relative h-64 w-full overflow-hidden">
+        <img
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+          src={image}
+          loading="lazy"
+          alt={title}
+        />
+        {/* Overlay subtil qui s'estompe au survol */}
+        <div className="absolute inset-0 bg-secondary/10 group-hover:bg-transparent transition-colors duration-500" />
+      </div>
+
+      <div className="p-8 flex-grow flex flex-col">
+        {/* Titre avec ligne décorative */}
+        <div className="mb-6">
+          <h4 className="text-xl font-light uppercase tracking-[0.2em] text-secondary leading-tight">
+            {title}
+          </h4>
+          <div className="h-[2px] w-12 bg-or mt-4 transition-all duration-500 group-hover:w-20" />
         </div>
+
+        {/* Contenu (les listes stylisées précédemment) */}
+        <div className="text-sm text-gray-600">{children}</div>
       </div>
-      <div className="p-6">
-        <h4 className="font-semibold mb-4">{title}</h4>
-        <div>{children}</div>
-      </div>
+
+      {/* Finition discrète en bas de carte */}
+      <div className="h-1 w-full bg-gray-50 group-hover:bg-or/20 transition-colors duration-500" />
     </div>
   );
 };

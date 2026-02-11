@@ -22,7 +22,7 @@ const Input = ({ icon, type, id, placeholder, onInputChange, className }) => {
         id={id}
         {...(type !== "file" ? { value } : {})}
         onChange={handleChange} // Gestionnaire de changement
-        className="border border-gray-300 rounded-full px-4 py-2 text-sm w-full focus:outline-none shadow-sm transition duration-300 ease-in-out"
+        className="border border-gray-300 px-4 py-2 text-sm w-full focus:outline-none shadow-sm transition duration-300 ease-in-out"
         placeholder={placeholder}
       />
       <Icon

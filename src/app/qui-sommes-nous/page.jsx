@@ -25,33 +25,44 @@ export default function Page() {
     <main className="min-h-screen w-full">
       <MainMenu />
       <PageTitle title={"Qui sommes nous ?"} />
-      <div className="flex justify-center">
+      <div className="flex justify-center bg-secondary">
         <div
-          className="relative w-full text-center py-24 border overflow-hidden shadow-lg bg-cover bg-center"
+          className="relative w-full text-center py-32 border-y border-white/10 overflow-hidden bg-cover bg-center"
           style={{
             backgroundImage: `
-        linear-gradient(to right, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.9)),
+        linear-gradient(to bottom, rgba(14, 14, 14, 0.8), rgba(14, 14, 14, 0.6)),
         url('/images/bzh-drapeau.avif')
       `,
           }}
         >
+          {/* Overlay subtil pour la profondeur */}
+          <div className="absolute inset-0 bg-secondary/40 backdrop-grayscale-[0.5]" />
+
           {/* Contenu principal */}
-          <div className="relative z-10 w-11/12 lg:w-5/12 mx-auto text-white">
-            <h3 className="text-3xl lg:text-4xl font-semibold mb-4 text-white">
-              La marbrerie <span className="text-or-light">PYTHAGORE</span>
-            </h3>
-            <p className="text-lg lg:text-xl leading-relaxed">
-              accompagne depuis <span className="font-bold">30 ans</span> ses
-              clients professionnels dans la réalisation de leurs agencements en
-              pierre naturelle ou reconstituée, en fournissant des produits et
-              un service de la plus haute qualité.
+          <div className="relative z-10 w-11/12 lg:w-7/12 mx-auto text-white">
+            <div className="flex flex-col items-center mb-8">
+              <div className="h-[1px] w-12 bg-or mb-6" />
+              <h3 className="text-2xl lg:text-3xl font-light uppercase tracking-[0.3em] leading-tight">
+                La marbrerie <span className="text-or">PYTHAGORE</span>
+              </h3>
+            </div>
+
+            <p className="text-sm lg:text-base font-light leading-loose tracking-widest text-gray-300 uppercase italic">
+              accompagne depuis{" "}
+              <span className="text-white font-medium not-italic">30 ans</span>{" "}
+              ses clients professionnels dans la réalisation de leurs
+              agencements en pierre naturelle ou reconstituée, en fournissant
+              des produits et un service de la plus haute qualité.
             </p>
+
+            {/* Signature visuelle en bas */}
+            <div className="mt-10 h-[40px] w-[1px] bg-gradient-to-b from-or to-transparent mx-auto" />
           </div>
         </div>
       </div>
 
       <div className="space-y-12 overflow-hidden">
-        <div className="mt-24 w-full lg:w-11/12 mx-auto bg-gradient-to-br from-white to-or-light rounded-xl ">
+        <div className="mt-24 w-full lg:w-11/12 mx-auto bg-gradient-to-br from-white to-or-light">
           <div className="max-w-5xl mx-auto">
             <AnimatedTestimonials
               testimonials={numbers_key}
@@ -162,7 +173,7 @@ const RectangleSkeleton = ({
   return (
     <div
       className={clsx(
-        "rounded-xl shadow-lg flex flex-col md:flex-row items-center gap-6 overflow-hiddens",
+        "shadow-lg flex flex-col md:flex-row items-center gap-6 overflow-hiddens",
         isImageRight ? "md:flex-row-reverse" : "md:flex-row",
         className
       )}
@@ -174,7 +185,7 @@ const RectangleSkeleton = ({
           alt={text}
           width={350}
           height={250}
-          className="rounded-lg object-cover w-full h-full"
+          className="object-cover w-full h-full"
         />
       </div>
 

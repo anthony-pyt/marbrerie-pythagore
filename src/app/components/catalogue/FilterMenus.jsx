@@ -34,13 +34,13 @@ const FilterMenus = ({
         <label htmlFor="account-number" className="sr-only">
           Recherche
         </label>
-        <div className="relative mt-2 rounded-md shadow-sm">
+        <div className="relative mt-2 shadow-sm">
           <input
             id="account-number"
             name="account-number"
             type="search"
             placeholder="Ex: sirius, zimbabwe"
-            className="block w-full rounded-md border-0 p-1.5 pl-8 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
+            className="block w-full border-0 p-1.5 pl-8 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-1">
@@ -65,7 +65,7 @@ const FilterMenus = ({
                   type="checkbox"
                   aria-describedby={"coup de cœur"}
                   checked={selectedFilters.coupDeCoeur}
-                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                  className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                   onChange={() =>
                     handleFilterChange(
                       "coupDeCoeur",
@@ -144,7 +144,7 @@ const FilterMenus = ({
                       name={category.id}
                       type="checkbox"
                       aria-describedby={category.label}
-                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                      className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                       checked={selectedCategories.includes(category.id)}
                       onChange={() => handleCategoryChange(category, true)}
                     />
@@ -170,7 +170,7 @@ const FilterMenus = ({
                             name={child.id}
                             type="checkbox"
                             aria-describedby={child.label}
-                            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                            className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                             checked={selectedCategories.includes(child.id)}
                             onChange={() => handleCategoryChange(child)}
                           />
@@ -207,7 +207,7 @@ const FilterMenus = ({
                       id={thikness.label}
                       type="checkbox"
                       aria-describedby={"coup de coeur"}
-                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                      className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                       onChange={() => handleThiknessChange(thikness)}
                     />
                   </div>
@@ -238,7 +238,7 @@ const FilterMenus = ({
                       id={finition.label}
                       type="checkbox"
                       aria-describedby={finition.label}
-                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                      className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                       onChange={() => handleFinitionChange(finition)}
                     />
                   </div>
@@ -267,7 +267,7 @@ const FilterMenus = ({
                       id={motif.name}
                       type="checkbox"
                       aria-describedby={"coup de coeur"}
-                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                      className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                       onChange={() => handleMotifChange(motif)}
                     />
                   </div>
@@ -296,7 +296,7 @@ const FilterMenus = ({
                       name={index}
                       type="checkbox"
                       aria-describedby={color.name}
-                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                      className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                       onChange={() => handleColorChange(color)}
                     />
                   </div>

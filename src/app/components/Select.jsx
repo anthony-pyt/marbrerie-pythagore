@@ -20,7 +20,7 @@ const Select = ({ icon, id, options, placeholder, onSelectChange, className, err
         id={id}
         value={selected} // Liaison de la valeur
         onChange={handleChange} // Gestionnaire de changement
-        className={`border border-gray-300 rounded-full px-4 py-2 text-sm w-full focus:outline-none shadow-sm transition duration-300 ease-in-out 
+        className={`border border-gray-300 px-4 py-2 text-sm w-full focus:outline-none shadow-sm transition duration-300 ease-in-out 
             ${selected ? "text-gray-900" : "text-gray-400"}`}
       >
         <option value="" disabled>

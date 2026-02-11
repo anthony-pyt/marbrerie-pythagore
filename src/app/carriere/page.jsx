@@ -61,7 +61,7 @@ export default function Page() {
           Découvrez ces métiers qui nous permettent d&apos;être :
         </p>
       </div>
-      <div className="container mx-auto my-8">
+      <div className="container mx-auto my-8 px-4">
         <h2 className="text-4xl font-title">NOS MÉTIERS</h2>
         <div className="m-4 p-4 rounded-xl ">
           <SectionTestimonials
@@ -81,27 +81,29 @@ export default function Page() {
           />
         </div>
       </div>
-      <SectionCommitments />
-      <ListJobs
-        jobs={jobs}
-        loading={loadingJobs}
-        setShowApplicationForm={setShowApplicationForm}
-        showApplicationForm={showApplicationForm}
-        successMessage={successMessage}
-      />
-      {showApplicationForm && (
-        <ModalSendForm
-          onClose={() => setShowApplicationForm(false)}
-          setSuccessMessage={setSuccessMessage}
+      <div className="px-4">
+        <SectionCommitments />
+        <ListJobs
+          jobs={jobs}
+          loading={loadingJobs}
+          setShowApplicationForm={setShowApplicationForm}
+          showApplicationForm={showApplicationForm}
+          successMessage={successMessage}
         />
-      )}
+        {showApplicationForm && (
+          <ModalSendForm
+            onClose={() => setShowApplicationForm(false)}
+            setSuccessMessage={setSuccessMessage}
+          />
+        )}
+      </div>
       <Footer />
     </main>
   );
 }
 
 const SectionTestimonials = ({ title, images, retardInterval }) => (
-  <div className="container mx-auto m-4 bg-gray-50 rounded-xl p-4">
+  <div className="container mx-auto m-4 bg-gray-50 p-4">
     <h2 className="text-2xl text-center md:text-left">{title}</h2>
     <AnimatedTestimonials
       testimonials={images}
@@ -153,7 +155,7 @@ const ListJobs = ({
   }, [selectedJob]);
 
   return (
-    <div className="mt-12 mx-auto bg-secondary p-12 rounded-xl lg:w-10/12 w-full">
+    <div className="mt-12 mx-auto bg-secondary p-12 lg:w-10/12 w-full">
       <div className="flex items-center justify-center w-full">
         <div className="mb-6 flex items-center space-x-3">
           <h2 className="text-white">Nos dernières offres d&apos;emploi</h2>
@@ -185,7 +187,7 @@ const ListJobs = ({
           <p>Récupération des données...</p>
         </div>
       )}
-      <div>
+      <div className="">
         <div className="w-full flex justify-center items-center max-w-5xl mx-auto">
           {jobs.length === 0 ? (
             <div className="text-center p-2 text-white flex flex-col items-center">
@@ -195,7 +197,7 @@ const ListJobs = ({
                 height="64"
                 className="mb-8"
               />
-              <div className="text-sm flex flex-col items-center justify-center text-white border rounded-xl p-4">
+              <div className="text-sm flex flex-col items-center justify-center text-white border p-4">
                 <p className="font-semibold text-center underline underline-offset-2">
                   Aucune offre pour le moment
                 </p>
@@ -213,15 +215,13 @@ const ListJobs = ({
               {jobs.map((item, index) => (
                 <div
                   key={index}
-                  className="border rounded-xl shadow p-4 mb-4 bg-white cursor-pointer"
+                  className="border shadow p-4 mb-4 bg-white cursor-pointer"
                   onClick={() => setSelectedJob(item)}
                 >
                   <div className="flex justify-between items-center mb-2">
                     <p className="font-bold uppercase">{item.title}</p>
                     <div className="flex justify-end items-center space-x-2">
-                      <p className="text-xs border shadow rounded px-2">
-                        {item.type}
-                      </p>
+                      <p className="text-xs border shadow px-2">{item.type}</p>
                       {item.weekly_hours && (
                         <p className="text-sm">{item?.weekly_hours + "h"}</p>
                       )}
@@ -239,7 +239,7 @@ const ListJobs = ({
                   </div>
                 </div>
               ))}
-              <div className="text-sm flex flex-col items-center justify-center mt-8 text-white border rounded-xl p-4">
+              <div className="text-sm flex flex-col items-center justify-center mt-8 text-white border p-4">
                 <p className="font-semibold text-center underline underline-offset-2">
                   Aucune offre ne correspond à votre profil ?
                 </p>
@@ -258,87 +258,125 @@ const ListJobs = ({
 
       {/* MODALE */}
       {selectedJob && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 p-4 overflow-y-auto">
+        <div className="fixed inset-0 flex items-center justify-center bg-secondary/40 backdrop-blur-sm z-50 p-4 md:p-8">
           <div
             ref={modalRef}
-            className="bg-white p-6 rounded-xl shadow-lg max-w-7xl w-full relative max-h-screen overflow-y-auto"
+            className="bg-white shadow-2xl max-w-5xl w-full relative max-h-[90vh] flex flex-col overflow-hidden"
           >
-            {/* Bouton de fermeture */}
+            {/* Bouton de fermeture élégant */}
             <button
-              className="absolute top-3 right-3 text-gray-500 hover:text-gray-800 transition"
+              className="absolute top-5 right-5 z-10 p-2 text-gray-400 hover:text-or transition-colors"
               onClick={() => setSelectedJob(null)}
             >
-              ✖
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="1.5"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
             </button>
 
-            {/* Titre du job */}
-            <h3 className="text-2xl font-bold text-secondary border-b border-gray-300 pb-2">
-              {selectedJob.title}
-            </h3>
-
-            {/* Infos générales */}
-            <div className="mt-4 space-y-3 text-gray-700 border-b border-gray-300 pb-4">
-              <p className="flex items-center text-sm text-gray-600">
-                <span className="mr-2">📄</span> <strong>Type :</strong>{" "}
-                <span className="ml-1">{selectedJob.type}</span>
-              </p>
-              <p className="flex items-center text-sm text-gray-600">
-                <span className="mr-2">⏳</span>{" "}
-                <strong>Heures / semaine :</strong>
-                {selectedJob.weekly_hours ? (
-                  <span className="ml-1">{selectedJob.weekly_hours}h</span>
-                ) : (
-                  <span className="ml-1">Non précisé</span>
-                )}
-              </p>
-              <p className="flex items-center text-sm text-gray-600">
-                <span className="mr-2">💰</span>{" "}
-                <strong>Salaire / mois : </strong>{" "}
-                {selectedJob.salary ? (
-                  <span className="ml-1">{selectedJob.salary} €</span>
-                ) : (
-                  <span className="ml-1">Selon profil</span>
-                )}
-              </p>
+            {/* Header avec ligne décorative */}
+            <div className="p-8 pb-4 border-b border-gray-100">
+              <span className="text-[10px] uppercase tracking-[0.3em] text-or font-bold mb-2 block">
+                Offre d'emploi
+              </span>
+              <h3 className="text-3xl font-light uppercase tracking-wider text-secondary">
+                {selectedJob.title}
+              </h3>
+              <div className="h-[2px] w-16 bg-or mt-4" />
             </div>
 
-            {/* Description */}
-            <div className="mt-4 border-b border-gray-300 pb-4">
-              <h4 className="text-lg font-semibold text-gray-800 flex items-center">
-                📝 <span className="ml-2">Description</span>
-              </h4>
-              <p
-                className="text-sm text-gray-600 mt-1 p-6 border rounded-xl leading-relaxed"
-                dangerouslySetInnerHTML={{ __html: selectedJob.description }}
-              ></p>
+            {/* Contenu Scrollable */}
+            <div className="overflow-y-auto p-8 pt-4 space-y-10">
+              {/* Grille d'infos rapides */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 bg-gray-50 p-6">
+                <div className="flex flex-col">
+                  <span className="text-[11px] uppercase tracking-widest text-gray-400 mb-1 font-semibold">
+                    Contrat
+                  </span>
+                  <span className="text-secondary font-medium">
+                    {selectedJob.type}
+                  </span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[11px] uppercase tracking-widest text-gray-400 mb-1 font-semibold">
+                    Temps de travail
+                  </span>
+                  <span className="text-secondary font-medium">
+                    {selectedJob.weekly_hours
+                      ? `${selectedJob.weekly_hours}h / semaine`
+                      : "Non précisé"}
+                  </span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[11px] uppercase tracking-widest text-gray-400 mb-1 font-semibold">
+                    Rémunération
+                  </span>
+                  <span className="text-secondary font-medium">
+                    {selectedJob.salary
+                      ? `${selectedJob.salary} € / mois`
+                      : "Selon profil"}
+                  </span>
+                </div>
+              </div>
+
+              {/* Sections de texte */}
+              <div className="space-y-8">
+                {/* Description */}
+                <section>
+                  <h4 className="text-sm uppercase tracking-[0.2em] text-secondary font-bold mb-4 flex items-center">
+                    <span className="w-2 h-2 bg-or rounded-full mr-3" />
+                    Description du poste
+                  </h4>
+                  <div
+                    className="text-gray-600 leading-relaxed text-sm prose prose-sm max-w-none px-5 border-l-2 border-gray-50"
+                    dangerouslySetInnerHTML={{
+                      __html: selectedJob.description,
+                    }}
+                  />
+                </section>
+
+                {/* Profil & Formation côte à côte sur desktop */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <section>
+                    <h4 className="text-sm uppercase tracking-[0.2em] text-secondary font-bold mb-4 flex items-center">
+                      <span className="w-2 h-2 bg-or rounded-full mr-3" />
+                      Profil recherché
+                    </h4>
+                    <p className="text-sm text-gray-600 leading-relaxed px-5">
+                      {selectedJob.profile_sought ?? "Non précisé"}
+                    </p>
+                  </section>
+
+                  <section>
+                    <h4 className="text-sm uppercase tracking-[0.2em] text-secondary font-bold mb-4 flex items-center">
+                      <span className="w-2 h-2 bg-or rounded-full mr-3" />
+                      Formation
+                    </h4>
+                    <p className="text-sm text-gray-600 leading-relaxed px-5">
+                      {selectedJob.formation ?? "Non précisé"}
+                    </p>
+                  </section>
+                </div>
+              </div>
             </div>
 
-            {/* Profil recherché */}
-            <div className="mt-4 border-b border-gray-300 pb-4">
-              <h4 className="text-lg font-semibold text-gray-800 flex items-center">
-                🔍 <span className="ml-2">Profil recherché</span>
-              </h4>
-              <p className="text-sm text-gray-600 mt-1">
-                {selectedJob.profile_sought ?? "Non précisé"}
-              </p>
-            </div>
-
-            {/* Formation requise */}
-            <div className="mt-4">
-              <h4 className="text-lg font-semibold text-gray-800 flex items-center">
-                🎓 <span className="ml-2">Formation</span>
-              </h4>
-              <p className="text-sm text-gray-600 mt-1">
-                {selectedJob.formation ?? "Non précisé"}
-              </p>
-            </div>
-            <div className="flex justify-end mt-10">
+            {/* Footer fixe avec bouton d'action */}
+            <div className="p-6 bg-white border-t border-gray-100 flex justify-end">
               <Button
-                text={"Je postule"}
+                text={"Postuler à cette offre"}
                 color="or"
                 size="big"
+                className="shadow-xl hover:shadow-or/20 transition-all transform hover:-translate-y-1"
                 onClick={() => setShowApplicationForm(true)}
-                // disabled={sendMessage}
               >
                 Postuler
               </Button>
@@ -414,7 +452,7 @@ const ModalSendForm = ({ onClose, setSuccessMessage }) => {
     if (
       formData.phone_number &&
       !/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/.test(
-        formData.phone_number
+        formData.phone_number,
       )
     ) {
       errors.phone_number = "Le numéro de téléphone n'est pas correct";

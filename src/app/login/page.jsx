@@ -3,7 +3,9 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Button from "@/components/Button";
+import Alert from "@/components/Alert"; // Ton nouveau composant d'alerte
 import { login } from "@/api/services/authServices";
+import { Icon } from "@iconify/react";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -11,6 +13,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [viewPassword, setWiewPassword] = useState(false)
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -19,8 +22,6 @@ export default function LoginPage() {
 
     try {
       const res = await login({ email, password });
-      console.log("Login successful, redirecting to /admin", res);
-
       router.push("/admin");
     } catch (err) {
       setError("Email ou mot de passe incorrect !");
@@ -29,61 +30,99 @@ export default function LoginPage() {
     }
   };
 
+  const handleViewPasswoard = () => {
+    setWiewPassword(!viewPassword)
+  }
+
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="absolute inset-0">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-primary font-light">
+      {/* Fond Immersif avec Overlay Pythagore */}
+      <div className="absolute inset-0 z-0">
         <img
           src="/images/echantillons.JPEG"
-          alt=""
-          className="w-screen h-screen object-cover"
+          alt="Pythagore Archive"
+          className="w-full h-full object-cover grayscale"
         />
+        <div className="absolute inset-0 bg-secondary/80 backdrop-blur" />
       </div>
-      <div className="bg-white px-8 py-16 rounded-2xl w-full max-w-md z-10">
-        <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
-          Connexion
-        </h2>
 
-        {error && (
-          <p className="text-red-500 text-sm text-center mb-4 bg-red-100 p-2 rounded-lg">
-            {error}
+      <div className="relative z-10 w-full max-w-md bg-secondary/50 border border-white/10 p-12 shadow-2xl backdrop-blur-md">
+        <div className="flex flex-col items-center mb-12">
+          <div className="h-[1px] w-12 bg-or mb-6" />
+          <h2 className="text-2xl font-light text-white uppercase tracking-[0.3em]">
+            Connexion
+          </h2>
+          <p className="text-[10px] text-or uppercase tracking-widest mt-2">
+            Espace Administration
           </p>
-        )}
+        </div>
 
-        <form onSubmit={handleLogin}>
-          <div className="space-y-4">
-            <div className="relative">
-              {/* <FiMail className="absolute left-3 top-3 text-gray-500" size={20} /> */}
+        <form onSubmit={handleLogin} className="space-y-8">
+          <div className="space-y-6">
+            <div className="relative group">
+              <Icon
+                icon="solar:letter-linear"
+                className="absolute left-0 top-3 text-gray-500 group-focus-within:text-or transition-colors"
+                size={18}
+              />
               <input
                 type="email"
-                placeholder="Email"
+                placeholder="EMAIL"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full pl-10 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                className="w-full bg-transparent border-b border-white/20 pl-8 py-3 text-white placeholder:text-gray-600 focus:border-or outline-none transition-all text-xs uppercase tracking-widest"
                 required
               />
             </div>
 
-            <div className="relative">
-              {/* <FiLock className="absolute left-3 top-3 text-gray-500" size={20} /> */}
+            <div className="relative group">
+              <Icon
+                icon="solar:lock-password-linear"
+                className="absolute left-0 top-3 text-gray-500 group-focus-within:text-or transition-colors"
+                size={18}
+              />
               <input
-                type="password"
-                placeholder="Mot de passe"
+                type={viewPassword ? "text" : "password"}
+                placeholder="MOT DE PASSE"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full pl-10 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                className="w-full bg-transparent border-b border-white/20 pl-8 py-3 text-white placeholder:text-gray-600 focus:border-or outline-none transition-all text-xs tracking-widest"
                 required
+              />
+              <Icon
+                icon={
+                  viewPassword ? "solar:eye-closed-linear" : "solar:eye-linear"
+                }
+                className="absolute right-0 top-3 text-gray-500 group-focus-within:text-or transition-colors"
+                size={18}
+                onClick={handleViewPasswoard}
               />
             </div>
           </div>
-          <div className="flex justify-center mt-12">
+
+          <div className="flex flex-col items-center pt-6">
             <Button
-              text={loading ? "Connexion..." : "Se connecter"}
+              text={loading ? "VÉRIFICATION..." : "ACCÉDER À L'INTERFACE"}
               type="submit"
               loading={loading}
+              color="or"
+              className="w-full"
             />
           </div>
         </form>
       </div>
+      <div className="my-4 w-full flex justify-center">
+        {/* Alerte flottante */}
+        <Alert
+          isVisible={!!error}
+          message={error}
+          type="error"
+          onClose={() => setError("")}
+        />
+      </div>
+
+      {/* Ligne décorative signature */}
+      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 w-[1px] h-12 bg-gradient-to-t from-or to-transparent opacity-50" />
     </div>
   );
 }

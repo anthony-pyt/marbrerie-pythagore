@@ -1,12 +1,13 @@
+"use client";
 import { useEffect, useRef } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
-// Fix pour les icônes Leaflet qui ne s'affichent pas dans Next.js
+// Fix pour les icônes Leaflet
 import markerIconPng from "leaflet/dist/images/marker-icon.png";
 import markerShadowPng from "leaflet/dist/images/marker-shadow.png";
 
-// Configuration de l'icône par défaut
 const defaultIcon = L.icon({
   iconUrl: markerIconPng.src,
   shadowUrl: markerShadowPng.src,
@@ -16,37 +17,39 @@ const defaultIcon = L.icon({
 });
 
 const FooterMaps = () => {
-  const markerRefs = useRef({
-    laniscat: null,
-    rouen: null,
-  });
+  const markerRefs = useRef({});
 
   useEffect(() => {
-    // Fix pour s'assurer que Leaflet fonctionne bien dans Next.js
+    // Fix Leaflet Next.js
     delete L.Icon.Default.prototype._getIconUrl;
     L.Icon.Default.mergeOptions({
       iconUrl: markerIconPng.src,
       shadowUrl: markerShadowPng.src,
     });
 
-    // Ouvrir les popups après un délai plus long
+    // Ouverture automatique de la popup principale
     const timer = setTimeout(() => {
-      markerRefs.current.laniscat.openPopup();
-    }, 500); // Augmentez le délai si nécessaire
+      if (markerRefs.current.laniscat) {
+        markerRefs.current.laniscat.openPopup();
+      }
+    }, 1000);
 
     return () => clearTimeout(timer);
   }, []);
 
   return (
-    <div className="w-full h-full absolute inset-0">
+    <div className="w-full h-full absolute inset-0 bg-secondary grayscale-[0.5] hover:grayscale-0 transition-all duration-1000">
       <MapContainer
-        center={[47.99604006779647, -1.261240943902487]}
-        zoom={7}
-        className="h-full w-full"
+        center={[47.5, 1.0]} // Recentré pour voir Laniscat, Rouen et Carrara
+        zoom={6}
+        className="h-full w-full custom-map"
         scrollWheelZoom={false}
       >
-        {/* Fond de carte OpenStreetMap */}
-        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        {/* Style de carte "CartoDB Positron" - Plus élégant et gris pour le luxe */}
+        <TileLayer
+          url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
+        />
 
         {zones.map((zone) => (
           <Marker
@@ -55,26 +58,55 @@ const FooterMaps = () => {
             icon={defaultIcon}
             ref={(ref) => (markerRefs.current[zone.id] = ref)}
           >
-            <Popup>
-              <div>
-                <div className="flex justify-center w-full my-4">
-                    <img src={zone.img} alt="" className="h-8 w-auto"/>
+            <Popup className="custom-popup">
+              <div className="p-2 min-w-[200px] bg-white">
+                <div className="flex justify-center w-full mb-4">
+                  <img
+                    src={zone.img}
+                    alt=""
+                    className="h-6 w-auto object-contain"
+                  />
                 </div>
-                {zone.name}
-                <br />
-                {zone.address}
+
+                <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-secondary mb-1">
+                  {zone.name}
+                </h4>
+
+                <p className="text-[10px] text-gray-500 leading-relaxed mb-4 uppercase tracking-wider">
+                  {zone.address}
+                </p>
+
+                <a
+                  className="inline-block text-[9px] uppercase tracking-[0.3em] text-or border-b border-or/30 hover:border-or transition-colors pb-1"
+                  href={zone.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Itinéraire →
+                </a>
               </div>
-              <a
-                className="underline underline-offset-2"
-                href={zone.url}
-                target="_blank"
-              >
-                Voir sur Google
-              </a>
             </Popup>
           </Marker>
-        ))}       
+        ))}
       </MapContainer>
+
+      {/* Styles injectés pour forcer les angles droits sur Leaflet */}
+      <style jsx global>{`
+        .custom-popup .leaflet-popup-content-wrapper {
+          border-radius: 0 !important;
+          padding: 0 !important;
+          box-shadow: 20px 20px 60px rgba(0, 0, 0, 0.1);
+        }
+        .custom-popup .leaflet-popup-content {
+          margin: 0 !important;
+        }
+        .custom-popup .leaflet-popup-tip {
+          display: none; /* Plus minimaliste */
+        }
+        .custom-map {
+          filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+        }
+      `}</style>
     </div>
   );
 };
@@ -88,23 +120,22 @@ export const zones = [
     address: "ZA Pen Ar Hoat 22570 Laniscat",
     position: [48.236577, -3.132568],
     img: "/images/logo_pythagore_texte_noir.png",
-    url: "https://www.google.fr/maps/place/Pythagore/@48.2380163,-3.1308951,16.54z/data=!4m6!3m5!1s0x4811b862bc91a1cd:0xc20dcfe6332b25b7!8m2!3d48.2363331!4d-3.1331111!16s%2Fg%2F1tj9bdl0?entry=ttu&g_ep=EgoyMDI1MDMxMi4wIKXMDSoJLDEwMjExNDU1SAFQAw%3D%3D",
+    url: "https://www.google.com/maps?q=Pythagore+Laniscat",
   },
   {
     id: "rouen",
-    name: "Dépot logisitque de Rouen",
-    address:
-      "ZA de Caillemare, 3 Pl. Caillemare, 27310 Saint-Ouen-de-Thouberville",
-    position: [49.35622727147632, 0.8830444288355398],
+    name: "Dépôt Normandie",
+    address: "ZA de Caillemare, 27310 St-Ouen-de-Thouberville",
+    position: [49.35622, 0.88304],
     img: "/images/logo_pythagore_texte_noir.png",
-    url: "https://www.google.fr/maps/place/Pythagore+Normandie/@49.3560945,0.8804588,17z/data=!3m1!4b1!4m6!3m5!1s0x47e11d4aac9a4ce1:0x68331a7b936e18f0!8m2!3d49.356091!4d0.8830337!16s%2Fg%2F11vylz5_74?entry=ttu&g_ep=EgoyMDI1MDMxMi4wIKXMDSoJLDEwMjExNDU1SAFQAw%3D%3D",
+    url: "https://www.google.com/maps?q=Pythagore+Normandie",
   },
   {
     id: "carrara",
-    name: "Carrara",
+    name: "Carrara Marbrerie",
     address: "206 rue du Revermont 01440 Viriate",
     position: [46.226431, 5.25396],
     img: "/images/logos/carrara/Logo_CARRARA_fin.png",
-    url: "https://www.google.fr/maps/place/CARRARA%C2%AE/@46.228054,5.2549573,19.49z/data=!4m10!1m2!2m1!1scarrara+marbrerie!3m6!1s0x47f35263c894c68b:0x692645d742ff8f15!8m2!3d46.2280303!4d5.2551107!15sChFjYXJyYXJhIG1hcmJyZXJpZVoTIhFjYXJyYXJhIG1hcmJyZXJpZZIBEW1hcmJsZV9jb250cmFjdG9ymgEjQ2haRFNVaE5NRzluUzBWSlEwRm5TVU5ZTW1OcE9XWjNFQUWqAToQATIfEAEiG9Y4ddN-amsM_uFq4lwCMs3xQ--WUt3XeVHytjIVEAIiEWNhcnJhcmEgbWFyYnJlcmll4AEA-gEECCcQNA!16s%2Fg%2F1td7h205?hl=fr&entry=ttu&g_ep=EgoyMDI1MDkwMi4wIKXMDSoASAFQAw%3D%3D",
+    url: "https://www.google.com/maps?q=Carrara+Marbrerie+Viriate",
   },
 ];

@@ -78,7 +78,7 @@ export default function Page() {
         </div>
       </section>
       <section>
-        <div className="mx-auto px-6 mt-12 py-6">
+        <div className="px-6 mt-12 py-6">
           <div className="text-center mb-12">
             <h3 className="text-3xl font-extrabold text-gray-800 mb-4">
               Nos projets
@@ -88,7 +88,7 @@ export default function Page() {
               notre savoir-faire
             </p>
           </div>
-          <div className="container mx-auto m-4 rounded-3xl p-4 bg-gradient-to-br from-white to-or-light">
+          <div className="container mx-auto m-4 p-4 bg-gradient-to-br from-white to-or-light">
             <AnimatedTestimonials testimonials={projetsSpecifiques} autoplay />
           </div>
         </div>

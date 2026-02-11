@@ -133,7 +133,7 @@ export default function Page() {
       if (
         formData.proTel &&
         !/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/.test(
-          formData.proTel
+          formData.proTel,
         )
       ) {
         errors.proTel =
@@ -159,7 +159,7 @@ export default function Page() {
     if (
       formData.phone_number &&
       !/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/.test(
-        formData.phone_number
+        formData.phone_number,
       )
     ) {
       errors.phone_number = "Le numéro de téléphone n'est pas correct";
@@ -215,7 +215,7 @@ export default function Page() {
       <div className="w-full flex justify-center">
         <div className="flex flex-col lg:flex-row mb-24">
           <div className="flex-1 max-w-3xl">
-            <div className="border rounded-2xl px-2 md:px-12 py-2 md:py-12 my-4 bg-white">
+            <div className="border px-2 md:px-12 py-2 md:py-12 my-4 bg-white">
               <h5 className="mb-4 uppercase">
                 Êtes-vous un professionnel ou un particulier ?
               </h5>
@@ -225,7 +225,7 @@ export default function Page() {
                     handleIsAPro("pro");
                     handleInputChange("isAPro", "pro");
                   }}
-                  className={`rounded-2xl flex flex-col items-center justify-center space-y-4 p-4 flex-1 group m-2 ${
+                  className={`flex flex-col items-center justify-center space-y-4 p-4 flex-1 group m-2 ${
                     isAPro === "pro"
                       ? "bg-secondary"
                       : "bg-gray-100 hover:bg-secondary transform duration-200"
@@ -246,7 +246,7 @@ export default function Page() {
                     handleIsAPro("particulier");
                     handleInputChange("isAPro", "particulier");
                   }}
-                  className={`rounded-2xl flex flex-col items-center justify-center space-y-4 p-4 flex-1 group m-2 ${
+                  className={`flex flex-col items-center justify-center space-y-4 p-4 flex-1 group m-2 ${
                     isAPro === "particulier"
                       ? "bg-secondary"
                       : "bg-gray-100 hover:bg-secondary transform duration-200"
@@ -266,7 +266,7 @@ export default function Page() {
             </div>
             {isAPro && (
               <div>
-                <div className="border rounded-2xl px-2 md:px-12 py-2 md:py-12 bg-white">
+                <div className="border  px-2 md:px-12 py-2 md:py-12 bg-white">
                   <h5 className="mb-4 uppercase">
                     Pour quelle raison vous souhaitez nous contacter ?{" "}
                   </h5>
@@ -276,7 +276,7 @@ export default function Page() {
                         handleHasProject("yes");
                         handleInputChange("hasProject", "yes");
                       }}
-                      className={`rounded-2xl flex flex-col items-center justify-center space-y-4 p-4 flex-1 group m-2 ${
+                      className={` flex flex-col items-center justify-center space-y-4 p-4 flex-1 group m-2 ${
                         hasProject === "yes"
                           ? "bg-secondary"
                           : "bg-gray-100 hover:bg-secondary transform duration-200"
@@ -297,7 +297,7 @@ export default function Page() {
                         handleHasProject("no");
                         handleInputChange("hasProject", "no");
                       }}
-                      className={`rounded-2xl flex flex-col items-center justify-center space-y-4 p-4 flex-1 group m-2 ${
+                      className={` flex flex-col items-center justify-center space-y-4 p-4 flex-1 group m-2 ${
                         hasProject === "no"
                           ? "bg-secondary"
                           : "bg-gray-100 hover:bg-secondary transform duration-200"
@@ -319,7 +319,7 @@ export default function Page() {
             )}
             {hasProject === "yes" && (
               <div>
-                <div className="border rounded-2xl px-2 md:px-12 py-2 md:py-12 my-4 bg-white">
+                <div className="border px-2 md:px-12 py-2 md:py-12 my-4 bg-white">
                   <h5 className="mb-4">
                     Quels sont les informations du projet ?
                   </h5>
@@ -375,7 +375,7 @@ export default function Page() {
                   </div>
                 </div>
                 {isAPro == "particulier" && (
-                  <div className="border rounded-2xl px-2 md:px-12 py-2 md:py-12 my-4 bg-white">
+                  <div className="border px-2 md:px-12 py-2 md:py-12 my-4 bg-white">
                     <h5 className="mb-4">
                       Êtes vous accompagné par un professionnel ?
                     </h5>
@@ -487,7 +487,7 @@ export default function Page() {
                     )}
                   </div>
                 )}
-                <div className="border rounded-2xl px-2 md:px-12 py-2 md:py-12 my-4 bg-white">
+                <div className="border px-2 md:px-12 py-2 md:py-12 my-4 bg-white">
                   <h5 className="mb-4">Avez-vous des documents à fournir ?</h5>
                   <FileUpload
                     onChange={(newValue) =>
@@ -495,8 +495,10 @@ export default function Page() {
                     }
                   />
                 </div>
-                <div className="border rounded-2xl px-2 md:px-12 py-2 md:py-6 my-4 bg-white">
-                  <h5 className="mb-4">Quelle est l'adresse du projet ?</h5>
+                <div className="border  px-2 md:px-12 py-2 md:py-6 my-4 bg-white">
+                  <h5 className="mb-4">
+                    Quelle est l&apos;adresse du projet ?
+                  </h5>
                   <div className="flex flex-col flex-wrap mt-4">
                     <Input
                       type="text"
@@ -541,7 +543,7 @@ export default function Page() {
             )}
             {hasProject != null && (
               <>
-                <div className="border rounded-2xl px-2 md:px-12 py-2 md:py-12 my-4 bg-white">
+                <div className="border px-2 md:px-12 py-2 md:py-12 my-4 bg-white">
                   <h5 className="mb-4 uppercase">A Propos de vous</h5>
                   <div className="flex flex-col justify-center flex-wrap">
                     {isAPro === "pro" && (
@@ -633,7 +635,7 @@ export default function Page() {
                 <div className="flex flex-col items-center mt-12">
                   <div className="w-full">
                     {hasProject == "yes" && (
-                      <div className="w-full text-sm p-2 bg-blue-50 border border-blue-100 rounded-lg mb-4 shadow">
+                      <div className="text-sm gap-4 w-full p-2 border backdrop-blur-md shadow-lg mb-2 text-blue-700 bg-blue-400/10 border-blue-400/20">
                         <p>
                           Faut-il prévoir des découpes évier, plaque,
                           robinetterie ? Des façonnages ?
@@ -643,8 +645,8 @@ export default function Page() {
                           souhaitées ?
                         </p>
                         <p>
-                          N'hésitez pas à donner le plus de détails possible
-                          pour une prise en charge plus efficace.
+                          N&apos;hésitez pas à donner le plus de détails
+                          possible pour une prise en charge plus efficace.
                         </p>
                       </div>
                     )}
@@ -664,11 +666,14 @@ export default function Page() {
                     <p className="error-message">{formErrors["message"]}</p>
                   </div>
                   {Object.keys(formErrors).length > 0 && (
-                    <div className="m-4 bg-red-50 rounded-xl p-2 text-sm shadow-xl">
-                      <p className="text-red-600 font-bold">
-                        Veuillez corriger les erreurs suivantes avant l'envoi du
-                        message...
-                      </p>
+                    <div className="my-4">
+                      <Alert
+                        isVisible={() => true}
+                        message={
+                          "Veuillez corriger les erreurs suivantes avant l'envoi du message..."
+                        }
+                        type="error"
+                      />
                     </div>
                   )}
                   <div className="flex justify-center mt-2">

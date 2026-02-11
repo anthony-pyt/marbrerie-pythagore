@@ -87,7 +87,7 @@ export const FileUpload = ({ onChange }) => {
       <motion.div
         onClick={handleClick}
         whileHover="animate"
-        className="group/file block rounded-lg cursor-pointer w-full relative overflow-hidden"
+        className="group/file block cursor-pointer w-full relative overflow-hidden"
       >
         <input
           ref={fileInputRef}
@@ -102,7 +102,7 @@ export const FileUpload = ({ onChange }) => {
         <div className="flex flex-col items-center justify-center">
           <div className="relative">
             <p className="font-sans font-bold text-neutral-700">
-             <span className="group-hover:bg-or transform duration-500 group-hover:px-2 rounded">Cliquez</span>  ou glissez-déposez pour ajouter un fichier
+             <span className="group-hover:bg-or transform duration-500 group-hover:px-2 ">Cliquez</span>  ou glissez-déposez pour ajouter un fichier
             </p>
           </div>
           <p className="relative font-sans font-normal text-neutral-400 text-sm mt-2">
@@ -115,18 +115,18 @@ export const FileUpload = ({ onChange }) => {
                   key={"file" + idx}
                   layoutId={idx === 0 ? "file-upload" : "file-upload-" + idx}
                   className={cn(
-                    "relative bg-white flex flex-col md:flex-row items-center md:items-start justify-start p-4 mt-4 w-full mx-auto rounded-md",
+                    "relative bg-white flex flex-col md:flex-row items-center md:items-start justify-start p-4 mt-4 w-full mx-auto",
                     "shadow border"
                   )}
                 >
                   <div className="mr-4">
                     {file.type.startsWith("image/") &&
                       filePreviews[file.name] && (
-                        <div className="mt-2 mb-4 w-full flex justify-center border rounded-xl overflow-hidden">
+                        <div className="mt-2 mb-4 w-full flex justify-center border overflow-hidden">
                           <img
                             src={filePreviews[file.name]}
                             alt={file.name}
-                            className="h-16 w-16 object-cover rounded-md"
+                            className="h-16 w-16 object-cover -md"
                           />
                         </div>
                       )}
@@ -145,7 +145,7 @@ export const FileUpload = ({ onChange }) => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         layout
-                        className="rounded-lg px-2 py-1 w-fit flex-shrink-0 text-sm text-neutral-600 shadow-input"
+                        className="-lg px-2 py-1 w-fit flex-shrink-0 text-sm text-neutral-600 shadow-input"
                       >
                         {(file.size / (1024 * 1024)).toFixed(2)} MB
                       </motion.p>
@@ -154,7 +154,7 @@ export const FileUpload = ({ onChange }) => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         layout
-                        className="px-1 py-0.5 rounded-md bg-gray-100 text-xs"
+                        className="px-1 py-0.5 -md bg-gray-100 text-xs"
                       >
                         {file.type}
                       </motion.p>
@@ -182,7 +182,7 @@ export const FileUpload = ({ onChange }) => {
                   damping: 20,
                 }}
                 className={cn(
-                  "relative group-hover/file:shadow-2xl bg-white flex items-center justify-center h-24 mt-4 w-full max-w-[12rem] mx-auto rounded-md border border-secondary",
+                  "relative group-hover/file:shadow-2xl bg-white flex items-center justify-center h-24 mt-4 w-full max-w-[12rem] mx-auto -md border border-secondary",
                   "shadow-[0px_10px_50px_rgba(0,0,0,0.1)]"
                 )}
               >
@@ -204,7 +204,7 @@ export const FileUpload = ({ onChange }) => {
             {!files.length && (
               <motion.div
                 variants={secondaryVariant}
-                className="absolute opacity-0 border border-dashed border-secondary inset-0 z-30 bg-transparent flex items-center justify-center h-24 mt-4 w-full max-w-[12rem] mx-auto rounded-md"
+                className="absolute opacity-0 border border-dashed border-secondary inset-0 z-30 bg-transparent flex items-center justify-center h-24 mt-4 w-full max-w-[12rem] mx-auto "
               ></motion.div>
             )}
           </div>
@@ -225,7 +225,7 @@ export function GridPattern() {
           return (
             <div
               key={`${col}-${row}`}
-              className={`w-10 h-10 flex flex-shrink-0 rounded-[2px] ${
+              className={`w-10 h-10 flex flex-shrink-0 -[2px] ${
                 index % 2 === 0
                   ? "bg-gray-50"
                   : "bg-gray-50 shadow-[0px_0px_1px_3px_rgba(255,255,255,1)_inset]"
