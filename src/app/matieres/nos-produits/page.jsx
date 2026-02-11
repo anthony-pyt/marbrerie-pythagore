@@ -28,8 +28,8 @@ export default function Page() {
   const [selectedThiknesses, setSelectedThiknesses] = useState([]);
   const [selectedFinitions, setSelectedFinitions] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
-  const [motifs, setMotifs]= useState([]);
-  const [colors, setColors]= useState([]);
+  const [motifs, setMotifs] = useState([]);
+  const [colors, setColors] = useState([]);
   const [totalProducts, setTotalProducts] = useState(0);
   const [selectedFilters, setSelectedFilters] = useState({
     coupDeCoeur: false,
@@ -62,17 +62,22 @@ export default function Page() {
     setLoadThiknesses(true);
 
     try {
-      const [categoryResponse, thiknessResponse, finitionsResponse, motifsResponse, colorsResponse] =
-        await Promise.all([
-          fetch(
-            process.env.NEXT_PUBLIC_API_STOCK_URL +
-            "/stock/categories-with-parent-matieres"
-          ),
-          fetch(process.env.NEXT_PUBLIC_API_STOCK_URL + "/thiknesses"),
-          fetch(process.env.NEXT_PUBLIC_API_STOCK_URL + "/finitions"),
-          fetch(process.env.NEXT_PUBLIC_API_STOCK_URL + "/patterns"),
-          fetch(process.env.NEXT_PUBLIC_API_STOCK_URL + "/colors"),
-        ]);
+      const [
+        categoryResponse,
+        thiknessResponse,
+        finitionsResponse,
+        motifsResponse,
+        colorsResponse,
+      ] = await Promise.all([
+        fetch(
+          process.env.NEXT_PUBLIC_API_STOCK_URL +
+            "/stock/categories-with-parent-matieres",
+        ),
+        fetch(process.env.NEXT_PUBLIC_API_STOCK_URL + "/thiknesses"),
+        fetch(process.env.NEXT_PUBLIC_API_STOCK_URL + "/finitions"),
+        fetch(process.env.NEXT_PUBLIC_API_STOCK_URL + "/patterns"),
+        fetch(process.env.NEXT_PUBLIC_API_STOCK_URL + "/colors"),
+      ]);
 
       const categories = await categoryResponse.json();
       const thiknesses = await thiknessResponse.json();
@@ -80,12 +85,11 @@ export default function Page() {
       const motifs = await motifsResponse.json();
       const colorsData = await colorsResponse.json();
 
-
       setCategories(categories);
       setThiknesses(thiknesses);
       setFinitions(finitions);
       setMotifs(motifs);
-      setColors(colorsData?.colors)
+      setColors(colorsData?.colors);
     } catch (error) {
       console.error(error);
     } finally {
@@ -99,11 +103,11 @@ export default function Page() {
     try {
       setLoadProducts(true);
       const productsResponse = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_STOCK_URL}/stock/products_only_matieres?${queryParams}`
+        `${process.env.NEXT_PUBLIC_API_STOCK_URL}/stock/products_only_matieres?${queryParams}`,
       );
 
       const filteredProducts = productsResponse.data.data.filter(
-        (product) => product.visible_website === 1
+        (product) => product.visible_website === 1,
       );
 
       setTotalProducts(filteredProducts.length);
@@ -161,14 +165,14 @@ export default function Page() {
       updatedCategories = selectedCategories.filter(
         (id) =>
           id !== category.id &&
-          !category.children?.some((child) => child.id === id)
+          !category.children?.some((child) => child.id === id),
       );
 
       updatedFilters = filters.filter(
         (filter) =>
           filter.type !== "matieres" ||
           (filter.text !== category.label &&
-            !category.children?.some((child) => child.label === filter.text))
+            !category.children?.some((child) => child.label === filter.text)),
       );
     } else {
       // Ajoute la catégorie et ses enfants (si isParent est true)
@@ -203,7 +207,7 @@ export default function Page() {
 
     if (selectedThiknesses.includes(thikness.id)) {
       setSelectedThiknesses(
-        selectedThiknesses.filter((id) => id !== thikness.id)
+        selectedThiknesses.filter((id) => id !== thikness.id),
       );
     } else {
       setSelectedThiknesses([...selectedThiknesses, thikness.id]);
@@ -211,7 +215,7 @@ export default function Page() {
 
     setFilters((prevFilters) => {
       const updatedFilters = prevFilters.filter(
-        (filter) => filter.text !== thikness.label
+        (filter) => filter.text !== thikness.label,
       );
 
       if (prevFilters.some((filter) => filter.text === thikness.label)) {
@@ -234,7 +238,7 @@ export default function Page() {
 
     if (selectedFinitions.includes(finition.id)) {
       setSelectedFinitions(
-        selectedFinitions.filter((id) => id !== finition.id)
+        selectedFinitions.filter((id) => id !== finition.id),
       );
     } else {
       setSelectedFinitions([...selectedFinitions, finition.id]);
@@ -243,7 +247,7 @@ export default function Page() {
     setFilters((prevFilters) => {
       // Retire le filtre existant si déjà présent
       const updatedFilters = prevFilters.filter(
-        (filter) => filter.text !== finition.label
+        (filter) => filter.text !== finition.label,
       );
 
       // Ajoute ou retire le filtre selon l'état du checkbox
@@ -274,7 +278,7 @@ export default function Page() {
     setFilters((prevFilters) => {
       // Retire le filtre existant si déjà présent
       const updatedFilters = prevFilters.filter(
-        (filter) => filter.text !== motif.name
+        (filter) => filter.text !== motif.name,
       );
 
       // Ajoute ou retire le filtre selon l'état du checkbox
@@ -305,7 +309,7 @@ export default function Page() {
     setFilters((prevFilters) => {
       // Retire le filtre existant si déjà présent
       const updatedFilters = prevFilters.filter(
-        (filter) => filter.text !== color.name
+        (filter) => filter.text !== color.name,
       );
 
       // Ajoute ou retire le filtre selon l'état du checkbox
@@ -332,9 +336,8 @@ export default function Page() {
       [filterName]: !prevFilters[filterName],
     }));
     setFilters((prevFilters) => {
-      
       const updatedFilters = prevFilters.filter(
-        (filter) => filter.text !== filterText
+        (filter) => filter.text !== filterText,
       );
 
       if (prevFilters.some((filter) => filter.text === filterText)) {
@@ -356,46 +359,50 @@ export default function Page() {
     const matchesSearchTerm =
       searchTerm.length > 2
         ? external_product.label
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase())
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase())
         : true;
 
     const matchesCategory =
       selectedCategories.length > 0
         ? selectedCategories.includes(
-          external_product.product.category?.parent?.id
-        ) ||
-        selectedCategories.includes(external_product.product.category?.id)
+            external_product.product.category?.parent?.id,
+          ) ||
+          selectedCategories.includes(external_product.product.category?.id)
         : true;
 
     const matchesThikness =
       selectedThiknesses.length > 0
         ? selectedThiknesses.every((selectedThikness) =>
-          external_product.thiknesses.map(
-            (thikness) => thikness.id === selectedThikness
+            external_product.thiknesses.map(
+              (thikness) => thikness.id === selectedThikness,
+            ),
           )
-        )
         : true;
 
     const matchesFinition =
       selectedFinitions.length > 0
-        ? external_product.finitions.some((finition) =>
-          finition
-        )
+        ? external_product.finitions.some((finition) => finition)
         : true;
 
     const matchesMotif =
       selectedMotifs.length > 0
-        ? external_product?.patterns.some((pattern) => selectedMotifs.includes(pattern.name)) ||
-        external_product?.patterns.some((pattern) => selectedMotifs.includes(pattern.slug))
-        || external_product?.patterns.some((pattern) => selectedMotifs.includes(pattern.id))
+        ? external_product?.patterns.some((pattern) =>
+            selectedMotifs.includes(pattern.name),
+          ) ||
+          external_product?.patterns.some((pattern) =>
+            selectedMotifs.includes(pattern.slug),
+          ) ||
+          external_product?.patterns.some((pattern) =>
+            selectedMotifs.includes(pattern.id),
+          )
         : true;
 
     const matchesColor =
       selectedColors.length > 0
         ? external_product.colories.some((color) =>
-          selectedColors.includes(color.name)
-        )
+            selectedColors.includes(color.name),
+          )
         : true;
 
     const matchesCoupDeCoeur = selectedFilters.coupDeCoeur
@@ -420,7 +427,7 @@ export default function Page() {
 
   const removeFilter = (filterToRemove) => {
     setFilters((prevFilters) =>
-      prevFilters.filter((filter) => filter.text !== filterToRemove.text)
+      prevFilters.filter((filter) => filter.text !== filterToRemove.text),
     );
   };
 
@@ -433,7 +440,7 @@ export default function Page() {
     <main className="min-h-screen">
       <MainMenu />
       <PageTitle title={"Nos produits"} />
-      <div className="mt-2">
+      <div className="max-w-[1900px] mx-auto px-4 md:px-8">
         <div className="lg:hidden flex justify-end mx-2">
           <Button
             text="Filtres"
@@ -444,34 +451,39 @@ export default function Page() {
           />
         </div>
         <div className="flex">
-          <div className="p-4 rounded-xl bg-white m-2 min-w-72 hidden lg:block">
-            <FiltersMenu
-              categories={categories}
-              thiknesses={thiknesses}
-              finitions={finitions}
-              motifs={motifs}
-              colors={colors}
-              selectedCategories={selectedCategories}
-              selectedThiknesses={selectedThiknesses}
-              selectedFinitions={selectedFinitions}
-              selectedMotifs={selectedMotifs}
-              selectedColors={selectedColors}
-              handleFilterChange={handleFilterChange}
-              handleCategoryChange={handleCategoryChange}
-              handleThiknessChange={handleThiknessChange}
-              handleFinitionChange={handleFinitionChange}
-              handleMotifChange={handleMotifChange}
-              handleColorChange={handleColorChange}
-              filters={filters}
-              setFilters={setFilters}
-              removeFilter={removeFilter}
-              selectedFilters={selectedFilters}
-              loadCategories={loadCategories}
-              loadFinitions={loadFinitions}
-              loadThiknesses={loadThiknesses}
-              setSearchTerm={setSearchTerm}
-            />
-          </div>
+          <aside className="hidden lg:block w-72 flex-shrink-0">
+            <div className="p-6 border border-gray-100 bg-gray-50/30">
+              <h2 className="text-[10px] uppercase tracking-[0.3em] text-or font-bold mb-6">
+                Affiner la recherche
+              </h2>
+              <FiltersMenu
+                categories={categories}
+                thiknesses={thiknesses}
+                finitions={finitions}
+                motifs={motifs}
+                colors={colors}
+                selectedCategories={selectedCategories}
+                selectedThiknesses={selectedThiknesses}
+                selectedFinitions={selectedFinitions}
+                selectedMotifs={selectedMotifs}
+                selectedColors={selectedColors}
+                handleFilterChange={handleFilterChange}
+                handleCategoryChange={handleCategoryChange}
+                handleThiknessChange={handleThiknessChange}
+                handleFinitionChange={handleFinitionChange}
+                handleMotifChange={handleMotifChange}
+                handleColorChange={handleColorChange}
+                filters={filters}
+                setFilters={setFilters}
+                removeFilter={removeFilter}
+                selectedFilters={selectedFilters}
+                loadCategories={loadCategories}
+                loadFinitions={loadFinitions}
+                loadThiknesses={loadThiknesses}
+                setSearchTerm={setSearchTerm}
+              />
+            </div>
+          </aside>
           {openMenuMobile && (
             <div className="lg:hidden fixed inset-0 z-50 bg-primary/50 overflow-auto p-12">
               <div>
@@ -482,7 +494,7 @@ export default function Page() {
                   <Icon icon={"carbon:close-outline"} width="42" height="42" />
                 </button>
               </div>
-              <div className="bg-white p-4 rounded-xl">
+              <div className="bg-white p-4">
                 <FiltersMenu
                   categories={categories}
                   thiknesses={thiknesses}
@@ -512,7 +524,7 @@ export default function Page() {
               </div>
             </div>
           )}
-          <div className="w-full bg-white p-4 rounded-xl m-2 min-h-screen">
+          <div className="w-full bg-white p-4 m-2 min-h-screen">
             {loadProducts && (
               <div className="mt-28 flex flex-col items-center">
                 <div className="h-32 overflow-hidden flex justify-center items-center">
@@ -539,7 +551,7 @@ export default function Page() {
             <div>
               {filteredProducts.length > 0 ? (
                 filteredProducts.length > 0 ? (
-                  <div className="flex flex-wrap justify-center md:justify-normal items-stretch">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 items-stretchh">
                     {filteredProducts.map((product) => (
                       <ProductCard key={product.id} product={product} />
                     ))}

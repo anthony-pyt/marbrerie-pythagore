@@ -69,7 +69,7 @@ const Slide = ({ slide, index, current, handleSlideClick }) => {
         }}
       >
         <div
-          className="absolute top-0 left-0 w-full h-full bg-secondary rounded-3xl overflow-hidden transition-all duration-150 ease-out"
+          className="absolute top-0 left-0 w-full h-full bg-secondary overflow-hidden transition-all duration-150 ease-out"
           style={{
             transform:
               current === index

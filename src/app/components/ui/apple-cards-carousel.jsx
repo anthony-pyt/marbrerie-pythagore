@@ -112,7 +112,7 @@ export const Carousel = ({ items, initialScroll = 0 }) => {
                   },
                 }}
                 key={"card" + index}
-                className="last:pr-[5%] md:last:pr-[33%]  rounded-3xl"
+                className="last:pr-[5%] md:last:pr-[33%]"
               >
                 {item}
               </motion.div>
@@ -192,7 +192,7 @@ export const Card = ({ card, index, layout = false }) => {
               layoutId={
                 layout ? `card-${card.imageable?.product?.label}` : undefined
               }
-              className="max-w-5xl mx-auto bg-white  h-fit  z-[60] my-10 p-4 md:p-10 rounded-3xl font-sans relative"
+              className="max-w-5xl mx-auto bg-white  h-fit  z-[60] my-10 p-4 md:p-10 font-sans relative"
             >
               <button
                 className="sticky top-4 h-8 w-8 right-0 ml-auto bg-black rounded-full flex items-center justify-center"
@@ -226,7 +226,7 @@ export const Card = ({ card, index, layout = false }) => {
       <motion.div
         layoutId={layout ? `card-${card.imageable?.product?.label}` : undefined}
         // onClick={handleOpen}
-        className="rounded-3xl bg-gray-100  h-80 w-56 md:h-[40rem] md:w-96 overflow-hidden flex flex-col items-start justify-start relative z-10"
+        className="bg-gray-100  h-80 w-56 md:h-[40rem] md:w-96 overflow-hidden flex flex-col items-start justify-start relative z-10"
       >
         <div className="absolute h-full top-0 inset-x-0 bg-gradient-to-b from-black/50 via-transparent to-transparent z-30 pointer-events-none" />
         <div className="relative z-40 p-8">

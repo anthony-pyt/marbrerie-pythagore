@@ -25,7 +25,7 @@ const Review = ({ note, date, name, comment, avatar }) => {
     : "";
 
   return (
-    <div className="bg-white rounded-2xl shadow p-4 w-96 m-4 flex flex-col justify-between">
+    <div className="bg-white shadow p-4 w-96 m-4 flex flex-col justify-between">
       <div>
         {/* Header */}
         <div className="flex items-center gap-3">

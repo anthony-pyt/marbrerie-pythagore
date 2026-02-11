@@ -1,5 +1,7 @@
+"use client";
 import { Icon } from "@iconify/react";
 import React from "react";
+import clsx from "clsx"; // Optionnel : pour gérer les classes proprement
 
 const Button = ({
   text,
@@ -8,90 +10,70 @@ const Button = ({
   icon = null,
   onClick,
   disabled = false,
-  loading = false, // Optionnel pour un état de chargement
+  loading = false,
+  type = "button",
 }) => {
-  let bgColor, textColor, hoverBgColor, hoverTextColor, borderColor;
-  let textSize = "text-base",
-    pHorizontal = "px-6",
-    pVertical = "py-3";
-  let width = 16,
-    height = 16;
+  // 1. Configuration des tailles via un objet (plus propre)
+  const sizeConfig = {
+    small: { text: "text-xs", py: "py-2", px: "px-4", icon: 14 },
+    normal: { text: "text-sm", py: "py-3", px: "px-6", icon: 18 },
+    large: { text: "text-lg", py: "py-4", px: "px-8", icon: 22 },
+  };
 
-  // Gestion des tailles
-  if (size === "small") {
-    textSize = "text-xs";
-    pHorizontal = "px-4";
-    pVertical = "py-2";
-    width = 12;
-    height = 12;
-  } else if (size === "large") {
-    textSize = "text-xl";
-    pHorizontal = "px-8";
-    pVertical = "py-4";
-    width = 20;
-    height = 20;
-  }
+  // 2. Configuration des couleurs
+  const colorConfig = {
+    secondary:
+      "bg-secondary text-white border-white hover:bg-white hover:text-secondary",
+    or: "bg-or text-secondary border-or hover:bg-secondary hover:text-white",
+    primary:
+      "bg-white text-secondary border-secondary hover:bg-secondary hover:text-white",
+  };
 
-  // Définition des couleurs en fonction de `color`
-  switch (color) {
-    case "secondary":
-      bgColor = "bg-secondary";
-      textColor = "text-white";
-      hoverBgColor = "hover:bg-white";
-      hoverTextColor = "hover:text-secondary";
-      borderColor = "border-white";
-      break;
-    case "or":
-      bgColor = "bg-or-light";
-      textColor = "text-secondary";
-      hoverBgColor = "hover:bg-secondary";
-      hoverTextColor = "hover:text-white";
-      borderColor = "border-or-light";
-      break;
-    default: // "primary"
-      bgColor = "bg-white";
-      textColor = "text-secondary";
-      hoverBgColor = "hover:bg-secondary";
-      hoverTextColor = "hover:text-white";
-      borderColor = "border-secondary";
-  }
+  const currentSize = sizeConfig[size] || sizeConfig.normal;
+  const currentColor = colorConfig[color] || colorConfig.primary;
 
   return (
     <button
+      type={type}
       onClick={onClick}
       disabled={disabled || loading}
-      className={`
-        relative border ${borderColor} rounded-full 
-        font-sans font-semibold leading-none text-center 
-        transition-all duration-300 ease-in-out shadow-sm transform-gpu
-        ${pHorizontal} ${pVertical} ${textSize} 
-        flex items-center justify-center 
-        ${bgColor} ${textColor}
-        ${
-          !disabled && !loading
-            ? `${hoverBgColor} ${hoverTextColor} hover:shadow-md hover:-translate-y-0.5`
-            : "opacity-50 cursor-not-allowed"
-        }
-      `}
+      className={clsx(
+        // Classes de base
+        "relative inline-flex items-center justify-center border transition-all duration-300 ease-out",
+        "font-sans overflow-hidden group active:scale-95",
+        "shadow-sm hover:shadow-md",
+        // Classes dynamiques
+        currentSize.text,
+        currentSize.py,
+        currentSize.px,
+        currentColor,
+        // État désactivé
+        (disabled || loading) && "opacity-50 cursor-not-allowed grayscale",
+      )}
     >
-      <div className="flex items-center space-x-3">
-        {icon && (
+      {/* Effet de brillance subtil au survol */}
+      <div className="absolute inset-0 w-full h-full bg-white opacity-0 group-hover:opacity-10 transition-opacity" />
+
+      <div className="flex items-center space-x-2 relative z-10">
+        {/* Loader ou Icône */}
+        {loading ? (
           <Icon
-            icon={icon}
-            width={width}
-            height={height}
-            className="transition-transform duration-300 ease-in-out group-hover:scale-110"
+            icon="svg-spinners:ring-resize"
+            width={currentSize.icon}
+            height={currentSize.icon}
           />
+        ) : (
+          icon && (
+            <Icon
+              icon={icon}
+              width={currentSize.icon}
+              height={currentSize.icon}
+              className="transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-12"
+            />
+          )
         )}
-        <span>{text}</span>
-        {loading && (
-          <Icon
-            icon="svg-spinners:pulse-rings-3"
-            width="24"
-            height="24"
-            className="text-black"
-          />
-        )}
+
+        <span className="leading-none">{text}</span>
       </div>
     </button>
   );

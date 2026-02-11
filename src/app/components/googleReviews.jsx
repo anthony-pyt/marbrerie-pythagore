@@ -3,6 +3,7 @@ import Review from "./Review";
 import useGoogleServices from "@/api/services/googleServices";
 import { useEffect, useState } from "react";
 import { ScaleLoader } from "react-spinners";
+import Alert from "./Alert";
 
 export default function GoogleReviews() {
   const { getGoogleReviews } = useGoogleServices();
@@ -67,9 +68,11 @@ export default function GoogleReviews() {
       )}
       {reviews.length === 0 && !loading && (
         <div className="flex justify-center items-center">
-          <p className="bg-orange-200 px-3 py-1 rounded-lg">
-            Erreur de chargement des commentaires...
-          </p>
+          <Alert
+          message="Erreur de chargement des commentaires..."
+          type="error"
+          isVisible={true}
+          />
         </div>
       )}
       <div className="flex items-stretch justify-evenly flex-wrap">

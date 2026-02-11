@@ -19,7 +19,7 @@ const Textarea = ({ id, placeholder, onInputChange, className }) => {
         id={id}
         value={value} // Liaison de la valeur
         onChange={handleChange} // Gestionnaire de changement
-        className="border border-gray-300 rounded-3xl px-4 py-2 text-sm w-full h-full focus:outline-none shadow-sm transition duration-300 ease-in-out resize-none"
+        className="border border-gray-300 px-4 py-2 text-sm w-full h-full focus:outline-none shadow-sm transition duration-300 ease-in-out resize-none"
         placeholder={placeholder}
       />
     </div>

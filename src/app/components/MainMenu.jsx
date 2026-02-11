@@ -69,10 +69,10 @@ export default function MainMenu({ page }) {
       : "sticky";
 
   const classDisposition = isHeightReduced
-    ? "h-16 m-0 bg-white shadow-lg"
+    ? "h-16 m-0 bg-white/50 backdrop-blur-lg shadow-lg"
     : page != "home"
-    ? "h-32 m-2 rounded-xl bg-white"
-    : "h-32 m-2 rounded-xl bg-white xl:bg-transparent";
+      ? "h-32 m-2 bg-white"
+      : "h-32 m-2 bg-white xl:bg-transparent";
 
   const classHamburger =
     page == "home"
@@ -117,7 +117,7 @@ export default function MainMenu({ page }) {
 
   return (
     <div
-      className={`${classGeneral} w-full top-0 z-20 rounded-xl mx-auto transform duration-100`}
+      className={`${classGeneral} w-full top-0 z-20 mx-auto transform duration-100`}
     >
       <div
         className={` ${classDisposition}
@@ -142,7 +142,7 @@ export default function MainMenu({ page }) {
                       ? "hover:bg-secondary"
                       : "hover:bg-or-light"
                     : "hover:bg-secondary"
-                } rounded-lg group relative transform duration-200 z-50 cursor-pointer`}
+                } group relative transform duration-200 z-50 cursor-pointer`}
               >
                 <Link
                   href={item.link}
@@ -173,12 +173,12 @@ export default function MainMenu({ page }) {
                 </Link>
                 {item.children?.length > 0 && (
                   <div className="absolute top-full left-0 hidden group-hover:block overflow-hidden">
-                    <div className="mt-2 p-4 w-96 bg-white border rounded-xl shadow-lg ">
+                    <div className="mt-2 p-4 w-96 bg-white border shadow-lg ">
                       <div>
                         {item.children.map((child) => (
                           <Link
                             href={child.link}
-                            className="flex items-center space-x-3 px-4 py-2 hover:bg-secondary hover:text-primary text-secondary rounded-lg duration-150 transform"
+                            className="flex items-center space-x-3 px-4 py-2 hover:bg-secondary hover:text-primary text-secondary duration-150 transform"
                             key={child.label}
                           >
                             <Icon icon={child.icon} width="20" height="20" />
@@ -204,7 +204,7 @@ export default function MainMenu({ page }) {
       </div>
       {isOpen && (
         <div
-          className={`fixed inset-0 h-screen w-screen bg-gray-800 text-white shadow-xl flex flex-col justify-start overflow-y-auto py-12 ${
+          className={`fixed inset-0 h-screen w-screen bg-secondary/90 backdrop-blur text-white shadow-xl flex flex-col justify-start overflow-y-auto py-12 ${
             isClosing
               ? "animate__animated animate__fadeOutLeft"
               : "animate__animated animate__fadeInLeft"
@@ -221,9 +221,9 @@ export default function MainMenu({ page }) {
                 <div className="flex items-center justify-center space-x-1 my-1 p-1">
                   <Link
                     href="/"
-                    className="text-3xl lg:text-6xl uppercase font-title"
+                    className="text-3xl lg:text-6xl uppercase font-light font-sans"
                   >
-                   Accueil
+                    Accueil
                   </Link>
                 </div>
               </div>
@@ -232,7 +232,7 @@ export default function MainMenu({ page }) {
                   <div className="flex items-center justify-center space-x-1">
                     <Link
                       href={item.link}
-                      className="text-3xl lg:text-6xl uppercase font-title"
+                      className="text-3xl lg:text-6xl uppercase font-light font-sans"
                     >
                       {item.label}
                     </Link>

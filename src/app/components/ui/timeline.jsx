@@ -36,7 +36,7 @@ export const Timeline = () => {
               <div className="h-10 absolute left-3 md:left-3 w-10 rounded-full bg-white flex items-center justify-center">
                 <div className="h-4 w-4 rounded-full bg-or-light border border-or-light p-2" />
               </div>
-              <h3 className="hidden md:block text-xl md:pl-20 md:text-5xl font-bold text-secondary">
+              <h3 className="hidden md:block text-5xl md:pl-20 md:text-8xl font-light text-secondary uppercase tracking-tighter">
                 {item.year}
               </h3>
             </div>
