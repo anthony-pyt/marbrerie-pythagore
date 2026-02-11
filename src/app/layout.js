@@ -8,6 +8,8 @@ import Loader from "./components/loader";
 import { metadata } from "./datas/metadata";
 import { useEffect, useState } from "react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import Script from "next/script";
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +27,7 @@ export default function RootLayout({ children }) {
         if (!isSamePage) {
           setLoading(true);
           setTimeout(() => {
-            setLoading(false)
+            setLoading(false);
           }, 3000);
         }
       }
@@ -51,10 +53,34 @@ export default function RootLayout({ children }) {
         <title>{metadata.title}</title>
       </head>
       <body className={inter.className} suppressHydrationWarning={true}>
-        {loading && <Loader />}
-        {children}
-        <SpeedInsights />
-        <Analytics />
+        <GoogleReCaptchaProvider
+          reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+          scriptProps={{
+            async: false,
+            defer: false,
+            appendTo: "head",
+            nonce: undefined,
+          }}
+        >
+          {loading && <Loader />}
+          {children}
+          <SpeedInsights />
+          <Analytics />
+          <Script id="axeptio-setup" strategy="afterInteractive">
+            {`
+              window.axeptioSettings = {
+                clientId: "691c886703323c0d56aa44fe",
+                cookiesVersion: "fr-eu-gpdr-18-11-2025",
+              };
+              
+              (function(d, s) {
+                var t = d.getElementsByTagName(s)[0], e = d.createElement(s);
+                e.async = true; e.src = "//static.axept.io/sdk.js";
+                t.parentNode.insertBefore(e, t);
+              })(document, "script");
+            `}
+          </Script>
+        </GoogleReCaptchaProvider>
       </body>
     </html>
   );
