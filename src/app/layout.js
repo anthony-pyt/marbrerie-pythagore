@@ -66,7 +66,11 @@ export default function RootLayout({ children }) {
           {children}
           <SpeedInsights />
           <Analytics />
-          <Script id="clickio-setup" strategy="afterInteractive">
+          <Script
+            id="clickio-setup"
+            strategy="afterInteractive"
+            src="//clickiocmp.com/t/consent_247457.js"
+          >
             {``}
           </Script>
         </GoogleReCaptchaProvider>
