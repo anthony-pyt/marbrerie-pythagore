@@ -2,6 +2,7 @@
 import Button from "@/components/Button";
 import HomeSwipper from "@/components/home/HomeSwipper";
 import ActionCatalogue from "@/components/home/ActionCatalogue";
+import NewsletterAction from "@/components/home/NewsletterAction";
 import MainMenu from "@/components/MainMenu";
 import InspirationWidget from "@/components/home/InspirationWidget";
 import BubbleService from "@/components/BubbleService";
@@ -34,70 +35,6 @@ export default function Home() {
   const [cardsInspiration, setCardsInspiration] = useState([]);
   const sectionRefs = useRef([]);
   const router = useRouter();
-
-  const testItems = [
-    {
-      image_url:
-        "https://images.unsplash.com/photo-1503602642458-232111445657?w=800&q=80",
-      imageable: {
-        product: {
-          label: "Montre de sport Garmin Fenix 7",
-          category: {
-            label: "Montres connectées",
-          },
-        },
-      },
-    },
-    {
-      image_url:
-        "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=800&q=80",
-      imageable: {
-        product: {
-          label: "Casque Sony WH-1000XM5",
-          category: {
-            label: "Audio",
-          },
-        },
-      },
-    },
-    {
-      image_url:
-        "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&q=80",
-      imageable: {
-        product: {
-          label: "Appareil photo Canon EOS R6",
-          category: {
-            label: "Photographie",
-          },
-        },
-      },
-    },
-    {
-      image_url:
-        "https://images.unsplash.com/photo-1611078489935-0cb964de46f2?w=800&q=80",
-      imageable: {
-        product: {
-          label: "Apple MacBook Pro M3",
-          category: {
-            label: "Informatique",
-          },
-        },
-      },
-    },
-    {
-      image_url:
-        "https://images.unsplash.com/photo-1593642634315-48f5414c3ad9?w=800&q=80",
-      imageable: {
-        product: {
-          label: "Clavier mécanique Keychron K6",
-          category: {
-            label: "Accessoires",
-          },
-        },
-      },
-    },
-  ];
-
 
   // Récupération des images en une seule fonction
   useEffect(() => {
@@ -133,7 +70,7 @@ export default function Home() {
       } catch (error) {
         console.error(
           "Erreur lors de la récupération des inspirations :",
-          error
+          error,
         );
       } finally {
         setLoadInspirations(false);
@@ -159,7 +96,7 @@ export default function Home() {
       },
       {
         threshold: 0.25, // Le pourcentage d'affichage du composant avant d'activer l'animation
-      }
+      },
     );
 
     // Observer chaque section
@@ -180,7 +117,7 @@ export default function Home() {
       inspirations.map((card, index) => (
         <Card key={card.id} card={card} index={index} />
       )),
-    [inspirations]
+    [inspirations],
   );
 
   const navigateTo = (href) => {
@@ -199,7 +136,7 @@ export default function Home() {
             muted
             className="opacity-40 blur w-full object-cover"
           /> */}
-         {imageSrc && (
+          {imageSrc && (
             <img
               alt="acceuil"
               // fill
@@ -234,7 +171,7 @@ export default function Home() {
         id="slider"
         className={`flex justify-center animate__animated`}
       >
-        <div className="bg-white flex h-auto lg:h-[500px] justify-between rounded-xl overflow-hidden my-12 shadow-lg flex-wrap w-11/12 border">
+        <div className="bg-white flex h-auto lg:h-[500px] justify-between overflow-hidden my-12 shadow-lg flex-wrap w-11/12 border">
           <div className="flex-1">
             <div className=" py-12 lg:py-20 px-4 lg:px-20">
               <h2>
@@ -245,9 +182,7 @@ export default function Home() {
                 réunit une équipe d’hommes et de femmes passionnés, dédiés à
                 sublimer les matériaux. Spécialisés dans la marbrerie de
                 décoration, nous accompagnons les professionnels de l’agencement
-                résidentiel, commercial et tertiaire. 
-                
-                Chaque réalisation prend
+                résidentiel, commercial et tertiaire. Chaque réalisation prend
                 vie dans nos ateliers, au coeur de la Bretagne, où vos projets
                 sont minutieusement découpés, façonnés et assemblés.
               </p>
@@ -273,6 +208,16 @@ export default function Home() {
       </section>
 
       <section
+        ref={(el) => (sectionRefs.current[2] = el)}
+        data-id="catalogue"
+        className={`animate__animated ${
+          visibleSections["catalogue"] ? "animate__fadeInLeft" : "opacity-0"
+        }`}
+      >
+        <NewsletterAction />
+      </section>
+
+      <section
         ref={(el) => (sectionRefs.current[1] = el)}
         data-id="inspiration"
         className={`py-20 animate__animated 
@@ -292,7 +237,7 @@ export default function Home() {
       </section>
 
       <section
-        ref={(el) => (sectionRefs.current[2] = el)}
+        ref={(el) => (sectionRefs.current[4] = el)}
         data-id="catalogue"
         className={`animate__animated ${
           visibleSections["catalogue"] ? "animate__fadeInLeft" : "opacity-0"
@@ -313,7 +258,7 @@ export default function Home() {
         </h2>
         <Link href={"/nos-services"}>
           <div className="flex justify-center">
-            <div className="rounded-3xl flex-wrap flex flex-col lg:flex-row items-center justify-between w-full max-w-full m-4 p-8 bg-white shadow-lg min-h-96">
+            <div className="flex-wrap flex flex-col lg:flex-row items-center justify-between w-full max-w-full m-4 p-8 bg-white shadow-lg min-h-96">
               <BubbleService
                 urlImage={"/images/nos-services/suivi_commercial.jpg"}
               >
@@ -332,7 +277,7 @@ export default function Home() {
       </section>
 
       <section
-        ref={(el) => (sectionRefs.current[4] = el)}
+        ref={(el) => (sectionRefs.current[5] = el)}
         data-id="reviews"
         className={`py-8 animate__animated ${
           visibleSections["reviews"] ? "animate__fadeIn" : "opacity-0"
@@ -348,31 +293,3 @@ export default function Home() {
 const ShowTextGenerateEffect = () => {
   return <TextGenerateEffect duration={2} filter={false} words={message} />;
 };
-
-const data = [
-  {
-    category: "Xtone",
-    title: "Ars Beige",
-    src: "/images/romantic.jpg",
-  },
-  {
-    category: "Dekton",
-    title: "Sirius",
-    src: "/images/versailles.jpg",
-  },
-  {
-    category: "Verrazzo",
-    title: "Topaze",
-    src: "/images/credence-marbre-dore-3.png",
-  },
-  {
-    category: "Ostrea",
-    title: "Saint Jacques",
-    src: "/images/IMG-4058.JPG",
-  },
-  {
-    category: "Marazzi",
-    title: "Golden White",
-    src: "/images/atr.jpg",
-  },
-];

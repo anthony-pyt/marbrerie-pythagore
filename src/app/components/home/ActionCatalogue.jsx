@@ -12,7 +12,7 @@ const ActionCatalogue = () => {
         <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
           <a
             href="/matieres/nos-produits"
-            className="mx-auto flex max-w-2xl flex-col gap-16 bg-white/5 ring-1 ring-white/10 sm:rounded-3xl p-8 lg:mx-0 lg:max-w-none lg:flex-row lg:items-center"
+            className="mx-auto flex max-w-2xl flex-col gap-16 p-8 lg:mx-0 lg:max-w-none lg:flex-row lg:items-center"
           >
             <img
               alt=""
