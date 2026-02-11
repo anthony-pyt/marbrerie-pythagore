@@ -167,7 +167,7 @@ const ListJobs = ({
           />
         </div>
       </div>
-      <div>
+      <div className="flex justify-center mb-4">
         <Alert
           isVisible={successMessage}
           message={"Votre message a bien été transmis"}
