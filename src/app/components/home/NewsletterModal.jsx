@@ -198,30 +198,30 @@ const NewsletterModal = ({ isOpen, onClose, initialEmail, onSuccess }) => {
                 />
               </div>
 
-              <div className="relative group">
+              <div className="relative group flex justify-center">
                 <select
                   required
-                  className="w-full bg-transparent border-b border-white/20 py-3 text-white outline-none focus:border-or transition-all appearance-none cursor-pointer"
+                  className="w-full bg-transparent border-b border-white/20 py-2 bg-white text- outline-none focus:border-or transition-all appearance-none cursor-pointer mx-1 pl-4"
                   value={formData.department}
                   onChange={(e) =>
                     setFormData({ ...formData, department: e.target.value })
                   }
                 >
-                  <option value="" className="bg-secondary text-gray-400">
+                  <option value="" className=" text-gray-400">
                     DÉPARTEMENT *
                   </option>
                   {departements.map((dept) => (
                     <option
                       key={dept.code}
                       value={`${dept.nom}`}
-                      className="bg-secondary text-white"
+                      className=""
                     >
                       {dept.code} - {dept.nom}
                     </option>
                   ))}
                 </select>
                 {/* Petit icone pour indiquer que c'est un menu déroulant */}
-                <div className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500 group-focus-within:text-or">
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500 group-focus-within:text-or">
                   <Icon icon="lucide:chevron-down" width="20" />
                 </div>
               </div>
