@@ -64,9 +64,10 @@ export async function POST(req) {
         );
       }
 
+      console.error("Détails Erreur Brevo:", result);
       return NextResponse.json(
         {
-          error: "Erreur pendant l'inscription",
+          error: result.message || "Erreur Brevo",
           code: result.code,
         },
         { status: response.status },
