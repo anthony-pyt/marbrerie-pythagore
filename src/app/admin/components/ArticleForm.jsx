@@ -21,6 +21,33 @@ export default function ArticleForm({ articleId = null }) {
   const [loadingSend, setLoadingSend] = useState(false);
   const router = useRouter();
 
+  // Style de l'éditeur version Luxe (Angles droits & Serif)
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const interval = setInterval(() => {
+        const editor = document.querySelector(".ql-editor");
+        const toolbar = document.querySelector(".ql-toolbar");
+        const container = document.querySelector(".ql-container");
+
+        if (editor && toolbar && container) {
+          editor.style.minHeight = "500px";
+          editor.style.fontFamily = "serif";
+          editor.style.fontSize = "1.1rem";
+
+          container.style.border = "1px solid black";
+          container.style.borderRadius = "0px";
+
+          toolbar.style.border = "1px solid black";
+          toolbar.style.borderBottom = "none";
+          toolbar.style.borderRadius = "0px";
+
+          clearInterval(interval);
+        }
+      }, 100);
+      return () => clearInterval(interval);
+    }
+  }, []);
+
   useEffect(() => {
     if (articleId) {
       const getArticle = async () => {
@@ -31,39 +58,12 @@ export default function ArticleForm({ articleId = null }) {
           setPhoto(response.coverImage);
           setTags(response.tags.map((tag) => tag.label));
         } catch (error) {
-          console.error("Erreur lors de la récupération de l'article", error);
+          console.error("Erreur récupération article", error);
         }
       };
       getArticle();
     }
   }, [articleId]);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const interval = setInterval(() => {
-        const editor = document.querySelector(".ql-editor"); // Sélectionne l'éditeur par sa classe
-        console.log(editor);
-
-        if (editor) {
-          editor.style.minHeight = "400px";
-          editor.style.border = "1px solid rgb(209 213 219)";
-          editor.style.borderRadius = "0.5rem";
-
-          const toolbar = document.querySelector(".ql-toolbar");
-          if (toolbar) {
-            toolbar.style.border = "none";
-            toolbar.style.display = "flex";
-            toolbar.style.justifyContent = "center";
-            toolbar.style.margin = "1.5rem 0 0.5rem 0";
-          }
-
-          clearInterval(interval);
-        }
-      }, 100);
-
-      return () => clearInterval(interval);
-    }
-  }, []);
 
   useEffect(() => {
     const getTags = async () => {
@@ -75,56 +75,38 @@ export default function ArticleForm({ articleId = null }) {
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
-    
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
+    if (storedUser) setUser(JSON.parse(storedUser));
   }, []);
 
   const modules = useMemo(
     () => ({
-      toolbar: {
-        container: [
-          ["bold", "italic", "underline", "strike"], // toggled buttons
-
-          [{ align: [] }],
-
-          ["blockquote", "code-block"],
-          ["link", "image", "video"],
-
-          [{ header: 1 }, { header: 2 }], // custom button values
-          [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
-          [{ script: "sub" }, { script: "super" }], // superscript/subscript
-          [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
-
-          [{ header: [1, 2, 3, 4, 5, 6, false] }],
-
-          [{ color: [] }, { background: [] }], // dropdown with defaults from theme
-        ],
-      },
+      toolbar: [
+        [{ header: [1, 2, 3, false] }],
+        ["bold", "italic", "underline", "strike"],
+        [{ list: "ordered" }, { list: "bullet" }],
+        [{ align: [] }],
+        ["link", "image", "blockquote"],
+        ["clean"],
+      ],
     }),
-    []
+    [],
   );
-
-  // const predefinedTags = ["Technologie", "Sport", "Art", "Cuisine", "Mode"];
 
   const handlePhotoChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.readAsDataURL(file);
-      reader.onload = () => setPhoto(reader.result); // Stocke l'image en Base64
+      reader.onload = () => setPhoto(reader.result);
     }
   };
 
-  const handleTagChange = (tag) => {
-    if (!tags.includes(tag)) {
-      setTags([...tags, tag]);
-    }
-  };
-
-  const handleTagRemove = (tag) => {
-    setTags(tags.filter((t) => t !== tag));
+  const handleTagToggle = (tagLabel) => {
+    setTags((prev) =>
+      prev.includes(tagLabel)
+        ? prev.filter((t) => t !== tagLabel)
+        : [...prev, tagLabel],
+    );
   };
 
   const handleSubmit = async (e) => {
@@ -133,141 +115,150 @@ export default function ArticleForm({ articleId = null }) {
     setErrorMessage(null);
     try {
       const userName = user ? user.full_name : "Anonyme";
-      if (articleId) {
-        await updateArticle(articleId, {
-          title,
-          photo,
-          content,
-          tags,
-          userName,
-        });
-      } else {
-        await storeArticle({
-          title,
-          photo,
-          content,
-          tags,
-          userName,
-        });
-      }
+      const payload = { title, photo, content, tags, userName };
+
+      articleId
+        ? await updateArticle(articleId, payload)
+        : await storeArticle(payload);
       router.push("/admin/blog/liste-articles");
     } catch (error) {
-      setErrorMessage(error.response.data.message);
-      console.log(error.response.data.message);
+      setErrorMessage(
+        error.response?.data?.message || "Une erreur est survenue",
+      );
     } finally {
       setLoadingSend(false);
     }
   };
 
-  return (
-    <div>
-      <h1 className="text-2xl font-bold mb-6">Créer un nouvel article</h1>
+  // Styles partagés Brutalistes
+  const labelStyle =
+    "text-[10px] uppercase tracking-[0.3em] font-bold text-black";
 
-      <form onSubmit={handleSubmit} className="space-y-6 mb-24">
-        {/* Titre de l'article */}
-        <div>
-          <label htmlFor="title" className="block font-medium text-gray-700">
-            Nom de l'article
-          </label>
+  return (
+    <div className="max-w-5xl mx-auto pb-32">
+      {/* Header Luxe */}
+      <header className="mb-12 border-b border-black pb-8">
+        <h1 className="text-3xl font-light tracking-[0.2em] uppercase">
+          {articleId ? "Édition de l'éditorial" : "Nouvelle Rédaction"}
+        </h1>
+      </header>
+
+      <form onSubmit={handleSubmit} className="space-y-16">
+        {/* Section Titre */}
+        <section className="space-y-4">
+          <label className={labelStyle}>Titre de l'article</label>
           <input
             type="text"
-            id="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
-            className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
-            placeholder="Entrez le titre..."
+            className="w-full text-2xl md:text-4xl font-serif italic border-b border-zinc-200 focus:border-black outline-none pb-4 transition-colors bg-transparent placeholder:text-zinc-200"
+            placeholder="LE TITRE DE VOTRE ŒUVRE..."
           />
-        </div>
+        </section>
 
-        {/* Editeur de texte */}
-        <div>
-          <label className="block font-medium text-gray-700 sr-only">Contenu</label>
+        {/* Upload Visuel */}
+        <section className="space-y-4">
+          <label className={labelStyle}>Image de couverture</label>
+          <div className="relative group border border-zinc-200 hover:border-black transition-colors p-10 text-center cursor-pointer">
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handlePhotoChange}
+              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+            />
+            {photo ? (
+              <div className="space-y-4">
+                <img
+                  src={photo}
+                  alt="Preview"
+                  className="max-h-80 mx-auto object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                />
+                <p className="text-[9px] tracking-widest text-zinc-400 uppercase">
+                  Cliquer pour remplacer le visuel
+                </p>
+              </div>
+            ) : (
+              <div className="py-12">
+                <Icon
+                  icon="ph:image-thin"
+                  className="w-12 h-12 mx-auto mb-4 text-zinc-300"
+                />
+                <p className="text-[10px] uppercase tracking-[0.2em] text-zinc-400">
+                  Importer une photographie haute résolution
+                </p>
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* Éditeur de texte */}
+        <section className="space-y-4 border border-black">
+          <label className={labelStyle}>Contenu éditorial</label>
           <QuillEditor
             value={content}
             onChange={setContent}
             modules={modules}
-            placeholder="Prenez votre plus belle plume pour rédiger cet article 🖋️"
+            placeholder="Prenez votre plus belle plume..."
           />
-        </div>
+        </section>
 
-        {/* Tags */}
-        <div>
-          <label className="block font-medium text-gray-700">Tags</label>
-          <div className="flex flex-wrap gap-2 mt-2">
+        {/* Tags / Classification */}
+        <section className="space-y-6">
+          <label className={labelStyle}>Classification & Tags</label>
+          <div className="flex flex-wrap gap-3">
             {predefinedTags.map((tag) => (
               <button
                 type="button"
                 key={tag.id}
-                onClick={() => handleTagChange(tag.label)}
-                className={`px-3 py-1 border rounded-full ${
+                onClick={() => handleTagToggle(tag.label)}
+                className={`px-6 py-2 border text-[10px] uppercase tracking-widest transition-all duration-300 ${
                   tags.includes(tag.label)
-                    ? "bg-blue-600 text-white"
-                    : "bg-gray-200 text-gray-700"
-                } transition hover:bg-blue-500 hover:text-white`}
+                    ? "bg-black text-white border-black"
+                    : "bg-white text-zinc-400 border-zinc-200 hover:border-black hover:text-black"
+                }`}
               >
                 {tag.label}
               </button>
             ))}
           </div>
-          {/* Affichage des tags sélectionnés */}
-          {tags.length > 0 && (
-            <div className="flex flex-wrap gap-2 mt-3">
-              {tags.map((tag) => (
-                <div
-                  key={tag}
-                  className="flex items-center bg-blue-500 text-white px-3 py-1 rounded-full"
-                >
-                  {tag}
-                  <button
-                    type="button"
-                    onClick={() => handleTagRemove(tag)}
-                    className="ml-2"
-                  >
-                    <Icon icon="mdi:close-circle" />
-                  </button>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+        </section>
 
-        {/* Upload d'image */}
-        <div>
-          <label htmlFor="photo" className="block font-medium text-gray-700">
-            Photo de l'article
-          </label>
-          <input
-            type="file"
-            id="photo"
-            accept="image/*"
-            onChange={handlePhotoChange}
-            className="mt-2"
-          />
-          {photo && (
-            <div className="mt-2">
-              <img
-                src={photo}
-                alt="Aperçu"
-                className="w-32 h-32 object-cover rounded-lg shadow"
-              />
+        {/* Barre d'action fixe (Identique au Job Form) */}
+        <footer className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-black p-4 z-[60]">
+          <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="text-red-600 text-[10px] uppercase tracking-widest font-bold">
+              {errorMessage && (
+                <span className="flex items-center">
+                  <Icon
+                    icon="mdi:alert-circle-outline"
+                    className="mr-2 h-4 w-4"
+                  />
+                  {errorMessage}
+                </span>
+              )}
             </div>
-          )}
-        </div>
 
-        <div className="fixed bottom-0 left-0 right-0 p-6 shadow-md bg-white">
-          <div className="flex justify-end items-center space-x-3">
-            {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-            <Button
-              loading={loadingSend}
-              text={articleId ? "Modifier l'article" : "Publier l'article"}
-              type="submit"
-              className="w-full bg-blue-600 text-white font-semibold py-3 rounded-lg hover:bg-blue-700 transition"
-            >
-              Publier l'article
-            </Button>
+            <div className="flex space-x-4 w-full md:w-auto">
+              <button
+                type="button"
+                onClick={() => router.back()}
+                className="flex-1 md:flex-none px-8 py-3 border border-black text-[10px] uppercase tracking-widest hover:bg-zinc-100 transition-colors"
+              >
+                Retour
+              </button>
+              <button
+                loading={loadingSend}
+                type="submit"
+                className="bg-black text-white px-10 py-3 text-[10px] uppercase tracking-widest hover:bg-zinc-800 transition-all font-medium border border-black"
+              >
+                {articleId
+                  ? "Enregistrer les modifications"
+                  : "Publier l'article"}
+              </button>
+            </div>
           </div>
-        </div>
+        </footer>
       </form>
     </div>
   );

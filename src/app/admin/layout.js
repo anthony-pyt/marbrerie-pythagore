@@ -4,10 +4,7 @@ import "./../../app/globals.css";
 import "animate.css";
 import { usePathname } from "next/navigation";
 import Loader from "@/components/loader";
-import { metadata } from "@/datas/metadata";
 import { useEffect, useState } from "react";
-import MainMenu from "@/components/MainMenu";
-import PageTitle from "@/components/PageTitle";
 import { logout } from "@/api/services/authServices";
 import { useRouter } from "next/navigation";
 import { Icon } from "@iconify/react";
@@ -17,9 +14,10 @@ const inter = Inter({ subsets: ["latin"] });
 export default function AdminLayout({ children }) {
   const pathname = usePathname();
   const [loading, setLoading] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false); // Fermé par défaut sur mobile
   const router = useRouter();
 
+  // Gestion du chargement lors de la navigation
   useEffect(() => {
     const handleClick = (event) => {
       const target = event.target.closest("a");
@@ -27,14 +25,13 @@ export default function AdminLayout({ children }) {
         setLoading(true);
       }
     };
-
     document.addEventListener("click", handleClick);
-
     return () => document.removeEventListener("click", handleClick);
   }, []);
 
   useEffect(() => {
-    setLoading(false); // Arrête le loader quand la page a changé
+    setLoading(false);
+    setSidebarOpen(false); // Ferme automatiquement le menu mobile après navigation
   }, [pathname]);
 
   const handleLogout = async () => {
@@ -43,74 +40,105 @@ export default function AdminLayout({ children }) {
   };
 
   return (
-    <div className="min-h-screen">
+    <div
+      className={`min-h-screen bg-white ${inter.className} overflow-x-hidden`}
+    >
       {loading && <Loader />}
-      <MainMenu />
-      <PageTitle title={"Administration"} />
 
-      <div className="flex min-h-screen">
-        <aside
-          className={`p-4 transition-all ${sidebarOpen ? "w-64" : "w-20"}`}
+      {/* Header Mobile / Titre Desktop */}
+      <header className="flex items-center justify-between p-4 md:p-8 border-b border-black">
+        <h1 className="text-xl md:text-7xl font-light tracking-[0.2em] md:tracking-widest uppercase">
+          Administration
+        </h1>
+        {/* Toggle Burger pour Mobile uniquement */}
+        <button
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+          className="md:hidden p-2 border border-black"
         >
-          <div className="flex justify-between items-center">
-            <button
-              onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="rounded-md hover:bg-gray-200"
-            >
-              {sidebarOpen ? (
-                <Icon icon="hugeicons:sidebar-left-01" width="24" height="24" />
-              ) : (
-                <Icon
-                  icon="hugeicons:sidebar-right-01"
-                  width="24"
-                  height="24"
-                />
-              )}
-            </button>
-          </div>
+          <Icon
+            icon={sidebarOpen ? "ph:x-thin" : "ph:list-thin"}
+            className="w-6 h-6"
+          />
+        </button>
+      </header>
 
-          <nav className="mt-8 space-y-4">
+      <div className="flex min-h-screen relative">
+        {/* Overlay pour Mobile */}
+        {sidebarOpen && (
+          <div
+            className="fixed inset-0 bg-black/20 z-40 md:hidden backdrop-blur-sm"
+            onClick={() => setSidebarOpen(false)}
+          />
+        )}
+
+        {/* Sidebar */}
+        <aside
+          className={`
+            fixed top-0 md:relative z-50 h-full md:h-auto pt-16 lg:pt-0
+            transition-all duration-500 ease-in-out
+            border-r border-black bg-white flex flex-col
+            ${sidebarOpen ? "translate-x-0 w-72" : "-translate-x-full w-72 md:translate-x-0 md:w-20 lg:w-72"}
+            md:translate-x-0
+          `}
+        >
+          <nav className="flex-1 overflow-y-auto">
             <NavItem
-              icon="mdi:view-dashboard"
+              icon="ph:layout-thin"
               text="Dashboard"
-              sidebarOpen={sidebarOpen}
+              active={pathname === "/admin"}
               onClick={() => router.push("/admin")}
             />
             <NavItem
-              icon="mdi:format-list-bulleted"
-              text="Liste des articles"
-              sidebarOpen={sidebarOpen}
+              icon="ph:article-thin"
+              text="Articles"
+              active={pathname.includes("articles")}
               onClick={() => router.push("/admin/blog/liste-articles")}
             />
             <NavItem
-              icon="mdi:format-list-bulleted"
-              text="Liste des jobs"
-              sidebarOpen={sidebarOpen}
+              icon="ph:briefcase-thin"
+              text="Jobs"
+              active={pathname.includes("jobs")}
               onClick={() => router.push("/admin/liste-jobs")}
             />
-            <NavItem
-              icon="mdi:logout"
-              text="Déconnexion"
-              sidebarOpen={sidebarOpen}
-              onClick={handleLogout}
-            />
           </nav>
+
+          <div className="border-t border-black bg-white">
+            <NavItem
+              icon="ph:power-thin"
+              text="Déconnexion"
+              onClick={handleLogout}
+              danger
+            />
+          </div>
         </aside>
 
-        <main className="flex-1 p-6">{children}</main>
+        {/* Zone de contenu principale */}
+        <main className="flex-1 p-4 md:p-10 w-full overflow-hidden">
+          <div className="max-w-7xl mx-auto animate__animated animate__fadeIn">
+            {children}
+          </div>
+        </main>
       </div>
     </div>
   );
 }
 
-/* 🔹 Composant NavItem */
-const NavItem = ({ icon, text, sidebarOpen, onClick }) => (
+/* 🔹 Composant NavItem - Adaptatif */
+const NavItem = ({ icon, text, onClick, active, danger }) => (
   <div
-    className="flex items-center space-x-3 px-3 py-1 rounded-lg hover:bg-gray-100 cursor-pointer transition"
+    className={`
+      flex items-center space-x-4 px-6 py-5 cursor-pointer transition-all duration-300
+      ${active ? "bg-black text-white" : "text-black hover:bg-zinc-100"}
+      ${danger ? "hover:bg-red-600 hover:text-white" : ""}
+    `}
     onClick={onClick}
-    as="button"
   >
-    <Icon size={22} className="text-gray-700" icon={icon} />
-    {sidebarOpen && <span className="text-gray-700">{text}</span>}
+    <div className="flex-shrink-0">
+      <Icon icon={icon} className="w-6 h-6" />
+    </div>
+    {/* On cache le texte sur tablette (md) mais on le montre sur mobile et grand écran (lg) */}
+    <span className="text-[10px] uppercase tracking-[0.3em] font-medium overflow-hidden whitespace-nowrap block md:hidden lg:block">
+      {text}
+    </span>
   </div>
 );

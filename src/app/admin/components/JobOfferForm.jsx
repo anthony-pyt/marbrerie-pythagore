@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import QuillEditor from "@/components/QuillEditor";
 import Button from "@/components/Button";
@@ -20,29 +20,27 @@ export default function JobOfferForm({ jobOfferId = null }) {
   const [loadingSend, setLoadingSend] = useState(false);
   const router = useRouter();
 
+  // Style de l'éditeur version Luxe (Angles droits)
   useEffect(() => {
     if (typeof window !== "undefined") {
       const interval = setInterval(() => {
-        const editor = document.querySelector(".ql-editor"); // Sélectionne l'éditeur par sa classe
-        console.log(editor);
-
+        const editor = document.querySelector(".ql-editor");
         if (editor) {
-          editor.style.minHeight = "400px";
-          editor.style.border = "1px solid rgb(209 213 219)";
-          editor.style.borderRadius = "0.5rem";
+          editor.style.minHeight = "450px";
+          editor.style.border = "1px solid black";
+          editor.style.borderRadius = "0px"; // Force no radius
 
           const toolbar = document.querySelector(".ql-toolbar");
           if (toolbar) {
-            toolbar.style.border = "none";
+            toolbar.style.border = "1px solid black";
+            toolbar.style.borderBottom = "none";
+            toolbar.style.borderRadius = "0px";
             toolbar.style.display = "flex";
-            toolbar.style.justifyContent = "center";
-            toolbar.style.margin = "1.5rem 0 0.5rem 0";
+            toolbar.style.flexWrap = "wrap";
           }
-
           clearInterval(interval);
         }
       }, 100);
-
       return () => clearInterval(interval);
     }
   }, []);
@@ -60,7 +58,7 @@ export default function JobOfferForm({ jobOfferId = null }) {
           setProfileSought(response.profile_sought || "");
           setFormation(response.formation || "");
         } catch (error) {
-          console.error("Erreur lors de la récupération de l'offre", error);
+          console.error("Erreur récupération", error);
         }
       };
       getJobOffer();
@@ -71,25 +69,16 @@ export default function JobOfferForm({ jobOfferId = null }) {
     () => ({
       toolbar: {
         container: [
-          ["bold", "italic", "underline", "strike"], // toggled buttons
-
+          ["bold", "italic", "underline"],
           [{ align: [] }],
-
-          ["blockquote", "code-block"],
-          ["link", "image", "video"],
-
-          [{ header: 1 }, { header: 2 }], // custom button values
-          [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
-          [{ script: "sub" }, { script: "super" }], // superscript/subscript
-          [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
-
-          [{ header: [1, 2, 3, 4, 5, 6, false] }],
-
-          [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+          [{ header: [1, 2, false] }],
+          [{ list: "ordered" }, { list: "bullet" }],
+          ["link"],
+          ["clean"],
         ],
       },
     }),
-    []
+    [],
   );
 
   const handleSubmit = async (e) => {
@@ -97,160 +86,165 @@ export default function JobOfferForm({ jobOfferId = null }) {
     setLoadingSend(true);
     setErrorMessage(null);
     try {
+      const payload = {
+        title,
+        type,
+        salary,
+        weekly_hours: weeklyHours,
+        description,
+        profile_sought: profileSought,
+        formation,
+      };
       if (jobOfferId) {
-        await updateJobOffer(jobOfferId, {
-          title,
-          type,
-          salary,
-          weekly_hours: weeklyHours,
-          description,
-          profile_sought: profileSought,
-          formation,
-        });
+        await updateJobOffer(jobOfferId, payload);
       } else {
-        await storeJobOffer({
-          title,
-          type,
-          salary,
-          weekly_hours: weeklyHours,
-          description,
-          profile_sought: profileSought,
-          formation,
-        });
+        await storeJobOffer(payload);
       }
       router.push("/admin/liste-jobs");
     } catch (error) {
       setErrorMessage(
-        error.response?.data?.message || "Une erreur est survenue."
+        error.response?.data?.message || "Une erreur est survenue.",
       );
-      console.error(error);
     } finally {
       setLoadingSend(false);
     }
   };
 
+  const inputStyle =
+    "mt-1 w-full p-4 border border-black rounded-none focus:bg-zinc-50 outline-none transition-colors placeholder:text-zinc-300 text-sm";
+  const labelStyle =
+    "block text-[10px] uppercase tracking-[0.2em] font-semibold text-zinc-500 mb-1";
+
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-6">
-        {jobOfferId ? "Modifier l'offre" : "Créer une nouvelle offre"}
-      </h1>
+    <div className="bg-white min-h-screen pb-32">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-12 border-b border-black pb-6">
+        <h1 className="text-3xl font-light tracking-[0.2em] uppercase">
+          {jobOfferId ? "Édition" : "Nouvelle Offre"}
+        </h1>
+      </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6 mb-24">
-        <div>
-          <label className="block font-medium text-gray-700">
-            Nom du poste
-          </label>
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-            className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
-            placeholder="Entrez le titre..."
-          />
-        </div>
-        <div className="flex items-center space-x-2">
+      <form onSubmit={handleSubmit} className="max-w-5xl space-y-12">
+        {/* Section Principale */}
+        <div className="grid grid-cols-1 gap-8">
           <div>
-            <label className="block font-medium text-gray-700">
-              Type de contrat
-            </label>
-            <select
-              value={type}
-              onChange={(e) => setType(e.target.value)}
+            <label className={labelStyle}>Intitulé du poste</label>
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
               required
-              className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="">Sélectionnez le type de contrat</option>
-              <option value="CDI">CDI</option>
-              <option value="CDD">CDD</option>
-              <option value="Apprentissage">Apprentissage</option>
-              <option value="Stage">Stage</option>
-            </select>
+              className={inputStyle}
+              placeholder="POLISSEUR, ADV..."
+            />
           </div>
 
-          <div>
-            <label className="block font-medium text-gray-700">Salaire par mois</label>
-            <input
-              type="number"
-              value={salary}
-              onChange={(e) => setSalary(e.target.value)}
-              className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
-              placeholder="1500"
-            />
-          </div>
-          <div>
-            <label className="block font-medium text-gray-700">
-              Heures hebdomadaires
-            </label>
-            <input
-              type="number"
-              value={weeklyHours}
-              onChange={(e) => setWeeklyHours(e.target.value)}
-              className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
-              placeholder="Ex : 39h"
-            />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div>
+              <label className={labelStyle}>Type de contrat</label>
+              <select
+                value={type}
+                onChange={(e) => setType(e.target.value)}
+                required
+                className={inputStyle}
+              >
+                <option value="">SÉLECTIONNER</option>
+                <option value="CDI">CDI</option>
+                <option value="CDD">CDD</option>
+                <option value="Apprentissage">APPRENTISSAGE</option>
+                <option value="Stage">STAGE</option>
+              </select>
+            </div>
+
+            <div>
+              <label className={labelStyle}>Rémunération mensuelle</label>
+              <input
+                type="number"
+                value={salary}
+                onChange={(e) => setSalary(e.target.value)}
+                className={inputStyle}
+                placeholder="0.00"
+              />
+            </div>
+
+            <div>
+              <label className={labelStyle}>Volume hebdomadaire</label>
+              <input
+                type="text"
+                value={weeklyHours}
+                onChange={(e) => setWeeklyHours(e.target.value)}
+                className={inputStyle}
+                placeholder="EX: 35H"
+              />
+            </div>
           </div>
         </div>
 
-        {/* Editeur de texte */}
-        {/* <div>
-          <label className="block font-medium">Contenu de l'offre</label>
-          <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            modules={modules}
-            placeholder="Contenu de l'offre..."
-            className="mt-1 w-full p-3 border border-gray-300 rounded-md h-36"
-          />
-        </div> */}
+        {/* Éditeur */}
         <div>
-          <label className="block font-medium sr-only">
-            Contenu de l'offre
-          </label>
-          <QuillEditor
-            value={description}
-            onChange={setDescription}
-            modules={modules}
-            placeholder="Contenu de l'offre..."
-          />
+          <label className={labelStyle}>Description détaillée</label>
+          <div className="mt-2 border border-black">
+            <QuillEditor
+              value={description}
+              onChange={setDescription}
+              modules={modules}
+              placeholder="Rédiger l'offre ici..."
+            />
+          </div>
         </div>
 
-        <div className="flex items-center space-x-4">
-          <div className="flex-1">
-            <label className="block font-medium text-gray-700">
-              Profil recherché
-            </label>
+        {/* Profil & Formation */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div>
+            <label className={labelStyle}>Profil recherché</label>
             <textarea
               value={profileSought}
               onChange={(e) => setProfileSought(e.target.value)}
-              modules={modules}
-              placeholder="Décrivez le profil recherché..."
-              className="mt-1 w-full p-3 border border-gray-300 rounded-md h-36"
+              placeholder="Exigences et soft skills..."
+              className={`${inputStyle} h-48 resize-none`}
             />
           </div>
 
-          <div className="flex-1">
-            <label className="block font-medium text-gray-700">
-              Formation requise
-            </label>
+          <div>
+            <label className={labelStyle}>Formation & Expérience</label>
             <textarea
               value={formation}
               onChange={(e) => setFormation(e.target.value)}
-              className="mt-1 w-full p-3 border border-gray-300 rounded-md h-36"
-              placeholder="Ex : Bac+5, BTS..."
+              className={`${inputStyle} h-48 resize-none`}
+              placeholder="Cursus académique requis..."
             />
           </div>
         </div>
 
-        <div className="fixed bottom-0 left-0 right-0 p-6 shadow-md bg-white">
-          <div className="flex justify-end items-center space-x-3">
-            {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-            <Button
-              loading={loadingSend}
-              text={jobOfferId ? "Modifier l'offre" : "Publier l'offre"}
-              type="submit"
-              className="w-full bg-blue-600 text-white font-semibold py-3 rounded-lg hover:bg-blue-700 transition"
-            />
+        {/* Footer Bar fixe - Style Brutaliste */}
+        <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-black p-6 z-50">
+          <div className="max-w-7xl mx-auto flex justify-between items-center">
+            <div>
+              {errorMessage && (
+                <p className="text-red-600 text-[10px] uppercase tracking-widest animate-pulse">
+                  {errorMessage}
+                </p>
+              )}
+            </div>
+            <div className="flex space-x-4">
+              <button
+                type="button"
+                onClick={() => router.back()}
+                className="px-8 py-3 text-[10px] uppercase tracking-widest border border-black hover:bg-zinc-100 transition-colors"
+              >
+                Annuler
+              </button>
+              <Button
+                loading={loadingSend}
+                text={
+                  jobOfferId
+                    ? "Enregistrer les modifications"
+                    : "Publier l'opportunité"
+                }
+                type="submit"
+                className="bg-black text-white px-10 py-3 text-[10px] uppercase tracking-widest hover:bg-zinc-800 transition-all font-medium border border-black"
+              />
+            </div>
           </div>
         </div>
       </form>

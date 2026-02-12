@@ -4,9 +4,9 @@ import { useEffect, useState, useRef } from "react";
 import useJobsServices from "@/api/services/jobOffersServices";
 import { Icon } from "@iconify/react";
 import { useRouter } from "next/navigation";
-import Toast from '@/components/Toast'
+import Toast from "@/components/Toast";
 
-export default function AdminDashboard() {
+export default function AdminJobsList() {
   const { fetchJobOffers, deleteJobOffer, togglePublishmentStatut } =
     useJobsServices();
   const [jobOffers, setJobOffers] = useState([]);
@@ -15,7 +15,7 @@ export default function AdminDashboard() {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState("info");
-  const menuRef = useRef(null); // Référence pour détecter les clics à l'extérieur
+  const menuRef = useRef(null);
 
   const router = useRouter();
 
@@ -25,7 +25,7 @@ export default function AdminDashboard() {
         const response = await fetchJobOffers();
         setJobOffers(response.data);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       } finally {
         setLoading(false);
       }
@@ -33,35 +33,32 @@ export default function AdminDashboard() {
     getJobOffers();
   }, []);
 
-  // Ferme le menu si on clique à l'extérieur
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
         setOpenMenu(null);
       }
     };
-
-    if (openMenu !== null) {
+    if (openMenu !== null)
       document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [openMenu]);
 
+  const triggerToast = (message, type) => {
+    setToastMessage(message);
+    setToastType(type);
+    setShowToast(true);
+  };
+
   const handleDelete = async (id) => {
-    if (!confirm("Êtes-vous sûr de vouloir supprimer cet article ?")) return;
+    if (!confirm("CONFIRMATION : Supprimer définitivement cette offre ?"))
+      return;
     try {
       await deleteJobOffer(id);
       setJobOffers(jobOffers.filter((offer) => offer.id !== id));
-      setToastMessage("Cette offre a bien été supprimée");
-      setToastType("success");
-      setShowToast(true);
+      triggerToast("L'offre a été retirée de la collection.", "success");
     } catch (error) {
-      setToastMessage("Une erreur s'est produite. Veuillez recommencer...");
-      setToastType("error");
-      setShowToast(true);
+      triggerToast("Erreur lors de la suppression.", "error");
     }
   };
 
@@ -69,33 +66,18 @@ export default function AdminDashboard() {
     try {
       await togglePublishmentStatut(offer.id);
       setJobOffers(
-        jobOffers.map((jobOffer) => {
-          if (jobOffer.id === offer.id) {
-            return { ...jobOffer, is_published: !offer.is_published };
-          }
-          return jobOffer;
-        })
+        jobOffers.map((j) =>
+          j.id === offer.id ? { ...j, is_published: !offer.is_published } : j,
+        ),
       );
-      setToastMessage("Le statut a été mis à jour !");
-      setToastType("success");
-      setShowToast(true);
+      triggerToast("Le statut de publication a été mis à jour.", "success");
     } catch (error) {
-      setToastMessage("Une erreur s'est produite. Veuillez recommencer...");
-      setToastType("error");
-      setShowToast(true);
+      triggerToast("Erreur de mise à jour.", "error");
     }
   };
 
-  const handleNavigation = (url) => {
-    router.push(url);
-  };
-
-  const toggleMenu = (id) => {
-    setOpenMenu(openMenu === id ? null : id);
-  };
-
   return (
-    <div>
+    <div className="bg-white min-h-screen px-4 md:px-0">
       {showToast && (
         <Toast
           message={toastMessage}
@@ -104,107 +86,156 @@ export default function AdminDashboard() {
         />
       )}
 
-      <div className="flex items-center justify-between space-x-2 mb-4">
-        <h1 className="text-2xl font-bold">Liste des offres d'emploi</h1>
+      {/* Header Luxe Responsive */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 md:mb-12 border-b border-black pb-6 gap-4">
+        <h1 className="text-2xl md:text-3xl font-light tracking-[0.2em] uppercase">
+          JOBS
+        </h1>
         <button
-          className="hover:bg-gray-100 py-1 px-2 rounded flex items-center border space-x-1"
-          onClick={() => handleNavigation("/admin/creer-offre-job")}
+          className="bg-black text-white hover:bg-zinc-800 py-3 px-6 md:px-8 flex items-center justify-center space-x-3 transition-all duration-300 w-full sm:w-auto"
+          onClick={() => router.push("/admin/creer-offre-job")}
         >
-          <Icon icon={"mdi:plus"} className="h-4 w-4" />
-          <span className="text-sm">Créer une offre</span>
+          <Icon icon={"mdi:plus"} className="h-5 w-5" />
+          <span className="text-[10px] uppercase tracking-widest font-medium">
+            Créer une offre
+          </span>
         </button>
       </div>
 
       {loading ? (
-        <p className="text-center">Chargement des offres...</p>
+        <div className="flex justify-center py-20 font-light tracking-[0.3em] uppercase text-[10px] text-zinc-400">
+          Chargement de la sélection...
+        </div>
       ) : jobOffers.length === 0 ? (
-        <p className="text-center">Aucune offre n'est disponible.</p>
+        <p className="text-center italic text-gray-400 py-20 font-serif">
+          Aucune opportunité disponible actuellement.
+        </p>
       ) : (
-        <div className="relative border text-sm">
-          {" "}
-          {/* Permet aux menus de dépasser */}
-          <table className="min-w-full border-collapse">
-            <thead className="border-b bg-gray-100">
-              <tr className="text-left">
-                <th className="px-3 py-2">Titre</th>
-                <th className="px-3 py-2">Date</th>
-                <th className="px-3 py-2">Type</th>
-                <th className="px-3 py-2">Publié ?</th>
-                <th className="px-3 py-2 text-right sr-only">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {jobOffers.map((offer) => (
-                <tr key={offer.id} className="hover:bg-gray-50 relative">
-                  <td className="px-3 py-2">{offer.title}</td>
-                  <td className="px-3 py-2">
-                    {new Date(offer.updated_at).toLocaleDateString("fr-FR")}
-                  </td>
-                  <td className="px-3 py-2">{offer.type}</td>
-                  <td className="px-3 py-2">
-                    {offer.is_published ? (
-                      <Icon
-                        icon="mdi:check"
-                        width="24"
-                        height="24"
-                        className="text-green-600"
-                      />
-                    ) : (
-                      <Icon
-                        icon="mdi:close"
-                        width="24"
-                        height="24"
-                        className="text-red-600"
-                      />
-                    )}
-                  </td>
-                  <td className="px-3 py-2 text-right relative text-sm">
-                    <button
-                      className="hover:bg-slate-100 rounded w-8 h-8"
-                      onClick={() => toggleMenu(offer.id)}
-                    >
-                      <Icon
-                        icon="mdi:dots-vertical"
-                        className="inline-block h-4 w-4"
-                      />
-                    </button>
-
-                    {openMenu === offer.id && (
-                      <div
-                        ref={menuRef}
-                        className="absolute right-3 mt-05 w-32 bg-white border rounded shadow-md z-50"
-                      >
-                        <button
-                          className="flex items-center px-4 py-2 w-full hover:bg-blue-100 text-blue-600 border-b"
-                          onClick={() => handlePublishmentOffer(offer)}
-                        >
-                          {offer.is_published ? "Dépublier" : "Publier"}
-                        </button>
-                        <button
-                          className="flex items-center px-4 py-2 w-full hover:bg-gray-100"
-                          onClick={() => handleNavigation(`/carriere`)}
-                        >
-                          Voir
-                        </button>
-                        <button
-                          className="flex items-center px-4 py-2 w-full hover:bg-gray-100"
-                          onClick={() => handleNavigation(`/admin/modifier-offre-job/${offer.id}`)}
-                        >
-                          Modifier
-                        </button>
-                        <button
-                          className="flex items-center px-4 py-2 w-full text-red-600 hover:bg-red-100 border-t"
-                          onClick={() => handleDelete(offer.id)}
-                        >
-                          Supprimer
-                        </button>
-                      </div>
-                    )}
-                  </td>
+        <div className="border border-black">
+          <div className="">
+            <table className="min-w-full border-collapse text-left">
+              <thead>
+                <tr className="bg-black text-white text-[10px] uppercase tracking-[0.2em]">
+                  <th className="px-4 md:px-6 py-4 font-medium">Poste</th>
+                  <th className="hidden md:table-cell px-6 py-4 font-medium">
+                    Type
+                  </th>
+                  <th className="hidden lg:table-cell px-6 py-4 font-medium">
+                    Mise à jour
+                  </th>
+                  <th className="px-4 md:px-6 py-4 font-medium text-center">
+                    Statut
+                  </th>
+                  <th className="px-4 md:px-6 py-4 text-right font-medium">
+                    Actions
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-black">
+                {jobOffers.map((offer) => (
+                  <tr
+                    key={offer.id}
+                    className="hover:bg-zinc-50 transition-colors group"
+                  >
+                    <td className="px-4 md:px-6 py-5">
+                      <div className="flex flex-col">
+                        <span className="text-xs md:text-sm font-medium tracking-tight uppercase">
+                          {offer.title}
+                        </span>
+                        {/* Tags mobiles */}
+                        <div className="md:hidden flex items-center space-x-2 mt-1">
+                          <span className="text-[9px] text-zinc-400 uppercase tracking-tighter">
+                            {offer.type}
+                          </span>
+                          <span className="text-[9px] text-zinc-300">•</span>
+                          <span className="text-[9px] text-zinc-400 italic">
+                            {new Date(offer.updated_at).toLocaleDateString(
+                              "fr-FR",
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                    </td>
+
+                    <td className="hidden md:table-cell px-6 py-4 text-[10px] uppercase tracking-widest text-zinc-500 font-semibold">
+                      {offer.type}
+                    </td>
+
+                    <td className="hidden lg:table-cell px-6 py-4 text-[11px] font-serif italic text-zinc-400">
+                      {new Date(offer.updated_at).toLocaleDateString("fr-FR")}
+                    </td>
+
+                    <td className="px-4 md:px-6 py-4 text-center">
+                      <div className="flex justify-center items-center space-x-1">
+                        <span
+                          className={`w-2 h-2 transition-all duration-500 ${
+                            offer.is_published
+                              ? "bg-green-600 animate-pulse"
+                              : "bg-zinc-200 border border-zinc-300"
+                          }`}
+                          title={offer.is_published ? "En ligne" : "Suspendue"}
+                        />
+                        <span className="text-[10px] uppercase tracking-widest transition-colors">
+                          {offer.is_published ? "En ligne" : "Suspendue"}
+                        </span>
+                      </div>
+                    </td>
+
+                    <td className="px-4 md:px-6 py-4 text-right relative">
+                      <button
+                        className="p-2 hover:bg-black hover:text-white transition-colors duration-200 border border-transparent hover:border-black"
+                        onClick={() =>
+                          setOpenMenu(openMenu === offer.id ? null : offer.id)
+                        }
+                      >
+                        <Icon icon="mdi:dots-horizontal" className="h-5 w-5" />
+                      </button>
+
+                      {openMenu === offer.id && (
+                        <div
+                          ref={menuRef}
+                          className="absolute right-4 md:right-10 top-12 w-44 md:w-48 bg-white border border-black z-50 shadow-2xl animate__animated animate__fadeIn animate__faster"
+                        >
+                          <button
+                            className={`flex items-center px-4 py-3 w-full text-[10px] uppercase tracking-widest transition-colors border-b border-zinc-100 font-bold ${
+                              offer.is_published
+                                ? "text-zinc-400 hover:text-black"
+                                : "text-black hover:bg-black hover:text-white"
+                            }`}
+                            onClick={() => handlePublishmentOffer(offer)}
+                          >
+                            {offer.is_published ? "Suspendre" : "Diffuser"}
+                          </button>
+                          <button
+                            className="flex items-center px-4 py-3 w-full text-[10px] uppercase tracking-widest hover:bg-black hover:text-white transition-colors border-b border-zinc-100"
+                            onClick={() => router.push(`/carriere`)}
+                          >
+                            Consulter
+                          </button>
+                          <button
+                            className="flex items-center px-4 py-3 w-full text-[10px] uppercase tracking-widest hover:bg-black hover:text-white transition-colors border-b border-zinc-100"
+                            onClick={() =>
+                              router.push(
+                                `/admin/modifier-offre-job/${offer.id}`,
+                              )
+                            }
+                          >
+                            Éditer
+                          </button>
+                          <button
+                            className="flex items-center px-4 py-3 w-full text-[10px] uppercase tracking-widest text-red-600 hover:bg-red-600 hover:text-white transition-colors font-bold"
+                            onClick={() => handleDelete(offer.id)}
+                          >
+                            Supprimer
+                          </button>
+                        </div>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
     </div>

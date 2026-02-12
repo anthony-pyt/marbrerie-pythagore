@@ -1,157 +1,138 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Icon } from "@iconify/react";
-import Link from "next/link";
 import useBlogServices from "@/api/services/blogServices";
 import useJobOffersServices from "@/api/services/jobOffersServices";
-import { useEffect, useState } from "react";
 
 export default function AdminDashboard() {
   const { countArticles } = useBlogServices();
   const { countJobOffers } = useJobOffersServices();
-  const [count, setCount] = useState({ articles: 0, jobOffers: 0 });
-  const [loading, setLoading] = useState({ articles: true, jobOffers: true });
+  const [counts, setCounts] = useState({ articles: 0, jobOffers: 0 });
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
-    const getNumbers = async () => {
+    const getDashboardData = async () => {
       try {
-        // Lance les deux requêtes en parallèle
         const [articlesResponse, offersResponse] = await Promise.allSettled([
           countArticles(),
           countJobOffers(),
         ]);
 
-        // Traite les résultats des articles
-        if (articlesResponse.status === "fulfilled") {
-          setTimeout(() => {
-            setCount((prev) => ({
-              ...prev,
-              articles: articlesResponse.value.data,
-            }));
-            setLoading((prev) => ({
-              ...prev,
-              articles: false,
-            }));
-            
-          }, 1000);
-        } else {
-          console.error("Erreur articles:", articlesResponse.reason);
-          setLoading((prev) => ({
-            ...prev,
-            articles: false,
-          }));
-        }
-
-        // Traite les résultats des offres
-        if (offersResponse.status === "fulfilled") {
-          setCount((prev) => ({
-            ...prev,
-            jobOffers: offersResponse.value.data,
-          }));
-          setLoading((prev) => ({
-            ...prev,
-            jobOffers: false,
-          }));
-        } else {
-          console.error("Erreur offres:", offersResponse.reason);
-        }
+        setCounts({
+          articles:
+            articlesResponse.status === "fulfilled"
+              ? articlesResponse.value.data
+              : 0,
+          jobOffers:
+            offersResponse.status === "fulfilled"
+              ? offersResponse.value.data
+              : 0,
+        });
       } catch (error) {
-        console.error("Erreur générale:", error);
-        setLoading((prev) => ({
-          ...prev,
-          jobOffers: false,
-        }));
+        console.error("Erreur stats", error);
+      } finally {
+        setLoading(false);
       }
     };
 
-    getNumbers();
+    getDashboardData();
   }, []);
 
-
   return (
-    <div className="p-6">
-      <div className="bg-white shadow rounded-lg p-6">
-        <h1 className="text-2xl font-bold mb-6">Dashboard</h1>
+    <div className="bg-white min-h-screen p-4 md:p-0">
+      {/* Header - S'adapte en colonne sur mobile */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 md:mb-12 border-b border-black pb-6 gap-4">
+        <h2 className="text-2xl md:text-3xl font-light tracking-[0.2em] uppercase">
+          Tableau de Bord
+        </h2>
+        <button
+          className="bg-black text-white hover:bg-zinc-800 py-3 px-6 flex items-center justify-center space-x-2 transition-all duration-300 w-full sm:w-auto"
+          onClick={() => router.push("/admin/blog/creer-article")}
+        >
+          <Icon icon={"mdi:plus"} className="h-4 w-4" />
+          <span className="text-[10px] uppercase tracking-widest font-bold">
+            Nouveau Contenu
+          </span>
+        </button>
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-          <Card
-            loading={loading.articles}
-            title={"Articles"}
-            value={count.articles}
-            icon={"mdi:format-list-bulleted"}
-            description={"visibles sur le site"}
-            url={"/admin/blog/liste-articles"}
-          />
-          <Card
-            loading={loading.jobOffers}
-            title={"Jobs"}
-            value={count.jobOffers}
-            icon={"mdi:format-list-bulleted"}
-            description={"annonces en cours de publication"}
-            url={"/admin/liste-jobs"}
+      {loading ? (
+        <div className="flex items-center justify-center h-64">
+          <Icon
+            icon="svg-spinners:ring-resize"
+            className="w-8 h-8 text-black"
           />
         </div>
+      ) : (
+        /* Grille responsive : 1 col mobile, 2 cols desktop */
+        /* Les bordures sont gérées pour éviter les doubles traits */
+        <div className="grid grid-cols-1 md:grid-cols-2 border-t border-l border-black">
+          <StatCard
+            title="Articles"
+            value={counts.articles}
+            description="Articles en ligne"
+            url="/admin/blog/liste-articles"
+            router={router}
+          />
+          <StatCard
+            title="Opportunités"
+            value={counts.jobOffers}
+            description="Annonces en cours"
+            url="/admin/liste-jobs"
+            router={router}
+          />
+        </div>
+      )}
 
-        <div className="p-4 rounded-lg border">
-          <h2 className="text-lg font-semibold mb-4">---------</h2>
-          <div className="flex flex-wrap">
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-          </div>
+      {/* Section Bas de page - Grille flexible */}
+      <div className="mt-12 border border-black p-6 md:p-10">
+        <h2 className="text-[10px] uppercase tracking-[0.3em] mb-8 text-zinc-400 font-bold">
+          Système & Gestion
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[1, 2, 3, 4].map((i) => (
+            <div
+              key={i}
+              className="border-b border-zinc-200 py-4 italic text-sm text-zinc-400 font-serif"
+            >
+              Module {i.toString().padStart(2, "0")} — En attente
+            </div>
+          ))}
         </div>
       </div>
     </div>
   );
 }
 
-const Skeleton = () => {
+const StatCard = ({ title, value, description, url, router }) => {
   return (
-    <div className="border border-gray-200 p-1 rounded-xl w-[400px] m-1">
-      <div className="flex justify-between">
-        <div className="h-4 w-36 rounded bg-gray-100 my-1"></div>
-        <div className="h-8 w-8 bg-gray-100 rounded-lg"></div>
+    <div
+      className="border-r border-b border-black p-8 md:p-12 group hover:bg-black transition-colors duration-700 cursor-pointer flex flex-col justify-between min-h-[250px] md:min-h-[350px]"
+      onClick={() => router.push(url)}
+    >
+      <div className="flex justify-between items-start">
+        <div className="w-full">
+          <h2 className="text-[10px] uppercase tracking-[0.4em] mb-6 md:mb-12 text-zinc-500 group-hover:text-zinc-400 transition-colors font-bold">
+            {title}
+          </h2>
+          <p className="text-6xl md:text-8xl font-light tracking-tighter group-hover:text-white transition-all duration-500 group-hover:translate-x-2">
+            {value.toString().padStart(2, "0")}
+          </p>
+        </div>
+        <Icon
+          icon="mdi:arrow-top-right"
+          className="text-black group-hover:text-white w-5 h-5 md:w-8 md:h-8 transition-all duration-500 group-hover:translate-x-1 group-hover:-translate-y-1"
+        />
       </div>
-      <div className="flex flex-col justify-between">
-        <div className="h-4 w-48 rounded bg-gray-100 my-1"></div>
-        <div className="h-4 w-48 rounded bg-gray-100 my-1"></div>
-        <div className="h-4 w-48 rounded bg-gray-100 my-1"></div>
-      </div>
-    </div>
-  );
-};
 
-const Card = ({ title, value, description, icon, url, loading }) => {
-  return (
-    <div className="p-4 rounded-lg border flex items-start justify-between">
-      <div>
-        <h2 className="text-lg font-semibold">{title}</h2>
-        {loading ? (
-          <div>
-            <Icon
-              icon="svg-spinners:pulse-rings-3"
-              width="24"
-              height="24"
-              className="text-black"
-            />
-          </div>
-        ) : (
-          <p className="text-4xl font-bold">{value}</p>
-        )}
-        <p className="text-xs mt-2">{description}</p>
-      </div>
-      <div className="h-full flex flex-col justify-between items-end">
-        <Icon icon={icon} className="w-8 h-8" />
-        <Link
-          href={url}
-          className="flex items-center space-x-1 border border-transparent hover:border-gray-200 px-1 rounded"
-        >
-          <span className="text-xs">Voir</span>
-          <Icon icon={"mdi:link-variant"} className="w-4 h-6" />
-        </Link>
+      <div className="mt-8">
+        <div className="h-[1px] w-8 bg-zinc-300 mb-4 group-hover:w-full group-hover:bg-zinc-700 transition-all duration-700"></div>
+        <p className="text-xs md:text-sm font-serif italic text-zinc-500 group-hover:text-zinc-400 transition-colors">
+          {description}
+        </p>
       </div>
     </div>
   );
