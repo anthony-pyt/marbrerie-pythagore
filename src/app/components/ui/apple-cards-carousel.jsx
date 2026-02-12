@@ -252,7 +252,6 @@ export const Card = ({ card, index, layout = false }) => {
         <BlurImage
           src={card.image_url}
           alt={card.imageable?.product?.label}
-          fill
           sizes="(max-width: 768px) 100vw, 50vw"
           className="h-full w-full object-cover absolute z-10 inset-0"
         />
@@ -269,7 +268,7 @@ export const BlurImage = ({ height, width, src, className, alt, ...rest }) => {
       className={cn(
         "transition duration-300",
         isLoading ? "blur-sm" : "blur-0",
-        className
+        className,
       )}
       onLoad={() => setLoading(false)}
       src={src}
@@ -277,7 +276,7 @@ export const BlurImage = ({ height, width, src, className, alt, ...rest }) => {
       height={height}
       loading="lazy"
       decoding="async"
-      blurDataURL={typeof src === "string" ? src : undefined}
+      blurdataurl={typeof src === "string" ? src : undefined}
       alt={alt ? alt : "Background of a beautiful view"}
       {...rest}
     />

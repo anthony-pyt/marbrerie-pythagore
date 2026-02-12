@@ -18,7 +18,6 @@ export default function GoogleReviews() {
     const fetchGoogleReviews = async () => {
       try {
         const response = await getGoogleReviews();
-        console.log(response);
 
         setAverageRating(response.averageRating);
         setNumberOfReviews(response.totalReviewCount);

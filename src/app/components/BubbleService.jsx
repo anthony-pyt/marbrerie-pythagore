@@ -10,7 +10,6 @@ const BubbleService = ({ title, children, urlImage }) => {
         <img
           src={urlImage}
           alt={title || "Service"}
-          fill
           className="object-cover transition-transform duration-700 group-hover:scale-110 group-hover:-rotate-2"
         />
         {/* Overlay subtil qui s'estompe au survol */}
