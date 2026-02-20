@@ -35,6 +35,8 @@ const nextConfig = {
       //   hostname: `'/' ${process.env.NEXT_PUBLIC_IMAGE_URL}`,
       // },
     ],
+    deviceSizes:[320, 480, 768, 1024, 1280],
+    formats: ["image/webp"],
     domains: [
       "assets.aceternity.com",
       "images.unsplash.com",
@@ -43,7 +45,7 @@ const nextConfig = {
       "localhost",
       "192.168.1.210",
       "api.stock.marbrerie-pythagore.fr",
-      // `${process.env.NEXT_PUBLIC_IMAGE_URL}`
+      `${process.env.NEXT_PUBLIC_IMAGE_URL}`
     ],
   },
   eslint: {
