@@ -134,7 +134,6 @@ const FilterMenus = ({
               </div>
             )}
             {categories
-            .sort((a, b) => a.label.localeCompare(b.label))
             .map((category) => (
               <div key={category.id}>
                 <div className="relative flex items-center my-2">

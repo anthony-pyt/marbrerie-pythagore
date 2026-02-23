@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
-const PageTitle = ({ title }) => {
+const PageTitle = ({ title, subtitle = "PYTHAGORE" }) => {
   const [randomNumber, setRandomNumber] = useState(1);
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const PageTitle = ({ title }) => {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-or text-[10px] uppercase tracking-[0.5em] font-bold mb-4"
         >
-          PYTHAGORE
+          {subtitle}
         </motion.span>
 
         {/* Titre principal */}
