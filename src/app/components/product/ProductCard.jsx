@@ -29,12 +29,11 @@ const ProductCard = ({ product }) => {
           className="relative aspect-square w-full overflow-hidden bg-gray-50 cursor-pointer"
           onClick={() => setIsOpenModal(true)}
         >
-          <Image
+          <img
             src={imageSrc}
             alt={product.label}
             fill
-            className="object-cover transition-transform duration-700 group-hover:scale-110"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+            className="object-cover transition-transform duration-700 group-hover:scale-110 h-full w-full"
           />
 
           {/* Overlay subtil au survol */}
