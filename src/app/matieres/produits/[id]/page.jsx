@@ -62,7 +62,7 @@ if (!product || Object.keys(product).length === 0) {
 
         <p className="text-gray-500 max-w-md mx-auto mb-10 leading-relaxed">
           Désolé, nous ne parvenons pas à trouver les détails de cette
-          référence. Il est possible qu'elle ne soit plus disponible dans notre
+          référence. Il est possible qu&apos;elle ne soit plus disponible dans notre
           stock actuel.
         </p>
 
@@ -205,37 +205,67 @@ if (!product || Object.keys(product).length === 0) {
 
             {/* BLOC GARANTIE */}
             {product.product.category.waranty && (
-              <div className="bg-secondary text-white p-8 relative overflow-hidden group">
-                <div className="relative z-10">
-                  <div className="flex items-center gap-4 mb-4">
-                    <img
-                      src={product.product.category.waranty.imageSrc}
-                      className="h-16 w-16 rounded-full border-2 border-white/20 p-1 bg-white"
-                      alt="Garantie"
-                    />
-                    <h3 className="font-bold tracking-tight italic">
-                      Garantie & Sérénité
-                    </h3>
+              <div className="bg-secondary text-white p-10 relative overflow-hidden group border border-white/5">
+                {/* Décoration de fond : Cercle de lumière subtil */}
+                <div className="absolute -top-24 -right-24 w-64 h-64 bg-or/10 rounded-full blur-3xl" />
+
+                <div className="relative z-10 h-full flex flex-col">
+                  {/* HEADER : Badge & Titre */}
+                  <div className="flex flex-col items-start gap-6 mb-8">
+                    <div className="relative">
+                      <img
+                        src={product.product.category.waranty.imageSrc}
+                        className="h-20 w-20 object-contain brightness-0 invert opacity-90 transition-transform duration-500 group-hover:scale-110"
+                        alt="Logo Garantie"
+                      />
+                      {/* Petite décoration dorée sous le logo */}
+                      <div className="absolute -bottom-2 left-0 w-8 h-[2px] bg-or" />
+                    </div>
+
+                    <div>
+                      <span className="text-[10px] uppercase tracking-[0.3em] text-or font-bold mb-1 block">
+                        Engagement Qualité
+                      </span>
+                      <h3 className="text-xl font-light uppercase tracking-[0.15em] leading-tight">
+                        Garantie <br />
+                        <span className="font-bold">Sérénité</span>
+                      </h3>
+                    </div>
                   </div>
-                  <p className="text-sm text-gray-300 leading-relaxed mb-6 text-justify">
+
+                  {/* DESCRIPTION */}
+                  <p className="text-sm text-gray-400 leading-relaxed mb-8 text-justify font-light">
                     {product.product.category.waranty.description}
                   </p>
 
+                  {/* ACTION : Bouton raffiné */}
                   {product.product.category.waranty.url && (
-                    <Link
-                      href={product.product.category.waranty.url}
-                      target="_blank"
-                      className="flex items-center justify-center gap-2 w-full py-3 bg-or text-secondary text-xs uppercase tracking-widest font-bold hover:bg-white transition-colors"
-                    >
-                      Activer ma garantie{" "}
-                      <Icon icon="si:arrow-right-duotone" width="18" />
-                    </Link>
+                    <div className="mt-auto">
+                      <Link
+                        href={product.product.category.waranty.url}
+                        target="_blank"
+                        className="group/btn relative flex items-center justify-between w-full py-4 px-6 border border-white/20 hover:border-or transition-all duration-500 overflow-hidden"
+                      >
+                        {/* Effet de remplissage au hover */}
+                        <div className="absolute inset-0 bg-or translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500" />
+
+                        <span className="relative z-10 text-[10px] uppercase tracking-[0.2em] font-bold group-hover/btn:text-secondary transition-colors duration-500">
+                          Activer ma garantie
+                        </span>
+                        <Icon
+                          icon="solar:arrow-right-up-outline"
+                          className="relative z-10 group-hover/btn:text-secondary group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-all duration-500"
+                          width="18"
+                        />
+                      </Link>
+                    </div>
                   )}
                 </div>
-                {/* Décoration en arrière-plan */}
+
+                {/* Icône de fond stylisée */}
                 <Icon
-                  icon="mdi:shield-check"
-                  className="absolute -bottom-4 -right-4 text-white/5 w-32 h-32 rotate-12"
+                  icon="solar:shield-check-outline"
+                  className="absolute -top-6 -right-6 text-white/[0.03] w-48 h-48 -rotate-12 pointer-events-none"
                 />
               </div>
             )}

@@ -28,103 +28,204 @@ export default function Page() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-gray-100">
+    <main className="min-h-screen bg-white">
       <MainMenu />
-      <PageTitle title="Nos garanties" />
+      <PageTitle
+        title="Garanties & Sérénité"
+        subtitle="L'engagement Pythagore"
+      />
 
-      <div className="max-w-6xl mx-auto px-4">
+      <div className="max-w-7xl mx-auto px-6 py-12">
         {loading ? (
-          <p className="text-center text-gray-500">
-            Chargement des garanties...
-          </p>
+          <div className="flex flex-col items-center py-20">
+            <div className="animate-pulse text-secondary uppercase tracking-widest text-xs">
+              Chargement des protocoles...
+            </div>
+          </div>
         ) : (
-          <div>
-            <div className="bg-white shadow-xl rounded-3xl p-8 flex flex-col items-center text-center my-6 border border-gray-100">
-              <img
-                src="/images/logo_pythagore_texte_noir_dore.png"
-                alt="logo pythagore noir"
-                className="h-20 mb-6 opacity-90"
-              />
+          <div className="space-y-24">
+            {/* --- SECTION 1 : GARANTIE GÉNÉRALE PYTHAGORE --- */}
+            <section className="relative grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+              {/* GAUCHE : TEXTES PRINCIPAUX */}
+              <div className="lg:col-span-5 space-y-8">
+                <div className="inline-block">
+                  <img
+                    src="/images/logo_pythagore_texte_noir_dore.png"
+                    alt="logo pythagore"
+                    className="h-16 mb-4 opacity-90"
+                  />
+                  <div className="h-[2px] w-12 bg-or" />
+                </div>
 
-              <h3 className="text-xl font-semibold tracking-wide text-gray-800 mb-4">
-                GARANTIE PYTHAGORE
-              </h3>
+                <h2 className="text-3xl font-light uppercase tracking-[0.2em] text-secondary leading-tight">
+                  Garantie <br /> <span className="font-bold">Pythagore</span>
+                </h2>
 
-              <div className="space-y-4 text-gray-600 text-sm leading-relaxed max-w-prose">
-                <p>
-                  Nos agencements sont garantis 2 ans en cas de défaut avéré
-                  concernant la matière, le façonnage et l&apos;installation (le
-                  cas échéant), effectués par Pythagore.
-                </p>
-
-                <p>
-                  Pour les surfaces minérales reconstituées, les fabricants de
-                  matériaux partenaires de Pythagore offrent une extension de
-                  garantie, jusqu&apos;à 25 ans, en cas de défaut du matériau
-                  (Hors refabrication & installation).
-                </p>
-
-                <p>
-                  Pour activer l&apos;extension de garantie, pensez à vous
-                  enregistrer sur le site internet du fabricant, dans les 30
-                  jours suivants l&apos;installation.
-                </p>
-
-                <p className="text-gray-800 text-[0.95rem] font-medium pt-2">
-                  Retrouvez les liens d&apos;enregistrement de nos partenaires
-                  ci-dessous.
-                </p>
+                <div className="space-y-6 text-sm text-gray-600 leading-relaxed text-justify max-w-md">
+                  <p>
+                    Nos agencements sont garantis{" "}
+                    <span className="text-secondary font-bold">2 ans</span> en
+                    cas de défaut avéré concernant la matière, le façonnage et
+                    l&apos;installation, réalisés par nos soins.
+                  </p>
+                  <p>
+                    Pour les surfaces minérales reconstituées, nos fabricants
+                    partenaires offrent une extension de garantie allant
+                    jusqu&apos;à{" "}
+                    <span className="text-secondary font-bold">25 ans</span>.
+                  </p>
+                  <p className="italic border-l-2 border-or/30 pl-4 py-2 bg-gray-50 text-[13px]">
+                    Important : Pensez à activer votre extension sur le site du
+                    fabricant dans les 30 jours suivant l&apos;installation.
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="flex justify-center my-8">
-              <h3 className="font-title">Extensions de garanties de nos partenaires fabricants</h3>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {waranties?.map((waranty) => (
-                <div
-                  key={waranty.id}
-                  className="relative bg-white shadow-xl rounded-3xl p-2 flex flex-col items-center text-center border border-gray-100 transition hover:shadow-2xl hover:-translate-y-0.5 duration-300"
-                >
-                  <div className="absolute top-3 right-3">
-                    <img
-                      src={waranty.logoSrc}
-                      alt={waranty.title}
-                      className="object-contain opacity-90 max-w-20"
+
+              {/* DROITE : CHARTE GRAPHIQUE (Remplace la photo) */}
+              <div className="lg:col-span-7 bg-gray-50/50 border border-gray-100 p-10 md:p-16 relative overflow-hidden group min-h-[450px] flex flex-col justify-center">
+                <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-12">
+                  {/* Item 1 */}
+                  <div className="space-y-4">
+                    <Icon
+                      icon="solar:medal-star-square-outline"
+                      className="text-or"
+                      width="32"
                     />
+                    <h4 className="text-xs uppercase tracking-[0.2em] font-bold text-secondary">
+                      Excellence Matière
+                    </h4>
+                    <p className="text-[11px] leading-relaxed text-gray-500 uppercase tracking-wider">
+                      Sélection rigoureuse des tranches auprès de nos
+                      fournisseurs.
+                    </p>
                   </div>
 
-                  <div className="gap-6 mb-6">
-                    <img
-                      src={waranty.imageSrc}
-                      alt={waranty.title}
-                      className="h-36 object-contain opacity-90"
+                  {/* Item 2 */}
+                  <div className="space-y-4">
+                    <Icon
+                      icon="solar:ruler-cross-pen-outline"
+                      className="text-or"
+                      width="32"
                     />
+                    <h4 className="text-xs uppercase tracking-[0.2em] font-bold text-secondary">
+                      Précision Façonnage
+                    </h4>
+                    <p className="text-[11px] leading-relaxed text-gray-500 uppercase tracking-wider">
+                      Découpe numérique et finitions main dans nos ateliers de
+                      production.
+                    </p>
                   </div>
 
-                  {waranty.url && (
-                    <div className="mt-auto w-full p-4 bg-blue-50 border border-blue-200 rounded-2xl text-sm">
-                      <p className="text-gray-700 font-medium">
-                        Votre garantie produit n&apos;est pas encore activée ?
+                  {/* Item 3 */}
+                  <div className="space-y-4">
+                    <Icon
+                      icon="solar:home-smile-outline"
+                      className="text-or"
+                      width="32"
+                    />
+                    <h4 className="text-xs uppercase tracking-[0.2em] font-bold text-secondary">
+                      Pose Certifiée
+                    </h4>
+                    <p className="text-[11px] leading-relaxed text-gray-500 uppercase tracking-wider">
+                      Installation réalisée par nos propres équipes de poseurs.
+                    </p>
+                  </div>
+
+                  {/* Item 4 */}
+                  <div className="space-y-4">
+                    <Icon
+                      icon="solar:shield-check-outline"
+                      className="text-or"
+                      width="32"
+                    />
+                    <h4 className="text-xs uppercase tracking-[0.2em] font-bold text-secondary">
+                      Suivi Client
+                    </h4>
+                    <p className="text-[11px] leading-relaxed text-gray-500 uppercase tracking-wider">
+                      Accompagnement et conseils d&apos;entretien pour la
+                      pérennité de vos surfaces.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Bordure décorative animée en bas */}
+                <div className="absolute bottom-0 left-0 h-1 bg-or transition-all duration-700 w-0 group-hover:w-full" />
+              </div>
+            </section>
+
+            {/* --- SECTION 2 : GRID DES PARTENAIRES --- */}
+            <section className="space-y-12">
+              <div className="text-center">
+                <p className="text-or text-[10px] uppercase tracking-[0.4em] font-bold mb-2">
+                  Partenaires
+                </p>
+                <h3 className="text-xl font-light uppercase tracking-[0.2em] text-secondary">
+                  Extensions Fabricants
+                </h3>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                {waranties?.map((waranty) => (
+                  <div
+                    key={waranty.id}
+                    className="bg-white border border-gray-100 group flex flex-col transition-all duration-500 hover:shadow-2xl hover:border-or/50"
+                  >
+                    {/* Image du matériau avec Overlay */}
+                    <div className="relative h-64 w-full overflow-hidden bg-gray-50">
+                      <img
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        src={waranty.imageSrc}
+                        alt={waranty.title}
+                      />
+                      <div className="absolute inset-0 bg-secondary/5 group-hover:bg-transparent transition-colors duration-500" />
+
+                      {/* Logo Partenaire flottant */}
+                      <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm p-3 shadow-sm">
+                        <img
+                          src={waranty.logoSrc}
+                          alt={waranty.title}
+                          className="h-6 w-auto object-contain"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="p-8 flex-grow flex flex-col">
+                      <div className="mb-6">
+                        <h4 className="text-lg font-light uppercase tracking-[0.15em] text-secondary leading-tight">
+                          {waranty.title || "Garantie Matière"}
+                        </h4>
+                        <div className="h-[1px] w-8 bg-or mt-3 transition-all duration-500 group-hover:w-16" />
+                      </div>
+
+                      <p className="text-xs text-gray-500 leading-relaxed mb-8 flex-grow">
+                        {waranty.description ||
+                          "Bénéficiez de l'expertise et de la protection longue durée du fabricant pour votre plan de travail."}
                       </p>
 
-                      <Link
-                        href={waranty.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mt-3 inline-flex items-center justify-center gap-2 px-3 py-2 text-blue-900 bg-or-light hover:bg-or hover:text-white rounded-lg transition-colors duration-200"
-                      >
-                        <span>Activer l&apos;extension de garantie</span>
-                        <Icon
-                          icon="si:arrow-right-duotone"
-                          width="20"
-                          height="20"
-                        />
-                      </Link>
+                      {waranty.url && (
+                        <Link
+                          href={waranty.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center justify-between w-full py-4 border-t border-gray-100 text-secondary hover:text-or transition-colors duration-300 group/link"
+                        >
+                          <span className="text-[10px] uppercase tracking-[0.2em] font-bold">
+                            Activer ma garantie
+                          </span>
+                          <Icon
+                            icon="si:arrow-right-duotone"
+                            className="transform group-hover/link:translate-x-1 transition-transform"
+                            width="20"
+                          />
+                        </Link>
+                      )}
                     </div>
-                  )}
-                </div>
-              ))}
-            </div>
+                    {/* Ligne de finition */}
+                    <div className="h-1 w-full bg-gray-50 group-hover:bg-or/30 transition-colors duration-500" />
+                  </div>
+                ))}
+              </div>
+            </section>
           </div>
         )}
       </div>

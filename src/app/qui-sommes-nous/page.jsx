@@ -27,7 +27,7 @@ export default function Page() {
       <PageTitle title={"Qui sommes nous ?"} />
       <div className="flex justify-center bg-secondary">
         <div
-          className="relative w-full text-center py-32 border-y border-white/10 overflow-hidden bg-cover bg-center"
+          className="relative w-full text-center py-16 border-y border-white/10 overflow-hidden bg-cover bg-center"
           style={{
             backgroundImage: `
         linear-gradient(to bottom, rgba(14, 14, 14, 0.8), rgba(14, 14, 14, 0.6)),
@@ -62,7 +62,7 @@ export default function Page() {
       </div>
 
       <div className="space-y-12 overflow-hidden">
-        <div className="mt-24 w-full lg:w-11/12 mx-auto bg-gradient-to-br from-white to-or-light">
+        <div className="mt-24 w-full lg:w-11/12 mx-auto bg-primary">
           <div className="max-w-5xl mx-auto">
             <AnimatedTestimonials
               testimonials={numbers_key}
@@ -154,7 +154,7 @@ const Team = () => {
 
 const DeliveryArea = () => {
   return (
-    <div className=" relative p-6 mx-auto mt-20 w-full bg-or-light h-[500px]">
+    <div className=" relative p-6 mx-auto mt-20 w-full h-[500px]">
       <FooterMaps />
     </div>
   );
