@@ -6,61 +6,79 @@ import "moment/locale/fr";
 moment.locale("fr");
 
 const Review = ({ note, date, name, comment, avatar }) => {
-  console.log(avatar);
+  const ratingMap = { ONE: 1, TWO: 2, THREE: 3, FOUR: 4, FIVE: 5 };
+  const starsCount = typeof note === "string" ? ratingMap[note] : note;
 
-  const ratingMap = {
-    ONE: 1,
-    TWO: 2,
-    THREE: 3,
-    FOUR: 4,
-    FIVE: 5,
-  };
-
-  const stars = Array.from(
-    { length: ratingMap[note] || 0 },
-    (_, index) => index
-  );
   const cleanComment = comment
     ? comment.replace(/\(Translated by Google\)[\s\S]*/, "").trim()
     : "";
 
   return (
-    <div className="bg-white shadow p-4 w-96 m-4 flex flex-col justify-between">
-      <div>
-        {/* Header */}
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full flex items-center justify-center">
-            <img src={avatar} alt="" className="h-full w-full" />
+    <div className="group relative flex flex-col w-full md:w-[350px] mt-12 transition-all duration-500">
+      {/* 1. Header / Avatar décalé (L'esprit ServiceCard) */}
+      <div className="relative h-24 w-full">
+        <div className="absolute left-8 top-0 flex items-center gap-4 z-10">
+          <div className="relative">
+            <img
+              src={avatar}
+              alt={name}
+              className="w-16 h-16 object-cover grayscale group-hover:grayscale-0 transition-all duration-700 shadow-lg border-2 border-white rounded-full"
+              onError={(e) =>
+                (e.target.src = `https://ui-avatars.com/api/?name=${name}&background=secondary&color=fff`)
+              }
+            />
+            {/* Petit badge Google */}
+            <div className="absolute -bottom-1 -right-1 bg-white p-1 rounded-full shadow-sm">
+              <Icon icon="logos:google-icon" className="text-xs" />
+            </div>
           </div>
-          <div>
-            <p className="font-semibold text-sm">{name}</p>
-            <p className="text-xs text-gray-500">{moment(date).fromNow()}</p>
+          <div className="pt-2">
+            <h5 className="text-[11px] font-bold uppercase tracking-[0.2em] text-secondary leading-none">
+              {name}
+            </h5>
+            <p className="text-[10px] text-gray-400 uppercase tracking-widest mt-1">
+              {moment(date).fromNow()}
+            </p>
           </div>
         </div>
+      </div>
 
-        {/* Stars */}
-        <div className="flex items-center mt-4">
-          {stars.map((_, index) => (
+      {/* 2. Le corps de l'avis (Boîte blanche surélevée) */}
+      <div className="bg-white p-8 pt-12 shadow-sm border border-gray-100 transition-all duration-500 group-hover:shadow-xl group-hover:border-or/20 flex-grow flex flex-col">
+        {/* Étoiles stylisées */}
+        <div className="flex gap-1 mb-4">
+          {[...Array(5)].map((_, i) => (
             <Icon
-              key={index}
-              icon="line-md:star-filled"
-              className="text-yellow-500 text-lg"
+              key={i}
+              icon="ic:round-star"
+              className={`text-base ${i < starsCount ? "text-or" : "text-gray-100"}`}
             />
           ))}
         </div>
 
-        {/* Commentaire */}
-        <p className="text-sm text-gray-800 mt-2">{cleanComment}</p>
+        {/* Commentaire avec guillemet stylisé */}
+        <div className="relative flex-grow">
+          <Icon
+            icon="fa:quote-left"
+            className="absolute -left-4 -top-2 text-gray-50 opacity-10 text-4xl group-hover:text-or/20 transition-colors"
+          />
+          <p className="text-sm leading-relaxed text-gray-600 italic font-light relative z-10">
+            {cleanComment ||
+              "L'excellence du travail de la pierre par Pythagore."}
+          </p>
+        </div>
+
+        {/* Signature : La ligne d'or (identique à ServiceCard) */}
+        <div className="mt-6">
+          <div className="flex items-center gap-2">
+            <div className="h-[1px] w-8 bg-or transition-all duration-500 group-hover:w-16" />
+            <div className="h-[4px] w-[4px] rounded-full bg-or opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+          </div>
+        </div>
       </div>
 
-      {/* Google Logo */}
-      <div className="flex justify-end mt-2">
-        <img
-          src="/images/divers/google.png"
-          alt="Google logo"
-          className="h-5"
-        />
-      </div>
+      {/* Ombre de sol discrète */}
+      <div className="absolute -bottom-2 inset-x-8 h-4 bg-black/5 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
     </div>
   );
 };
