@@ -43,8 +43,45 @@ export default function ProductPage({ params }) {
       </div>
     );
   }
+if (!product || Object.keys(product).length === 0) {
+  return (
+    <main className="min-h-screen bg-white flex flex-col">
+      <MainMenu />
+      <div className="flex-1 flex flex-col items-center justify-center px-6 py-20 text-center">
+        <div className="mb-8 p-6 bg-gray-50 rounded-full">
+          <Icon
+            icon="solar:confounded-circle-outline"
+            className="text-gray-300"
+            width="80"
+          />
+        </div>
 
-  if (!product) return null;
+        <h1 className="text-3xl font-light text-secondary uppercase tracking-tighter mb-4">
+          Matière introuvable
+        </h1>
+
+        <p className="text-gray-500 max-w-md mx-auto mb-10 leading-relaxed">
+          Désolé, nous ne parvenons pas à trouver les détails de cette
+          référence. Il est possible qu'elle ne soit plus disponible dans notre
+          stock actuel.
+        </p>
+
+        <Link
+          href="/matieres/nos-produits"
+          className="group flex items-center gap-3 px-8 py-4 bg-secondary text-white text-xs uppercase tracking-widest font-bold hover:bg-or transition-all duration-300 shadow-xl"
+        >
+          <Icon
+            icon="si:arrow-left-duotone"
+            className="group-hover:-translate-x-1 transition-transform"
+            width="20"
+          />
+          Retour aux produits
+        </Link>
+      </div>
+      <Footer />
+    </main>
+  );
+}
 
   return (
     <main className="min-h-screen bg-white">
@@ -52,7 +89,7 @@ export default function ProductPage({ params }) {
 
       <PageTitle
         title={product.label}
-        subtitle={product.product.category.label}
+        subtitle={product.product?.category?.label}
       />
 
       <div className="max-w-7xl mx-auto px-6 py-12">
