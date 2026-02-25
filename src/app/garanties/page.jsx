@@ -31,7 +31,7 @@ export default function Page() {
     <main className="min-h-screen bg-white">
       <MainMenu />
       <PageTitle
-        title="Garanties & Sérénité"
+        title="Garanties"
         subtitle="L'engagement Pythagore"
       />
 
@@ -39,7 +39,7 @@ export default function Page() {
         {loading ? (
           <div className="flex flex-col items-center py-20">
             <div className="animate-pulse text-secondary uppercase tracking-widest text-xs">
-              Chargement des protocoles...
+              Chargement...
             </div>
           </div>
         ) : (
@@ -160,7 +160,7 @@ export default function Page() {
                   Partenaires
                 </p>
                 <h3 className="text-xl font-light uppercase tracking-[0.2em] text-secondary">
-                  Extensions Fabricants
+                  Extensions Fournisseurs
                 </h3>
               </div>
 
