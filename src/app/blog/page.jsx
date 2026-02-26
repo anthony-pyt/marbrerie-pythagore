@@ -32,7 +32,7 @@ export default function Page() {
   return (
     <main className="min-h-screen">
       <MainMenu />
-      <PageTitle title={"Journal & Inspirations"} />
+      <PageTitle title={"À découvrir"} />
 
       <div className="max-w-6xl mx-auto px-6 py-24">
         <div className="grid grid-cols-1 gap-24">

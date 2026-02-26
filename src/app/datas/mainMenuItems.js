@@ -113,7 +113,7 @@ const listMenu = [
     icon: "solar:info-circle-linear",
   },
   {
-    label: "Blog",
+    label: "À découvrir",
     active: true,
     children: [],
     slug: "blg",
