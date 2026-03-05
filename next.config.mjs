@@ -2,6 +2,11 @@ import path from "path";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'standalone',           // ✅ Standalone build
+  compress: true,                 // ✅ Gzip automatique
+  poweredByHeader: false,         // ✅ Supprime X-Powered-By
+  reactStrictMode: true,          // ✅ Debug React strict mode
+  productionBrowserSourceMaps: false,
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
