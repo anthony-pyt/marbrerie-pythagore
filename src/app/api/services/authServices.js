@@ -1,18 +1,21 @@
 import axios from "axios";
 import gateway_instance from "../../lib/gatewayInstance";
 
-const  getCsrfCookie =()=>gateway_instance.get("/sanctum/csrf-cookie")
+const getCsrfCookie = async () => await gateway_instance.get("/sanctum/csrf-cookie");
 
 export async function login(data) {
-  await getCsrfCookie();
-  const response = await gateway_instance.post("/api/login", data);
-  const user = response.data  
-  
+  const cookie = await getCsrfCookie();
+  const response = await gateway_instance.post("/auth/login", data);
+  // const response = await axios.post("http://localhost:8000/auth/login", data, {
+  //   withCredentials: true,
+  // });
+  const user = response.data;
+
   localStorage.setItem("user", JSON.stringify(user));
 }
 
 export async function logout() {
-  await gateway_instance.post("/api/logout");
+  await gateway_instance.post("/auth/logout");
   // Appel à l'API pour supprimer le cookie côté serveur
   try {
     await axios.delete("/api/cookies", {
