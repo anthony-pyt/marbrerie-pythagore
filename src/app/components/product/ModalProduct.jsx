@@ -16,7 +16,7 @@ export function ModalProduct({ setOpen, open, product }) {
   if (!product) return null;
 
   const handleNavigate = () => {
-    router.push(`/matieres/produits/${product.id}`);
+    router.push(`/matieres/produits/${product.label}`);
   };
 
   return (

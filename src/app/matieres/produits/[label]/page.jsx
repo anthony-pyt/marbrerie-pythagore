@@ -9,7 +9,7 @@ import Footer from "@/components/Footer";
 import Slider from "@/components/product/Slider";
 import Link from "next/link";
 
-export default function ProductPage({ params }) {
+export default function ProductPage({ params }) {  
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -17,7 +17,7 @@ export default function ProductPage({ params }) {
     const fetchProduct = async () => {
       try {
         const { data } = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_STOCK_URL}/external-products/${params.id}`,
+          `${process.env.NEXT_PUBLIC_API_STOCK_URL}/external-product-by-label/${params.label}`,
         );
         setProduct(data);
       } catch (error) {
