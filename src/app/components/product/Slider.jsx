@@ -10,7 +10,7 @@ const Slider = ({ principal_image, images }) => {
 //     : images;
   return (
     <div className="flex flex-col items-center">
-      <div className="w-[400px] lg:w-[750px] rounded-xl overflow-hidden">
+      <div className="w-full overflow-hidden">
         <Splide
           options={{
             type: "loop",
@@ -34,7 +34,7 @@ const Slider = ({ principal_image, images }) => {
               <img
                 src={image.image_url}
                 alt={`Image ${index + 1}`}
-                className="w-full h-full object-cover rounded-lg"
+                className="w-full h-full object-cover"
               />
             </SplideSlide>
           ))}
