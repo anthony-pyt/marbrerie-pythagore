@@ -8,7 +8,7 @@ export const LayoutGrid = ({ cards }) => {
   const [selected, setSelected] = useState(null);
 
   const goToDetails = (card) => {
-    const url = `/matieres/produits/${card.imageable?.label}`;
+    const url = `/matieres/produits/${card.imageable?.slug}`;
     window.open(url);
   };
 

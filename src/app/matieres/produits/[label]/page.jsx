@@ -17,7 +17,7 @@ export default function ProductPage({ params }) {
     const fetchProduct = async () => {
       try {
         const { data } = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_STOCK_URL}/external-product-by-label/${params.label}`,
+          `${process.env.NEXT_PUBLIC_API_STOCK_URL}/external-product-by-label/${params.slug}`,
         );
         setProduct(data);
       } catch (error) {
