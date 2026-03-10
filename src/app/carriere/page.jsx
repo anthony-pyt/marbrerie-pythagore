@@ -40,7 +40,11 @@ export default function Page() {
     const getJobs = async () => {
       try {
         const response = await fetchJobOffers();
-        setJobs(response.data);
+        const publishedJobs = response.data.filter(
+          (job) => job.is_published === 1,
+        );
+
+        setJobs(publishedJobs);
       } catch (error) {
         console.log(error);
       } finally {

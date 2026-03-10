@@ -62,7 +62,7 @@ export default function LoginPage() {
             <div className="relative group">
               <Icon
                 icon="solar:letter-linear"
-                className="absolute left-0 top-3 text-gray-500 group-focus-within:text-or transition-colors"
+                className="absolute left-3 top-3 text-gray-500 group-focus-within:text-or transition-colors"
                 size={18}
               />
               <input
@@ -70,7 +70,7 @@ export default function LoginPage() {
                 placeholder="EMAIL"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-transparent border-b border-white/20 pl-8 py-3 text-white placeholder:text-gray-600 focus:border-or outline-none transition-all text-xs uppercase tracking-widest"
+                className="w-full bg-transparent border-b border-white/20 pl-12 py-3 text-white placeholder:text-gray-600 focus:border-or outline-none transition-all text-xs tracking-widest"
                 required
               />
             </div>
@@ -78,7 +78,7 @@ export default function LoginPage() {
             <div className="relative group">
               <Icon
                 icon="solar:lock-password-linear"
-                className="absolute left-0 top-3 text-gray-500 group-focus-within:text-or transition-colors"
+                className="absolute left-3 top-3 text-gray-500 group-focus-within:text-or transition-colors"
                 size={18}
               />
               <input
@@ -86,14 +86,14 @@ export default function LoginPage() {
                 placeholder="MOT DE PASSE"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-transparent border-b border-white/20 pl-8 py-3 text-white placeholder:text-gray-600 focus:border-or outline-none transition-all text-xs tracking-widest"
+                className="w-full bg-transparent border-b border-white/20 pl-12 py-3 text-white placeholder:text-gray-600 focus:border-or outline-none transition-all text-xs tracking-widest"
                 required
               />
               <Icon
                 icon={
                   viewPassword ? "solar:eye-closed-linear" : "solar:eye-linear"
                 }
-                className="absolute right-0 top-3 text-gray-500 group-focus-within:text-or transition-colors"
+                className="absolute right-3 top-3 text-gray-500 group-focus-within:text-or transition-colors"
                 size={18}
                 onClick={handleViewPasswoard}
               />
