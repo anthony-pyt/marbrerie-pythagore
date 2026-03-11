@@ -2,7 +2,7 @@ import path from "path";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'standalone',           // ✅ Standalone build
+  output: process.env.DOCKER_MODE ? "standalone" : undefined,           // ✅ Standalone build
   compress: true,                 // ✅ Gzip automatique
   poweredByHeader: false,         // ✅ Supprime X-Powered-By
   reactStrictMode: true,          // ✅ Debug React strict mode
