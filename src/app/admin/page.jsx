@@ -48,7 +48,7 @@ export default function AdminDashboard() {
         <h2 className="text-2xl md:text-3xl font-light tracking-[0.2em] uppercase">
           Tableau de Bord
         </h2>
-        <button
+        {/* <button
           className="bg-black text-white hover:bg-zinc-800 py-3 px-6 flex items-center justify-center space-x-2 transition-all duration-300 w-full sm:w-auto"
           onClick={() => router.push("/admin/blog/creer-article")}
         >
@@ -56,7 +56,7 @@ export default function AdminDashboard() {
           <span className="text-[10px] uppercase tracking-widest font-bold">
             Nouveau Contenu
           </span>
-        </button>
+        </button> */}
       </div>
 
       {loading ? (
@@ -78,7 +78,7 @@ export default function AdminDashboard() {
             router={router}
           />
           <StatCard
-            title="Opportunités"
+            title="Offres d'emploi"
             value={counts.jobOffers}
             description="Annonces en cours"
             url="/admin/liste-jobs"
@@ -88,7 +88,7 @@ export default function AdminDashboard() {
       )}
 
       {/* Section Bas de page - Grille flexible */}
-      <div className="mt-12 border border-black p-6 md:p-10">
+      {/* <div className="mt-12 border border-black p-6 md:p-10">
         <h2 className="text-[10px] uppercase tracking-[0.3em] mb-8 text-zinc-400 font-bold">
           Système & Gestion
         </h2>
@@ -102,7 +102,7 @@ export default function AdminDashboard() {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

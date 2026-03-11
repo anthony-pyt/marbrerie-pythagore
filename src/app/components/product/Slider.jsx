@@ -10,21 +10,20 @@ const Slider = ({ principal_image, images }) => {
 //     : images;
   return (
     <div className="flex flex-col items-center">
-      <div className="w-[400px] lg:w-[750px] rounded-xl overflow-hidden">
+      <div className="w-full bg-black overflow-hidden">
         <Splide
           options={{
             type: "loop",
             autoplay: true,
             interval: 5000,
             pauseOnHover: true,
-            pauseOnFocus: false,
-            pagination: true,
             arrows: true,
-            cover: true,
+            pagination: true,
             rewind: true,
             fixedHeight: "450px",
+            cover: false,
             breakpoints: {
-              768: { fixedHeight: "300px", width: "100%" },
+              768: { fixedHeight: "300px" },
             },
           }}
           aria-label="Photos du produit"
@@ -34,7 +33,7 @@ const Slider = ({ principal_image, images }) => {
               <img
                 src={image.image_url}
                 alt={`Image ${index + 1}`}
-                className="w-full h-full object-cover rounded-lg"
+                className="w-full h-full object-cover block"
               />
             </SplideSlide>
           ))}

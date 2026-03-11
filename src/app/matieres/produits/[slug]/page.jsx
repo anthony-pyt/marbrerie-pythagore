@@ -17,7 +17,7 @@ export default function ProductPage({ params }) {
     const fetchProduct = async () => {
       try {
         const { data } = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_STOCK_URL}/external-product-by-label/${params.label}`,
+          `${process.env.NEXT_PUBLIC_API_STOCK_URL}/external-product-by-slug/${params.slug}`,
         );
         setProduct(data);
       } catch (error) {
@@ -27,7 +27,7 @@ export default function ProductPage({ params }) {
       }
     };
     fetchProduct();
-  }, [params.id]);
+  }, [params.slug]);
 
   if (loading) {
     return (
@@ -116,7 +116,7 @@ if (!product || Object.keys(product).length === 0) {
 
             {/* SLIDER / GALERIE */}
             {product.images?.length > 0 && (
-              <div className="bg-gray-50 rounded-2xl p-6">
+              <div className="p-6">
                 <Slider
                   images={product.images}
                   principal_image={product.image_url}

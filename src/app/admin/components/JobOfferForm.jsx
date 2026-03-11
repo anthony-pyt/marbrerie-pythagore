@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import QuillEditor from "@/components/QuillEditor";
 import Button from "@/components/Button";
 import useJobOffersServices from "@/api/services/jobOffersServices";
+import { Icon } from "@iconify/react";
 
 export default function JobOfferForm({ jobOfferId = null }) {
   const { storeJobOffer, fetchJobOffer, updateJobOffer } =
@@ -234,16 +235,23 @@ export default function JobOfferForm({ jobOfferId = null }) {
               >
                 Annuler
               </button>
-              <Button
-                loading={loadingSend}
-                text={
-                  jobOfferId
-                    ? "Enregistrer les modifications"
-                    : "Publier l'opportunité"
-                }
+              <button
                 type="submit"
-                className="bg-black text-white px-10 py-3 text-[10px] uppercase tracking-widest hover:bg-zinc-800 transition-all font-medium border border-black"
-              />
+                className="flex items-center space-x-2 px-8 py-3 text-[10px] uppercase tracking-widest border border-black hover:bg-stone-900 hover:text-white transition-colors"
+              >
+                {loadingSend && (
+                  <Icon
+                    icon="svg-spinners:ring-resize"
+                    width={14}
+                    height={14}
+                  />
+                )}
+                <span>
+                  {jobOfferId
+                    ? "Enregistrer les modifications"
+                    : "Publier l'offre"}
+                </span>
+              </button>
             </div>
           </div>
         </div>
