@@ -61,8 +61,6 @@ export default function Page() {
     setLoadCategories(true);
     setLoadThiknesses(true);
 
-    console.log("Ma variable API :", process.env.NEXT_PUBLIC_API_STOCK_URL);
-
     try {
       const [
         categoryResponse,
