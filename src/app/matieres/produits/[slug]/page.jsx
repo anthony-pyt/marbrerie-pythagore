@@ -2,7 +2,7 @@
 
 import { Icon } from "@iconify/react";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import MainMenu from "@/components/MainMenu";
 import PageTitle from "@/components/PageTitle";
 import Footer from "@/components/Footer";
@@ -10,6 +10,10 @@ import Slider from "@/components/product/Slider";
 import Link from "next/link";
 
 export default function ProductPage({ params }) {  
+
+  const unwrappedParams = use(params);
+  const slug = unwrappedParams.slug;
+
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -17,7 +21,7 @@ export default function ProductPage({ params }) {
     const fetchProduct = async () => {
       try {
         const { data } = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_STOCK_URL}/external-product-by-slug/${params.slug}`,
+          `${process.env.NEXT_PUBLIC_API_STOCK_URL}/external-product-by-slug/${slug}`,
         );
         setProduct(data);
       } catch (error) {
@@ -27,7 +31,7 @@ export default function ProductPage({ params }) {
       }
     };
     fetchProduct();
-  }, [params.slug]);
+  }, [slug]);
 
   if (loading) {
     return (

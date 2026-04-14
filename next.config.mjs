@@ -7,13 +7,15 @@ const nextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
   productionBrowserSourceMaps: false,
-  webpack: (config) => {
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      "@": path.resolve("./src/app"),
-    };
-    return config;
-  },
+  webpack: process.env.DOCKER_MODE
+    ? (config) => {
+        config.resolve.alias = {
+          ...config.resolve.alias,
+          "@": path.resolve("./src/app"),
+        };
+        return config;
+      }
+    : undefined,
 
   async rewrites() {
     return [
