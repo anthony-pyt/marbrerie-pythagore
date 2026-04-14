@@ -2,57 +2,57 @@ import path from "path";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: process.env.DOCKER_MODE ? "standalone" : undefined,           // ✅ Standalone build
-  compress: true,                 // ✅ Gzip automatique
-  poweredByHeader: false,         // ✅ Supprime X-Powered-By
-  reactStrictMode: true,          // ✅ Debug React strict mode
+  output: process.env.DOCKER_MODE ? "standalone" : undefined,
+  compress: true,
+  poweredByHeader: false,
+  reactStrictMode: true,
   productionBrowserSourceMaps: false,
-  webpack: (config) => {
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      "@": path.resolve("./src/app"),
-    };
-    return config;
-  },
-  rewrites: () => {
+
+  async rewrites() {
     return [
       {
-        source: "/backend/:pah*",
-        destination: `${process.env.NEXT_PUBLIC_API_GATEWAY_URL}/:pah*`,
+        // Correction de la faute de frappe :path*
+        source: "/backend/:path*",
+        destination: `${process.env.NEXT_PUBLIC_API_GATEWAY_URL}/:path*`,
       },
       {
-        source: "/stocks/:pah*",
-        destination: process.env.NEXT_PUBLIC_API_STOCK_URL + "/:pah*",
+        source: "/stocks/:path*",
+        destination: `${process.env.NEXT_PUBLIC_API_STOCK_URL}/:path*`,
       },
     ];
   },
+
   images: {
+    unoptimized: process.env.NODE_ENV === "development",
+    // On migre tout dans remotePatterns et on vide 'domains' qui est déprécie
     remotePatterns: [
       {
-        protocol: process.env.NODE_ENV === "production" ? "https" : "http",
-        hostname: "/",
-        port: "",
+        protocol: "http",
+        hostname: "localhost",
+        port: "11000", // Ton port backend d'images
         pathname: "/images/**",
       },
-      // {
-      //   protocol: process.env.NODE_ENV === "production" ? "https" : "http",
-      //   port: "",
-      //   hostname: `'/' ${process.env.NEXT_PUBLIC_IMAGE_URL}`,
-      // },
+      {
+        protocol: "https",
+        hostname: "assets.aceternity.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "pythagore.doliplus.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "api.stock.marbrerie-pythagore.fr",
+        pathname: "/**",
+      },
     ],
-    domains: [
-      "assets.aceternity.com",
-      "images.unsplash.com",
-      "pbs.twimg.com",
-      "pythagore.doliplus.com",
-      "localhost",
-      "192.168.1.210",
-      "api.stock.marbrerie-pythagore.fr",
-      // `${process.env.NEXT_PUBLIC_IMAGE_URL}`
-    ],
-  },
-  eslint: {
-    ignoreDuringBuilds: true,
   },
 };
 

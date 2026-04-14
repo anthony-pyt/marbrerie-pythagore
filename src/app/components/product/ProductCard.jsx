@@ -48,9 +48,11 @@ const ProductCard = ({ product }) => {
           <div className="absolute top-3 left-3">
             {category?.logo_url ? (
               <div className="bg-white/80 backdrop-blur-md p-1.5 shadow-sm">
-                <img
+                <Image
                   src={category.logo_url}
                   alt={category.label}
+                  width={60} // Largeur approximative pour le logo
+                  height={16} // Hauteur fixe (h-4 = 16px)
                   className="h-4 w-auto object-contain"
                 />
               </div>

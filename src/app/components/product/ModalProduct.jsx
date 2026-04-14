@@ -39,7 +39,7 @@ export function ModalProduct({ setOpen, open, product }) {
             {/* BOUTON FERMER */}
             <button
               onClick={() => setOpen(false)}
-              className="absolute right-4 top-4 z-10 p-2 text-gray-400 hover:text-secondary transition-colors rounded-full bg-white"
+              className="absolute right-4 top-4 z-20 p-2 text-gray-400 hover:text-secondary transition-colors rounded-full bg-white shadow-md"
             >
               <Icon icon="carbon:close" width="32" />
             </button>
@@ -48,20 +48,26 @@ export function ModalProduct({ setOpen, open, product }) {
               {/* --- COLONNE GAUCHE : IMAGE --- */}
               <div className="w-full lg:w-3/5 bg-gray-50 flex flex-col">
                 <div className="relative aspect-square lg:aspect-auto lg:h-full min-h-[400px]">
-                  <img
+                  <Image
                     src={product.image_url}
                     alt={product.label}
-                    className="absolute inset-0 h-full w-full object-cover"
+                    fill
+                    priority // Image importante dans une modale
+                    sizes="(max-width: 1024px) 100vw, 60vw"
+                    className="object-cover"
                   />
 
                   {/* Badge Catégorie flottant */}
-                  <div className="absolute top-6 left-6">
+                  <div className="absolute top-6 left-6 z-10">
                     {product.product?.category?.logo_url ? (
-                      <div className="bg-white/90 backdrop-blur p-2 shadow-sm">
-                        <img
+                      <div className="relative bg-white/90 backdrop-blur p-2 shadow-sm">
+                        <Image
                           src={product.product.category.logo_url}
-                          className="h-6 w-auto"
-                          alt="logo"
+                          alt="logo catégorie"
+                          width={100} // Ajuste selon la taille réelle de tes logos
+                          height={24}
+                          className="h-6 w-auto object-contain"
+                          style={{ width: 'auto', height: '24px' }}
                         />
                       </div>
                     ) : (
@@ -204,11 +210,14 @@ export function ModalProduct({ setOpen, open, product }) {
 
                   {product.product.category.waranty && (
                     <div className="flex items-center gap-4 p-3 bg-gray-50 border border-gray-100">
-                      <img
-                        src={product.product.category.waranty.imageSrc}
-                        className="h-8 w-auto grayscale"
-                        alt="Garantie"
-                      />
+                      <div className="relative h-8 w-16">
+                         <Image
+                          src={product.product.category.waranty.imageSrc}
+                          alt="Garantie"
+                          fill
+                          className="object-contain grayscale opacity-60"
+                        />
+                      </div>
                       <p className="text-[9px] leading-tight text-gray-500 uppercase">
                         Produit certifié avec garantie constructeur incluse.
                       </p>
