@@ -1,0 +1,32 @@
+services:
+  extranet-front:
+    build:
+      context: .
+      dockerfile: /dev/Dockerfile
+    container_name: extranet-front
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - WATCHPACK_POLLING=true
+      - WATCHPACK_POLLING_INTERVAL=500
+      - CHOKIDAR_USEPOLLING=true
+      - CHOKIDAR_INTERVAL=500
+      - NEXT_TELEMETRY_DISABLED=1
+    deploy:
+      resources:
+        limits:
+          memory: 2g
+          cpus: "2.0"    
+        reservations:
+          memory: 512m
+    networks:
+      - internal-net
+
+networks:
+  internal-net:
+    external: true

@@ -527,11 +527,8 @@ export default function Page() {
           <div className="w-full bg-white p-4 m-2 min-h-screen">
             {loadProducts && (
               <div className="mt-28 flex flex-col items-center">
-                <div className="h-32 overflow-hidden flex justify-center items-center">
-                  <img
-                    src="/images/loaders/loader-pythagore.gif"
-                    className="h-40 w-auto"
-                  />
+                <div className="overflow-hidden flex justify-center items-center">
+                  <Icon icon="nrk:spinner" width="48" height="48" className="animate-spin" />
                 </div>
                 <p>Chargement des données...</p>
               </div>
