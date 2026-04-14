@@ -7,6 +7,13 @@ const nextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
   productionBrowserSourceMaps: false,
+  webpack: (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      "@": path.resolve("./src/app"),
+    };
+    return config;
+  },
 
   async rewrites() {
     return [

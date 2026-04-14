@@ -67,7 +67,7 @@ export function ModalProduct({ setOpen, open, product }) {
                           width={100} // Ajuste selon la taille réelle de tes logos
                           height={24}
                           className="h-6 w-auto object-contain"
-                          style={{ width: 'auto', height: '24px' }}
+                          style={{ width: "auto", height: "24px" }}
                         />
                       </div>
                     ) : (
@@ -211,7 +211,7 @@ export function ModalProduct({ setOpen, open, product }) {
                   {product.product.category.waranty && (
                     <div className="flex items-center gap-4 p-3 bg-gray-50 border border-gray-100">
                       <div className="relative h-8 w-16">
-                         <Image
+                        <Image
                           src={product.product.category.waranty.imageSrc}
                           alt="Garantie"
                           fill
