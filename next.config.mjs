@@ -18,15 +18,23 @@ const nextConfig = {
     : undefined,
 
   async rewrites() {
+    const apiGatewayUrl =
+      process.env.NEXT_PUBLIC_API_GATEWAY_URL ||
+      process.env.API_GATEWAY_URL ||
+      "http://localhost:8000";
+    const apiStockUrl =
+      process.env.NEXT_PUBLIC_API_STOCK_URL ||
+      process.env.API_STOCK_URL ||
+      "http://localhost:8001";
+
     return [
       {
-        // Correction de la faute de frappe :path*
         source: "/backend/:path*",
-        destination: `${process.env.NEXT_PUBLIC_API_GATEWAY_URL}/:path*`,
+        destination: `${apiGatewayUrl}/:path*`,
       },
       {
         source: "/stocks/:path*",
-        destination: `${process.env.NEXT_PUBLIC_API_STOCK_URL}/:path*`,
+        destination: `${apiStockUrl}/:path*`,
       },
     ];
   },
