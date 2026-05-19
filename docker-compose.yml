@@ -1,12 +1,12 @@
 services:
-  extranet-front:
+  marbrerie-front:
     build:
       context: .
       dockerfile: /dev/Dockerfile
-    container_name: extranet-front
+    container_name: marbrerie-front
     restart: unless-stopped
     ports:
-      - "3000:3000"
+      - "3001:3000"
     volumes:
       - .:/app
       - /app/node_modules
