@@ -3,7 +3,8 @@
 const isProd = process.env.NODE_ENV === "production";
 
 const nextConfig = {
-  reactCompiler: isProd,
+  reactCompiler: false,
+  // reactCompiler: isProd,
   output: isProd ? "standalone" : undefined,
 
   // Webpack uniquement en dev (ignoré en prod avec Turbopack)
