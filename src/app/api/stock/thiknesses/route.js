@@ -13,14 +13,9 @@ export async function GET(request) {
 
   const apiUrl = process.env.API_GATEWAY_URL;
   try {
-    const cookieHeader = request.headers.get("cookie");
+    // const cookieHeader = request.headers.get("cookie");
     
-    const response = await axios.get(`${apiUrl}/api/stock/thiknesses`, {
-      headers: {
-        ...(cookieHeader ? { Cookie: cookieHeader } : {}),
-      },
-      withCredentials: true
-    });
+    const response = await axios.get(`${apiUrl}/api/stock/thiknesses`);
 
     cache.set(cacheKey, {
       data: response.data,
