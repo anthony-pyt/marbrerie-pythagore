@@ -214,7 +214,7 @@ export function ModalProduct({ setOpen, open, product }) {
                         <img
                           src={product.product.category.waranty.imageSrc}
                           alt="Garantie"
-                          fill
+                          // fill
                           className="object-contain grayscale opacity-60"
                         />
                       </div>
