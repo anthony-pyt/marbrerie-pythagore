@@ -11,11 +11,9 @@ export async function GET(request) {
     return Response.json(cached.data);
   }
 
-  const apiUrl = process.env.API_GATEWAY_URL;
+  const apiUrl = process.env.NEXT_PUBLIC_API_STOCK_URL;
   try {
-    // const cookieHeader = request.headers.get("cookie");
-    
-    const response = await axios.get(`${apiUrl}/api/stock/thiknesses`);
+    const response = await axios.get(`${apiUrl}/thiknesses`);
 
     cache.set(cacheKey, {
       data: response.data,

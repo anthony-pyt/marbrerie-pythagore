@@ -13,8 +13,6 @@ export async function GET(request) {
 
   const apiUrl = process.env.API_GATEWAY_URL;
   try {
-    // const cookieHeader = request.headers.get("cookie");
-
     const response = await axios.get(`${apiUrl}/api/stock/colors`);
 
     cache.set(cacheKey, {
