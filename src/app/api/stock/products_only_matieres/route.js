@@ -11,13 +11,13 @@ export async function GET(request) {
     return Response.json(cached.data);
   }
 
-  const apiUrl = process.env.API_GATEWAY_URL;
+  const apiUrl = process.env.NEXT_PUBLIC_API_STOCK_URL;
   
   try {
     const { searchParams } = new URL(request.url);
     const params = Object.fromEntries(searchParams.entries());
 
-    const response = await axios.get(`${apiUrl}/api/stock/products_only_matieres`, {
+    const response = await axios.get(`${apiUrl}/products_only_matieres`, {
       params,
     });
 
