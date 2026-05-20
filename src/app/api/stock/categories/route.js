@@ -14,7 +14,7 @@ export async function GET() {
   const apiUrl = process.env.NEXT_PUBLIC_API_STOCK_URL;
   try {
     const response = await axios.get(
-      `${apiUrl}/categories-with-parent-matieres`,
+      `${apiUrl}/stock/categories-with-parent-matieres`,
     );
 
     cache.set(cacheKey, {

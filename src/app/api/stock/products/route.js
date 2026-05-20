@@ -17,7 +17,7 @@ export async function GET(request) {
     const { searchParams } = new URL(request.url);
     const params = Object.fromEntries(searchParams.entries());
 
-    const response = await axios.get(`${apiUrl}/products_only_matieres`, {
+    const response = await axios.get(`${apiUrl}/stock/products_only_matieres`, {
       params,
     });
 
