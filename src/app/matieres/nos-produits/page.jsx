@@ -69,7 +69,7 @@ export default function Page() {
         motifsResponse,
         colorsResponse,
       ] = await Promise.all([
-        fetch("/api/stock/categories-with-parent-matieres"),
+        fetch("/api/stock/categories"),
         fetch("/api/stock/thiknesses"),
         fetch("/api/stock/finitions"),
         fetch("/api/stock/patterns"),
@@ -100,7 +100,7 @@ export default function Page() {
     try {
       setLoadProducts(true);
       const productsResponse = await axios.get(
-        `/api/stock/products_only_matieres?${queryParams}`,
+        `/api/stock/products?${queryParams}`,
       );
 
       const filteredProducts = productsResponse.data.data.filter(
