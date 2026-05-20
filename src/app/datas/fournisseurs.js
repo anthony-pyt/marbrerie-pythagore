@@ -21,6 +21,11 @@ export const fournisseurs = [
     url: "https://www.cosentino.com/fr-fr/dekton",
   },
   {
+    name: "Laminam",
+    image_url: "/images/logos/fournisseurs/laminam_logo.png",
+    url: "https://www.laminam.com/fra/fr",
+  },
+  {
     name: "Marazzi",
     image_url: "/images/logos/fournisseurs/logo_marazzi.png",
     url: "https://www.marazzi.fr/",
@@ -55,11 +60,11 @@ export const fournisseurs = [
     image_url: "/images/logos/fournisseurs/logo_silestone_noir.png",
     url: "https://www.cosentino.com/fr-fr/silestone/",
   },
-  {
-    name: "Sustonable",
-    image_url: "/images/logos/fournisseurs/logo_sustonable_noir.png",
-    url: "https://www.sustonable.com/en/",
-  },
+  // {
+  //   name: "Sustonable",
+  //   image_url: "/images/logos/fournisseurs/logo_sustonable_noir.png",
+  //   url: "https://www.sustonable.com/en/",
+  // },
   {
     name: "Uniceramica",
     image_url: "/images/logos/fournisseurs/logo_uniceramica.png",
