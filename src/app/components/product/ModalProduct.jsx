@@ -48,7 +48,7 @@ export function ModalProduct({ setOpen, open, product }) {
               {/* --- COLONNE GAUCHE : IMAGE --- */}
               <div className="w-full lg:w-3/5 bg-gray-50 flex flex-col">
                 <div className="relative aspect-square lg:aspect-auto lg:h-full min-h-[400px]">
-                  <Image
+                  <img
                     src={product.image_url}
                     alt={product.label}
                     fill
@@ -61,7 +61,7 @@ export function ModalProduct({ setOpen, open, product }) {
                   <div className="absolute top-6 left-6 z-10">
                     {product.product?.category?.logo_url ? (
                       <div className="relative bg-white/90 backdrop-blur p-2 shadow-sm">
-                        <Image
+                        <img
                           src={product.product.category.logo_url}
                           alt="logo catégorie"
                           width={100} // Ajuste selon la taille réelle de tes logos
@@ -211,7 +211,7 @@ export function ModalProduct({ setOpen, open, product }) {
                   {product.product.category.waranty && (
                     <div className="flex items-center gap-4 p-3 bg-gray-50 border border-gray-100">
                       <div className="relative h-8 w-16">
-                        <Image
+                        <img
                           src={product.product.category.waranty.imageSrc}
                           alt="Garantie"
                           fill

@@ -12,11 +12,12 @@ export async function GET(request) {
   }
 
   const apiUrl = process.env.API_GATEWAY_URL;
+  
   try {
     const { searchParams } = new URL(request.url);
     const params = Object.fromEntries(searchParams.entries());
 
-    const response = await axios.get(`${apiUrl}/stock/products_only_matieres`, {
+    const response = await axios.get(`${apiUrl}/api/stock/products_only_matieres`, {
       params,
     });
 

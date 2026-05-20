@@ -48,7 +48,7 @@ const ProductCard = ({ product }) => {
           <div className="absolute top-3 left-3">
             {category?.logo_url ? (
               <div className="bg-white/80 backdrop-blur-md p-1.5 shadow-sm">
-                <Image
+                <img
                   src={category.logo_url}
                   alt={category.label}
                   width={60} // Largeur approximative pour le logo

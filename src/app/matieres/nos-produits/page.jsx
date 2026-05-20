@@ -119,21 +119,21 @@ export default function Page() {
 
   useEffect(() => {
     fetchData();
-    // fetchProducts();
+    fetchProducts();
   }, []);
 
-  // useEffect(() => {
-  //   fetchProducts();
-  // }, [
-  //   selectedCategories,
-  //   selectedMotifs,
-  //   selectedColors,
-  //   selectedThiknesses,
-  //   selectedFinitions,
-  //   selectedFilters,
-  //   searchTerm,
-  //   currentPage,
-  // ]);
+  useEffect(() => {
+    fetchProducts();
+  }, [
+    selectedCategories,
+    selectedMotifs,
+    selectedColors,
+    selectedThiknesses,
+    selectedFinitions,
+    selectedFilters,
+    searchTerm,
+    currentPage,
+  ]);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {

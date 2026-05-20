@@ -19,7 +19,6 @@ export async function GET() {
       data: response.data,
       timestamp: Date.now(),
     });
-    console.log(response);
     
     return Response.json(response.data);
   } catch (error) {
