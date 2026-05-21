@@ -38,7 +38,9 @@ const Review = ({ note, date, name, comment, avatar }) => {
   const [imgSrc, setImgSrc] = useState(avatar || fallbackAvatar);
 
   const cleanComment = comment
-    ? comment.replace(/\(Translated by Google\)[\s\S]*/, "").trim()
+    ? comment.includes("(Original)")
+      ? comment.split("(Original)")[1].trim()
+      : comment.replace(/\(Translated by Google\)[\s\S]*/, "").trim()
     : "";
 
   return (
@@ -97,8 +99,7 @@ const Review = ({ note, date, name, comment, avatar }) => {
             className="absolute -left-3 -top-3 text-5xl text-gray-200 opacity-10 transition-all duration-500 group-hover:text-or group-hover:opacity-15"
           />
           <p className="relative z-10 text-sm font-light leading-relaxed italic text-gray-600">
-            {cleanComment ||
-              "L'excellence du travail de la pierre par Pythagore."}
+            {cleanComment || comment}
           </p>
         </div>
 
