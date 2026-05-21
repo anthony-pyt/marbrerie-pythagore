@@ -3,7 +3,7 @@
 import MainMenu from "@/components/MainMenu";
 import PageTitle from "@/components/PageTitle";
 import Footer from "@/components/Footer";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import useBlogServices from "@/api/services/blogServices";
 import Image from "next/image";
 import moment from "moment";
@@ -12,6 +12,9 @@ import "moment/locale/fr";
 moment.locale("fr");
 
 export default function ArticlePage({ params }) {
+  
+    const unwrappedParams = use(params);
+    const id = unwrappedParams.id;
   const { fetchArticle } = useBlogServices();
   const [article, setArticle] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -19,7 +22,7 @@ export default function ArticlePage({ params }) {
   useEffect(() => {
     const getArticle = async () => {
       try {
-        const response = await fetchArticle(params.id);
+        const response = await fetchArticle(id);
         setArticle(response);
       } catch (error) {
         console.log(error);
@@ -28,11 +31,8 @@ export default function ArticlePage({ params }) {
       }
     };
     getArticle();
-  }, [params.id]);
+  }, [id]);
 
-  useEffect(() => {
-    console.log(article);
-  }, [article]);
 
     if (loading) {
       return (

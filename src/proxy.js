@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export async function middleware(req: NextRequest) {
+export async function proxy(req) {
   const token = req.cookies.get("pythagore_gateway_session")?.value;
   
   // Si l'utilisateur est déjà connecté et tente d'accéder à /login

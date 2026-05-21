@@ -139,7 +139,7 @@ export default function ArticleForm({ articleId = null }) {
       {/* Header Luxe */}
       <header className="mb-12 border-b border-black pb-8">
         <h1 className="text-3xl font-light tracking-[0.2em] uppercase">
-          {articleId ? "Édition de l'éditorial" : "Nouvelle Rédaction"}
+          {articleId ? "Édition" : "Nouvel article"}
         </h1>
       </header>
 

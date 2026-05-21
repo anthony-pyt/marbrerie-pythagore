@@ -1,7 +1,6 @@
 import { Icon } from "@iconify/react";
 import React from "react";
 
-
 const FilterMenus = ({
   categories,
   thiknesses,
@@ -26,8 +25,13 @@ const FilterMenus = ({
   loadFinitions,
   loadThiknesses,
   handleFilterChange,
-  setSearchTerm
+  setSearchTerm,
 }) => {
+  console.log(categories);
+  
+  if (categories.error) {
+    return <div>Aucune catégorie</div>;
+  }
   return (
     <div>
       <div className="mb-12">
@@ -70,7 +74,7 @@ const FilterMenus = ({
                     handleFilterChange(
                       "coupDeCoeur",
                       "Coup de cœur",
-                      "solar:heart-bold"
+                      "solar:heart-bold",
                     )
                   }
                 />
@@ -133,8 +137,7 @@ const FilterMenus = ({
                 <Icon icon="ph:spinner-gap" className="w-6 h-6 animate-spin" />
               </div>
             )}
-            {categories
-            .map((category) => (
+            {categories?.map((category) => (
               <div key={category.id}>
                 <div className="relative flex items-center my-2">
                   <div className="flex items-center">
@@ -314,4 +317,4 @@ const FilterMenus = ({
   );
 };
 
-export default FilterMenus
+export default FilterMenus;

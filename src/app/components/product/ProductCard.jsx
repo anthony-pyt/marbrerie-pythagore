@@ -51,6 +51,8 @@ const ProductCard = ({ product }) => {
                 <img
                   src={category.logo_url}
                   alt={category.label}
+                  width={60} // Largeur approximative pour le logo
+                  height={16} // Hauteur fixe (h-4 = 16px)
                   className="h-4 w-auto object-contain"
                 />
               </div>

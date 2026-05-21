@@ -44,7 +44,7 @@ export default function Page() {
             <div className="py-20 text-center border border-white/10">
               <p className="text-gray-500 uppercase tracking-widest text-xs">
                 {loading
-                  ? "Chargement des archives..."
+                  ? "Chargement des articles..."
                   : "Aucun article trouvé."}
               </p>
             </div>

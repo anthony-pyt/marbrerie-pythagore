@@ -1,59 +1,24 @@
-import path from "path";
-
 /** @type {import('next').NextConfig} */
+
+const isProd = process.env.NODE_ENV === "production";
+
 const nextConfig = {
-  output: process.env.DOCKER_MODE ? "standalone" : undefined,           // ✅ Standalone build
-  compress: true,                 // ✅ Gzip automatique
-  poweredByHeader: false,         // ✅ Supprime X-Powered-By
-  reactStrictMode: true,          // ✅ Debug React strict mode
-  productionBrowserSourceMaps: false,
-  webpack: (config) => {
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      "@": path.resolve("./src/app"),
-    };
-    return config;
-  },
-  rewrites: () => {
-    return [
-      {
-        source: "/backend/:pah*",
-        destination: `${process.env.NEXT_PUBLIC_API_GATEWAY_URL}/:pah*`,
-      },
-      {
-        source: "/stocks/:pah*",
-        destination: process.env.NEXT_PUBLIC_API_STOCK_URL + "/:pah*",
-      },
-    ];
-  },
-  images: {
-    remotePatterns: [
-      {
-        protocol: process.env.NODE_ENV === "production" ? "https" : "http",
-        hostname: "/",
-        port: "",
-        pathname: "/images/**",
-      },
-      // {
-      //   protocol: process.env.NODE_ENV === "production" ? "https" : "http",
-      //   port: "",
-      //   hostname: `'/' ${process.env.NEXT_PUBLIC_IMAGE_URL}`,
-      // },
-    ],
-    domains: [
-      "assets.aceternity.com",
-      "images.unsplash.com",
-      "pbs.twimg.com",
-      "pythagore.doliplus.com",
-      "localhost",
-      "192.168.1.210",
-      "api.stock.marbrerie-pythagore.fr",
-      // `${process.env.NEXT_PUBLIC_IMAGE_URL}`
-    ],
-  },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+  reactCompiler: false,
+  // reactCompiler: isProd,
+  output: isProd ? "standalone" : undefined,
+
+  // Webpack uniquement en dev (ignoré en prod avec Turbopack)
+  ...(isProd
+    ? {}
+    : {
+        webpack: (config) => {
+          config.watchOptions = {
+            poll: 500,
+            aggregateTimeout: 300,
+          };
+          return config;
+        },
+      }),
 };
 
 export default nextConfig;

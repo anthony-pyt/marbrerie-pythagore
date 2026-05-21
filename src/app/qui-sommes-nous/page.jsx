@@ -17,7 +17,10 @@ import clsx from "clsx";
 import AnimatedTestimonials from "../components/ui/animated-testimonials";
 const FooterMaps = dynamic(
   () => import("@/components/qui-sommes-nous/FooterMaps"),
-  { ssr: false }
+  {
+    ssr: false,
+    loading: () => <div className="h-full w-full bg-zinc-100 animate-pulse" />,
+  },
 );
 
 export default function Page() {
@@ -155,7 +158,7 @@ const Team = () => {
 const DeliveryArea = () => {
   return (
     <div className=" relative p-6 mx-auto mt-20 w-full h-[500px]">
-      <FooterMaps />
+      <FooterMaps key="footer-map-instance" />
     </div>
   );
 };

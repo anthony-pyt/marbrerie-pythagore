@@ -7,7 +7,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/Modal";
-import { cn } from "@/lib/utils";
+import { cn } from "../../lib/utils";
 
 const ListImages = ({ images }) => {
   const [selectedImage, setSelectedImage] = useState(null);

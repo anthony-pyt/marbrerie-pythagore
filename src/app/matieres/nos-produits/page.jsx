@@ -69,14 +69,11 @@ export default function Page() {
         motifsResponse,
         colorsResponse,
       ] = await Promise.all([
-        fetch(
-          process.env.NEXT_PUBLIC_API_STOCK_URL +
-            "/stock/categories-with-parent-matieres",
-        ),
-        fetch(process.env.NEXT_PUBLIC_API_STOCK_URL + "/thiknesses"),
-        fetch(process.env.NEXT_PUBLIC_API_STOCK_URL + "/finitions"),
-        fetch(process.env.NEXT_PUBLIC_API_STOCK_URL + "/patterns"),
-        fetch(process.env.NEXT_PUBLIC_API_STOCK_URL + "/colors"),
+        fetch("/api/stock/categories"),
+        fetch("/api/stock/thiknesses"),
+        fetch("/api/stock/finitions"),
+        fetch("/api/stock/patterns"),
+        fetch("/api/stock/colors"),
       ]);
 
       const categories = await categoryResponse.json();
@@ -103,7 +100,7 @@ export default function Page() {
     try {
       setLoadProducts(true);
       const productsResponse = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_STOCK_URL}/stock/products_only_matieres?${queryParams}`,
+        `/api/stock/products?${queryParams}`,
       );
 
       const filteredProducts = productsResponse.data.data.filter(
@@ -359,25 +356,25 @@ export default function Page() {
     const matchesSearchTerm =
       searchTerm.length > 2
         ? external_product.label
-            .toLowerCase()
-            .includes(searchTerm.toLowerCase())
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase())
         : true;
 
     const matchesCategory =
       selectedCategories.length > 0
         ? selectedCategories.includes(
-            external_product.product.category?.parent?.id,
-          ) ||
-          selectedCategories.includes(external_product.product.category?.id)
+          external_product.product.category?.parent?.id,
+        ) ||
+        selectedCategories.includes(external_product.product.category?.id)
         : true;
 
     const matchesThikness =
       selectedThiknesses.length > 0
         ? selectedThiknesses.every((selectedThikness) =>
-            external_product.thiknesses.map(
-              (thikness) => thikness.id === selectedThikness,
-            ),
-          )
+          external_product.thiknesses.map(
+            (thikness) => thikness.id === selectedThikness,
+          ),
+        )
         : true;
 
     const matchesFinition =
@@ -388,21 +385,21 @@ export default function Page() {
     const matchesMotif =
       selectedMotifs.length > 0
         ? external_product?.patterns.some((pattern) =>
-            selectedMotifs.includes(pattern.name),
-          ) ||
-          external_product?.patterns.some((pattern) =>
-            selectedMotifs.includes(pattern.slug),
-          ) ||
-          external_product?.patterns.some((pattern) =>
-            selectedMotifs.includes(pattern.id),
-          )
+          selectedMotifs.includes(pattern.name),
+        ) ||
+        external_product?.patterns.some((pattern) =>
+          selectedMotifs.includes(pattern.slug),
+        ) ||
+        external_product?.patterns.some((pattern) =>
+          selectedMotifs.includes(pattern.id),
+        )
         : true;
 
     const matchesColor =
       selectedColors.length > 0
         ? external_product.colories.some((color) =>
-            selectedColors.includes(color.name),
-          )
+          selectedColors.includes(color.name),
+        )
         : true;
 
     const matchesCoupDeCoeur = selectedFilters.coupDeCoeur
@@ -527,10 +524,12 @@ export default function Page() {
           <div className="w-full bg-white p-4 m-2 min-h-screen">
             {loadProducts && (
               <div className="mt-28 flex flex-col items-center">
-                <div className="h-32 overflow-hidden flex justify-center items-center">
-                  <img
-                    src="/images/loaders/loader-pythagore.gif"
-                    className="h-40 w-auto"
+                <div className="overflow-hidden flex justify-center items-center">
+                  <Icon
+                    icon="nrk:spinner"
+                    width="48"
+                    height="48"
+                    className="animate-spin"
                   />
                 </div>
                 <p>Chargement des données...</p>

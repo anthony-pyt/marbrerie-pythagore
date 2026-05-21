@@ -4,7 +4,7 @@ export default function useImageServices() {
   const fetchAllInspirationPhotos = async (limit = 0) => {
     try {
       const response = await axios.get(
-        `stocks/stock/inspirations?limit=${limit}`
+        `${process.env.NEXT_PUBLIC_API_STOCK_URL}/stock/inspirations?limit=${limit}`,
       );
 
       return response;
