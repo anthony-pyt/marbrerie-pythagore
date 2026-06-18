@@ -54,7 +54,7 @@ export function ModalProduct({ setOpen, open, product }) {
                     fill
                     priority // Image importante dans une modale
                     sizes="(max-width: 1024px) 100vw, 60vw"
-                    className="object-cover"
+                    className="object-cover w-full h-full"
                   />
 
                   {/* Badge Catégorie flottant */}
