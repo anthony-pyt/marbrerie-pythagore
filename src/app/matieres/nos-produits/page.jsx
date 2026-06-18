@@ -10,120 +10,111 @@ import { useEffect, useState } from "react";
 import Filter from "../../components/catalogue/Filter";
 import FiltersMenu from "./../../components/catalogue/FilterMenus";
 import axios from "axios";
-//  import { colors } from "../../datas/filters";
 
 export default function Page() {
-  const [loadProducts, setLoadProducts] = useState(true);
-  const [loadCategories, setLoadCategories] = useState(true);
-  const [loadThiknesses, setLoadThiknesses] = useState(true);
-  const [loadFinitions, setLoadFinitions] = useState(true);
+  const [loadProducts, setLoadProducts] = useState(false);
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [finitions, setFinitions] = useState([]);
   const [thiknesses, setThiknesses] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [motifs, setMotifs] = useState([]);
+  const [colors, setColors] = useState([]);
+
+  // États des filtres
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
   const [selectedMotifs, setSelectedMotifs] = useState([]);
   const [selectedColors, setSelectedColors] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedThiknesses, setSelectedThiknesses] = useState([]);
   const [selectedFinitions, setSelectedFinitions] = useState([]);
-  const [totalPages, setTotalPages] = useState(1);
-  const [motifs, setMotifs] = useState([]);
-  const [colors, setColors] = useState([]);
-  const [totalProducts, setTotalProducts] = useState(0);
   const [selectedFilters, setSelectedFilters] = useState({
     coupDeCoeur: false,
-    // produitDurable: false,
   });
-  const [openMenuMobile, setOpenMenuMobile] = useState(false);
-  const [filters, setFilters] = useState([
-    // { type: "filter", text: "Coup de cœur", icon: "solar:heart-bold" },
-  ]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [inputValue, setInputValue] = useState("");
+  const [filters, setFilters] = useState([]);
+  const [openMenuMobile, setOpenMenuMobile] = useState(false);
 
-  const filterParams = {
-    categories: selectedCategories,
-    thiknesses: selectedThiknesses,
-    finitions: selectedFinitions,
-    motifs: selectedMotifs,
-    colors: selectedColors,
-    coupDeCoeur: selectedFilters.coupDeCoeur,
-    // produitDurable: selectedFilters.produitDurable,
-    searchTerm: searchTerm,
-    page: currentPage,
-    limit: 50,
-  };
+  useEffect(() => {
+    const fetchMetadata = async () => {
+      try {
+        const [cat, thi, fin, pat, col] = await Promise.all([
+          fetch("/api/stock/categories").then((res) => res.json()),
+          fetch("/api/stock/thiknesses").then((res) => res.json()),
+          fetch("/api/stock/finitions").then((res) => res.json()),
+          fetch("/api/stock/patterns").then((res) => res.json()),
+          fetch("/api/stock/colors").then((res) => res.json()),
+        ]);
+        setCategories(cat);
+        setThiknesses(thi);
+        setFinitions(fin);
+        setMotifs(pat);
+        setColors(col?.colors || []);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    fetchMetadata();
+  }, []);
 
-  const queryParams = new URLSearchParams(filterParams).toString();
+  const fetchProducts = async (isReset = false) => {
+    // if (loadProducts) return;
 
-  const fetchData = async () => {
+    const nextPage = isReset ? 1 : page;
     setLoadProducts(true);
-    setLoadCategories(true);
-    setLoadThiknesses(true);
 
     try {
-      const [
-        categoryResponse,
-        thiknessResponse,
-        finitionsResponse,
-        motifsResponse,
-        colorsResponse,
-      ] = await Promise.all([
-        fetch("/api/stock/categories"),
-        fetch("/api/stock/thiknesses"),
-        fetch("/api/stock/finitions"),
-        fetch("/api/stock/patterns"),
-        fetch("/api/stock/colors"),
-      ]);
+      const response = await axios.get(`/api/stock/products`, {
+        params: {
+          categories: selectedCategories.join(","),
+          thiknesses: selectedThiknesses.join(","),
+          finitions: selectedFinitions.join(","),
+          motifs: selectedMotifs.join(","),
+          colors: selectedColors.join(","),
+          coupDeCoeur: selectedFilters.coupDeCoeur ? "true" : "false",
+          searchTerm: searchTerm,
+          page: nextPage,
+          limit: 20, // Remis à 20 pour correspondre à votre logique de pagination backend
+        },
+      });
 
-      const categories = await categoryResponse.json();
-      const thiknesses = await thiknessResponse.json();
-      const finitions = await finitionsResponse.json();
-      const motifs = await motifsResponse.json();
-      const colorsData = await colorsResponse.json();
-
-      setCategories(categories);
-      setThiknesses(thiknesses);
-      setFinitions(finitions);
-      setMotifs(motifs);
-      setColors(colorsData?.colors);
+      const newProducts = response.data.data;
+      setProducts((prev) =>
+        isReset ? newProducts : [...prev, ...newProducts],
+      );
+      setHasMore(response.data.current_page < response.data.last_page);
+      setPage(nextPage + 1);
     } catch (error) {
       console.error(error);
-    } finally {
-      setLoadCategories(false);
-      setLoadThiknesses(false);
-      setLoadFinitions(false);
-    }
-  };
-
-  const fetchProducts = async () => {
-    try {
-      setLoadProducts(true);
-      const productsResponse = await axios.get(
-        `/api/stock/products?${queryParams}`,
-      );
-
-      const filteredProducts = productsResponse.data.data.filter(
-        (product) => product.visible_website === 1,
-      );
-
-      setTotalProducts(filteredProducts.length);
-      setTotalPages(productsResponse.data.last_page);
-      setProducts(filteredProducts);
-    } catch (error) {
-      console.log(error);
     } finally {
       setLoadProducts(false);
     }
   };
 
   useEffect(() => {
-    fetchData();
-    fetchProducts();
-  }, []);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMore && !loadProducts) {
+          fetchProducts(false);
+        }
+      },
+      { threshold: 0.1 },
+    );
+
+    const target = document.querySelector("#scroll-trigger");
+    if (target) observer.observe(target);
+    return () => observer.disconnect();
+  }, [hasMore, loadProducts]);
 
   useEffect(() => {
-    fetchProducts();
+    // 1. On vide la liste pour forcer le chargement propre
+    setProducts([]);
+    setPage(1);
+    setHasMore(true);
+
+    // 2. On appelle la fonction de fetch avec le flag isReset=true
+    fetchProducts(true);
   }, [
     selectedCategories,
     selectedMotifs,
@@ -132,26 +123,19 @@ export default function Page() {
     selectedFinitions,
     selectedFilters,
     searchTerm,
-    currentPage,
   ]);
 
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-      window.scrollTo({ top: 200, behavior: "smooth" });
-    }
-  };
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setSearchTerm(inputValue);
+    }, 500);
 
-  const handlePreviousPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-      window.scrollTo({ top: 200, behavior: "smooth" });
-    }
-  };
+    return () => {
+      clearTimeout(handler); 
+    };
+  }, [inputValue]);
 
   const handleCategoryChange = (category, isParent) => {
-    setCurrentPage(1);
-
     const isCategorySelected = selectedCategories.includes(category.id);
 
     let updatedCategories;
@@ -183,11 +167,13 @@ export default function Page() {
         {
           type: "matieres",
           text: category.label,
+          id: category.id,
           icon: null,
         },
         ...(category.children?.map((child) => ({
           type: "matieres",
           text: child.label,
+          id: child.id,
           icon: null,
         })) || []),
       ];
@@ -200,8 +186,6 @@ export default function Page() {
   };
 
   const handleThiknessChange = (thikness) => {
-    setCurrentPage(1);
-
     if (selectedThiknesses.includes(thikness.id)) {
       setSelectedThiknesses(
         selectedThiknesses.filter((id) => id !== thikness.id),
@@ -211,61 +195,33 @@ export default function Page() {
     }
 
     setFilters((prevFilters) => {
-      const updatedFilters = prevFilters.filter(
-        (filter) => filter.text !== thikness.label,
-      );
-
-      if (prevFilters.some((filter) => filter.text === thikness.label)) {
-        return updatedFilters;
-      } else {
-        return [
-          ...updatedFilters,
-          {
-            type: "thikness",
-            text: thikness.label,
-            icon: null,
-          },
-        ];
+      const isSelected = selectedThiknesses.includes(thikness.id);
+      if (isSelected) {
+        return prevFilters.filter((f) => f.text !== thikness.label);
       }
+      return [
+        ...prevFilters,
+        { type: "thikness", text: thikness.label, id: thikness.id }, // Ajout de l'ID ici
+      ];
     });
   };
 
   const handleFinitionChange = (finition) => {
-    setCurrentPage(1);
+    const isSelected = selectedFinitions.includes(finition.id);
 
-    if (selectedFinitions.includes(finition.id)) {
-      setSelectedFinitions(
-        selectedFinitions.filter((id) => id !== finition.id),
-      );
+    if (isSelected) {
+      setSelectedFinitions((prev) => prev.filter((id) => id !== finition.id));
+      setFilters((prev) => prev.filter((f) => f.id !== finition.id)); // Utiliser ID
     } else {
-      setSelectedFinitions([...selectedFinitions, finition.id]);
+      setSelectedFinitions((prev) => [...prev, finition.id]);
+      setFilters((prev) => [
+        ...prev,
+        { type: "finition", text: finition.label, id: finition.id },
+      ]); // Ajouter ID
     }
-
-    setFilters((prevFilters) => {
-      // Retire le filtre existant si déjà présent
-      const updatedFilters = prevFilters.filter(
-        (filter) => filter.text !== finition.label,
-      );
-
-      // Ajoute ou retire le filtre selon l'état du checkbox
-      if (prevFilters.some((filter) => filter.text === finition.label)) {
-        return updatedFilters;
-      } else {
-        return [
-          ...updatedFilters,
-          {
-            type: "finition",
-            text: finition.label,
-            icon: null,
-          },
-        ];
-      }
-    });
   };
 
   const handleMotifChange = (motif) => {
-    setCurrentPage(1);
-
     if (selectedMotifs.includes(motif.slug)) {
       setSelectedMotifs(selectedMotifs.filter((name) => name !== motif.slug));
     } else {
@@ -273,154 +229,45 @@ export default function Page() {
     }
 
     setFilters((prevFilters) => {
-      // Retire le filtre existant si déjà présent
-      const updatedFilters = prevFilters.filter(
-        (filter) => filter.text !== motif.name,
-      );
-
-      // Ajoute ou retire le filtre selon l'état du checkbox
-      if (prevFilters.some((filter) => filter.text === motif.name)) {
-        return updatedFilters;
-      } else {
-        return [
-          ...updatedFilters,
-          {
-            type: "motif",
-            text: motif.name,
-            icon: null,
-          },
-        ];
+      const isSelected = selectedMotifs.includes(motif.slug);
+      if (isSelected) {
+        return prevFilters.filter((f) => f.text !== motif.name);
       }
+      return [
+        ...prevFilters,
+        { type: "motif", text: motif.web_label, slug: motif.slug }, // Ajout du slug
+      ];
     });
   };
 
   const handleColorChange = (color) => {
-    setCurrentPage(1);
+    const isSelected = selectedColors.includes(color.name);
 
-    if (selectedColors.includes(color.name)) {
-      setSelectedColors(selectedColors.filter((name) => name !== color.name));
+    if (isSelected) {
+      setSelectedColors((prev) => prev.filter((n) => n !== color.name));
+      setFilters((prev) => prev.filter((f) => f.text !== color.name));
     } else {
-      setSelectedColors([...selectedColors, color.name]);
+      setSelectedColors((prev) => [...prev, color.name]);
+      setFilters((prev) => [...prev, { type: "color", text: color.name }]); // Ici le texte suffit
     }
-
-    setFilters((prevFilters) => {
-      // Retire le filtre existant si déjà présent
-      const updatedFilters = prevFilters.filter(
-        (filter) => filter.text !== color.name,
-      );
-
-      // Ajoute ou retire le filtre selon l'état du checkbox
-      if (prevFilters.some((filter) => filter.text === color.name)) {
-        return updatedFilters;
-      } else {
-        return [
-          ...updatedFilters,
-          {
-            type: "color",
-            text: color.name,
-            icon: null,
-          },
-        ];
-      }
-    });
   };
 
   const handleFilterChange = (filterName, filterText, filterIcon) => {
-    setCurrentPage(1);
-
     setSelectedFilters((prevFilters) => ({
       ...prevFilters,
       [filterName]: !prevFilters[filterName],
     }));
     setFilters((prevFilters) => {
-      const updatedFilters = prevFilters.filter(
-        (filter) => filter.text !== filterText,
-      );
-
-      if (prevFilters.some((filter) => filter.text === filterText)) {
-        return updatedFilters;
-      } else {
-        return [
-          ...updatedFilters,
-          {
-            type: "filter",
-            text: filterText,
-            icon: filterIcon,
-          },
-        ];
+      const isSelected = selectedFilters[filterName];
+      if (isSelected) {
+        return prevFilters.filter((f) => f.text !== filterText);
       }
+      return [
+        ...prevFilters,
+        { type: "filter", text: filterText, name: filterName }, // Ajout du nom technique
+      ];
     });
   };
-
-  const filteredProducts = products.filter((external_product) => {
-    const matchesSearchTerm =
-      searchTerm.length > 2
-        ? external_product.label
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase())
-        : true;
-
-    const matchesCategory =
-      selectedCategories.length > 0
-        ? selectedCategories.includes(
-          external_product.product.category?.parent?.id,
-        ) ||
-        selectedCategories.includes(external_product.product.category?.id)
-        : true;
-
-    const matchesThikness =
-      selectedThiknesses.length > 0
-        ? selectedThiknesses.every((selectedThikness) =>
-          external_product.thiknesses.map(
-            (thikness) => thikness.id === selectedThikness,
-          ),
-        )
-        : true;
-
-    const matchesFinition =
-      selectedFinitions.length > 0
-        ? external_product.finitions.some((finition) => finition)
-        : true;
-
-    const matchesMotif =
-      selectedMotifs.length > 0
-        ? external_product?.patterns.some((pattern) =>
-          selectedMotifs.includes(pattern.name),
-        ) ||
-        external_product?.patterns.some((pattern) =>
-          selectedMotifs.includes(pattern.slug),
-        ) ||
-        external_product?.patterns.some((pattern) =>
-          selectedMotifs.includes(pattern.id),
-        )
-        : true;
-
-    const matchesColor =
-      selectedColors.length > 0
-        ? external_product.colories.some((color) =>
-          selectedColors.includes(color.name),
-        )
-        : true;
-
-    const matchesCoupDeCoeur = selectedFilters.coupDeCoeur
-      ? external_product.heart == 1
-      : true;
-
-    // const matchesproduitDurable = selectedFilters.produitDurable
-    //   ? external_product.durable == 1
-    //   : true;
-
-    return (
-      matchesSearchTerm &&
-      matchesCategory &&
-      matchesThikness &&
-      matchesFinition &&
-      matchesCoupDeCoeur &&
-      // matchesproduitDurable &&
-      matchesColor &&
-      matchesMotif
-    );
-  });
 
   const removeFilter = (filterToRemove) => {
     setFilters((prevFilters) =>
@@ -430,7 +277,47 @@ export default function Page() {
 
   const toggleFiltersMenu = () => {
     setOpenMenuMobile(!openMenuMobile);
-    console.log(openMenuMobile);
+  };
+
+  const removeFilterAndUncheck = (filterToRemove) => {
+    console.log("Tentative de suppression de :", filterToRemove);
+    // 1. Supprimer le tag
+    setFilters((prev) => prev.filter((f) => f !== filterToRemove));
+
+    // 2. Synchroniser
+    switch (filterToRemove.type) {
+      case "matieres":
+        setSelectedCategories((prev) =>
+          prev.filter((id) => id !== filterToRemove.id),
+        );
+        break;
+      case "thikness":
+        setSelectedThiknesses((prev) =>
+          prev.filter((id) => id !== filterToRemove.id),
+        );
+        break;
+      case "finition":
+        setSelectedFinitions((prev) =>
+          prev.filter((id) => id !== filterToRemove.id),
+        );
+        break;
+      case "motif":
+        setSelectedMotifs((prev) =>
+          prev.filter((slug) => slug !== filterToRemove.slug),
+        );
+        break;
+      case "color":
+        setSelectedColors((prev) =>
+          prev.filter((name) => name !== filterToRemove.text),
+        );
+        break;
+      case "filter":
+        setSelectedFilters((prev) => ({
+          ...prev,
+          [filterToRemove.name]: false,
+        }));
+        break;
+    }
   };
 
   return (
@@ -448,37 +335,36 @@ export default function Page() {
           />
         </div>
         <div className="flex">
-          <aside className="hidden lg:block w-72 flex-shrink-0">
-            <div className="p-6 border border-gray-100 bg-gray-50/30">
-              <h2 className="text-[10px] uppercase tracking-[0.3em] text-or font-bold mb-6">
+          <aside className="hidden lg:block w-80 flex-shrink-0 relative">
+            <div className="p-1 border border-gray-100 bg-secondary text-white sticky top-20 h-[calc(100vh-8rem)] flex flex-col">
+              <h2 className="text-[10px] uppercase tracking-[0.3em] text-or font-bold m-6">
                 Affiner la recherche
               </h2>
-              <FiltersMenu
-                categories={categories}
-                thiknesses={thiknesses}
-                finitions={finitions}
-                motifs={motifs}
-                colors={colors}
-                selectedCategories={selectedCategories}
-                selectedThiknesses={selectedThiknesses}
-                selectedFinitions={selectedFinitions}
-                selectedMotifs={selectedMotifs}
-                selectedColors={selectedColors}
-                handleFilterChange={handleFilterChange}
-                handleCategoryChange={handleCategoryChange}
-                handleThiknessChange={handleThiknessChange}
-                handleFinitionChange={handleFinitionChange}
-                handleMotifChange={handleMotifChange}
-                handleColorChange={handleColorChange}
-                filters={filters}
-                setFilters={setFilters}
-                removeFilter={removeFilter}
-                selectedFilters={selectedFilters}
-                loadCategories={loadCategories}
-                loadFinitions={loadFinitions}
-                loadThiknesses={loadThiknesses}
-                setSearchTerm={setSearchTerm}
-              />
+              <div className="overflow-y-auto flex-1">
+                <FiltersMenu
+                  categories={categories}
+                  thiknesses={thiknesses}
+                  finitions={finitions}
+                  motifs={motifs}
+                  colors={colors}
+                  selectedCategories={selectedCategories}
+                  selectedThiknesses={selectedThiknesses}
+                  selectedFinitions={selectedFinitions}
+                  selectedMotifs={selectedMotifs}
+                  selectedColors={selectedColors}
+                  handleFilterChange={handleFilterChange}
+                  handleCategoryChange={handleCategoryChange}
+                  handleThiknessChange={handleThiknessChange}
+                  handleFinitionChange={handleFinitionChange}
+                  handleMotifChange={handleMotifChange}
+                  handleColorChange={handleColorChange}
+                  filters={filters}
+                  setFilters={setFilters}
+                  removeFilter={removeFilter}
+                  selectedFilters={selectedFilters}
+                  setSearchTerm={setInputValue}
+                />
+              </div>
             </div>
           </aside>
           {openMenuMobile && (
@@ -513,83 +399,71 @@ export default function Page() {
                   setFilters={setFilters}
                   removeFilter={removeFilter}
                   selectedFilters={selectedFilters}
-                  loadCategories={loadCategories}
-                  loadFinitions={loadFinitions}
-                  loadThiknesses={loadThiknesses}
-                  setSearchTerm={setSearchTerm}
+                  setSearchTerm={setInputValue}
                 />
               </div>
             </div>
           )}
-          <div className="w-full bg-white p-4 m-2 min-h-screen">
-            {loadProducts && (
-              <div className="mt-28 flex flex-col items-center">
-                <div className="overflow-hidden flex justify-center items-center">
-                  <Icon
-                    icon="nrk:spinner"
-                    width="48"
-                    height="48"
-                    className="animate-spin"
-                  />
-                </div>
-                <p>Chargement des données...</p>
+          <div className="w-full bg-white px-4">
+            {/* Zone des tags actifs */}
+            {filters.length > 0 && (
+              <div className="flex flex-wrap gap-2 mb-6 p-4 bg-primary/50 border border-gray-100">
+                {filters.map((filter, index) => (
+                  <button
+                    key={index}
+                    onClick={() => removeFilterAndUncheck(filter)}
+                    className="flex items-center gap-2 bg-white border border-gray-200 px-3 py-1 text-sm hover:border-or transition rounded-none"
+                  >
+                    {filter.text}
+                    <Icon
+                      icon="carbon:close"
+                      className="text-gray-400 hover:text-red-500"
+                    />
+                  </button>
+                ))}
+                <button
+                  onClick={() => {
+                    setSelectedCategories([]);
+                    setSelectedThiknesses([]);
+                    setSelectedFinitions([]);
+                    setSelectedMotifs([]);
+                    setSelectedColors([]);
+                    setSelectedFilters({ coupDeCoeur: false });
+                    setFilters([]);
+                  }}
+                  className="text-sm text-or font-bold underline ml-2 hover:text-orange-600"
+                >
+                  Tout effacer
+                </button>
               </div>
             )}
-            <div className="flex items-center flex-wrap truncate w-full text-xs">
-              {filters?.map((filter, index) => {
-                return (
-                  <Filter
-                    text={filter.text}
-                    icon={filter.icon}
-                    key={index}
-                    onClick={() => console.log(filter)}
-                  />
-                );
-              })}
-            </div>
-            <div>
-              {filteredProducts.length > 0 ? (
-                filteredProducts.length > 0 ? (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 items-stretchh">
-                    {filteredProducts.map((product) => (
-                      <ProductCard key={product.id} product={product} />
-                    ))}
-                  </div>
-                ) : (
-                  <p>Aucun produit disponible</p>
-                )
-              ) : (
-                !loadProducts && (
-                  <div className="flex justify-center items-center mt-28">
-                    <p className="text-gray-500">
-                      Aucun produit ne correspond aux filtres.
-                    </p>
-                  </div>
-                )
-              )}
+            {/* Grille unique de produits */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+              {products.map((product, index) => (
+                <ProductCard key={`${product.id}-${index}`} product={product} />
+              ))}
             </div>
 
-            <div className="pagination-controls flex justify-center items-center mt-12">
-              <Button
-                text={"Précédente"}
-                color={"primary"}
-                onClick={handlePreviousPage}
-                disabled={currentPage === 1}
-              >
-                Précédent
-              </Button>
-              <span className="mx-4">
-                Page {currentPage} sur {totalPages}
-              </span>
-              <Button
-                text={"Suivante"}
-                color="primary"
-                onClick={handleNextPage}
-                disabled={currentPage === totalPages}
-              >
-                Suivant
-              </Button>
-            </div>
+            {/* État vide */}
+            {!loadProducts && products.length === 0 && (
+              <p className="text-center py-20">
+                Aucun produit ne correspond à vos filtres.
+              </p>
+            )}
+
+            {/* Scroll Trigger */}
+            <div id="scroll-trigger" className="h-10 w-full" />
+
+            {loadProducts && (
+              <div className="flex justify-center py-6">
+                <Icon
+                  icon="nrk:spinner"
+                  className="animate-spin"
+                  width="48"
+                  height="48"
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
