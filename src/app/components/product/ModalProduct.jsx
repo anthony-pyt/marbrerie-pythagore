@@ -34,7 +34,7 @@ export function ModalProduct({ setOpen, open, product }) {
         <div className="flex min-h-full items-center justify-center p-4 sm:p-6">
           <DialogPanel
             transition
-            className="relative transform overflow-hidden bg-white shadow-2xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 w-full max-w-6xl"
+            className="relative transform overflow-hidden bg-white shadow-2xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 w-full max-w-6xl h-full xl:h-[800px] flex" // Ajout de h-[80vh] et flex
           >
             {/* BOUTON FERMER */}
             <button
@@ -214,7 +214,7 @@ export function ModalProduct({ setOpen, open, product }) {
                         <img
                           src={product.product.category.waranty.imageSrc}
                           alt="Garantie"
-                          // fill 
+                          // fill
                           className="object-contain grayscale opacity-60"
                         />
                       </div>
