@@ -62,6 +62,7 @@ const ImageComponent = ({ card }) => {
               src={category.logo_url}
               alt={category.label}
               className="h-4 w-auto object-contain"
+              referrerPolicy="no-referrer"
             />
           </div>
         ) : (
