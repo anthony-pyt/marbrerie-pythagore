@@ -13,7 +13,7 @@ export async function GET(request) {
 
   const apiUrl = process.env.NEXT_PUBLIC_API_STOCK_URL;
   try {
-    const response = await axios.get(`${apiUrl}/patterns`);
+    const response = await axios.get(`${apiUrl}/stock/patterns`);
 
     // cache.set(cacheKey, {
     //   data: response.data,
