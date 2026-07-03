@@ -2,7 +2,6 @@ import axios from "axios";
 import gateway_instance from "../../lib/gatewayInstance";
 
 const getCsrfCookie = async () => await gateway_instance.get("/sanctum/csrf-cookie");
-
 export async function login(data) {
   const cookie = await getCsrfCookie();
   const response = await gateway_instance.post("/auth/login", data);
