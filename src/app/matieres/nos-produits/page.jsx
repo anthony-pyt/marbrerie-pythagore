@@ -6,12 +6,13 @@ import Footer from "../../components/Footer";
 import PageTitle from "../../components/PageTitle";
 import ProductCard from "../../components/product/ProductCard";
 import { Icon } from "@iconify/react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Filter from "../../components/catalogue/Filter";
 import FiltersMenu from "./../../components/catalogue/FilterMenus";
 import axios from "axios";
 
 export default function Page() {
+  const gridRef = useRef(null);
   const [loadProducts, setLoadProducts] = useState(false);
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -108,12 +109,21 @@ export default function Page() {
   }, [hasMore, loadProducts]);
 
   useEffect(() => {
-    // 1. On vide la liste pour forcer le chargement propre
-    setProducts([]);
+    // setProducts([]);
     setPage(1);
     setHasMore(true);
 
-    // 2. On appelle la fonction de fetch avec le flag isReset=true
+    if (gridRef.current) {
+      const elementPosition =
+        gridRef.current.getBoundingClientRect().top + window.scrollY;
+      const offset = 100;
+
+      window.scrollTo({
+        top: elementPosition - offset,
+        behavior: "smooth",
+      });
+    }
+
     fetchProducts(true);
   }, [
     selectedCategories,
@@ -131,7 +141,7 @@ export default function Page() {
     }, 500);
 
     return () => {
-      clearTimeout(handler); 
+      clearTimeout(handler);
     };
   }, [inputValue]);
 
@@ -280,7 +290,6 @@ export default function Page() {
   };
 
   const removeFilterAndUncheck = (filterToRemove) => {
-    console.log("Tentative de suppression de :", filterToRemove);
     // 1. Supprimer le tag
     setFilters((prev) => prev.filter((f) => f !== filterToRemove));
 
@@ -324,7 +333,7 @@ export default function Page() {
     <main className="min-h-screen">
       <MainMenu />
       <PageTitle title={"Nos produits"} />
-      <div className="max-w-[1900px] mx-auto px-4 md:px-8">
+      <div className="max-w-[1900px] mx-auto px-4 md:px-8" ref={gridRef}>
         <div className="lg:hidden flex justify-end mx-2">
           <Button
             text="Filtres"
@@ -337,7 +346,7 @@ export default function Page() {
         <div className="flex">
           <aside className="hidden lg:block w-80 flex-shrink-0 relative">
             <div className="p-1 border border-gray-100 bg-secondary text-white sticky top-20 h-[calc(100vh-8rem)] flex flex-col">
-              <h2 className="text-[10px] uppercase tracking-[0.3em] text-or font-bold m-6">
+              <h2 className="text-[11px] uppercase tracking-[0.3em] text-or-light font-bold m-6">
                 Affiner la recherche
               </h2>
               <div className="overflow-y-auto flex-1">
@@ -404,20 +413,20 @@ export default function Page() {
               </div>
             </div>
           )}
-          <div className="w-full bg-white px-4">
+          <div className="w-full bg-white px-4 min-h-[500px] relative">
             {/* Zone des tags actifs */}
             {filters.length > 0 && (
-              <div className="flex flex-wrap gap-2 mb-6 p-4 bg-primary/50 border border-gray-100">
+              <div className="flex flex-wrap gap-2 mb-6 p-4 bg-secondary">
                 {filters.map((filter, index) => (
                   <button
                     key={index}
                     onClick={() => removeFilterAndUncheck(filter)}
-                    className="flex items-center gap-2 bg-white border border-gray-200 px-3 py-1 text-sm hover:border-or transition rounded-none"
+                    className="group flex items-center gap-2 px-3 py-1 text-or-light text-sm border border-transparent hover:border-or-light transition rounded-none"
                   >
                     {filter.text}
                     <Icon
                       icon="carbon:close"
-                      className="text-gray-400 hover:text-red-500"
+                      className="text-or-light group-hover:text-red-500"
                     />
                   </button>
                 ))}
@@ -431,30 +440,63 @@ export default function Page() {
                     setSelectedFilters({ coupDeCoeur: false });
                     setFilters([]);
                   }}
-                  className="text-sm text-or font-bold underline ml-2 hover:text-orange-600"
+                  className="text-[10px] uppercase tracking-[0.3em] text-or-light underline ml-2 hover:text-red-500"
                 >
                   Tout effacer
                 </button>
               </div>
             )}
-            {/* Grille unique de produits */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
-              {products.map((product, index) => (
-                <ProductCard key={`${product.id}-${index}`} product={product} />
-              ))}
+            <div className="relative">
+              {/* Overlay de chargement discret pour les filtres */}
+              {loadProducts && products.length > 0 && (
+                <div className="fixed inset-0 z-20 flex items-center justify-center pt-40 transition-all duration-500 ease-in-out animate-fade-in">
+                  <div className="bg-secondary text-white border border-or/20 px-8 py-10 shadow-2xl flex flex-col justify-center items-center gap-5 min-w-[280px]">
+                    <div className="relative w-12 h-12 flex items-center justify-center">
+                      <div className="absolute inset-0 rounded-full border-4 border-white/10"></div>
+                      <div className="absolute inset-0 rounded-full border-4 border-t-or border-r-transparent border-b-transparent border-l-transparent animate-spin"></div>
+                    </div>
+
+                    <div className="text-center space-y-1">
+                      <span className="block text-xs uppercase tracking-[0.2em] text-or font-semibold">
+                        Chargement
+                      </span>
+                      <span className="block text-sm text-gray-300 font-light italic">
+                        Mise à jour...
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Grille de produits */}
+              <div
+                className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 transition-opacity duration-300 ${
+                  loadProducts && products.length > 0
+                    ? "opacity-40 pointer-events-none"
+                    : "opacity-100"
+                }`}
+              >
+                {products.map((product, index) => (
+                  <ProductCard
+                    key={`${product.id}-${index}`}
+                    product={product}
+                  />
+                ))}
+              </div>
             </div>
 
-            {/* État vide */}
+            {/* État vide uniquement si on ne charge pas et qu'il n'y a rien */}
             {!loadProducts && products.length === 0 && (
               <p className="text-center py-20">
                 Aucun produit ne correspond à vos filtres.
               </p>
             )}
 
-            {/* Scroll Trigger */}
-            <div id="scroll-trigger" className="h-10 w-full" />
+            {/* Scroll Trigger pour l'infinite scroll (uniquement visible s'il y a d'autres pages) */}
+            {hasMore && <div id="scroll-trigger" className="h-10 w-full" />}
 
-            {loadProducts && (
+            {/* Spinner de bas de page (uniquement pour le scroll infini, pas pour les filtres) */}
+            {loadProducts && products.length === 0 && (
               <div className="flex justify-center py-6">
                 <Icon
                   icon="nrk:spinner"
