@@ -24,7 +24,7 @@ const Card = ({
     <div className={cardClass}>
       <div>
         <div className={imageContainerClass}>
-          <img
+          <Image
             className={imageClass}
             src={image}
             alt=""
