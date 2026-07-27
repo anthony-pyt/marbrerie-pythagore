@@ -1,6 +1,7 @@
+// app/api/google-reviews/route.js
 import axios from "axios";
+import { NextResponse } from "next/server";
 
-// ✅ Ajoute cette ligne pour empêcher le prerendering au build
 export const dynamic = "force-dynamic";
 
 export async function GET() {
@@ -8,9 +9,9 @@ export async function GET() {
     const response = await axios.get(
       `${process.env.API_URL}/get_google_reviews`,
     );
-    return Response.json(response.data);
+    return NextResponse.json(response.data);
   } catch (error) {
     console.error("Erreur API Google Reviews:", error.message);
-    return Response.json({ error: "Service Unavailable" }, { status: 503 });
+    return NextResponse.json({ error: "Service Unavailable" }, { status: 503 });
   }
 }

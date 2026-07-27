@@ -193,7 +193,7 @@ export function ModalProduct({ setOpen, open, product }) {
                         Origine
                       </p>
                       <span className="text-xs">
-                        {product.origine || "Italie"}
+                        {product.origine}
                       </span>
                     </div>
                   </div>
