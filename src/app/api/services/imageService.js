@@ -1,13 +1,16 @@
 import axios from "axios";
 
 export default function useImageServices() {
+   const baseUrl =process.env.NEXT_PUBLIC_API_URL
   const fetchAllInspirationPhotos = async (limit = 0) => {
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_STOCK_URL}/stock/inspirations?limit=${limit}`,
+        `${baseUrl}/api/stock/inspirations?limit=${limit}`,
+
+        
       );
 
-      return response;
+      return response?.data;
     } catch (error) {
       console.log(error);
     }
@@ -15,7 +18,7 @@ export default function useImageServices() {
 
   const storeImageInPost = async (data) => {
     const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/image_in_post`, data
+      `${baseUrl}/image_in_post`, data
     );
     return response;
   }

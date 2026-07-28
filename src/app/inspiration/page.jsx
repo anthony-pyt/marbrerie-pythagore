@@ -37,7 +37,7 @@ export default function Page() {
     const fetchInspirations = async () => {
       try {
         const response = await fetchAllInspirationPhotos()
-        setInspirations(response.data);
+        setInspirations(response);
       } catch (error) {
         console.error("Erreur lors de la récupération du produit :", error);
       }
