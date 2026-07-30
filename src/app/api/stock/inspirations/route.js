@@ -24,10 +24,10 @@ export async function GET(request) {
     });
   }
 
-  const apiUrl = process.env.NEXT_PUBLIC_API_STOCK_URL;
+  const apiUrl = process.env.NEXT_API_GATEWAY_URL??'http://gateway:8000';
 
   if (!apiUrl) {
-    console.error("NEXT_PUBLIC_API_STOCK_URL is not defined");
+    console.error("NEXT_API_GATEWAY_URL is not defined");
     return Response.json(
       { error: "Server misconfiguration" },
       { status: 500 },
@@ -35,7 +35,7 @@ export async function GET(request) {
   }
 
   try {
-    const response = await apiClient.get(`${apiUrl}/stock/inspirations`, {
+    const response = await apiClient.get(`${apiUrl}/api/stock/inspirations`, {
       params: Object.fromEntries(searchParams),
     });
 

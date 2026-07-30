@@ -190,7 +190,7 @@ export const Card = ({ card, index, layout = false }) => {
               exit={{ opacity: 0 }}
               ref={containerRef}
               layoutId={
-                layout ? `card-${card.imageable?.product?.label}` : undefined
+                layout ? `card-${card.imageable?.label}` : undefined
               }
               className="max-w-5xl mx-auto bg-white  h-fit  z-[60] my-10 p-4 md:p-10 font-sans relative"
             >
@@ -203,20 +203,20 @@ export const Card = ({ card, index, layout = false }) => {
               <motion.p
                 layoutId={
                   layout
-                    ? `category-${card.imageable?.product?.label}`
+                    ? `category-${card.imageable?.label}`
                     : undefined
                 }
                 className="text-base font-medium text-black "
               >
-                {card.imageable?.product?.category?.label}
+                {card.imageable?.category?.label}
               </motion.p>
               <motion.p
                 layoutId={
-                  layout ? `title-${card.imageable?.product?.label}` : undefined
+                  layout ? `title-${card.imageable?.label}` : undefined
                 }
                 className="text-2xl md:text-5xl font-semibold text-neutral-700 mt-4 "
               >
-                {card.imageable?.product?.label}
+                {card.imageable?.label}
               </motion.p>
               {/* <div className="py-10">{card.content}</div> */}
             </motion.div>
@@ -224,7 +224,7 @@ export const Card = ({ card, index, layout = false }) => {
         )}
       </AnimatePresence>
       <motion.div
-        layoutId={layout ? `card-${card.imageable?.product?.label}` : undefined}
+        layoutId={layout ? `card-${card.imageable?.label}` : undefined}
         // onClick={handleOpen}
         className="bg-gray-100  h-80 w-56 md:h-[40rem] md:w-96 overflow-hidden flex flex-col items-start justify-start relative z-10"
       >
@@ -233,25 +233,25 @@ export const Card = ({ card, index, layout = false }) => {
           <motion.p
             layoutId={
               layout
-                ? `category-${card.imageable?.product?.category?.label}`
+                ? `category-${card.imageable?.category?.label}`
                 : undefined
             }
             className="text-white text-sm md:text-base font-medium font-sans text-left"
           >
-            {card.imageable?.product?.category?.label}
+            {card.imageable?.category?.label}
           </motion.p>
           <motion.p
             layoutId={
-              layout ? `title-${card.imageable?.product?.label}` : undefined
+              layout ? `title-${card.imageable?.label}` : undefined
             }
             className="text-white text-xl md:text-3xl font-semibold max-w-xs text-left [text-wrap:balance] font-sans mt-2"
           >
-            {card.imageable?.product?.label}
+            {card.imageable?.label}
           </motion.p>
         </div>
         <BlurImage
           src={card.image_url}
-          alt={card.imageable?.product?.label}
+          alt={card.imageable?.label}
           sizes="(max-width: 768px) 100vw, 50vw"
           className="h-full w-full object-cover absolute z-10 inset-0"
         />

@@ -2,11 +2,11 @@ import axios from "axios";
 
 export default function useImageServices() {
   const baseApiUrl = process.env.NEXT_PUBLIC_API_URL
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL
+  const baseUrl = process.env.NEXT_API_GATEWAY_URL
   const fetchAllInspirationPhotos = async (limit = 0) => {
     try {
       const response = await axios.get(
-        `${baseUrl}/api/stock/inspirations?limit=${limit}`,
+        `/api/proxy/stock/inspirations?limit=${limit}`,
 
 
       );

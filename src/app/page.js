@@ -67,8 +67,6 @@ export default function Home() {
       try {
         const response = await fetchAllInspirationPhotos(8);
         const data  = await response
-        console.log('res',data);
-        
         setInspirations(data);
       } catch (error) {
         console.error(

@@ -5,7 +5,7 @@ import { useState } from "react";
 import { ModalProduct } from "./ModalProduct";
 import Image from "next/image";
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product=[]}) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
 
   // Sécurisation des données
