@@ -51,7 +51,7 @@ export function ModalProduct({ setOpen, open, product }) {
                   <img
                     src={product.image_url}
                     alt={product.label}
-                    fill
+                    fill="true"
                     priority // Image importante dans une modale
                     sizes="(max-width: 1024px) 100vw, 60vw"
                     className="object-cover w-full h-full"
@@ -185,7 +185,7 @@ export function ModalProduct({ setOpen, open, product }) {
                         Motif
                       </p>
                       <span className="text-xs">
-                        {product.motif || "Veiné"}
+                        {product.motif || product.product?.motif}
                       </span>
                     </div>
                     <div>
@@ -193,7 +193,7 @@ export function ModalProduct({ setOpen, open, product }) {
                         Origine
                       </p>
                       <span className="text-xs">
-                        {product.origine}
+                        {product.origine || product.product?.origine}
                       </span>
                     </div>
                   </div>
