@@ -184,17 +184,13 @@ export function ModalProduct({ setOpen, open, product }) {
                       <p className="text-[10px] uppercase text-gray-400 tracking-widest mb-1">
                         Motif
                       </p>
-                      <span className="text-xs">
-                        {product.motif || "Veiné"}
-                      </span>
+                      <span className="text-xs">{product.motif}</span>
                     </div>
                     <div>
                       <p className="text-[10px] uppercase text-gray-400 tracking-widest mb-1">
                         Origine
                       </p>
-                      <span className="text-xs">
-                        {product.origine}
-                      </span>
+                      <span className="text-xs">{product.origine}</span>
                     </div>
                   </div>
                 </div>
