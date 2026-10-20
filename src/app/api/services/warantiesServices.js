@@ -1,10 +1,9 @@
 import axios from "axios";
 
 export default function useWarantyServices() {
+  // Route serveur du site, en cache : le navigateur n'appelle plus stock directement.
   const fetchWaranties = async () => {
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_STOCK_URL}/stock/waranties`
-    );
+    const response = await axios.get("/api/stock/waranties");
     return response.data;
   };
 
