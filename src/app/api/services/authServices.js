@@ -4,47 +4,53 @@ import gateway_instance from "../../lib/gatewayInstance";
 const getCsrfCookie = async () => await gateway_instance.get("/sanctum/csrf-cookie");
 
 export async function login(data) {
-  const cookie = await getCsrfCookie();
+  await getCsrfCookie();
   const response = await gateway_instance.post("/auth/login", data);
-  // const response = await axios.post("http://localhost:8000/auth/login", data, {
-  //   withCredentials: true,
-  // });
   const user = response.data;
 
+  // Création du cookie de session côté Next.js pour autoriser le proxy (/admin)
+  await axios.post("/api/cookies", {
+    name: "pythagore_gateway_session",
+    value: user?.id ? String(user.id) : "authenticated",
+  });
+
   localStorage.setItem("user", JSON.stringify(user));
+  return user;
 }
 
+
 export async function logout() {
-  await gateway_instance.post("/auth/logout");
-  // Appel à l'API pour supprimer le cookie côté serveur
+  try {
+    await gateway_instance.post("/auth/logout");
+  } catch (error) {
+    console.error("Erreur lors de la déconnexion gateway", error);
+  }
+
+  // Appel à l'API pour supprimer le cookie côté Next.js
   try {
     await axios.delete("/api/cookies", {
       headers: {
-        "Content-Type": "application/json", // Ajoute les headers pour JSON
+        "Content-Type": "application/json",
       },
       data: {
-        name: "pythagore_gateway_session", // Envoie un objet JSON avec le nom du cookie
+        name: "pythagore_gateway_session",
       },
     });
-    localStorage.removeItem("user");
   } catch (error) {
     console.error("Erreur lors de la suppression du cookie", error);
   }
+
+  localStorage.removeItem("user");
 }
 
-// export async function isUserLoggedIn() {
-//   try {
-//     const response = await gateway_instance.get("/api/cookies", {
-//       params: { name: "pythagore_gateway_session" }, // Passe le nom du cookie à vérifier
-//     });
+export async function isUserLoggedIn() {
+  try {
+    const response = await axios.get("/api/cookies", {
+      params: { name: "pythagore_gateway_session" },
+    });
 
-//     if (response.status === 200) {
-//       return true; // Si la session est valide
-//     } else {
-//       return false; // Si la session est invalide
-//     }
-//   } catch (error) {
-//     console.error("Erreur lors de la vérification de la session", error);
-//     return false; // En cas d'erreur, on considère que la session n'est pas valide
-//   }
-// }
+    return response.status === 200;
+  } catch (error) {
+    return false;
+  }
+}
