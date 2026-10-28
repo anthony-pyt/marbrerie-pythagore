@@ -18,6 +18,7 @@ export async function login(data) {
   return user;
 }
 
+
 export async function logout() {
   try {
     await gateway_instance.post("/auth/logout");
