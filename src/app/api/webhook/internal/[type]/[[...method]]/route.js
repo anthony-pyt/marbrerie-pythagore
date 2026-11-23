@@ -1,6 +1,6 @@
 import { revalidateTag } from "next/cache";
 import { CATALOG_TAG } from "@/lib/stockCatalog";
-import { verifyMachineToken } from "@/lib/machineToken";
+import { publicKeysFromEnv, verifyMachineToken } from "@/lib/machineToken";
 
 /**
  * Webhooks internes relayés par la Gateway (`PUT /api/webhook/internal/{type}/{method}`, consommateur
@@ -9,7 +9,7 @@ import { verifyMachineToken } from "@/lib/machineToken";
  */
 export async function PUT(request, context) {
   const payload = await verifyMachineToken(request.headers.get("authorization"), {
-    publicKey: process.env.OAUTH_PUBLIC_KEY,
+    publicKey: publicKeysFromEnv(),
     allowedClientIds: (process.env.STOCK_MACHINE_CLIENT_ID ?? "").split(",").filter(Boolean),
   });
 

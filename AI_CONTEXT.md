@@ -46,7 +46,7 @@ This document provides a comprehensive overview of the **Marbrerie Pythagore** p
 ## 📦 Catalogue de stock (cache serveur, 19/10/2026)
 - Les routes `src/app/api/stock/*` (produits, catégories, couleurs, finitions, motifs, épaisseurs, garanties) lisent stock **uniquement** via `src/app/lib/stockCatalog.js` (`unstable_cache`, 10 min, étiquette `catalog`) : une erreur n'est jamais mise en cache, et la dernière version connue reste servie si stock tombe. Ne pas réintroduire d'appel direct du navigateur à stock ni d'`axios` (il contourne le cache de Next).
 - Rafraîchissement immédiat : `PUT /api/webhook/internal/catalog/changed`, relayé par la Gateway (consommateur `website`). Seul le jeton machine de stock est accepté (`src/app/lib/machineToken.js` : RS256, expiration, `is_machine`, `client_id`).
-- Variables : `OAUTH_PUBLIC_KEY` (clé publique d'auth-api, PEM, retours à la ligne en `\n`), `STOCK_MACHINE_CLIENT_ID` (client machine de stock). Côté Gateway : `WEBSITE_URL` (adresse interne du site).
+- Variables : `AUTH_PASSPORT_PUBLIC_KEY` (clé publique d'auth-api, PEM, retours à la ligne en `\n`), `STOCK_MACHINE_CLIENT_ID` (client machine de stock). Côté Gateway : `WEBSITE_URL` (adresse interne du site).
 
 ## 📝 Coding Standards & Patterns
 - **App Router**: Uses server and client components appropriately (check for `"use client"` directive).

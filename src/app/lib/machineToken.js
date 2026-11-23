@@ -17,13 +17,16 @@ async function importPublicKey(pem) {
 }
 
 /**
+ * @param {{ publicKey: string | string[], allowedClientIds: string[], now?: number }} options `publicKey` : une clé, ou
+ *   plusieurs pendant une rotation de la clé d'auth-api (ADR-04, 18/11/2026) ; la signature doit passer avec l'une d'elles.
  * @returns {Promise<object|null>} le payload si le jeton est valide et émis par un client autorisé, sinon null
  */
 export async function verifyMachineToken(authorization, { publicKey, allowedClientIds, now = Date.now() / 1000 }) {
   const token = authorization?.startsWith("Bearer ") ? authorization.slice(7) : null;
   const parts = token?.split(".");
 
-  if (!publicKey || !allowedClientIds?.length || parts?.length !== 3) {
+  const publicKeys = [publicKey].flat().filter(Boolean);
+  if (!publicKeys.length || !allowedClientIds?.length || parts?.length !== 3) {
     return null;
   }
 
@@ -33,12 +36,15 @@ export async function verifyMachineToken(authorization, { publicKey, allowedClie
       return null;
     }
 
-    const valid = await crypto.subtle.verify(
-      "RSASSA-PKCS1-v1_5",
-      await importPublicKey(publicKey),
-      base64UrlToBytes(parts[2]),
-      new TextEncoder().encode(`${parts[0]}.${parts[1]}`),
-    );
+    let valid = false;
+    for (const pem of publicKeys) {
+      valid ||= await crypto.subtle.verify(
+        "RSASSA-PKCS1-v1_5",
+        await importPublicKey(pem),
+        base64UrlToBytes(parts[2]),
+        new TextEncoder().encode(`${parts[0]}.${parts[1]}`),
+      );
+    }
     const payload = JSON.parse(decoder.decode(base64UrlToBytes(parts[1])));
 
     const fresh = (!payload.exp || payload.exp > now) && (!payload.nbf || payload.nbf <= now + 60);
@@ -48,4 +54,12 @@ export async function verifyMachineToken(authorization, { publicKey, allowedClie
   } catch {
     return null;
   }
+}
+
+/**
+ * Clés publiques d'auth-api lues dans l'environnement : `AUTH_PASSPORT_PUBLIC_KEY` (seule source depuis le 18/11/2026,
+ * l'ancien nom `OAUTH_PUBLIC_KEY` n'est plus lu), puis la clé secondaire d'une rotation (`AUTH_PASSPORT_PUBLIC_KEY_SECONDARY`, ADR-04).
+ */
+export function publicKeysFromEnv(env = process.env) {
+  return [env.AUTH_PASSPORT_PUBLIC_KEY, env.AUTH_PASSPORT_PUBLIC_KEY_SECONDARY].filter(Boolean);
 }
