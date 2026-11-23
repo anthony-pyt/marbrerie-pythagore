@@ -22,7 +22,8 @@ export default function LoginPage() {
       await login({ email, password });
       window.location.href = "/admin";
     } catch (err) {
-      setError("Email ou mot de passe incorrect !");
+      // Message du serveur (identifiants refusés, compte sans droit sur le site, trop d'essais, service indisponible).
+      setError(err?.response?.data?.message ?? "Connexion impossible. Merci de réessayer.");
       setLoading(false);
     }
   };
@@ -63,8 +64,9 @@ export default function LoginPage() {
                 size={18}
               />
               <input
-                type="email"
-                placeholder="EMAIL"
+                type="text"
+                autoComplete="username"
+                placeholder="E-MAIL OU NOM D'UTILISATEUR"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full bg-transparent border-b border-white/20 pl-12 py-3 text-white placeholder:text-gray-600 focus:border-or outline-none transition-all text-xs tracking-widest"

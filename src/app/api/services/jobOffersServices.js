@@ -4,14 +4,14 @@ import { isUserLoggedIn } from "./authServices";
 export default function useJobOffersServices() {
   const countJobOffers = async () => {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/count_job_offers`
+      `/api/web-api/count_job_offers`
     );
     return response;
   };
 
   const fetchJobOffers = async () => {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/job_offers`
+      `/api/web-api/job_offers`
     );
     return response;
   };
@@ -19,21 +19,21 @@ export default function useJobOffersServices() {
   // Offres publiées uniquement, pour le site public
   const fetchPublishedJobOffers = async () => {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/published_job_offers`
+      `/api/web-api/published_job_offers`
     );
     return response;
   };
 
   const fetchJobOffer = async (id) => {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/job_offers/${id}`
+      `/api/web-api/job_offers/${id}`
     );
     return response.data;
   };
 
   const storeJobOffer = async (data) => {
     const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/job_offers`,
+      `/api/web-api/job_offers`,
       data
     );
     return response;
@@ -41,7 +41,7 @@ export default function useJobOffersServices() {
 
   const updateJobOffer = async (id, data) => {
     const response = await axios.put(
-      `${process.env.NEXT_PUBLIC_API_URL}/job_offers/${id}`,
+      `/api/web-api/job_offers/${id}`,
       data
     );
     return response;
@@ -49,14 +49,14 @@ export default function useJobOffersServices() {
 
   const deleteJobOffer = async (id) => {
     const response = await axios.delete(
-      `${process.env.NEXT_PUBLIC_API_URL}/job_offers/${id}`
+      `/api/web-api/job_offers/${id}`
     );
     return response;
   };
 
   const togglePublishmentStatut = async (id) => {
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/job_offers/${id}/toggle_publishment`
+    const response = await axios.patch(
+      `/api/web-api/job_offers/${id}/toggle_publishment`
     );
     return response;
   }

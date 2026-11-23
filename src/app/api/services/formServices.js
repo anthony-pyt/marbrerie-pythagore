@@ -4,7 +4,7 @@ export default function FormServices() {
   const VerifyAndSendContact = async (datas) => {
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/verify_and_send_contact`,
+        `/api/web-api/verify_and_send_contact`,
         { datas },
         {
           headers: {
@@ -22,7 +22,7 @@ export default function FormServices() {
   const VerifyAndSendCandidacy = async (datas) => {
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/verify_and_send_candidacy`,
+        `/api/web-api/verify_and_send_candidacy`,
         { datas },
         {
           headers: {

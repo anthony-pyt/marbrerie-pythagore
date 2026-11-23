@@ -4,28 +4,28 @@ import { isUserLoggedIn } from "../services/authServices";
 export default function useBlogServices() {
   const countArticles = async () =>  {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/blog/count_articles`
+      `/api/web-api/blog/count_articles`
     );
     return response;
   }
 
   const fetchArticles = async () => {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/blog/get_articles`
+      `/api/web-api/blog/get_articles`
     );
     return response;
   };
 
   const fetchArticle = async (id) => {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/blog/articles/${id}`
+      `/api/web-api/blog/articles/${id}`
     );
     return response.data;
   };
 
   const storeArticle = async (data) => {
     const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/blog/store_article`,
+      `/api/web-api/blog/store_article`,
       data
     );
     return response;
@@ -33,7 +33,7 @@ export default function useBlogServices() {
 
   const updateArticle = async (id, data) => {
     const response = await axios.put(
-      `${process.env.NEXT_PUBLIC_API_URL}/blog/update_article/${id}`,
+      `/api/web-api/blog/update_article/${id}`,
       data
     );
     return response;
@@ -41,7 +41,7 @@ export default function useBlogServices() {
 
   const deleteArticle = async (id) => {
     const response = await axios.delete(
-      `${process.env.NEXT_PUBLIC_API_URL}/blog/delete_article/${id}`    );
+      `/api/web-api/blog/delete_article/${id}`    );
     return response;
   };
 

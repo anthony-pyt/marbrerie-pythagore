@@ -1,55 +1,29 @@
 import axios from "axios";
-import gateway_instance from "../../lib/gatewayInstance";
 
-const getCsrfCookie = async () => await gateway_instance.get("/sanctum/csrf-cookie");
-export async function login(data) {
-  await getCsrfCookie();
-  const response = await gateway_instance.post("/auth/login", data);
-  const user = response.data;
+// Espace d'administration du site (23/11/2026) : connexion par identifiant et mot de passe auprès du serveur du site
+// (BFF), qui garde les jetons d'auth-api dans des cookies chiffrés httpOnly. Le navigateur ne voit jamais de jeton ;
+// seul le nom affiché est gardé dans localStorage (auteur des articles).
 
-  // Création du cookie de session côté Next.js pour autoriser le proxy (/admin)
-  await axios.post("/api/cookies", {
-    name: "pythagore_gateway_session",
-    value: user?.id ? String(user.id) : "authenticated",
-  });
-
+export async function login({ email, password }) {
+  const response = await axios.post("/api/auth/login", { login: email, password });
+  const user = response.data?.user ?? null;
   localStorage.setItem("user", JSON.stringify(user));
   return user;
 }
 
-
 export async function logout() {
   try {
-    await gateway_instance.post("/auth/logout");
+    await axios.post("/api/auth/logout");
   } catch (error) {
-    console.error("Erreur lors de la déconnexion gateway", error);
+    console.error("Erreur lors de la déconnexion", error);
   }
-
-  // Appel à l'API pour supprimer le cookie côté Next.js
-  try {
-    await axios.delete("/api/cookies", {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: {
-        name: "pythagore_gateway_session",
-      },
-    });
-  } catch (error) {
-    console.error("Erreur lors de la suppression du cookie", error);
-  }
-
   localStorage.removeItem("user");
 }
 
 export async function isUserLoggedIn() {
   try {
-    const response = await axios.get("/api/cookies", {
-      params: { name: "pythagore_gateway_session" },
-    });
-
-    return response.status === 200;
-  } catch (error) {
+    return (await axios.get("/api/auth/session")).status === 200;
+  } catch {
     return false;
   }
 }

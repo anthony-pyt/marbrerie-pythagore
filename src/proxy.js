@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { readSession } from "@/lib/session/session-cookies";
 
 // Détecte une navigation directe du navigateur (URL tapée, lien, onglet)
 // par opposition à un appel fetch/axios fait depuis le site.
@@ -23,15 +24,23 @@ export async function proxy(req) {
     return NextResponse.next();
   }
 
-  const token = req.cookies.get("pythagore_gateway_session")?.value;
+  // Session chiffrée posée par /api/auth/login (23/11/2026). Avant : simple présence d'un cookie, que n'importe qui
+  // pouvait poser par POST /api/cookies (route supprimée). Le jeton lui-même est revérifié par api-marbrerie-pythagore
+  // à chaque écriture.
+  let loggedIn = false;
+  try {
+    loggedIn = Boolean(readSession(req.cookies, process.env.SITE_SESSION_SECRET));
+  } catch (error) {
+    console.error("[proxy] SITE_SESSION_SECRET manquant ou trop court", error.message);
+  }
 
   // Si l'utilisateur est déjà connecté et tente d'accéder à /login
-  if (pathname === "/login" && token) {
+  if (pathname === "/login" && loggedIn) {
     return NextResponse.redirect(new URL("/admin", req.url));
   }
 
   // Si l'utilisateur n'est pas connecté et tente d'accéder à /admin
-  if (!token && pathname.startsWith("/admin")) {
+  if (!loggedIn && pathname.startsWith("/admin")) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
