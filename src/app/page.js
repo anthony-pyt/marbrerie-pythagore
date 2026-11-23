@@ -66,7 +66,8 @@ export default function Home() {
     const fetchInspirations = async () => {
       try {
         const response = await fetchAllInspirationPhotos(8);
-        setInspirations(response.data);
+        const data  = await response
+        setInspirations(data);
       } catch (error) {
         console.error(
           "Erreur lors de la récupération des inspirations :",

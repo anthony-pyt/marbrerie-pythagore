@@ -34,7 +34,7 @@ export const LayoutGrid = ({ cards }) => {
 
 const ImageComponent = ({ card }) => {
   const product = card.imageable;
-  const category = product?.product?.category;
+  const {category} = product;
 
   return (
     <div className="relative aspect-square w-full overflow-hidden bg-gray-50">
