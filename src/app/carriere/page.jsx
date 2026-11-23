@@ -28,31 +28,40 @@ import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import useJobOffersServices from "@/api/services/jobOffersServices";
 import Loader from "../components/loader";
 import Alert from "../components/Alert";
+import { normalizeSpaces, plainTextToHtml } from "@/lib/utils";
 
 export default function Page() {
-  const { fetchJobOffers } = useJobOffersServices();
+  const { fetchPublishedJobOffers } = useJobOffersServices();
   const [loadingJobs, setLoadingJobs] = useState(true);
   const [jobs, setJobs] = useState([]);
+  const [jobsError, setJobsError] = useState(false);
   const [showApplicationForm, setShowApplicationForm] = useState(false);
+  // Offre à laquelle la candidature se rapporte (null = candidature spontanée)
+  const [applicationJob, setApplicationJob] = useState(null);
   const [successMessage, setSuccessMessage] = useState(false);
 
-  useEffect(() => {
-    const getJobs = async () => {
-      try {
-        const response = await fetchJobOffers();
-        const publishedJobs = response.data.filter(
-          (job) => job.is_published === 1,
-        );
+  const getJobs = async () => {
+    setLoadingJobs(true);
+    setJobsError(false);
+    try {
+      const response = await fetchPublishedJobOffers();
+      setJobs(response.data);
+    } catch (error) {
+      console.log(error);
+      setJobsError(true);
+    } finally {
+      setLoadingJobs(false);
+    }
+  };
 
-        setJobs(publishedJobs);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoadingJobs(false);
-      }
-    };
+  useEffect(() => {
     getJobs();
   }, []);
+
+  const openApplicationForm = (job = null) => {
+    setApplicationJob(job);
+    setShowApplicationForm(true);
+  };
 
   return (
     <main className="min-h-screen antialiased">
@@ -90,12 +99,15 @@ export default function Page() {
         <ListJobs
           jobs={jobs}
           loading={loadingJobs}
-          setShowApplicationForm={setShowApplicationForm}
-          showApplicationForm={showApplicationForm}
+          error={jobsError}
+          onRetry={getJobs}
+          onApply={openApplicationForm}
           successMessage={successMessage}
+          setSuccessMessage={setSuccessMessage}
         />
         {showApplicationForm && (
           <ModalSendForm
+            job={applicationJob}
             onClose={() => setShowApplicationForm(false)}
             setSuccessMessage={setSuccessMessage}
           />
@@ -132,10 +144,31 @@ const SectionCommitments = () => (
   </div>
 );
 
+// Champ saisi avec l'éditeur riche, ou en texte brut pour les anciennes offres
+const RichText = ({ value }) => {
+  const html = normalizeSpaces(plainTextToHtml(value));
+  // Un éditeur vidé renvoie par exemple "<p><br></p>"
+  const isEmpty = !html.replace(/<[^>]*>|&nbsp;/g, "").trim();
+
+  if (isEmpty) {
+    return (
+      <p className="text-sm text-gray-600 leading-relaxed px-5">Non précisé</p>
+    );
+  }
+  return (
+    <div
+      className="job-rich-text text-sm text-gray-600 leading-relaxed px-5"
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
+  );
+};
+
 const ListJobs = ({
   jobs,
   loading,
-  setShowApplicationForm,
+  error,
+  onRetry,
+  onApply,
   successMessage,
   setSuccessMessage,
 }) => {
@@ -166,7 +199,7 @@ const ListJobs = ({
           <Button
             text={"Postuler"}
             color={"or"}
-            onClick={() => setShowApplicationForm(true)}
+            onClick={() => onApply()}
             icon={"tabler:send"}
           />
         </div>
@@ -180,7 +213,7 @@ const ListJobs = ({
         />
       </div>
 
-      {loading && (
+      {loading ? (
         <div className="flex flex-col items-center justify-center text-white">
           <Icon
             icon="svg-spinners:pulse-rings-3"
@@ -190,75 +223,100 @@ const ListJobs = ({
           />
           <p>Récupération des données...</p>
         </div>
-      )}
-      <div className="">
-        <div className="w-full flex justify-center items-center max-w-5xl mx-auto">
-          {jobs.length === 0 ? (
-            <div className="text-center p-2 text-white flex flex-col items-center">
-              <Icon
-                icon="fluent:live-off-20-regular"
-                width="64"
-                height="64"
-                className="mb-8"
-              />
-              <div className="text-sm flex flex-col items-center justify-center text-white border p-4">
-                <p className="font-semibold text-center underline underline-offset-2">
-                  Aucune offre pour le moment
-                </p>
-                <p className="mt-2">
-                  Nous vous invitons à soumettre votre candidature spontanée.
-                </p>
-                <p>
-                  Nous restons constamment à la recherche de talents motivés et
-                  ouverts à de nouvelles opportunités.
-                </p>
+      ) : error ? (
+        <div className="text-center p-2 text-white flex flex-col items-center">
+          <Icon
+            icon="fluent:plug-disconnected-20-regular"
+            width="64"
+            height="64"
+            className="mb-8"
+          />
+          <div className="text-sm flex flex-col items-center justify-center text-white border p-4 space-y-4">
+            <p className="font-semibold text-center">
+              Impossible de charger les offres pour le moment.
+            </p>
+            <Button
+              text={"Réessayer"}
+              color={"or"}
+              onClick={onRetry}
+              icon={"tabler:refresh"}
+            />
+          </div>
+        </div>
+      ) : (
+        <div className="">
+          <div className="w-full flex justify-center items-center max-w-5xl mx-auto">
+            {jobs.length === 0 ? (
+              <div className="text-center p-2 text-white flex flex-col items-center">
+                <Icon
+                  icon="fluent:live-off-20-regular"
+                  width="64"
+                  height="64"
+                  className="mb-8"
+                />
+                <div className="text-sm flex flex-col items-center justify-center text-white border p-4">
+                  <p className="font-semibold text-center underline underline-offset-2">
+                    Aucune offre pour le moment
+                  </p>
+                  <p className="mt-2">
+                    Nous vous invitons à soumettre votre candidature spontanée.
+                  </p>
+                  <p>
+                    Nous restons constamment à la recherche de talents motivés
+                    et ouverts à de nouvelles opportunités.
+                  </p>
+                </div>
               </div>
-            </div>
-          ) : (
-            <div>
-              {jobs.map((item, index) => (
-                <div
-                  key={index}
-                  className="border shadow p-4 mb-4 bg-white cursor-pointer"
-                  onClick={() => setSelectedJob(item)}
-                >
-                  <div className="flex justify-between items-center mb-2">
-                    <p className="font-bold uppercase">{item.title}</p>
-                    <div className="flex justify-end items-center space-x-2">
-                      <p className="text-xs border shadow px-2">{item.type}</p>
-                      {item.weekly_hours && (
-                        <p className="text-sm">{item?.weekly_hours + "h"}</p>
-                      )}
+            ) : (
+              <div className="w-full">
+                {jobs.map((item) => (
+                  <div
+                    key={item.id}
+                    className="border shadow p-4 mb-4 bg-white cursor-pointer"
+                    onClick={() => setSelectedJob(item)}
+                  >
+                    <div className="flex justify-between items-center mb-2">
+                      <p className="font-bold uppercase">{item.title}</p>
+                      <div className="flex justify-end items-center space-x-2">
+                        <p className="text-xs border shadow px-2">
+                          {item.type}
+                        </p>
+                        {item.weekly_hours && (
+                          <p className="text-sm">{item?.weekly_hours + "h"}</p>
+                        )}
+                      </div>
+                    </div>
+                    <p
+                      className="text-sm line-clamp-4"
+                      dangerouslySetInnerHTML={{
+                        __html: normalizeSpaces(item.description),
+                      }}
+                    ></p>
+                    <div className="flex justify-end">
+                      <span className="text-xs text-gray-500">
+                        Mise à jour le{" "}
+                        {new Date(item.updated_at).toLocaleDateString("fr-FR")}
+                      </span>
                     </div>
                   </div>
-                  <p
-                    className="text-sm line-clamp-2"
-                    dangerouslySetInnerHTML={{ __html: item.description }}
-                  ></p>
-                  <div className="flex justify-end">
-                    <span className="text-xs text-gray-500">
-                      Mise à jour le{" "}
-                      {new Date(item.updated_at).toLocaleDateString("fr-FR")}
-                    </span>
-                  </div>
+                ))}
+                <div className="text-sm flex flex-col items-center justify-center mt-8 text-white border p-4">
+                  <p className="font-semibold text-center underline underline-offset-2">
+                    Aucune offre ne correspond à votre profil ?
+                  </p>
+                  <p className="mt-2">
+                    Nous vous invitons à soumettre votre candidature spontanée.
+                  </p>
+                  <p>
+                    Nous restons constamment à la recherche de talents motivés
+                    et ouverts à de nouvelles opportunités.
+                  </p>
                 </div>
-              ))}
-              <div className="text-sm flex flex-col items-center justify-center mt-8 text-white border p-4">
-                <p className="font-semibold text-center underline underline-offset-2">
-                  Aucune offre ne correspond à votre profil ?
-                </p>
-                <p className="mt-2">
-                  Nous vous invitons à soumettre votre candidature spontanée.
-                </p>
-                <p>
-                  Nous restons constamment à la recherche de talents motivés et
-                  ouverts à de nouvelles opportunités.
-                </p>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* MODALE */}
       {selectedJob && (
@@ -343,7 +401,8 @@ const ListJobs = ({
                   <div
                     className="text-gray-600 leading-relaxed text-sm prose prose-sm max-w-none px-5 border-l-2 border-gray-50"
                     dangerouslySetInnerHTML={{
-                      __html: selectedJob.description,
+                      // Les offres déjà en base peuvent encore en contenir
+                      __html: normalizeSpaces(selectedJob.description),
                     }}
                   />
                 </section>
@@ -355,9 +414,7 @@ const ListJobs = ({
                       <span className="w-2 h-2 bg-or rounded-full mr-3" />
                       Profil recherché
                     </h4>
-                    <p className="text-sm text-gray-600 leading-relaxed px-5">
-                      {selectedJob.profile_sought ?? "Non précisé"}
-                    </p>
+                    <RichText value={selectedJob.profile_sought} />
                   </section>
 
                   <section>
@@ -365,9 +422,7 @@ const ListJobs = ({
                       <span className="w-2 h-2 bg-or rounded-full mr-3" />
                       Formation
                     </h4>
-                    <p className="text-sm text-gray-600 leading-relaxed px-5">
-                      {selectedJob.formation ?? "Non précisé"}
-                    </p>
+                    <RichText value={selectedJob.formation} />
                   </section>
                 </div>
               </div>
@@ -380,10 +435,12 @@ const ListJobs = ({
                 color="or"
                 size="big"
                 className="shadow-xl hover:shadow-or/20 transition-all transform hover:-translate-y-1"
-                onClick={() => setShowApplicationForm(true)}
-              >
-                Postuler
-              </Button>
+                onClick={() => {
+                  // Ferme la fiche pour ne pas empiler deux modales
+                  onApply(selectedJob);
+                  setSelectedJob(null);
+                }}
+              />
             </div>
           </div>
         </div>
@@ -392,7 +449,7 @@ const ListJobs = ({
   );
 };
 
-const ModalSendForm = ({ onClose, setSuccessMessage }) => {
+const ModalSendForm = ({ job, onClose, setSuccessMessage }) => {
   const [formErrors, setFormErrors] = useState({});
   const [formData, setFormData] = useState({});
   const [sendMessage, setSendMessage] = useState(false);
@@ -424,20 +481,20 @@ const ModalSendForm = ({ onClose, setSuccessMessage }) => {
     if (!validateForm()) {
       return; // Ne pas envoyer si validation échoue
     }
-    try {
-      // Affiche le message 2 secondes, puis ferme la modale
-      setTimeout(() => {
-        onClose(false);
-      }, 2000);
-      await VerifyAndSendCandidacy(formData);
-      setSendMessage(true);
-      setSuccessMessage("Votre candidature a bien été envoyée !");
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setTimeout(() => {
-        setSendMessage(false);
-      }, 5000);
+    setSendMessage(true);
+    // L'API retrouve l'intitulé de l'offre pour l'afficher dans le mail reçu
+    const datas = job ? { ...formData, job_offer_id: job.id } : formData;
+    // VerifyAndSendCandidacy renvoie undefined en cas d'échec
+    const status = await VerifyAndSendCandidacy(datas);
+    if (status >= 200 && status < 300) {
+      setSuccessMessage(true);
+      onClose(false);
+    } else {
+      setFormErrors({
+        submit:
+          "L'envoi de votre candidature a échoué, merci de réessayer plus tard.",
+      });
+      setSendMessage(false);
     }
   };
 
@@ -492,6 +549,12 @@ const ModalSendForm = ({ onClose, setSuccessMessage }) => {
             <h4 className="text-lg md:text-2xl font-bold text-center mb-8">
               Votre candidature
             </h4>
+            {job && (
+              <p className="text-center text-sm text-gray-500 -mt-6">
+                Pour l&apos;offre :{" "}
+                <span className="font-semibold">{job.title}</span>
+              </p>
+            )}
             <div className="py-10">
               <div className="flex flex-wrap justify-between my-2">
                 <div className="flex-1">
@@ -599,12 +662,13 @@ const ModalSendForm = ({ onClose, setSuccessMessage }) => {
                 <p className="error-message">{formErrors["message"]}</p>
               </div>
             </div>
-            <div className="flex justify-end">
+            <div className="flex justify-end items-center space-x-4">
+              <p className="error-message">{formErrors["submit"]}</p>
               <Button
                 text={"Envoyer"}
                 onClick={sendForm}
                 icon={"tabler:send"}
-                disabled={sendMessage}
+                loading={sendMessage}
               />
             </div>
           </ModalContent>

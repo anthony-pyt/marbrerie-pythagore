@@ -1,19 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Button from "@/components/Button";
-import Alert from "@/components/Alert"; // Ton nouveau composant d'alerte
+import Alert from "@/components/Alert";
 import { login } from "@/api/services/authServices";
 import { Icon } from "@iconify/react";
 
 export default function LoginPage() {
-  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [viewPassword, setWiewPassword] = useState(false)
+  const [viewPassword, setWiewPassword] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -21,18 +19,17 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const res = await login({ email, password });
-      router.push("/admin");
+      await login({ email, password });
+      window.location.href = "/admin";
     } catch (err) {
       setError("Email ou mot de passe incorrect !");
-    } finally {
       setLoading(false);
     }
   };
 
   const handleViewPasswoard = () => {
-    setWiewPassword(!viewPassword)
-  }
+    setWiewPassword(!viewPassword);
+  };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-primary font-light">
@@ -93,7 +90,7 @@ export default function LoginPage() {
                 icon={
                   viewPassword ? "solar:eye-closed-linear" : "solar:eye-linear"
                 }
-                className="absolute right-3 top-3 text-gray-500 group-focus-within:text-or transition-colors"
+                className="absolute right-3 top-3 text-gray-500 group-focus-within:text-or transition-colors cursor-pointer"
                 size={18}
                 onClick={handleViewPasswoard}
               />

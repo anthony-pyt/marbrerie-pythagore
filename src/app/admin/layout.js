@@ -36,7 +36,7 @@ export default function AdminLayout({ children }) {
 
   const handleLogout = async () => {
     await logout();
-    router.push("/");
+    window.location.href = "/";
   };
 
   return (

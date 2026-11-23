@@ -6,6 +6,7 @@ import QuillEditor from "@/components/QuillEditor";
 import Button from "@/components/Button";
 import useJobOffersServices from "@/api/services/jobOffersServices";
 import { Icon } from "@iconify/react";
+import { normalizeSpaces, plainTextToHtml } from "@/lib/utils";
 
 export default function JobOfferForm({ jobOfferId = null }) {
   const { storeJobOffer, fetchJobOffer, updateJobOffer } =
@@ -56,8 +57,9 @@ export default function JobOfferForm({ jobOfferId = null }) {
           setSalary(response.salary || "");
           setWeeklyHours(response.weekly_hours || "");
           setDescription(response.description || "");
-          setProfileSought(response.profile_sought || "");
-          setFormation(response.formation || "");
+          // Les anciennes offres ont été saisies en texte brut
+          setProfileSought(plainTextToHtml(response.profile_sought));
+          setFormation(plainTextToHtml(response.formation));
         } catch (error) {
           console.error("Erreur récupération", error);
         }
@@ -82,6 +84,20 @@ export default function JobOfferForm({ jobOfferId = null }) {
     [],
   );
 
+  // Barre d'outils réduite pour les champs profil et formation
+  const smallModules = useMemo(
+    () => ({
+      toolbar: {
+        container: [
+          ["bold", "italic", "underline"],
+          [{ list: "ordered" }, { list: "bullet" }],
+          ["clean"],
+        ],
+      },
+    }),
+    [],
+  );
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoadingSend(true);
@@ -92,9 +108,9 @@ export default function JobOfferForm({ jobOfferId = null }) {
         type,
         salary,
         weekly_hours: weeklyHours,
-        description,
-        profile_sought: profileSought,
-        formation,
+        description: normalizeSpaces(description),
+        profile_sought: normalizeSpaces(profileSought),
+        formation: normalizeSpaces(formation),
       };
       if (jobOfferId) {
         await updateJobOffer(jobOfferId, payload);
@@ -198,22 +214,26 @@ export default function JobOfferForm({ jobOfferId = null }) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
             <label className={labelStyle}>Profil recherché</label>
-            <textarea
-              value={profileSought}
-              onChange={(e) => setProfileSought(e.target.value)}
-              placeholder="Exigences et soft skills..."
-              className={`${inputStyle} h-48 resize-none`}
-            />
+            <div className="mt-2 [&_.ql-editor]:min-h-[250px]">
+              <QuillEditor
+                value={profileSought}
+                onChange={setProfileSought}
+                modules={smallModules}
+                placeholder="Exigences et soft skills..."
+              />
+            </div>
           </div>
 
           <div>
             <label className={labelStyle}>Formation & Expérience</label>
-            <textarea
-              value={formation}
-              onChange={(e) => setFormation(e.target.value)}
-              className={`${inputStyle} h-48 resize-none`}
-              placeholder="Cursus académique requis..."
-            />
+            <div className="mt-2 [&_.ql-editor]:min-h-[250px]">
+              <QuillEditor
+                value={formation}
+                onChange={setFormation}
+                modules={smallModules}
+                placeholder="Cursus académique requis..."
+              />
+            </div>
           </div>
         </div>
 

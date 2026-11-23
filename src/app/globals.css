@@ -213,6 +213,25 @@ input[type="checkbox"].checkboxInput {
   @apply bg-gray-200;
 }
 
+/* Champs riches des offres d'emploi (profil, formation) */
+.job-rich-text p + p,
+.job-rich-text p + ul,
+.job-rich-text p + ol,
+.job-rich-text ul + p,
+.job-rich-text ol + p {
+  @apply mt-3;
+}
+.job-rich-text ul {
+  @apply list-disc pl-5 space-y-1;
+}
+.job-rich-text ol {
+  @apply list-decimal pl-5 space-y-1;
+}
+/* Quill 2 enregistre les puces sous forme de <ol><li data-list="bullet"> */
+.job-rich-text li[data-list="bullet"] {
+  list-style-type: disc;
+}
+
 .stack-container {
   position: relative;
   perspective: 600px;

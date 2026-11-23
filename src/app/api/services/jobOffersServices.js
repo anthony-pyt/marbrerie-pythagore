@@ -16,6 +16,14 @@ export default function useJobOffersServices() {
     return response;
   };
 
+  // Offres publiées uniquement, pour le site public
+  const fetchPublishedJobOffers = async () => {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/published_job_offers`
+    );
+    return response;
+  };
+
   const fetchJobOffer = async (id) => {
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_API_URL}/job_offers/${id}`
@@ -56,6 +64,7 @@ export default function useJobOffersServices() {
   return {
     countJobOffers,
     fetchJobOffers,
+    fetchPublishedJobOffers,
     fetchJobOffer,
     storeJobOffer,
     updateJobOffer,
