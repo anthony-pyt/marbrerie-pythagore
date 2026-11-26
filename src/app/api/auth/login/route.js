@@ -18,7 +18,7 @@ export async function POST(req) {
 
   let result;
   try {
-    result = await loginWithPassword({ login, password });
+    result = await loginWithPassword({ login, password, request: req });
   } catch (error) {
     console.error("[auth/login] configuration incomplète :", error.message);
     return NextResponse.json({ message: "Connexion impossible : configuration incomplète." }, { status: 500 });

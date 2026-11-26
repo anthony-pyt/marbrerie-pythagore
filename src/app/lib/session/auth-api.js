@@ -1,3 +1,4 @@
+import { forwardedFor } from "../client-address.js";
 // Appels serveur → Gateway → auth-api pour la session de l'espace d'administration du site (modèle : extranet-front-v2,
 // src/lib/session/auth-api.js). Les jetons et mots de passe ne sont jamais journalisés ni renvoyés au navigateur.
 //   - connexion : POST {NEXT_API_GATEWAY_URL}/authenticate/api/login (public) → auth-api POST /api/login, compte interne
@@ -26,13 +27,14 @@ function passwordClient() {
   return { client_id: clientId, client_secret: clientSecret };
 }
 
-async function postJson(path, body, { timeoutMs, token } = {}) {
+async function postJson(path, body, { timeoutMs, token, headers = {} } = {}) {
   return fetch(gatewayUrl(path), {
     method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
       ...(token && { Authorization: `Bearer ${token}` }),
+      ...headers,
     },
     body: JSON.stringify(body ?? {}),
     cache: "no-store",
@@ -42,13 +44,14 @@ async function postJson(path, body, { timeoutMs, token } = {}) {
 }
 
 /** @returns {Promise<{ ok: true, data: object } | { ok: false, status: number }>} */
-export async function loginWithPassword({ login, password }) {
+/** `request` : requête du navigateur, pour transmettre l'adresse du visiteur (limite de tentatives par adresse). */
+export async function loginWithPassword({ login, password, request }) {
   let response;
   try {
     response = await postJson(
       "authenticate/api/login",
       { email: login, password, user_type: SITE_USER_TYPE, grant_type: "password", ...passwordClient() },
-      { timeoutMs: LOGIN_TIMEOUT_MS },
+      { timeoutMs: LOGIN_TIMEOUT_MS, headers: forwardedFor(request) },
     );
   } catch (error) {
     console.error("[session] connexion : Gateway injoignable", error.name);

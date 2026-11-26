@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { gatewayUrl } from "@/lib/session/auth-api";
 import { authUnavailableResponse, commitSession, currentSession, getSession, sessionExpiredResponse } from "@/lib/session/server";
+import { forwardedFor } from "@/lib/client-address";
 
 const GATEWAY_TIMEOUT_MS = 30_000;
 /** Rejouées après un 401 et un renouvellement : seulement les méthodes idempotentes (une écriture n'est jamais rejouée). */
@@ -30,6 +31,7 @@ async function handler(req, { params }) {
     method: req.method,
     headers: {
       Accept: "application/json",
+      ...forwardedFor(req),
       ...(req.headers.get("content-type") && { "Content-Type": req.headers.get("content-type") }),
       ...(token && { Authorization: `Bearer ${token}` }),
     },

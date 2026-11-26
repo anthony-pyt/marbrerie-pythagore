@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { forwardedFor } from "@/lib/client-address";
 
 const API_URL = process.env.NEXT_API_GATEWAY_URL;
 const GATEWAY_SECRET = process.env.INTERNAL_API_KEY;
@@ -30,6 +31,7 @@ async function handler(req, context) {
     // Injection de la clé secrète de sécurité
     headers.set("X-Internal-Secret", GATEWAY_SECRET);
     headers.set("Accept", "application/json");
+    for (const [name, value] of Object.entries(forwardedFor(req))) headers.set(name, value);
 
     const response = await fetch(targetUrl, {
       method: req.method,
